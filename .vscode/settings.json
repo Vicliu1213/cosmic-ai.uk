@@ -15,7 +15,7 @@
   "activityBar.visible": true,
   "sideBar.location": "left",
   "workbench.sideBar.location": "left",
-  "workbench.statusBar.visible": true,
+  "workbench.statusBar.visible": false,
   "files.autoSave": "afterDelay",
   "files.autoSaveDelay": 500,
   "files.autoSaveWhenNoErrors": true,
