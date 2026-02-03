@@ -4,7 +4,7 @@
 import math
 from dataclasses import dataclass
 from typing import Dict, List, Optional, Callable, Tuple
-from datetime import datetime
+from datetime import datetime, timezone
 
 import numpy as np
 
@@ -184,7 +184,7 @@ class QuantumAdvantageAnalyzer:
             sizes=list(map(int, sizes)),
             classical_costs=list(map(float, classical_costs)),
             quantum_costs=list(map(float, quantum_costs)),
-            timestamp=datetime.utcnow().isoformat(),
+            timestamp=datetime.now(timezone.utc).isoformat(),
         )
 
     def _gen_sizes(self) -> np.ndarray:
