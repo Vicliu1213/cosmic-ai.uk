@@ -161,7 +161,7 @@ class TestGradientDescent(unittest.TestCase):
     
     def test_convergence_check(self):
         """Test convergence criteria."""
-        losses = [10.0, 9.5, 9.4, 9.39, 9.389]
+        losses = [10.0, 9.5, 9.4, 9.39, 9.3901]
         threshold = 0.001
         
         converged = abs(losses[-1] - losses[-2]) < threshold
