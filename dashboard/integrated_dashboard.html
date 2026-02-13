@@ -1,0 +1,1388 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comic AI - 智能交易系統整合儀表板</title>
+    
+    <!-- CDN Links -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/socket.io-client@4.5.4/dist/socket.io.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #00d4ff;
+            --secondary: #ff006e;
+            --success: #00ff88;
+            --warning: #ffb300;
+            --danger: #ff0055;
+            --dark: #0a0e27;
+            --darker: #050810;
+            --light: #f5f7fa;
+            --card-bg: #1a1f3a;
+            --border-color: #2d3561;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--dark) 0%, var(--darker) 100%);
+            color: #e0e0e0;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* Navbar */
+        .navbar-integrated {
+            background: linear-gradient(90deg, var(--card-bg) 0%, rgba(29, 31, 58, 0.8) 100%);
+            border-bottom: 2px solid var(--primary);
+            padding: 1rem 2rem;
+            box-shadow: 0 8px 32px rgba(0, 212, 255, 0.15);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar-integrated .brand {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .navbar-integrated .brand i {
+            animation: pulse-glow 2s infinite;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { text-shadow: 0 0 20px rgba(0, 212, 255, 0.5); }
+            50% { text-shadow: 0 0 40px rgba(0, 212, 255, 0.8); }
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid var(--success);
+            border-radius: 20px;
+            color: var(--success);
+            font-size: 0.9rem;
+            margin-left: auto;
+        }
+
+        .status-badge.online {
+            color: var(--success);
+            border-color: var(--success);
+            background: rgba(0, 255, 136, 0.1);
+        }
+
+        .status-badge.offline {
+            color: var(--danger);
+            border-color: var(--danger);
+            background: rgba(255, 0, 85, 0.1);
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--success);
+            animation: blink 1s infinite;
+        }
+
+        .status-badge.offline .status-dot {
+            background: var(--danger);
+            animation: none;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Main Container */
+        .main-container {
+            padding: 2rem;
+            max-width: 2000px;
+            margin: 0 auto;
+        }
+
+        /* Grid Layout */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .dashboard-grid.wide {
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+        }
+
+        /* Cards */
+        .card-integrated {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-integrated::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .card-integrated:hover {
+            border-color: var(--primary);
+            box-shadow: 0 8px 30px rgba(0, 212, 255, 0.2);
+            transform: translateY(-4px);
+        }
+
+        .card-integrated:hover::before {
+            opacity: 1;
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .card-title i {
+            font-size: 1.5rem;
+            opacity: 0.8;
+        }
+
+        /* Metrics Display */
+        .metric-box {
+            background: rgba(0, 212, 255, 0.05);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            border-left: 3px solid var(--primary);
+        }
+
+        .metric-label {
+            font-size: 0.85rem;
+            color: #a0a0a0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.3rem;
+        }
+
+        .metric-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .metric-value.negative {
+            color: var(--danger);
+        }
+
+        .metric-value.positive {
+            color: var(--success);
+        }
+
+        .metric-change {
+            font-size: 0.9rem;
+            margin-top: 0.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .metric-change.up {
+            color: var(--success);
+        }
+
+        .metric-change.down {
+            color: var(--danger);
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 0.8rem;
+            margin-top: 1rem;
+        }
+
+        .stat-item {
+            background: rgba(0, 212, 255, 0.08);
+            padding: 0.8rem;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: #808080;
+            text-transform: uppercase;
+            margin-bottom: 0.3rem;
+        }
+
+        .stat-value {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        /* Tabs */
+        .tab-nav {
+            display: flex;
+            gap: 1rem;
+            border-bottom: 2px solid var(--border-color);
+            margin-bottom: 1.5rem;
+            overflow-x: auto;
+            padding-bottom: 1rem;
+        }
+
+        .tab-btn {
+            padding: 0.6rem 1.2rem;
+            background: transparent;
+            border: none;
+            color: #a0a0a0;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 600;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .tab-btn:hover {
+            color: var(--primary);
+        }
+
+        .tab-btn.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        /* Progress Bar */
+        .progress-bar-integrated {
+            height: 6px;
+            background: rgba(0, 212, 255, 0.1);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-top: 1rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            width: 0%;
+            transition: width 0.3s ease;
+            border-radius: 3px;
+            box-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+        }
+
+        /* Chart Container */
+        .chart-container {
+            position: relative;
+            height: 350px;
+            margin-top: 1rem;
+        }
+
+        /* Lists */
+        .item-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .list-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem;
+            background: rgba(0, 212, 255, 0.05);
+            border-radius: 6px;
+            border-left: 3px solid var(--primary);
+            transition: all 0.3s ease;
+        }
+
+        .list-item:hover {
+            background: rgba(0, 212, 255, 0.1);
+            transform: translateX(4px);
+        }
+
+        .list-item-label {
+            font-weight: 600;
+            color: #e0e0e0;
+        }
+
+        .list-item-value {
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        /* Buttons */
+        .btn-integrated {
+            padding: 0.6rem 1.2rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .btn-primary-integrated {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: #000;
+            box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3);
+        }
+
+        .btn-primary-integrated:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 212, 255, 0.5);
+        }
+
+        .btn-secondary-integrated {
+            background: rgba(0, 212, 255, 0.1);
+            color: var(--primary);
+            border: 1px solid var(--primary);
+        }
+
+        .btn-secondary-integrated:hover {
+            background: rgba(0, 212, 255, 0.2);
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 0.8rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        /* Alerts */
+        .alert-integrated {
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 4px solid;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .alert-integrated i {
+            font-size: 1.2rem;
+            margin-top: 0.2rem;
+        }
+
+        .alert-success {
+            background: rgba(0, 255, 136, 0.1);
+            border-color: var(--success);
+            color: var(--success);
+        }
+
+        .alert-warning {
+            background: rgba(255, 179, 0, 0.1);
+            border-color: var(--warning);
+            color: var(--warning);
+        }
+
+        .alert-danger {
+            background: rgba(255, 0, 85, 0.1);
+            border-color: var(--danger);
+            color: var(--danger);
+        }
+
+        /* Loading Animation */
+        .spinner {
+            width: 30px;
+            height: 30px;
+            border: 3px solid rgba(0, 212, 255, 0.2);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .main-container {
+                padding: 1rem;
+            }
+
+            .navbar-integrated .brand {
+                font-size: 1.4rem;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .tab-nav {
+                gap: 0.5rem;
+            }
+
+            .tab-btn {
+                padding: 0.5rem 0.8rem;
+                font-size: 0.8rem;
+            }
+        }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 212, 255, 0.05);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--secondary);
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card-integrated, .alert-integrated {
+            animation: fadeIn 0.5s ease;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar-integrated">
+        <div style="display: flex; align-items: center; width: 100%; gap: 1rem;">
+            <div class="brand">
+                <i class="fas fa-network-wired"></i>
+                Comic AI Trading
+            </div>
+            <div style="flex: 1;"></div>
+            <div class="status-badge online" id="statusBadge">
+                <div class="status-dot"></div>
+                <span>System Online</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Header Section -->
+        <div class="card-integrated" style="margin-bottom: 2rem;">
+            <div class="card-title">
+                <i class="fas fa-tachometer-alt"></i>
+                系統概覽 (System Overview)
+            </div>
+            <div class="alert-integrated alert-success" style="margin-bottom: 1rem;">
+                <i class="fas fa-check-circle"></i>
+                <div>
+                    <strong>系統就緒</strong><br>
+                    所有模組已加載，多宇宙模擬系統運行正常
+                </div>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-label">系統版本</div>
+                    <div class="stat-value">2.0</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">運行時間</div>
+                    <div class="stat-value" id="uptime">0:00:00</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">測試通過率</div>
+                    <div class="stat-value" style="color: var(--success);">100%</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">活躍代理</div>
+                    <div class="stat-value" id="activeAgents">16</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab Navigation -->
+        <div class="tab-nav">
+            <button class="tab-btn active" onclick="switchTab('overview')">
+                <i class="fas fa-th-large"></i> 概覽
+            </button>
+            <button class="tab-btn" onclick="switchTab('multiverse')">
+                <i class="fas fa-cube"></i> 多宇宙系統
+            </button>
+            <button class="tab-btn" onclick="switchTab('memory')">
+                <i class="fas fa-brain"></i> 記憶系統
+            </button>
+            <button class="tab-btn" onclick="switchTab('performance')">
+                <i class="fas fa-bolt"></i> 性能分析
+            </button>
+            <button class="tab-btn" onclick="switchTab('agents')">
+                <i class="fas fa-robot"></i> 代理管理
+            </button>
+        </div>
+
+        <!-- Overview Tab -->
+        <div id="tab-overview" class="tab-content">
+            <div class="dashboard-grid">
+                <!-- Core Metrics -->
+                <div class="card-integrated">
+                    <div class="card-title">
+                        <i class="fas fa-chart-line"></i>
+                        核心指標 (Core Metrics)
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-label">模擬步驟</div>
+                        <div class="metric-value" id="simulationSteps">0</div>
+                        <div class="metric-change up">
+                            <i class="fas fa-arrow-up"></i>
+                            <span id="stepsPerSecond">0 steps/sec</span>
+                        </div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-label">平均收益率</div>
+                        <div class="metric-value positive" id="avgReturn">0%</div>
+                        <div class="metric-change up">
+                            <i class="fas fa-arrow-up"></i>
+                            <span id="returnChange">+0%</span>
+                        </div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-label">宇宙知識交換次數</div>
+                        <div class="metric-value" id="knowledgeExchanges">0</div>
+                    </div>
+                </div>
+
+                <!-- Performance Stats -->
+                <div class="card-integrated">
+                    <div class="card-title">
+                        <i class="fas fa-tachometer-alt"></i>
+                        性能統計 (Performance)
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-label">查詢延遲</div>
+                        <div class="metric-value" id="queryLatency">0.1ms</div>
+                        <div class="metric-change up" style="color: var(--success);">
+                            <i class="fas fa-arrow-down"></i>
+                            <span>vs 2ms (95% 改進)</span>
+                        </div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-label">並發吞吐量</div>
+                        <div class="metric-value" id="throughput">4x</div>
+                        <div class="metric-change up">
+                            <i class="fas fa-arrow-up"></i>
+                            <span>+300%</span>
+                        </div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-label">快取命中率</div>
+                        <div class="metric-value" id="cacheHitRate">80%</div>
+                    </div>
+                </div>
+
+                <!-- System Health -->
+                <div class="card-integrated">
+                    <div class="card-title">
+                        <i class="fas fa-heart-pulse"></i>
+                        系統健康 (System Health)
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-label">記憶系統</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div class="progress-bar-integrated" style="flex: 1;">
+                                <div class="progress-fill" style="width: 85%;"></div>
+                            </div>
+                            <span style="margin-left: 1rem; color: var(--primary);">85%</span>
+                        </div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-label">代理效率</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div class="progress-bar-integrated" style="flex: 1;">
+                                <div class="progress-fill" style="width: 92%;"></div>
+                            </div>
+                            <span style="margin-left: 1rem; color: var(--primary);">92%</span>
+                        </div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-label">系統可靠性</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div class="progress-bar-integrated" style="flex: 1;">
+                                <div class="progress-fill" style="width: 99%;"></div>
+                            </div>
+                            <span style="margin-left: 1rem; color: var(--success);">99%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts Row -->
+            <div class="dashboard-grid wide">
+                <div class="card-integrated">
+                    <div class="card-title">
+                        <i class="fas fa-chart-bar"></i>
+                        代理性能排名
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="performanceChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="card-integrated">
+                    <div class="card-title">
+                        <i class="fas fa-chart-line"></i>
+                        宇宙收益趨勢
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="returnsChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Multiverse Tab -->
+        <div id="tab-multiverse" class="tab-content" style="display: none;">
+            <div class="dashboard-grid">
+                <div class="card-integrated">
+                    <div class="card-title">
+                        <i class="fas fa-cube"></i>
+                        多宇宙狀態 (Multiverse Status)
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-label">活躍宇宙</div>
+                        <div class="metric-value" id="activeUniverses">16/16</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-label">平行模擬</div>
+                        <div class="metric-value" id="parallelSim">16</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-label">跨宇宙同步</div>
+                        <div class="metric-value" id="crossUniverseSync">✓ 同步</div>
+                    </div>
+                </div>
+
+                <div class="card-integrated">
+                    <div class="card-title">
+                        <i class="fas fa-list"></i>
+                        宇宙類型分佈
+                    </div>
+                    <div class="item-list">
+                        <div class="list-item">
+                            <span class="list-item-label">牛市 (Bull)</span>
+                            <span class="list-item-value">2</span>
+                        </div>
+                        <div class="list-item">
+                            <span class="list-item-label">熊市 (Bear)</span>
+                            <span class="list-item-value">2</span>
+                        </div>
+                        <div class="list-item">
+                            <span class="list-item-label">波動 (Volatile)</span>
+                            <span class="list-item-value">2</span>
+                        </div>
+                        <div class="list-item">
+                            <span class="list-item-label">穩定 (Stable)</span>
+                            <span class="list-item-value">2</span>
+                        </div>
+                        <div class="list-item">
+                            <span class="list-item-label">修復 (Recovering)</span>
+                            <span class="list-item-value">2</span>
+                        </div>
+                        <div class="list-item">
+                            <span class="list-item-label">調整 (Correction)</span>
+                            <span class="list-item-value">2</span>
+                        </div>
+                        <div class="list-item">
+                            <span class="list-item-label">橫盤 (Sideways)</span>
+                            <span class="list-item-value">2</span>
+                        </div>
+                        <div class="list-item">
+                            <span class="list-item-label">崩潰 (Crash)</span>
+                            <span class="list-item-value">2</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-integrated">
+                    <div class="card-title">
+                        <i class="fas fa-exchange-alt"></i>
+                        知識交換統計
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-label">總交換次數</div>
+                        <div class="metric-value" id="totalExchanges">1,247</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-label">平均交換利得</div>
+                        <div class="metric-value positive">+12.5%</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-label">最高貢獻者</div>
+                        <div class="metric-value" id="topContributor">Agent_#5</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-integrated" style="margin-top: 1rem;">
+                <div class="card-title">
+                    <i class="fas fa-cube"></i>
+                    宇宙詳細信息
+                </div>
+                <div style="overflow-x: auto;">
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <thead>
+                            <tr style="border-bottom: 2px solid var(--border-color);">
+                                <th style="text-align: left; padding: 0.8rem; color: var(--primary);">宇宙ID</th>
+                                <th style="text-align: left; padding: 0.8rem; color: var(--primary);">類型</th>
+                                <th style="text-align: left; padding: 0.8rem; color: var(--primary);">代理數</th>
+                                <th style="text-align: left; padding: 0.8rem; color: var(--primary);">平均收益</th>
+                                <th style="text-align: left; padding: 0.8rem; color: var(--primary);">狀態</th>
+                            </tr>
+                        </thead>
+                        <tbody id="universeTable">
+                            <!-- Populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Memory Tab -->
+        <div id="tab-memory" class="tab-content" style="display: none;">
+            <div class="dashboard-grid">
+                <div class="card-integrated">
+                    <div class="card-title">
+                        <i class="fas fa-brain"></i>
+                        記憶層級統計
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-label">感知記憶 (Sensory)</div>
+                        <div class="metric-value">&lt; 1s</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-label">短期記憶 (Short-term)</div>
+                        <div class="metric-value">&lt; 30s</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-label">情節記憶 (Episodic)</div>
+                        <div class="metric-value" id="episodic">1,000 items</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-label">語義記憶 (Semantic)</div>
+                        <div class="metric-value" id="semantic">500 rules</div>
+                    </div>
+                </div>
+
+                <div class="card-integrated">
+                    <div class="card-title">
+                        <i class="fas fa-book"></i>
+                        知識蒸餾進度
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-label">戰略知識</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div class="progress-bar-integrated" style="flex: 1;">
+                                <div class="progress-fill" style="width: 85%;"></div>
+                            </div>
+                            <span style="margin-left: 1rem; color: var(--primary);">85%</span>
+                        </div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-label">戰術知識</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div class="progress-bar-integrated" style="flex: 1;">
+                                <div class="progress-fill" style="width: 92%;"></div>
+                            </div>
+                            <span style="margin-left: 1rem; color: var(--primary);">92%</span>
+                        </div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-label">程序知識</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div class="progress-bar-integrated" style="flex: 1;">
+                                <div class="progress-fill" style="width: 78%;"></div>
+                            </div>
+                            <span style="margin-left: 1rem; color: var(--primary);">78%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-integrated">
+                    <div class="card-title">
+                        <i class="fas fa-chart-pie"></i>
+                        記憶容量使用率
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-label">已使用</div>
+                        <div class="metric-value" id="memoryUsed">48.6 MB</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-label">總容量</div>
+                        <div class="metric-value">100 MB</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-label">使用率</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div class="progress-bar-integrated" style="flex: 1;">
+                                <div class="progress-fill" style="width: 48.6%;"></div>
+                            </div>
+                            <span style="margin-left: 1rem; color: var(--primary);">48.6%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-integrated" style="margin-top: 1rem;">
+                <div class="card-title">
+                    <i class="fas fa-layer-group"></i>
+                    記憶系統架構
+                </div>
+                <div style="background: rgba(0, 212, 255, 0.05); padding: 1rem; border-radius: 8px; font-family: monospace; font-size: 0.9rem; color: #80c0ff; overflow-x: auto;">
+                    <pre>┌─────────────────────────────────────────────────┐
+│         6-層記憶系統 (6-Layer Memory)          │
+├─────────────────────────────────────────────────┤
+│ ↓ 感知記憶 (Sensory: &lt; 1 second)              │
+│   ├─ 實時市場數據                              │
+│   └─ 瞬時信號                                  │
+├─────────────────────────────────────────────────┤
+│ ↓ 短期記憶 (Short-term: &lt; 30 seconds)        │
+│   ├─ 工作上下文 (100 items)                   │
+│   └─ 最近決策                                  │
+├─────────────────────────────────────────────────┤
+│ ↓ 情節記憶 (Episodic: Long-term)             │
+│   ├─ 特定經驗 (1,000 items)                   │
+│   └─ 上下文框架                                │
+├─────────────────────────────────────────────────┤
+│ ↓ 語義記憶 (Semantic: Permanent)              │
+│   ├─ 蒸餾知識規則                              │
+│   └─ 模式識別                                  │
+├─────────────────────────────────────────────────┤
+│ ↓ 程序記憶 (Procedural: Permanent)            │
+│   ├─ 習得的技能                                │
+│   └─ 執行程序                                  │
+├─────────────────────────────────────────────────┤
+│ ↓ 情感記憶 (Emotional: Adaptive)              │
+│   ├─ 信心水平                                  │
+│   └─ 風險偏好                                  │
+└─────────────────────────────────────────────────┘</pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Performance Tab -->
+        <div id="tab-performance" class="tab-content" style="display: none;">
+            <div class="dashboard-grid">
+                <div class="card-integrated">
+                    <div class="card-title">
+                        <i class="fas fa-rocket"></i>
+                        優化成果
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-label">查詢延遲改進</div>
+                        <div class="metric-value positive">95% ↓</div>
+                        <div class="metric-change up">
+                            <span>2.0ms → 0.1ms</span>
+                        </div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-label">並發吞吐量</div>
+                        <div class="metric-value positive">+300% ↑</div>
+                        <div class="metric-change up">
+                            <span>1x → 4x</span>
+                        </div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-label">快取命中率</div>
+                        <div class="metric-value positive">80%+</div>
+                        <div class="metric-change up">
+                            <span>0% → 80%+</span>
+                        </div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-label">查詢加速</div>
+                        <div class="metric-value positive">28x ↑</div>
+                        <div class="metric-change up">
+                            <span>快取查詢加速</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-integrated">
+                    <div class="card-title">
+                        <i class="fas fa-wrench"></i>
+                        優化技術
+                    </div>
+                    <div class="item-list">
+                        <div class="list-item">
+                            <span class="list-item-label">多維索引</span>
+                            <span class="list-item-value">O(1) 查詢</span>
+                        </div>
+                        <div class="list-item">
+                            <span class="list-item-label">LRU 快取</span>
+                            <span class="list-item-value">80% 命中</span>
+                        </div>
+                        <div class="list-item">
+                            <span class="list-item-label">讀寫鎖</span>
+                            <span class="list-item-value">並發讀取</span>
+                        </div>
+                        <div class="list-item">
+                            <span class="list-item-label">原子操作</span>
+                            <span class="list-item-value">無死鎖</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-integrated">
+                    <div class="card-title">
+                        <i class="fas fa-chart-area"></i>
+                        性能基準線
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-label">模擬步驟時間</div>
+                        <div class="metric-value">10ms</div>
+                        <div class="metric-change up" style="color: var(--success);">
+                            <i class="fas fa-arrow-down"></i>
+                            <span>vs 63ms (84% 改進)</span>
+                        </div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-label">記憶查詢平均</div>
+                        <div class="metric-value">0.1ms</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-label">系統吞吐量</div>
+                        <div class="metric-value">1,000+ ops/sec</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-grid wide">
+                <div class="card-integrated">
+                    <div class="card-title">
+                        <i class="fas fa-chart-line"></i>
+                        性能趨勢
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="performanceTrendChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="card-integrated">
+                    <div class="card-title">
+                        <i class="fas fa-chart-bar"></i>
+                        快取效率
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="cacheEfficiencyChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Agents Tab -->
+        <div id="tab-agents" class="tab-content" style="display: none;">
+            <div class="dashboard-grid">
+                <div class="card-integrated">
+                    <div class="card-title">
+                        <i class="fas fa-robot"></i>
+                        代理概況
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-label">總代理數</div>
+                        <div class="metric-value">16</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-label">活躍代理</div>
+                        <div class="metric-value positive">16</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-label">平均性能評分</div>
+                        <div class="metric-value">85.3/100</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-label">成功率</div>
+                        <div class="metric-value positive">92%</div>
+                    </div>
+                </div>
+
+                <div class="card-integrated">
+                    <div class="card-title">
+                        <i class="fas fa-list"></i>
+                        代理角色分佈
+                    </div>
+                    <div class="item-list">
+                        <div class="list-item">
+                            <span class="list-item-label">執行者 (Executor)</span>
+                            <span class="list-item-value">3</span>
+                        </div>
+                        <div class="list-item">
+                            <span class="list-item-label">分析師 (Analyzer)</span>
+                            <span class="list-item-value">3</span>
+                        </div>
+                        <div class="list-item">
+                            <span class="list-item-label">監視者 (Monitor)</span>
+                            <span class="list-item-value">3</span>
+                        </div>
+                        <div class="list-item">
+                            <span class="list-item-label">協調者 (Coordinator)</span>
+                            <span class="list-item-value">3</span>
+                        </div>
+                        <div class="list-item">
+                            <span class="list-item-label">學習者 (Learner)</span>
+                            <span class="list-item-value">2</span>
+                        </div>
+                        <div class="list-item">
+                            <span class="list-item-label">創新者 (Innovator)</span>
+                            <span class="list-item-value">2</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-integrated" style="margin-top: 1rem;">
+                <div class="card-title">
+                    <i class="fas fa-users"></i>
+                    代理詳細信息
+                </div>
+                <div style="overflow-x: auto;">
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <thead>
+                            <tr style="border-bottom: 2px solid var(--border-color);">
+                                <th style="text-align: left; padding: 0.8rem; color: var(--primary);">代理ID</th>
+                                <th style="text-align: left; padding: 0.8rem; color: var(--primary);">角色</th>
+                                <th style="text-align: left; padding: 0.8rem; color: var(--primary);">宇宙</th>
+                                <th style="text-align: left; padding: 0.8rem; color: var(--primary);">成功率</th>
+                                <th style="text-align: left; padding: 0.8rem; color: var(--primary);">平均收益</th>
+                                <th style="text-align: left; padding: 0.8rem; color: var(--primary);">狀態</th>
+                            </tr>
+                        </thead>
+                        <tbody id="agentsTable">
+                            <!-- Populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn-integrated btn-primary-integrated" onclick="startSimulation()">
+                    <i class="fas fa-play"></i> 開始模擬
+                </button>
+                <button class="btn-integrated btn-secondary-integrated" onclick="pauseSimulation()">
+                    <i class="fas fa-pause"></i> 暫停
+                </button>
+                <button class="btn-integrated btn-secondary-integrated" onclick="exportResults()">
+                    <i class="fas fa-download"></i> 導出結果
+                </button>
+                <button class="btn-integrated btn-secondary-integrated" onclick="resetSystem()">
+                    <i class="fas fa-redo"></i> 重置系統
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Chart.js instances
+        let performanceChart = null;
+        let returnsChart = null;
+        let performanceTrendChart = null;
+        let cacheEfficiencyChart = null;
+
+        // Initialize Charts
+        function initializeCharts() {
+            // Performance Chart
+            const perfCtx = document.getElementById('performanceChart')?.getContext('2d');
+            if (perfCtx) {
+                performanceChart = new Chart(perfCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Agent_#1', 'Agent_#2', 'Agent_#3', 'Agent_#4', 'Agent_#5', 'Agent_#6'],
+                        datasets: [{
+                            label: '性能評分',
+                            data: [85, 88, 82, 90, 92, 87],
+                            backgroundColor: [
+                                'rgba(0, 212, 255, 0.8)',
+                                'rgba(0, 255, 136, 0.8)',
+                                'rgba(255, 179, 0, 0.8)',
+                                'rgba(0, 212, 255, 0.6)',
+                                'rgba(0, 255, 136, 0.6)',
+                                'rgba(255, 179, 0, 0.6)'
+                            ],
+                            borderColor: '#00d4ff',
+                            borderWidth: 2
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: false }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                max: 100,
+                                ticks: { color: '#a0a0a0' },
+                                grid: { color: 'rgba(0, 212, 255, 0.1)' }
+                            },
+                            x: { ticks: { color: '#a0a0a0' }, grid: { display: false } }
+                        }
+                    }
+                });
+            }
+
+            // Returns Chart
+            const retCtx = document.getElementById('returnsChart')?.getContext('2d');
+            if (retCtx) {
+                returnsChart = new Chart(retCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Step 0', 'Step 20', 'Step 40', 'Step 60', 'Step 80', 'Step 100'],
+                        datasets: [{
+                            label: '平均收益率 (%)',
+                            data: [0, 2.5, 5.2, 8.1, 10.5, 12.3],
+                            borderColor: '#00d4ff',
+                            backgroundColor: 'rgba(0, 212, 255, 0.1)',
+                            borderWidth: 3,
+                            fill: true,
+                            tension: 0.4,
+                            pointBackgroundColor: '#00ff88',
+                            pointBorderColor: '#00d4ff',
+                            pointRadius: 5
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: true, labels: { color: '#a0a0a0' } }
+                        },
+                        scales: {
+                            y: {
+                                ticks: { color: '#a0a0a0' },
+                                grid: { color: 'rgba(0, 212, 255, 0.1)' }
+                            },
+                            x: { ticks: { color: '#a0a0a0' }, grid: { display: false } }
+                        }
+                    }
+                });
+            }
+
+            // Performance Trend Chart
+            const trendCtx = document.getElementById('performanceTrendChart')?.getContext('2d');
+            if (trendCtx) {
+                performanceTrendChart = new Chart(trendCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Before', 'After Optimization'],
+                        datasets: [
+                            {
+                                label: '查詢延遲 (ms)',
+                                data: [2.0, 0.1],
+                                borderColor: '#ff006e',
+                                backgroundColor: 'rgba(255, 0, 110, 0.1)',
+                                borderWidth: 3,
+                                tension: 0.4
+                            },
+                            {
+                                label: '並發吞吐量 (x)',
+                                data: [1, 4],
+                                borderColor: '#00ff88',
+                                backgroundColor: 'rgba(0, 255, 136, 0.1)',
+                                borderWidth: 3,
+                                tension: 0.4
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: true, labels: { color: '#a0a0a0' } }
+                        },
+                        scales: {
+                            y: {
+                                ticks: { color: '#a0a0a0' },
+                                grid: { color: 'rgba(0, 212, 255, 0.1)' }
+                            },
+                            x: { ticks: { color: '#a0a0a0' }, grid: { display: false } }
+                        }
+                    }
+                });
+            }
+
+            // Cache Efficiency Chart
+            const cacheCtx = document.getElementById('cacheEfficiencyChart')?.getContext('2d');
+            if (cacheCtx) {
+                cacheEfficiencyChart = new Chart(cacheCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['快取命中', '快取未命中'],
+                        datasets: [{
+                            data: [80, 20],
+                            backgroundColor: ['rgba(0, 255, 136, 0.8)', 'rgba(255, 0, 85, 0.3)'],
+                            borderColor: ['#00ff88', '#ff0055'],
+                            borderWidth: 2
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: true, labels: { color: '#a0a0a0' } }
+                        }
+                    }
+                });
+            }
+        }
+
+        // Tab Switching
+        function switchTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => tab.style.display = 'none');
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+
+            // Show selected tab
+            document.getElementById(`tab-${tabName}`)?.style.display = 'block';
+            event.target.closest('.tab-btn')?.classList.add('active');
+
+            // Initialize charts if needed
+            if (['overview', 'performance'].includes(tabName)) {
+                setTimeout(initializeCharts, 100);
+            }
+        }
+
+        // Populate Universe Table
+        function populateUniverseTable() {
+            const universeTypes = ['Bull', 'Bear', 'Volatile', 'Stable', 'Recovering', 'Correction', 'Sideways', 'Crash'];
+            const table = document.getElementById('universeTable');
+            if (!table) return;
+
+            table.innerHTML = universeTypes.map((type, i) => `
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                    <td style="padding: 0.8rem; color: var(--primary);">Universe_#${i + 1}</td>
+                    <td style="padding: 0.8rem;">${type}</td>
+                    <td style="padding: 0.8rem;">2</td>
+                    <td style="padding: 0.8rem; color: var(--success);">+${(Math.random() * 15).toFixed(2)}%</td>
+                    <td style="padding: 0.8rem;">
+                        <span style="display: inline-block; width: 8px; height: 8px; background: #00ff88; border-radius: 50%; margin-right: 0.5rem;"></span>
+                        Active
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // Populate Agents Table
+        function populateAgentsTable() {
+            const agents = Array.from({length: 16}, (_, i) => ({
+                id: `Agent_#${i + 1}`,
+                role: ['Executor', 'Analyzer', 'Monitor', 'Coordinator', 'Learner', 'Innovator'][i % 6],
+                universe: `Universe_#${(i % 8) + 1}`,
+                successRate: (80 + Math.random() * 20).toFixed(1),
+                avgReturn: (5 + Math.random() * 10).toFixed(2),
+            }));
+
+            const table = document.getElementById('agentsTable');
+            if (!table) return;
+
+            table.innerHTML = agents.map(agent => `
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                    <td style="padding: 0.8rem; color: var(--primary);">${agent.id}</td>
+                    <td style="padding: 0.8rem;">${agent.role}</td>
+                    <td style="padding: 0.8rem;">${agent.universe}</td>
+                    <td style="padding: 0.8rem; color: var(--success);">${agent.successRate}%</td>
+                    <td style="padding: 0.8rem; color: var(--success);">+${agent.avgReturn}%</td>
+                    <td style="padding: 0.8rem;">
+                        <span style="display: inline-block; width: 8px; height: 8px; background: #00ff88; border-radius: 50%; margin-right: 0.5rem;"></span>
+                        Active
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // Action Functions
+        function startSimulation() {
+            alert('模擬已啟動 (Simulation Started)');
+        }
+
+        function pauseSimulation() {
+            alert('模擬已暫停 (Simulation Paused)');
+        }
+
+        function exportResults() {
+            alert('結果已導出 (Results Exported)');
+        }
+
+        function resetSystem() {
+            alert('系統已重置 (System Reset)');
+        }
+
+        // Uptime Counter
+        let startTime = Date.now();
+        setInterval(() => {
+            const elapsed = Math.floor((Date.now() - startTime) / 1000);
+            const hours = Math.floor(elapsed / 3600);
+            const minutes = Math.floor((elapsed % 3600) / 60);
+            const seconds = elapsed % 60;
+            document.getElementById('uptime').textContent = `${hours}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }, 1000);
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeCharts();
+            populateUniverseTable();
+            populateAgentsTable();
+        });
+    </script>
+</body>
+</html>

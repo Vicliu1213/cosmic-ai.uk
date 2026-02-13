@@ -87,6 +87,36 @@ from .multiverse_challenge import (
     MultiverseAgent,
 )
 
+from .live_trading import (
+    OrderType,
+    OrderStatus,
+    PositionSide,
+    MarketPrice,
+    Order,
+    Position,
+    AccountInfo,
+    RiskManager,
+    OrderExecutor,
+    LiveTradingEngine,
+)
+
+from .data_integration import (
+    DataFormat,
+    OHLCV,
+    DataLoader,
+    DataBuffer,
+    DataAnalyzer,
+    DataManager,
+)
+
+from .unified_api import (
+    SystemStatus,
+    SystemMetrics,
+    SimulationConfig,
+    ComicAIUnifiedAPI,
+    create_and_run_simulation,
+)
+
 # Define public API
 __all__ = [
     # OpenCode Framework
@@ -152,6 +182,33 @@ __all__ = [
     "run_multiverse_simulation",
     "UniverseType",
     "MultiverseAgent",
+    
+    # Live Trading System
+    "OrderType",
+    "OrderStatus",
+    "PositionSide",
+    "MarketPrice",
+    "Order",
+    "Position",
+    "AccountInfo",
+    "RiskManager",
+    "OrderExecutor",
+    "LiveTradingEngine",
+    
+    # Data Integration Layer
+    "DataFormat",
+    "OHLCV",
+    "DataLoader",
+    "DataBuffer",
+    "DataAnalyzer",
+    "DataManager",
+    
+    # Unified API
+    "SystemStatus",
+    "SystemMetrics",
+    "SimulationConfig",
+    "ComicAIUnifiedAPI",
+    "create_and_run_simulation",
 ]
 
 
