@@ -72,6 +72,21 @@ from .agent_memory import (
     AgentMemoryManager,
 )
 
+from .performance_optimization import (
+    OptimizedMemoryIndex,
+    ThreadSafeMemoryCache,
+    ReadWriteLock,
+    OptimizedMemoryRecall,
+)
+
+from .multiverse_challenge import (
+    MultiverseChallenge,
+    create_multiverse_challenge,
+    run_multiverse_simulation,
+    UniverseType,
+    MultiverseAgent,
+)
+
 # Define public API
 __all__ = [
     # OpenCode Framework
@@ -124,6 +139,19 @@ __all__ = [
     "DistilledKnowledge",
     "EnhancedMemorySystem",
     "AgentMemoryManager",
+    
+    # Performance Optimization
+    "OptimizedMemoryIndex",
+    "ThreadSafeMemoryCache",
+    "ReadWriteLock",
+    "OptimizedMemoryRecall",
+    
+    # Multiverse Challenge System
+    "MultiverseChallenge",
+    "create_multiverse_challenge",
+    "run_multiverse_simulation",
+    "UniverseType",
+    "MultiverseAgent",
 ]
 
 
