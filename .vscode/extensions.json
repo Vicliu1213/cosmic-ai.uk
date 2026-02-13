@@ -1,6 +1,5 @@
 {
     "recommendations": [
-        "sst-dev.opencode",
-        "ms-ceintl.vscode-language-pack-zh-hant"
+        "ms-vscode-remote.remote-containers"
     ]
 }

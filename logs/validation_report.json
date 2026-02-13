@@ -1,0 +1,32 @@
+{
+  "timestamp": "2026-02-13T21:20:17.910814",
+  "hostname": "VM-HKG1-4H8221SGL8",
+  "environment": "unknown",
+  "sections": {
+    "yaml_files": {
+      "valid": 20,
+      "errors": 0
+    },
+    "environment": {
+      "set": 1,
+      "missing": 7
+    },
+    "services": {
+      "ok": 3,
+      "failed": 0
+    },
+    "parameters": {
+      "ok": 3,
+      "error": 0
+    },
+    "security": {
+      "SSL_Certificate_Valid": true,
+      "HTTPS_Configured": false,
+      "API_Keys_In_Env": true,
+      "gitignore_Excludes_env": true
+    }
+  },
+  "overall_status": "FAIL",
+  "total_checks": 27,
+  "total_errors": 7
+}

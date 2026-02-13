@@ -1,0 +1,68 @@
+# API 集成配置
+# API Integration Configuration
+
+api:
+  # OpenAI API
+  openai:
+    enabled: true
+    api_key: ${OPENAI_API_KEY}
+    model: gpt-4-turbo
+    temperature: 0.3
+    max_tokens: 2000
+    timeout: 30
+
+  # Azure OpenAI
+  azure_openai:
+    enabled: true
+    api_key: ${AZURE_OPENAI_API_KEY}
+    endpoint: ${AZURE_OPENAI_ENDPOINT}
+    deployment_name: ${AZURE_OPENAI_DEPLOYMENT}
+    api_version: "2024-02-15-preview"
+    temperature: 0.3
+    max_tokens: 2000
+
+  # Vertex AI
+  vertex_ai:
+    enabled: true
+    project_id: ${GOOGLE_CLOUD_PROJECT}
+    location: ${GOOGLE_CLOUD_LOCATION}
+    model: ${VERTEX_AI_MODEL}
+    temperature: ${VERTEX_AI_TEMPERATURE}
+    max_tokens: ${VERTEX_AI_MAX_TOKENS}
+
+  # 數據源 API
+  data_sources:
+    # Crypto 交易所
+    binance:
+      enabled: true
+      api_key: ${BINANCE_API_KEY}
+      secret_key: ${BINANCE_SECRET_KEY}
+      base_url: https://api.binance.com
+    
+    # 股票數據
+    alpha_vantage:
+      enabled: true
+      api_key: ${ALPHA_VANTAGE_API_KEY}
+      base_url: https://www.alphavantage.co
+    
+    polygon:
+      enabled: true
+      api_key: ${POLYGON_API_KEY}
+      base_url: https://api.polygon.io
+
+  # 通知 API
+  notifications:
+    telegram:
+      enabled: true
+      bot_token: ${TELEGRAM_BOT_TOKEN}
+      chat_id: ${TELEGRAM_CHAT_ID}
+    
+    slack:
+      enabled: false
+      webhook_url: ${SLACK_WEBHOOK_URL}
+    
+    email:
+      enabled: false
+      provider: ${EMAIL_PROVIDER}
+      server: ${EMAIL_SERVER}
+      port: ${EMAIL_PORT}

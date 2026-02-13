@@ -1,0 +1,18 @@
+backup:
+  compression: true
+  enabled: true
+  encryption: true
+  retention_days: 30
+  schedule: 0 2 * * *
+data_types:
+  config_files: true
+  data_files: true
+  database: true
+  logs: true
+  user_data: true
+storage:
+  backup_location: /root/comic_ai/data/backups
+  cloud_storage:
+    bucket: comic-ai-backups
+    enabled: true
+    provider: aws_s3
