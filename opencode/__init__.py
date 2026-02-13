@@ -62,6 +62,16 @@ from .bio_inspired_enhancement import (
     BioInspiredAgentEnhancer,
 )
 
+from .agent_memory import (
+    MemoryType,
+    KnowledgeType,
+    MemoryEntry,
+    ContextFrame,
+    DistilledKnowledge,
+    EnhancedMemorySystem,
+    AgentMemoryManager,
+)
+
 # Define public API
 __all__ = [
     # OpenCode Framework
@@ -105,6 +115,15 @@ __all__ = [
     "EvolutionEngine",
     "NeuralAdaptationEngine",
     "BioInspiredAgentEnhancer",
+    
+    # Memory & Context System
+    "MemoryType",
+    "KnowledgeType",
+    "MemoryEntry",
+    "ContextFrame",
+    "DistilledKnowledge",
+    "EnhancedMemorySystem",
+    "AgentMemoryManager",
 ]
 
 
