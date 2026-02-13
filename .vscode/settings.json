@@ -14,7 +14,7 @@
   "window.commandCenter": true,
   "activityBar.visible": true,
   "sideBar.location": "left",
-  "workbench.sideBar.location": "left",
+  "workbench.sideBar.location": "right",
   "workbench.statusBar.visible": true,
   "files.autoSave": "afterDelay",
   "files.autoSaveDelay": 500,
@@ -328,5 +328,17 @@
   "security.workspace.trust.enabled": false,
   "telemetry.telemetryLevel": "off",
   "files.encoding": "utf8",
-  "files.autoGuessEncoding": true
+  "files.autoGuessEncoding": true,
+  "terminal.integrated.env.linux": {
+    "PYTHONPATH": "${workspaceFolder}",
+    "RAY_memory": "2000000000",
+    "GOOGLE_CLOUD_PROJECT": "${workspaceFolder}/config/project-id",
+    "GOOGLE_APPLICATION_CREDENTIALS": "${workspaceFolder}/config/google-credentials.json",
+    "VERTEX_AI_ENDPOINT": "https://us-central1-aiplatform.googleapis.com"
+  },
+  "python.defaultInterpreterPath": "${workspaceFolder}/venv/bin/python",
+  "copilot.chat.model.provider": "vertex-ai",
+  "copilot.chat.model.endpoint": "https://us-central1-aiplatform.googleapis.com",
+  "copilot.chat.model.name": "gemini-1.5-pro",
+  "copilot.chat.apiKey": "${env:VERTEX_AI_API_KEY}"
 }

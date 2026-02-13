@@ -4,7 +4,11 @@
 ###############################
 root = true
 # All files
-[*]
+[*]這
+
+
+
+
 indent_style = space
 end_of_line = lf
 

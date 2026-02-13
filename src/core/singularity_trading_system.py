@@ -30,6 +30,7 @@ except ImportError:
 
 # 本地量子增強多智能體系統
 from data.agents.intelligent_agents import IntelligentAgentSystem, AgentType, AgentState
+from src.core.enhanced_quantum_market_analyzer import EnhancedQuantumMarketAnalyzer
 
 class TradingStrategy(Enum):
     """交易策略枚舉"""
@@ -61,42 +62,6 @@ class Position:
     unrealized_pnl: float
     strategy: TradingStrategy
     quantum_coherence: float = 0.0
-
-class QuantumMarketAnalyzer:
-    """量子市場分析器"""
-    
-    def __init__(self):
-        self.quantum_state = np.random.rand(10)  # 10維量子態
-        self.coherence_threshold = 0.85
-        
-    def analyze_market_quantum(self, market_data: Dict[str, Any]) -> Dict[str, float]:
-        """量子市場分析"""
-        # 模擬量子計算市場預測
-        quantum_metrics = {
-            'quantum_momentum': np.random.random(),
-            'entanglement_strength': np.random.random(),
-            'superposition_probability': np.random.random(),
-            'coherence_level': np.random.uniform(0.7, 1.0)
-        }
-        
-        # 量子共振計算
-        resonance = self._calculate_quantum_resonance(market_data, quantum_metrics)
-        quantum_metrics['resonance'] = resonance
-        
-        return quantum_metrics
-    
-    def _calculate_quantum_resonance(self, market_data: Dict, quantum_metrics: Dict) -> float:
-        """計算量子共振強度"""
-        base_resonance = np.mean(list(quantum_metrics.values()))
-        
-        # 市場數據的量子疊加效應
-        if 'volume' in market_data and 'price' in market_data:
-            market_quantum_factor = (market_data['volume'] * market_data['price']) / 1e6
-            resonance = base_resonance * (1 + 0.1 * np.sin(market_quantum_factor))
-        else:
-            resonance = base_resonance
-            
-        return min(1.0, max(0.0, resonance))
 
 class SemanticTradingAgents:
     """基於 Semantic Kernel 的交易智能體"""
@@ -171,7 +136,7 @@ class SingularityResonanceTradingSystem:
     
     def __init__(self, config_path: str = "config/trading_config.yaml"):
         self.config = self._load_config(config_path)
-        self.quantum_analyzer = QuantumMarketAnalyzer()
+        self.quantum_analyzer = EnhancedQuantumMarketAnalyzer()
         self.semantic_agents = SemanticTradingAgents()
         self.local_agents = IntelligentAgentSystem()
         self.positions: Dict[str, Position] = {}
