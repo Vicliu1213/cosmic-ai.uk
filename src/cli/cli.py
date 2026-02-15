@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-Comic AI 主CLI界面 - 完整全屏显示
-打开即显示完整界面，无需滚动
+Comic AI 主CLI界面 - 集成三栏任务面板
+打开即显示完整界面，包含任务追踪面板
 """
 
 import os
@@ -13,88 +13,75 @@ from pathlib import Path
 from datetime import datetime, timedelta
 import logging
 
+# 导入三栏面板
+sys.path.insert(0, str(Path(__file__).parent.parent))
+from core.tri_column_panel import TriColumnTaskPanel, Task
+
 class FullScreenCLI:
-    """全屏CLI界面管理器"""
+    """全屏CLI界面管理器 - 集成任务面板"""
     
     def __init__(self):
         self.project_root = Path("/root/comic_ai")
         self.start_time = datetime.now()
-        self.completed_tasks = []
-        self.current_tasks = []
+        self.task_panel = TriColumnTaskPanel(column_width=28)
         
     def get_terminal_size(self) -> Tuple[int, int]:
         """获取终端大小"""
-        cols, rows = shutil.get_terminal_size((120, 30))
+        cols, rows = shutil.get_terminal_size((120, 40))
         return cols, rows
     
     def clear_screen(self):
         """清屏"""
         os.system('clear' if os.name == 'posix' else 'cls')
     
-    def print_box(self, title: str, width: int = 80) -> str:
+    def print_box(self, title: str, width: int = 90) -> str:
         """打印标题框"""
         lines = []
-        # 上边框
         lines.append("╔" + "═" * (width - 2) + "╗")
-        # 标题（居中）
         title_padded = title.center(width - 2)
         lines.append("║" + title_padded + "║")
-        # 下边框
         lines.append("╚" + "═" * (width - 2) + "╝")
-        return "\n".join(lines)
-    
-    def print_section(self, title: str, width: int = 80) -> str:
-        """打印节标题"""
-        lines = []
-        lines.append("")
-        lines.append("┌" + "─" * (width - 2) + "┐")
-        title_text = f" {title} "
-        title_padded = title_text.ljust(width - 2)
-        lines.append("│" + title_padded + "│")
-        lines.append("└" + "─" * (width - 2) + "┘")
         return "\n".join(lines)
     
     def build_full_interface(self) -> str:
         """构建完整的界面"""
-        width = 100
+        width = 90
         output = []
         
         # === 顶部标题 ===
         output.append(self.print_box("🚀 Comic AI 量子分析系统", width))
         output.append("")
         
-        # === 状态信息 ===
+        # === 任务追踪面板 (三栏) ===
+        output.append("📋 任务追踪面板")
+        output.append("─" * width)
+        output.append(self.task_panel.build_full_panel())
+        output.append("")
+        
+        # === 系统状态 ===
         runtime = datetime.now() - self.start_time
-        status_section = self.print_section("📊 系统状态", width)
-        output.append(status_section)
+        output.append("📊 系统状态")
+        output.append("─" * width)
         
-        status_info = [
+        # 状态信息双栏显示
+        status_left = [
             f"  ⏱️  运行时间: {runtime.total_seconds():.0f}s",
-            f"  📍 工作目录: {self.project_root}",
-            f"  🖥️  终端大小: {self.get_terminal_size()[0]}x{self.get_terminal_size()[1]}",
-            f"  ⌚ 当前时间: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}",
+            f"  📍 工作目录: {str(self.project_root)[:40]}",
         ]
-        for info in status_info:
-            output.append(info)
+        status_right = [
+            f"  🖥️  终端大小: {self.get_terminal_size()[0]}x{self.get_terminal_size()[1]}",
+            f"  ⌚ 当前时间: {datetime.now().strftime('%H:%M:%S')}",
+        ]
         
-        # === 当前任务 ===
-        output.append(self.print_section("🔧 当前任务", width))
-        if self.current_tasks:
-            for task in self.current_tasks[-3:]:
-                output.append(f"  🔄 {task['id']}: {task['description']}")
-        else:
-            output.append("  ✅ 当前无进行中任务")
+        for left, right in zip(status_left, status_right):
+            output.append(f"{left:<45} {right}")
         
-        # === 已完成任务 ===
-        output.append(self.print_section("✅ 已完成任务", width))
-        if self.completed_tasks:
-            for task in self.completed_tasks[-3:]:
-                output.append(f"  ✓ {task['description']}")
-        else:
-            output.append("  📋 暂无完成的任务")
+        output.append("")
         
         # === 菜单选项 ===
-        output.append(self.print_section("📋 菜单选项", width))
+        output.append("📋 菜单选项")
+        output.append("─" * width)
+        
         menu_items = [
             "[1] 🧊  执行 Stage1 量子优势分析",
             "[2] 📊  查看可用的物理理论",
@@ -103,22 +90,18 @@ class FullScreenCLI:
             "[5] 🚀  启动系统",
             "[q] 🚪  离开系统",
         ]
+        
         for i in range(0, len(menu_items), 2):
-            left = menu_items[i].ljust(48)
+            left = menu_items[i].ljust(45)
             right = menu_items[i+1] if i+1 < len(menu_items) else ""
             output.append(f"  {left}  {right}")
         
-        # === 快速命令 ===
-        output.append(self.print_section("⚡ 快速命令", width))
-        commands = [
-            "Ctrl+C: 立即退出",
-            "h: Heisenberg理论  |  b: Bekenstein理论",
-            "l: Bremermann理论  |  d: Landauer理论",
-        ]
-        for cmd in commands:
-            output.append(f"  {cmd}")
+        output.append("")
         
-        # === 底部分隔线 ===
+        # === 快速命令 ===
+        output.append("⚡ 快速命令")
+        output.append("─" * width)
+        output.append("  Ctrl+C: 立即退出  |  h/b/l/d: 理论速查")
         output.append("")
         output.append("═" * width)
         
@@ -134,10 +117,9 @@ class FullScreenCLI:
     
     def run_stage1_analysis(self):
         """执行 Stage1 分析"""
-        self.current_tasks.append({
-            'id': 'stage1',
-            'description': '执行 Stage1 量子优势分析'
-        })
+        # 添加任务
+        task_id = f"stage1_{int(time.time())}"
+        self.task_panel.add_task(task_id, "执行 Stage1 分析", status="running")
         
         self.clear_screen()
         print(self.print_box("🔬 Stage1 量子优势分析", 80))
@@ -161,11 +143,8 @@ class FullScreenCLI:
         print("─" * 70)
         print("")
         
-        self.completed_tasks.append({
-            'id': 'stage1',
-            'description': 'Stage1 量子优势分析 - 已完成'
-        })
-        self.current_tasks = [t for t in self.current_tasks if t['id'] != 'stage1']
+        # 更新任务状态为已完成
+        self.task_panel.update_task_status(task_id, "completed")
         
         input("按 Enter 返回主菜单...")
     
@@ -226,7 +205,7 @@ class FullScreenCLI:
         print("")
         
         choice = input("请选择: ").strip()
-        if choice != 'q':
+        if choice != 'q' and choice in ['h', 'b', 'l', 'd']:
             print(f"修改 {choice.upper()} 参数...")
             time.sleep(1)
     
@@ -254,6 +233,13 @@ class FullScreenCLI:
   • Bekenstein:  黑洞的信息内容
   • Bremermann:  物理计算的速度极限
   • Landauer:    信息处理的能源成本
+
+任务面板说明：
+  • 左栏 (🔄 即时任务):   正在进行中的任务
+  • 中栏 (⏳ 未完成):    待处理的任务
+  • 右栏 (✅ 已完成):    已完成的任务
+  
+  每列显示最多8个任务，按优先级和时间排序
         """
         print(help_text)
         input("按 Enter 返回主菜单...")
@@ -261,6 +247,12 @@ class FullScreenCLI:
     def run(self):
         """主程序循环"""
         try:
+            # 添加一些示例任务
+            self.task_panel.add_task("init", "初始化系统", status="completed")
+            self.task_panel.add_task("config", "加载配置", status="completed")
+            self.task_panel.add_task("analysis", "分析数据", status="pending")
+            self.task_panel.add_task("optimize", "优化参数", status="pending")
+            
             while True:
                 choice = self.display_menu()
                 
