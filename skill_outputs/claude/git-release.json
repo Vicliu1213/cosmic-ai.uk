@@ -1,0 +1,17 @@
+{
+  "name": "git_release",
+  "description": "Create consistent releases and changelogs",
+  "input_schema": {
+    "type": "object",
+    "properties": {},
+    "required": []
+  },
+  "metadata": {
+    "audience": "maintainers",
+    "workflow": "github"
+  },
+  "tags": [
+    "devops",
+    "github"
+  ]
+}

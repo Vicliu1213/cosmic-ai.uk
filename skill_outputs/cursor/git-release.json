@@ -1,0 +1,17 @@
+{
+  "cursor.commands": [
+    {
+      "id": "opencode.gitRelease",
+      "title": "Git Release",
+      "description": "Create consistent releases and changelogs",
+      "category": "Devops"
+    }
+  ],
+  "cursor.keybindings": [
+    {
+      "key": "ctrl+shift+o",
+      "command": "opencode.gitRelease",
+      "when": "editorTextFocus"
+    }
+  ]
+}
