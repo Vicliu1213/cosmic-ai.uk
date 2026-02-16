@@ -32,6 +32,72 @@ config_manager = ConfigManager()
 config_manager.load_config('config/core/main_system_config.yaml')
 
 
+# Test clipboard endpoint
+@app.route('/test-clipboard', methods=['GET'])
+def test_clipboard():
+    """Test page for clipboard functionality."""
+    html = """<!DOCTYPE html>
+<html>
+<head>
+    <title>複製/貼上功能測試 - Comic AI</title>
+    <style>
+        body { font-family: Arial; margin: 20px; background: #1a1a1a; color: #fff; }
+        .container { max-width: 600px; margin: 0 auto; background: #2a2a2a; padding: 20px; border-radius: 8px; }
+        input, textarea { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #444; background: #333; color: #fff; border-radius: 4px; }
+        button { background: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; }
+        button:hover { background: #45a049; }
+        .status { margin-top: 20px; padding: 10px; background: #e8f5e9; color: #1b5e20; border-left: 4px solid #4CAF50; border-radius: 4px; }
+        .error { background: #ffebee; color: #b71c1c; border-left-color: #f44336; }
+        .success { background: #e8f5e9; color: #1b5e20; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 複製/貼上功能測試</h1>
+        
+        <h3>1. 複製文本</h3>
+        <input type="text" id="copyInput" value="嘗試複製這個文本!" readonly>
+        <button onclick="copyToClipboard()">複製到剪貼板</button>
+        
+        <h3>2. 貼上文本</h3>
+        <textarea id="pasteArea" rows="4" placeholder="按下 'Ctrl+V' 貼上或點擊下面的按鈕"></textarea>
+        <button onclick="pasteFromClipboard()">從剪貼板貼上</button>
+        
+        <div id="status" class="status success" style="display:none;"></div>
+    </div>
+
+    <script>
+        function copyToClipboard() {
+            const text = document.getElementById('copyInput').value;
+            navigator.clipboard.writeText(text).then(() => {
+                showStatus('✅ 文本已複製到剪貼板!', false);
+            }).catch(err => {
+                showStatus('❌ 複製失敗: ' + err, true);
+            });
+        }
+
+        function pasteFromClipboard() {
+            navigator.clipboard.readText().then(text => {
+                document.getElementById('pasteArea').value = text;
+                showStatus('✅ 文本已從剪貼板貼上!', false);
+            }).catch(err => {
+                showStatus('❌ 貼上失敗: ' + err, true);
+            });
+        }
+
+        function showStatus(msg, isError) {
+            const el = document.getElementById('status');
+            el.textContent = msg;
+            el.style.display = 'block';
+            if (isError) el.classList.add('error');
+            else el.classList.remove('error');
+        }
+    </script>
+</body>
+</html>"""
+    return html
+
+
 # Health check endpoints
 @app.route('/health', methods=['GET'])
 def health_check() -> Tuple[Dict[str, Any], int]:
