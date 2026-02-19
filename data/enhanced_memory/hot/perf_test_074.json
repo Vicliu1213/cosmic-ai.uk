@@ -1,0 +1,12 @@
+{
+  "key": "perf_test_074",
+  "content": {
+    "index": 74,
+    "data": "test_data"
+  },
+  "tier": "hot",
+  "created_at": 1771374975.0230336,
+  "accessed_at": 1771374975.0230336,
+  "access_count": 1,
+  "size_bytes": 34
+}
