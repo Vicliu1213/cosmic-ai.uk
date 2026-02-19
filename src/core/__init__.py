@@ -8,8 +8,14 @@ Exports:
 - SingularityTradingSystem: Main singularity resonance trading system
 """
 
-from .enhanced_quantum_market_analyzer import EnhancedQuantumMarketAnalyzer
-from .singularity_trading_system import SingularityResonanceTradingSystem
+def __getattr__(name):
+    if name == 'EnhancedQuantumMarketAnalyzer':
+        from .enhanced_quantum_market_analyzer import EnhancedQuantumMarketAnalyzer
+        return EnhancedQuantumMarketAnalyzer
+    elif name == 'SingularityResonanceTradingSystem':
+        from .singularity_trading_system import SingularityResonanceTradingSystem
+        return SingularityResonanceTradingSystem
+    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
 
 __all__ = [
     'EnhancedQuantumMarketAnalyzer',

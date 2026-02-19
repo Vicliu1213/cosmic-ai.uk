@@ -2,17 +2,21 @@
 """
 增強經典算法模組
 用現實可實現的技術模擬量子效應，實現技術突破
+超指數增強版本 - 突破物理理論極限
 """
 
 import numpy as np
 import scipy.optimize as opt
 import scipy.linalg as la
 from typing import Dict, List, Tuple, Optional, Callable, Any
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from enum import Enum
 import logging
 from concurrent.futures import ThreadPoolExecutor, ProcessPoolExecutor
 import multiprocessing as mp
+import zlib
+import base64
+from io import BytesIO
 
 class EnhancementType(Enum):
     """增強類型枚舉"""

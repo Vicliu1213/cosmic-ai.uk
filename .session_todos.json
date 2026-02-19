@@ -14,20 +14,19 @@
   {
     "id": "3",
     "content": "集成回顧功能到 CLI",
-    "status": "comple CT
- ted",
+    "status": "completed",
     "priority": "high"
   },
   {
     "id": "4",
     "content": "測試自動化回顧系統",
-    "status": "in_progress",
+    "status": "completed",
     "priority": "medium"
   },
   {
     "id": "5",
     "content": "優化回顧輸出格式",
-    "status": "pending",
+    "status": "in_progress",
     "priority": "medium"
   },
   {
@@ -35,5 +34,17 @@
     "content": "添加自動回顧到啟動流程",
     "status": "pending",
     "priority": "low"
+  },
+  {
+    "id": "7",
+    "content": "優化任務面板性能",
+    "status": "in_progress",
+    "priority": "high"
+  },
+  {
+    "id": "8",
+    "content": "激活 HTTPS 服務",
+    "status": "pending",
+    "priority": "high"
   }
 ]
