@@ -1,0 +1,368 @@
+[
+  {
+    "key": "ctrl+shift+d",
+    "command": "workbench.view.debug",
+    "when": "viewContainer.workbench.view.debug.enabled",
+    "description": "Dashboard | 儀表板"
+  },
+  {
+    "key": "ctrl+shift+e",
+    "command": "workbench.view.explorer",
+    "when": "true",
+    "description": "Explorer | 檔案總管"
+  },
+  {
+    "key": "ctrl+shift+f",
+    "command": "workbench.view.search",
+    "when": "true",
+    "description": "Search | 搜尋"
+  },
+  {
+    "key": "ctrl+shift+g",
+    "command": "workbench.view.scm",
+    "when": "true",
+    "description": "Git | 版本控制"
+  },
+  {
+    "key": "ctrl+shift+x",
+    "command": "workbench.view.extensions",
+    "when": "true",
+    "description": "Extensions | 擴充套件"
+  },
+  {
+    "key": "ctrl+shift+t",
+    "command": "workbench.view.testing",
+    "when": "testing.totalPass + testing.totalFail >= 0",
+    "description": "Testing | 測試"
+  },
+  {
+    "key": "ctrl+shift+h",
+    "command": "workbench.action.toggleActivityBarVisibility",
+    "when": "true",
+    "description": "Toggle Activity Bar | 切換活動欄"
+  },
+  {
+    "key": "ctrl+shift+b",
+    "command": "workbench.action.toggleSidebarVisibility",
+    "when": "true",
+    "description": "Toggle Sidebar | 切換側邊欄"
+  },
+  {
+    "key": "ctrl+shift+j",
+    "command": "workbench.action.togglePanel",
+    "when": "true",
+    "description": "Toggle Panel | 切換面板"
+  },
+  {
+    "key": "ctrl+shift+p",
+    "command": "workbench.action.showCommands",
+    "when": "true",
+    "description": "Command Palette | 命令面板"
+  },
+  {
+    "key": "shift+alt+1",
+    "command": "extension.opencomcode.runLiveServer",
+    "when": "true",
+    "description": "Open Dashboard | 開啟儀表板"
+  },
+  {
+    "key": "shift+alt+2",
+    "command": "workbench.action.openTerminal",
+    "when": "true",
+    "description": "Terminal | 終端"
+  },
+  {
+    "key": "shift+alt+3",
+    "command": "workbench.action.closeAllEditors",
+    "when": "true",
+    "description": "Close All Editors | 關閉所有編輯器"
+  },
+  {
+    "key": "shift+alt+4",
+    "command": "workbench.view.run",
+    "when": "true",
+    "description": "Run & Debug | 執行與除錯"
+  },
+  {
+    "key": "shift+alt+5",
+    "command": "workbench.action.tasks.build",
+    "when": "true",
+    "description": "Build | 建置"
+  },
+  {
+    "key": "shift+alt+6",
+    "command": "workbench.action.tasks.test",
+    "when": "true",
+    "description": "Test | 測試"
+  },
+  {
+    "key": "shift+alt+7",
+    "command": "workbench.action.toggleCenteredLayout",
+    "when": "true",
+    "description": "Centered Layout | 置中配置"
+  },
+  {
+    "key": "shift+alt+8",
+    "command": "workbench.action.toggleZenMode",
+    "when": "true",
+    "description": "Zen Mode | 禪宗模式"
+  },
+  {
+    "key": "shift+alt+0",
+    "command": "workbench.view.problems",
+    "when": "true",
+    "description": "Problems | 問題"
+  },
+  {
+    "key": "alt+1",
+    "command": "workbench.action.openEditorAtIndex1",
+    "when": "true",
+    "description": "Editor 1"
+  },
+  {
+    "key": "alt+2",
+    "command": "workbench.action.openEditorAtIndex2",
+    "when": "true",
+    "description": "Editor 2"
+  },
+  {
+    "key": "alt+3",
+    "command": "workbench.action.openEditorAtIndex3",
+    "when": "true",
+    "description": "Editor 3"
+  },
+  {
+    "key": "alt+4",
+    "command": "workbench.action.openEditorAtIndex4",
+    "when": "true",
+    "description": "Editor 4"
+  },
+  {
+    "key": "alt+5",
+    "command": "workbench.action.openEditorAtIndex5",
+    "when": "true",
+    "description": "Editor 5"
+  },
+  {
+    "key": "ctrl+alt+shift+t",
+    "command": "workbench.action.togglePeekInEditorGroup",
+    "when": "true",
+    "description": "Toggle Panel in Editor | 切換編輯器中的面板"
+  },
+  {
+    "key": "ctrl+k ctrl+r",
+    "command": "keybindings.editor.recordSearchKeys",
+    "when": "inKeybindingsEditor && inKeybindingsSearch",
+    "description": "Record Keys | 記錄按鍵"
+  },
+  {
+    "key": "ctrl+k ctrl+s",
+    "command": "workbench.action.openGlobalKeybindings",
+    "when": "true",
+    "description": "Keyboard Shortcuts | 鍵盤快捷鍵"
+  },
+  {
+    "key": "ctrl+k ctrl+p",
+    "command": "workbench.action.openGlobalSettings",
+    "when": "true",
+    "description": "Open Settings | 開啟設定"
+  },
+  {
+    "key": "f1",
+    "command": "workbench.action.quickOpen",
+    "when": "true",
+    "description": "Quick File Open | 快速檔案開啟"
+  },
+  {
+    "key": "f2",
+    "command": "editor.action.rename",
+    "when": "editorFocus && !editorReadonly",
+    "description": "Rename | 重新命名"
+  },
+  {
+    "key": "f3",
+    "command": "editor.action.nextMatchFindAction",
+    "when": "editorFocus",
+    "description": "Find Next | 尋找下一個"
+  },
+  {
+    "key": "shift+f3",
+    "command": "editor.action.previousMatchFindAction",
+    "when": "editorFocus",
+    "description": "Find Previous | 尋找上一個"
+  },
+  {
+    "key": "f5",
+    "command": "workbench.action.debug.start",
+    "when": "!inDebugMode",
+    "description": "Start Debugging | 開始除錯"
+  },
+  {
+    "key": "shift+f5",
+    "command": "workbench.action.debug.stop",
+    "when": "inDebugMode",
+    "description": "Stop Debugging | 停止除錯"
+  },
+  {
+    "key": "f9",
+    "command": "editor.debug.action.toggleBreakpoint",
+    "when": "debuggersAvailable && editorTextFocus",
+    "description": "Toggle Breakpoint | 切換中斷點"
+  },
+  {
+    "key": "f10",
+    "command": "workbench.action.debug.stepOver",
+    "when": "inDebugMode && !focusedSessionIsAttach",
+    "description": "Step Over | 逐步執行"
+  },
+  {
+    "key": "f11",
+    "command": "workbench.action.debug.stepInto",
+    "when": "inDebugMode && !focusedSessionIsAttach",
+    "description": "Step Into | 逐步進入"
+  },
+  {
+    "key": "shift+f11",
+    "command": "workbench.action.debug.stepOut",
+    "when": "inDebugMode && !focusedSessionIsAttach",
+    "description": "Step Out | 逐步跳出"
+  },
+  {
+    "key": "ctrl+.",
+    "command": "editor.action.quickFix",
+    "when": "editorHasCodeActionsProvider && editorTextFocus && !editorReadonly",
+    "description": "Quick Fix | 快速修正"
+  },
+  {
+    "key": "ctrl+shift+space",
+    "command": "editor.action.triggerParameterHints",
+    "when": "editorHasSignatureHelpProvider && editorTextFocus",
+    "description": "Trigger Parameter Hints | 觸發參數提示"
+  },
+  {
+    "key": "ctrl+space",
+    "command": "editor.action.triggerSuggest",
+    "when": "editorTextFocus",
+    "description": "Trigger Suggest | 觸發建議"
+  },
+  {
+    "key": "shift+alt+f",
+    "command": "editor.action.formatDocument",
+    "when": "editorHasDocumentFormattingProvider && editorTextFocus && !editorReadonly",
+    "description": "Format Document | 格式化文件"
+  },
+  {
+    "key": "shift+alt+ctrl+f",
+    "command": "editor.action.formatSelection",
+    "when": "editorHasDocumentSelectionFormattingProvider && editorTextFocus && !editorReadonly",
+    "description": "Format Selection | 格式化選取"
+  },
+  {
+    "key": "ctrl+l",
+    "command": "editor.action.selectAll",
+    "when": "editorTextFocus",
+    "description": "Select All | 全選"
+  },
+  {
+    "key": "ctrl+h",
+    "command": "editor.action.startFindReplaceAction",
+    "when": "editorFocus",
+    "description": "Find and Replace | 尋找和取代"
+  },
+  {
+    "key": "ctrl+/",
+    "command": "editor.action.commentLine",
+    "when": "editorTextFocus && !editorReadonly",
+    "description": "Toggle Comment | 切換註解"
+  },
+  {
+    "key": "ctrl+k ctrl+0",
+    "command": "editor.foldAll",
+    "when": "editorTextFocus",
+    "description": "Fold All | 全部摺疊"
+  },
+  {
+    "key": "ctrl+k ctrl+j",
+    "command": "editor.unfoldAll",
+    "when": "editorTextFocus",
+    "description": "Unfold All | 全部展開"
+  },
+  {
+    "key": "alt+up",
+    "command": "editor.action.moveLinesUpAction",
+    "when": "editorTextFocus && !editorReadonly",
+    "description": "Move Line Up | 向上移動行"
+  },
+  {
+    "key": "alt+down",
+    "command": "editor.action.moveLinesDownAction",
+    "when": "editorTextFocus && !editorReadonly",
+    "description": "Move Line Down | 向下移動行"
+  },
+  {
+    "key": "shift+alt+up",
+    "command": "editor.action.copyLinesUpAction",
+    "when": "editorTextFocus && !editorReadonly",
+    "description": "Copy Line Up | 向上複製行"
+  },
+  {
+    "key": "shift+alt+down",
+    "command": "editor.action.copyLinesDownAction",
+    "when": "editorTextFocus && !editorReadonly",
+    "description": "Copy Line Down | 向下複製行"
+  },
+  {
+    "key": "ctrl+shift+k",
+    "command": "editor.action.deleteLines",
+    "when": "editorTextFocus && !editorReadonly",
+    "description": "Delete Line | 刪除行"
+  },
+  {
+    "key": "shift+enter",
+    "command": "editor.action.insertLineAfter",
+    "when": "editorTextFocus && !editorReadonly",
+    "description": "Insert Line After | 在後面插入行"
+  },
+  {
+    "key": "shift+ctrl+enter",
+    "command": "editor.action.insertLineBefore",
+    "when": "editorTextFocus && !editorReadonly",
+    "description": "Insert Line Before | 在前面插入行"
+  },
+  {
+    "key": "ctrl+j",
+    "command": "editor.action.joinLines",
+    "when": "editorTextFocus && !editorReadonly",
+    "description": "Join Lines | 加入行"
+  },
+  {
+    "key": "ctrl+u",
+    "command": "editor.action.transformToLowercase",
+    "when": "editorTextFocus && !editorReadonly",
+    "description": "Transform to Lowercase | 轉換為小寫"
+  },
+  {
+    "key": "ctrl+shift+u",
+    "command": "editor.action.transformToUppercase",
+    "when": "editorTextFocus && !editorReadonly",
+    "description": "Transform to Uppercase | 轉換為大寫"
+  },
+  {
+    "key": "ctrl+shift+i",
+    "command": "editor.action.inspectTMScopes",
+    "when": "editorFocus",
+    "description": "Inspect TM Scopes | 檢查 TM 範圍"
+  },
+  {
+    "key": "ctrl+alt+n",
+    "command": "code-runner.run",
+    "when": "filenamematch",
+    "description": "Run Code | 執行代碼"
+  },
+  {
+    "key": "shift+alt+9",
+    "command": "workbench.action.tasks.showTasks",
+    "when": "true",
+    "description": "Show Tasks | 顯示工作"
+  }
+]

@@ -3,7 +3,7 @@
     "version": "1.0.0",
     "name": "Opencode 多共識宇宙智能體交易系統",
     "description": "集成 Opencode + Hummingbot + Freqtrade + Semantic Kernel 的革命性交易系統",
-    
+
     "system_config": {
       "quantum": {
         "coherence_threshold": 0.85,
@@ -12,7 +12,7 @@
         "quantum_signature_strength": 1.2,
         "quantum_state_dimensions": 8
       },
-      
+
       "agents": {
         "quantum_analyst": {
           "enabled": true,
@@ -20,21 +20,21 @@
           "description": "Opencode 量子分析師 - 負責量子市場分析和共振檢測",
           "capabilities": ["quantum_analysis", "resonance_detection", "coherence_management"]
         },
-        
+
         "hummingbot_hft": {
           "enabled": true,
           "weight": 1.2,
           "description": "Hummingbot 高頻交易專家 - 負責高頻套利和流動性分析",
           "capabilities": ["high_frequency_trading", "arbitrage", "liquidity_analysis"]
         },
-        
+
         "freqtrade_ml": {
           "enabled": true,
           "weight": 1.15,
           "description": "Freqtrade 機器學習師 - 負責機器學習預測和策略優化",
           "capabilities": ["machine_learning", "strategy_optimization", "adaptive_prediction"]
         },
-        
+
         "semantic_orchestrator": {
           "enabled": true,
           "weight": 1.1,
@@ -42,7 +42,7 @@
           "capabilities": ["workflow_orchestration", "risk_management", "enterprise_coordination"]
         }
       },
-      
+
     "consensus": {
       "default_level": "eastern_western_fusion",
       "fallback_level": "majority_vote",
@@ -50,7 +50,7 @@
       "historical_weighting": 0.3,
       "min_participants": 2,
       "decision_threshold": 0.7,
-      
+
       "eastern_western_fusion": {
         "enabled": true,
         "eastern_philosophy": {
@@ -89,12 +89,12 @@
       }
     }
     },
-    
+
     "exchange_config": {
       "supported_exchanges": {
         "centralized": [
           "binance",
-          "okx", 
+          "okx",
           "bybit",
           "gate.io",
           "htx",
@@ -102,8 +102,8 @@
           "kraken",
           "kucoin",
           "bitget"
-        ],
-        
+        ], 
+
         "decentralized": [
           "uniswap",
           "curve",
@@ -115,13 +115,13 @@
           "traderjoe",
           "pancakeswap"
         ],
-        
+
         "specialized": [
           "hyperliquid",
           "derive"
         ]
       },
-      
+
       "execution_parameters": {
         "max_latency_ms": 50,
         "max_position_size_percent": 10,
@@ -130,7 +130,7 @@
         "order_timeout_seconds": 30
       }
     },
-    
+
     "strategy_config": {
       "quantum_enhanced": {
         "enabled": true,
@@ -138,21 +138,21 @@
         "resonance_threshold": 0.75,
         "quantum_advantage_factor": 1.2
       },
-      
+
       "hft_arbitrage": {
         "enabled": true,
         "min_spread_percent": 0.05,
         "max_execution_time_ms": 100,
         "arbitrage_timeout_seconds": 5
       },
-      
+
       "ml_optimized": {
         "enabled": true,
         "model_update_frequency_hours": 6,
         "prediction_confidence_min": 0.75,
         "backtest_window_days": 30
       },
-      
+
       "semantic_orchestrated": {
         "enabled": true,
         "workflow_timeout_seconds": 60,
@@ -160,7 +160,7 @@
         "correlation_threshold": 0.7
       }
     },
-    
+
     "risk_management": {
       "multi_layer_risk": {
         "agent_level_risk": true,
@@ -168,7 +168,7 @@
         "system_level_risk": true,
         "execution_level_risk": true
       },
-      
+
       "risk_parameters": {
         "max_daily_loss_percent": 5,
         "max_open_positions": 10,
@@ -176,7 +176,7 @@
         "var_confidence": 0.95,
         "stop_loss_auto_adjustment": true
       },
-      
+
       "safety_features": {
         "real_time_monitoring": true,
         "anomaly_detection": true,
@@ -184,7 +184,7 @@
         "quantum_encryption": true
       }
     },
-    
+
     "performance_monitoring": {
       "metrics": {
         "decision_accuracy_target": 0.85,
@@ -193,7 +193,7 @@
         "execution_latency_target_ms": 50,
         "annual_return_target": 0.30
       },
-      
+
       "logging": {
         "level": "INFO",
         "file": "logs/universe_trading.log",
@@ -201,7 +201,7 @@
         "backup_count": 10,
         "structured_logging": true
       },
-      
+
       "alerts": {
         "performance_degradation": true,
         "coherence_drop": true,
@@ -209,7 +209,7 @@
         "execution_timeout": true
       }
     },
-    
+
     "development_config": {
       "debug_mode": false,
       "simulation_mode": true,
@@ -218,20 +218,20 @@
         "historical_data_days": 365,
         "monte_carlo_runs": 1000
       },
-      
+
       "future_phases": {
         "phase_2_quantum_hardware": {
           "description": "集成真實量子計算硬體",
           "timeline": "2026 Q3",
           "features": ["quantum_entanglement_network", "quantum_algorithms", "quantum_optimization"]
         },
-        
+
         "phase_3_ai_evolution": {
           "description": "AI 智能體自主進化",
-          "timeline": "2026 Q4", 
+          "timeline": "2026 Q4",
           "features": ["autonomous_evolution", "strategy_generation", "meta_learning"]
         },
-        
+
         "phase_4_multiverse": {
           "description": "多元宇宙擴展",
           "timeline": "2027 Q1",
@@ -239,16 +239,16 @@
         }
       }
     },
-    
+
     "integration_status": {
       "opencode_quantum": "✅ 集成完成",
       "hummingbot_hft": "✅ 核心技術提取",
-      "freqtrade_ml": "✅ 算法框架集成", 
+      "freqtrade_ml": "✅ 算法框架集成",
       "semantic_kernel": "✅ 企業架構採用",
       "consensus_protocol": "✅ 多共識決策系統",
       "universe_coordination": "✅ 宇宙智能體協調"
     },
-    
+
     "deployment": {
       "recommended_hardware": {
         "cpu_cores": 8,
@@ -257,23 +257,23 @@
         "network_mbps": 1000,
         "quantum_processor": "optional_phase_2"
       },
-      
+
       "containerization": {
         "docker_support": true,
         "kubernetes_ready": true,
         "microservices_architecture": true
       },
-      
+
       "scaling": {
         "horizontal_scaling": true,
         "load_balancing": true,
         "fault_tolerance": true
       }
     },
-    
+
     "meta": {
       "created_date": "2026-02-03",
-      "last_updated": "2026-02-03", 
+      "last_updated": "2026-02-03",
       "version_history": ["1.0.0"],
       "contributors": ["Opencode AI Assistant", "Multi-Agent Research Team"],
       "license": "Apache 2.0",

@@ -1,0 +1,246 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  
+  // 核心配置 - Core Settings
+  "provider": {
+    "anthropic": {
+      "options": {
+        "timeout": 600000,
+        "setCacheKey": true
+      }
+    }
+  },
+  "model": "anthropic/claude-sonnet-4-5",
+  "small_model": "anthropic/claude-haiku-4-5",
+  
+  // UI与主题配置 - UI & Theme
+  "theme": "opencode",
+  "tui": {
+    "scroll_speed": 3,
+    "scroll_acceleration": {
+      "enabled": true
+    },
+    "diff_style": "auto"
+  },
+  
+  // 工具配置 - Tools Configuration
+  "tools": {
+    "write": true,
+    "edit": true,
+    "bash": true,
+    "read": true
+  },
+  
+  // 权限配置 - Permissions
+  "permission": {
+    "bash": "ask",
+    "write": "ask"
+  },
+  
+  // MCP 服务器配置 - MCP Servers (Model Context Protocol)
+  "mcp": {
+    // 交易系统监控 - Trading System Monitoring
+    "trading-monitor": {
+      "type": "local",
+      "command": ["python", "src/core/trading_monitor_mcp.py"],
+      "enabled": true,
+      "timeout": 10000,
+      "environment": {
+        "TRADING_ENV": "production",
+        "MONITOR_INTERVAL": "300"
+      }
+    },
+    
+    // 量化引擎接口 - Quantum Engine Interface
+    "quantum-engine": {
+      "type": "local",
+      "command": ["python", "engine/quantum_engine_mcp.py"],
+      "enabled": true,
+      "timeout": 15000,
+      "environment": {
+        "ENGINE_MODE": "hybrid",
+        "OPTIMIZATION_LEVEL": "3"
+      }
+    },
+    
+    // 数据分析工具 - Data Analysis Tools
+    "data-analyzer": {
+      "type": "local",
+      "command": ["python", "src/core/data_analyzer_mcp.py"],
+      "enabled": true,
+      "timeout": 8000
+    },
+    
+    // 风险管理系统 - Risk Management System
+    "risk-manager": {
+      "type": "local",
+      "command": ["python", "src/core/risk_manager_mcp.py"],
+      "enabled": true,
+      "timeout": 5000
+    },
+    
+    // 代码搜索工具 - Grep by Vercel (GitHub Code Search)
+    "gh_grep": {
+      "type": "remote",
+      "url": "https://mcp.grep.app",
+      "enabled": false,
+      "timeout": 10000
+    },
+    
+    // 文档搜索工具 - Context7 (Docs Search)
+    "context7": {
+      "type": "remote",
+      "url": "https://mcp.context7.com/mcp",
+      "enabled": false,
+      "headers": {
+        "CONTEXT7_API_KEY": "{env:CONTEXT7_API_KEY}"
+      }
+    }
+  },
+  
+  // 格式化工具 - Code Formatters
+  "formatter": {
+    "black": {
+      "command": ["black", "--line-length=127", "$FILE"],
+      "extensions": [".py"]
+    },
+    "prettier": {
+      "command": ["npx", "prettier", "--write", "$FILE"],
+      "extensions": [".js", ".ts", ".jsx", ".tsx", ".json", ".yaml", ".yml"]
+    },
+    "shfmt": {
+      "command": ["shfmt", "-i", "2", "-w", "$FILE"],
+      "extensions": [".sh"]
+    }
+  },
+  
+  // 自定义命令 - Custom Commands
+  "command": {
+    "test": {
+      "template": "运行完整的测试套件，展示覆盖率报告，关注任何失败的测试。\nRun the full test suite with coverage report and show any failures.\nFocus on the failing tests and suggest fixes.",
+      "description": "运行测试套件 / Run test suite",
+      "agent": "build"
+    },
+    "analyze": {
+      "template": "分析当前交易系统的性能指标，识别瓶颈，提出优化建议。\nAnalyze the current trading system performance metrics, identify bottlenecks, and suggest optimizations.",
+      "description": "分析交易系统 / Analyze trading system",
+      "agent": "build"
+    },
+    "monitor": {
+      "template": "启动实时监控模式，持续监控系统健康状况、交易状态和风险指标。\nStart real-time monitoring mode to continuously monitor system health, trading status, and risk metrics.",
+      "description": "启动监控 / Start monitoring",
+      "agent": "build"
+    },
+    "deploy": {
+      "template": "部署交易系统到生产环境，执行完整的预部署检查。\nDeploy trading system to production with full pre-deployment checks.",
+      "description": "部署系统 / Deploy system",
+      "agent": "build"
+    }
+  },
+  
+  // Agent 配置 - Agent Definitions
+  "agent": {
+    "code-reviewer": {
+      "description": "代码审查员 - 检查代码最佳实践和安全问题 / Code reviewer for best practices and security",
+      "model": "anthropic/claude-sonnet-4-5",
+      "tools": {
+        "write": false,
+        "edit": false,
+        "bash": false
+      }
+    },
+    "trading-analyst": {
+      "description": "交易分析员 - 分析交易数据和策略性能 / Trading analyst for data and strategy analysis",
+      "model": "anthropic/claude-sonnet-4-5",
+      "tools": {
+        "trading-monitor": true,
+        "data-analyzer": true,
+        "risk-manager": true,
+        "write": false,
+        "edit": true
+      }
+    },
+    "quantum-engineer": {
+      "description": "量化工程师 - 开发和优化量化算法 / Quantum engineer for algorithm development",
+      "model": "anthropic/claude-sonnet-4-5",
+      "tools": {
+        "quantum-engine": true,
+        "data-analyzer": true,
+        "edit": true,
+        "write": true
+      }
+    },
+    "devops-engineer": {
+      "description": "运维工程师 - 系统部署和监控 / DevOps engineer for deployment and monitoring",
+      "model": "anthropic/claude-sonnet-4-5",
+      "tools": {
+        "bash": true,
+        "write": true,
+        "edit": true
+      }
+    }
+  },
+  
+  // 默认 Agent - Default Agent
+  "default_agent": "build",
+  
+  // 规则和指导文档 - Instructions & Rules
+  "instructions": [
+    "AGENTS.md",
+    "docs/TRADING_GUIDELINES.md",
+    "docs/DEVELOPMENT_GUIDELINES.md"
+  ],
+  
+  // 键盘绑定 - Keybinds
+  "keybinds": {
+    "Tab": "toggle_plan_mode",
+    "Ctrl+s": "save_session",
+    "Ctrl+z": "undo",
+    "Ctrl+Shift+z": "redo"
+  },
+  
+  // 上下文压缩 - Context Compaction
+  "compaction": {
+    "auto": true,
+    "prune": true,
+    "reserved": 15000
+  },
+  
+  // 文件监视器 - File Watcher
+  "watcher": {
+    "ignore": [
+      "node_modules/**",
+      "venv/**",
+      ".git/**",
+      "__pycache__/**",
+      ".pytest_cache/**",
+      "*.log",
+      "build/**",
+      "dist/**",
+      ".session_todos.json"
+    ]
+  },
+  
+  // 分享设置 - Sharing Settings
+  "share": "manual",
+  
+  // 自动更新 - Auto Update
+  "autoupdate": true,
+  
+  // 服务器配置 - Server Configuration
+  "server": {
+    "port": 4096,
+    "hostname": "0.0.0.0",
+    "mdns": true,
+    "mdnsDomain": "trading-system.local",
+    "cors": ["http://localhost:5173", "http://localhost:3000"]
+  },
+  
+  // 禁用的提供商 - Disabled Providers
+  "disabled_providers": [],
+  
+  // 实验功能 - Experimental Features
+  "experimental": {
+    "advancedContext": true
+  }
+}

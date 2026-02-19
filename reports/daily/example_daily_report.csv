@@ -1,0 +1,5 @@
+date,symbol,close_price,daily_return,trades_count,win_rate,realized_pnl,total_pnl
+2024-02-19,BTC/USDT,53200.00,2.31,12,0.67,1250.50,1601.25
+2024-02-19,ETH/USDT,3020.00,4.14,8,0.63,750.25,870.75
+2024-02-18,BTC/USDT,52100.00,1.95,10,0.70,980.50,1120.75
+2024-02-18,ETH/USDT,2900.00,3.45,7,0.57,620.30,750.50

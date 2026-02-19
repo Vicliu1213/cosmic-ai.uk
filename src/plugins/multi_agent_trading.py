@@ -6,6 +6,13 @@ Multi-Agent Trading System
 Provides a comprehensive multi-agent trading framework with portfolio management,
 risk management, and signal analysis agents for autonomous trading decisions.
 提供包含組合管理、風險管理和信號分析智能體的多智能體交易框架。
+
+Integration with LogManager:
+This module supports optional integration with the LogManager for centralized
+event logging. Agents can be initialized with a LogManager instance to enable
+comprehensive logging of trading operations.
+
+For integration examples, see: MULTI_AGENT_TRADING_INTEGRATION_EXAMPLES.py
 """
 
 import logging
@@ -17,6 +24,14 @@ from datetime import datetime
 import numpy as np
 
 logger = logging.getLogger(__name__)
+
+# Optional import for LogManager integration
+try:
+    from src.core.logging_integration import LogManager
+    HAS_LOG_MANAGER = True
+except ImportError:
+    HAS_LOG_MANAGER = False
+    LogManager = None  # type: ignore
 
 
 class AgentRole(Enum):
@@ -106,13 +121,15 @@ class BaseAgent(ABC):
         agent_id (str): Unique agent identifier
         role (AgentRole): Agent's role
         confidence_threshold (float): Minimum confidence for decisions
+        log_manager (Optional[LogManager]): Optional centralized logging manager
     """
     
     def __init__(
         self,
         agent_id: str,
         role: AgentRole,
-        confidence_threshold: float = 0.6
+        confidence_threshold: float = 0.6,
+        log_manager: Optional[Any] = None
     ):
         """
         Initialize base agent.
@@ -121,12 +138,23 @@ class BaseAgent(ABC):
             agent_id: Unique identifier for the agent
             role: The role of the agent
             confidence_threshold: Minimum confidence level for decisions (0.0-1.0)
+            log_manager: Optional LogManager instance for centralized logging
         """
         self.agent_id = agent_id
         self.role = role
         self.confidence_threshold = confidence_threshold
         self.decision_history: List[TradingDecision] = []
         self.logger = logging.getLogger(f"{__name__}.{agent_id}")
+        
+        # Optional LogManager integration
+        self.log_manager = log_manager
+        self.event_logger = None
+        if log_manager and HAS_LOG_MANAGER:
+            self.event_logger = log_manager.get_logger("trading.agents")
+            self.event_logger.info(
+                f"[AGENT_INIT] Agent: {agent_id} | Role: {role.value} | "
+                f"Confidence threshold: {confidence_threshold}"
+            )
         
     @abstractmethod
     def analyze(self, market_data: MarketData, portfolio: PortfolioState) -> Optional[TradingDecision]:
@@ -144,9 +172,21 @@ class BaseAgent(ABC):
         pass
     
     def record_decision(self, decision: TradingDecision) -> None:
-        """Record a trading decision in history."""
+        """Record a trading decision in history with optional event logging."""
         self.decision_history.append(decision)
         self.logger.info(f"Decision recorded: {decision.decision_type.value} {decision.quantity} {decision.symbol}")
+        
+        # Log to centralized event logger if available
+        if self.event_logger:
+            self.event_logger.info(
+                f"[DECISION_RECORDED] Agent: {decision.agent_id} | "
+                f"Type: {decision.decision_type.value} | "
+                f"Symbol: {decision.symbol} | "
+                f"Qty: {decision.quantity:.2f} | "
+                f"Confidence: {decision.confidence:.2%} | "
+                f"Risk: {decision.risk_score:.2%} | "
+                f"Rationale: {decision.rationale}"
+            )
     
     def get_decision_history(self, limit: int = 100) -> List[TradingDecision]:
         """Get recent decision history."""
@@ -166,7 +206,8 @@ class PortfolioManagementAgent(BaseAgent):
         self,
         agent_id: str = "pm_agent_1",
         target_allocations: Optional[Dict[str, float]] = None,
-        rebalance_threshold: float = 0.05
+        rebalance_threshold: float = 0.05,
+        log_manager: Optional[Any] = None
     ):
         """
         Initialize portfolio management agent.
@@ -175,8 +216,9 @@ class PortfolioManagementAgent(BaseAgent):
             agent_id: Unique agent identifier
             target_allocations: Target allocation percentages
             rebalance_threshold: Trigger rebalance if drift exceeds this
+            log_manager: Optional LogManager instance for centralized logging
         """
-        super().__init__(agent_id, AgentRole.PORTFOLIO_MANAGER)
+        super().__init__(agent_id, AgentRole.PORTFOLIO_MANAGER, log_manager=log_manager)
         self.target_allocations = target_allocations or {}
         self.rebalance_threshold = rebalance_threshold
         
@@ -202,16 +244,30 @@ class PortfolioManagementAgent(BaseAgent):
             current_allocations = self._calculate_allocations(portfolio)
             drift = self._calculate_allocation_drift(current_allocations)
             
+            if self.event_logger:
+                self.event_logger.debug(
+                    f"[PORTFOLIO_ANALYSIS] {market_data.symbol} | "
+                    f"Drift: {drift:.2%} | Threshold: {self.rebalance_threshold:.2%}"
+                )
+            
             if drift > self.rebalance_threshold:
                 decision = self._create_rebalance_decision(
                     market_data, portfolio, drift
                 )
                 if decision.confidence >= self.confidence_threshold:
                     self.record_decision(decision)
+                    if self.event_logger:
+                        self.event_logger.info(
+                            f"[REBALANCE_TRIGGERED] Drift {drift:.2%} exceeds threshold"
+                        )
                     return decision
                     
         except Exception as e:
             self.logger.error(f"Error in portfolio analysis: {e}")
+            if self.event_logger:
+                self.event_logger.error(
+                    f"[PORTFOLIO_ERROR] Agent {self.agent_id}: {str(e)}"
+                )
             
         return None
     
@@ -271,7 +327,8 @@ class RiskManagementAgent(BaseAgent):
         agent_id: str = "rm_agent_1",
         max_position_size: float = 0.1,
         max_portfolio_loss: float = 0.02,
-        var_threshold: float = 0.95
+        var_threshold: float = 0.95,
+        log_manager: Optional[Any] = None
     ):
         """
         Initialize risk management agent.
@@ -281,8 +338,9 @@ class RiskManagementAgent(BaseAgent):
             max_position_size: Maximum position size as % of portfolio
             max_portfolio_loss: Maximum allowed portfolio loss %
             var_threshold: Value at Risk threshold (confidence level)
+            log_manager: Optional LogManager instance for centralized logging
         """
-        super().__init__(agent_id, AgentRole.RISK_MANAGER)
+        super().__init__(agent_id, AgentRole.RISK_MANAGER, log_manager=log_manager)
         self.max_position_size = max_position_size
         self.max_portfolio_loss = max_portfolio_loss
         self.var_threshold = var_threshold
@@ -307,12 +365,23 @@ class RiskManagementAgent(BaseAgent):
             position_value = portfolio.positions.get(market_data.symbol, 0) * market_data.price
             max_allowed = portfolio.total_value * self.max_position_size
             
+            if self.event_logger:
+                self.event_logger.debug(
+                    f"[RISK_CHECK] {market_data.symbol} | "
+                    f"Position: ${position_value:.2f} | Max: ${max_allowed:.2f}"
+                )
+            
             if position_value > max_allowed:
                 decision = self._create_risk_reduction_decision(
                     market_data, portfolio, position_value, max_allowed
                 )
                 if decision.confidence >= self.confidence_threshold:
                     self.record_decision(decision)
+                    if self.event_logger:
+                        self.event_logger.warning(
+                            f"[POSITION_LIMIT_EXCEEDED] {market_data.symbol}: "
+                            f"${position_value:.2f} > ${max_allowed:.2f}"
+                        )
                     return decision
             
             # Check portfolio loss limit
@@ -320,10 +389,18 @@ class RiskManagementAgent(BaseAgent):
                 decision = self._create_emergency_exit_decision(market_data, portfolio)
                 if decision.confidence >= self.confidence_threshold:
                     self.record_decision(decision)
+                    if self.event_logger:
+                        loss_pct = (portfolio.unrealized_pnl / portfolio.total_value) * 100
+                        self.event_logger.critical(
+                            f"[EMERGENCY_EXIT] Portfolio loss {loss_pct:.2f}% "
+                            f"exceeds limit {self.max_portfolio_loss:.2%}"
+                        )
                     return decision
                     
         except Exception as e:
             self.logger.error(f"Error in risk analysis: {e}")
+            if self.event_logger:
+                self.event_logger.error(f"[RISK_ERROR] {self.agent_id}: {str(e)}")
             
         return None
     
@@ -384,7 +461,8 @@ class SignalAnalysisAgent(BaseAgent):
         agent_id: str = "sa_agent_1",
         sma_short: int = 20,
         sma_long: int = 50,
-        rsi_threshold: float = 0.3
+        rsi_threshold: float = 0.3,
+        log_manager: Optional[Any] = None
     ):
         """
         Initialize signal analysis agent.
@@ -394,8 +472,9 @@ class SignalAnalysisAgent(BaseAgent):
             sma_short: Short SMA period
             sma_long: Long SMA period
             rsi_threshold: RSI threshold for signal generation
+            log_manager: Optional LogManager instance for centralized logging
         """
-        super().__init__(agent_id, AgentRole.SIGNAL_ANALYST)
+        super().__init__(agent_id, AgentRole.SIGNAL_ANALYST, log_manager=log_manager)
         self.sma_short = sma_short
         self.sma_long = sma_long
         self.rsi_threshold = rsi_threshold
@@ -417,22 +496,38 @@ class SignalAnalysisAgent(BaseAgent):
         """
         try:
             if not market_data.indicators:
+                if self.event_logger:
+                    self.event_logger.debug(
+                        f"[NO_INDICATORS] {market_data.symbol}: No indicators available"
+                    )
                 return None
             
             # Check SMA crossover
             sma_signal = self._check_sma_crossover(market_data)
             if sma_signal:
                 self.record_decision(sma_signal)
+                if self.event_logger:
+                    self.event_logger.info(
+                        f"[SMA_SIGNAL] {market_data.symbol}: "
+                        f"{sma_signal.decision_type.value} signal"
+                    )
                 return sma_signal
             
             # Check RSI signal
             rsi_signal = self._check_rsi_signal(market_data)
             if rsi_signal:
                 self.record_decision(rsi_signal)
+                if self.event_logger:
+                    self.event_logger.info(
+                        f"[RSI_SIGNAL] {market_data.symbol}: "
+                        f"{rsi_signal.decision_type.value} signal"
+                    )
                 return rsi_signal
                 
         except Exception as e:
             self.logger.error(f"Error in signal analysis: {e}")
+            if self.event_logger:
+                self.event_logger.error(f"[SIGNAL_ERROR] {self.agent_id}: {str(e)}")
             
         return None
     
@@ -512,17 +607,27 @@ class MultiAgentCoordinator:
     mechanisms to determine final trading actions.
     """
     
-    def __init__(self, coordinator_id: str = "coordinator_1"):
+    def __init__(self, coordinator_id: str = "coordinator_1", log_manager: Optional[Any] = None):
         """
         Initialize the multi-agent coordinator.
         
         Args:
             coordinator_id: Unique identifier for the coordinator
+            log_manager: Optional LogManager instance for centralized logging
         """
         self.coordinator_id = coordinator_id
         self.agents: Dict[str, BaseAgent] = {}
         self.decision_log: List[Dict[str, Any]] = []
         self.logger = logging.getLogger(f"{__name__}.{coordinator_id}")
+        
+        # Optional LogManager integration
+        self.log_manager = log_manager
+        self.coordination_logger = None
+        if log_manager and HAS_LOG_MANAGER:
+            self.coordination_logger = log_manager.get_logger("trading.decisions")
+            self.coordination_logger.info(
+                f"[COORDINATOR_INIT] Coordinator initialized: {coordinator_id}"
+            )
         
     def register_agent(self, agent: BaseAgent) -> None:
         """
@@ -533,6 +638,11 @@ class MultiAgentCoordinator:
         """
         self.agents[agent.agent_id] = agent
         self.logger.info(f"Registered agent: {agent.agent_id} (role: {agent.role.value})")
+        
+        if self.coordination_logger:
+            self.coordination_logger.info(
+                f"[AGENT_REGISTERED] {agent.agent_id} (role: {agent.role.value})"
+            )
     
     def unregister_agent(self, agent_id: str) -> None:
         """Unregister an agent from the coordinator."""
@@ -561,13 +671,33 @@ class MultiAgentCoordinator:
         """
         if not self.agents:
             self.logger.warning("No agents registered with coordinator")
+            if self.coordination_logger:
+                self.coordination_logger.warning(
+                    f"[NO_AGENTS] Coordinator {self.coordinator_id}: No agents registered"
+                )
             return None
         
         try:
+            if self.coordination_logger:
+                self.coordination_logger.info(
+                    f"[COORDINATION_START] Symbol: {market_data.symbol} | "
+                    f"Agents: {len(self.agents)} | "
+                    f"Portfolio: ${portfolio.total_value:.2f}"
+                )
+            
             decisions = self._collect_decisions(market_data, portfolio)
             
             if not decisions:
+                if self.coordination_logger:
+                    self.coordination_logger.debug(
+                        f"[NO_DECISIONS] {market_data.symbol}: No agent decisions"
+                    )
                 return None
+            
+            if self.coordination_logger:
+                self.coordination_logger.debug(
+                    f"[DECISIONS_COLLECTED] {len(decisions)} decision(s) collected"
+                )
             
             final_decision = self._apply_consensus(
                 decisions, market_data, voting_threshold
@@ -580,6 +710,10 @@ class MultiAgentCoordinator:
             
         except Exception as e:
             self.logger.error(f"Error in coordination: {e}")
+            if self.coordination_logger:
+                self.coordination_logger.error(
+                    f"[COORDINATION_ERROR] {self.coordinator_id}: {str(e)}"
+                )
             return None
     
     def _collect_decisions(
