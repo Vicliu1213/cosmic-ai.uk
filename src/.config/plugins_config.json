@@ -1,0 +1,12 @@
+{
+  "enabled": true,
+  "plugins": {
+    "multi_agent_trading": {
+      "enabled": true,
+      "description": "Multi-Agent Trading System",
+      "auto_start": true
+    }
+  },
+  "auto_load_on_startup": true,
+  "log_level": "INFO"
+}

@@ -94,10 +94,41 @@ class GroverQuantumSearch:
         """
         self.n_qubits = n_qubits
         self.n_states = 2 ** n_qubits
+    
+    def hadamard(self, n_qubits: int) -> np.ndarray:
+        """
+        創建 Hadamard 門應用後的均勻疊加態
+        
+        Args:
+            n_qubits: 量子比特數
+            
+        Returns:
+            疊加態的振幅數組
+        """
+        n_states = 2 ** n_qubits
+        amplitudes = np.ones(n_states) / np.sqrt(n_states)
+        return amplitudes
+    
+    def oracle(self, state: np.ndarray, marked_indices: List[int]) -> np.ndarray:
+        """
+        應用 Oracle (相位翻轉標記態)
+        
+        Args:
+            state: 當前量子態
+            marked_indices: 要標記的態的索引列表
+            
+        Returns:
+            應用 Oracle 後的量子態
+        """
+        new_state = state.copy()
+        for idx in marked_indices:
+            if 0 <= idx < len(new_state):
+                new_state[idx] *= -1
+        return new_state
         
     def search(self, 
                marked_indices: List[int],
-               iterations: Optional[int] = None) -> Tuple[int, float]:
+               iterations: Optional[int] = None) -> int:
         """
         執行 Grover 搜索
         
@@ -106,7 +137,7 @@ class GroverQuantumSearch:
             iterations: 迭代次數 (默認自動計算)
             
         Returns:
-            (測量結果, 成功概率)
+            測量結果 (索引)
         """
         if iterations is None:
             # 最優迭代次數
@@ -141,7 +172,7 @@ class GroverQuantumSearch:
         
         logger.info(f"搜索結果: {result}, 成功概率: {success_prob:.4f}")
         
-        return result, success_prob
+        return int(result)
 
 
 # ═══════════════════════════════════════════════════════════════════════════
@@ -312,7 +343,7 @@ class QuantumTradingOptimizer:
             self.classical_searcher = QuantumInspiredClassical(iterations=15)
             logger.info("使用量子啟發的經典搜索")
     
-    def select_best_signal(self, signals: List[TradingSignal]) -> Tuple[Optional[TradingSignal], Dict[str, Any]]:
+    def select_best_signal(self, signals: List[TradingSignal]) -> Tuple[Optional[TradingSignal], float]:
         """
         從信號列表中選擇最優信號
         
@@ -320,10 +351,10 @@ class QuantumTradingOptimizer:
             signals: 交易信號列表
             
         Returns:
-            (選中的信號, 詳細信息)
+            (選中的信號, 綜合質量評分)
         """
         if not signals:
-            return None, {"error": "No signals available"}
+            return None, 0.0
         
         # 計算每個信號的評分
         scores = np.array([signal.get_score() for signal in signals])
@@ -340,9 +371,12 @@ class QuantumTradingOptimizer:
             marked_indices = [i for i, score in enumerate(scores) if score >= threshold]
             
             if not marked_indices:
-                marked_indices = [np.argmax(scores)]
+                marked_indices = [int(np.argmax(scores))]
             
-            selected_idx, success_prob = self.quantum_searcher.search(marked_indices)
+            # 執行量子搜索
+            quantum_result = self.quantum_searcher.search(marked_indices)
+            # 確保結果在有效範圍內,如果超出範圍則取最後一個標記索引
+            selected_idx = marked_indices[min(quantum_result % len(marked_indices), len(marked_indices) - 1)]
             method = "Quantum Grover"
         else:
             # 使用經典搜索
@@ -352,22 +386,12 @@ class QuantumTradingOptimizer:
         elapsed_time = (datetime.now() - start_time).total_seconds()
         
         selected_signal = signals[selected_idx]
-        
-        details = {
-            "method": method,
-            "selected_index": selected_idx,
-            "selected_signal_id": selected_signal.signal_id,
-            "signal_score": float(scores[selected_idx]),
-            "confidence": float(success_prob),
-            "all_scores": scores.tolist(),
-            "elapsed_time_ms": elapsed_time * 1000,
-            "total_signals": len(signals)
-        }
+        quality_score = float(scores[selected_idx])
         
         logger.info(f"選擇完成: 信號 ID={selected_signal.signal_id}, 評分={scores[selected_idx]:.4f}, "
                    f"耗時={elapsed_time*1000:.2f}ms")
         
-        return selected_signal, details
+        return selected_signal, quality_score
 
 
 # ═══════════════════════════════════════════════════════════════════════════
