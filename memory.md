@@ -98,3 +98,47 @@ source /root/comic_ai/venv/bin/activate
 - 交易引擎: ✅ 就緒
 - API 層: ✅ 就緒
 - 所有測試: ✅ 218/218 通過 (100%)
+
+## 6. 防閃退和斷線重連系統 ✨ NEW
+
+### 核心功能
+- ✅ 全局異常捕獲和處理
+- ✅ 自動重連 with 指數退避算法
+- ✅ 定期健康檢查
+- ✅ 連接狀態監控
+- ✅ 優雅關閉機制
+- ✅ 信號處理 (SIGTERM, SIGINT)
+- ✅ 詳細指標收集
+
+### 實現文件
+- `system_robustness.py` - 核心防閃退系統
+- `main_system.py` - 集成主系統入口
+- `ROBUSTNESS_SYSTEM_GUIDE.md` - 完整使用指南
+
+### 關鍵特性
+1. **RobustConnection**: 單連接管理器
+   - 指數退避重試 (最多5次)
+   - 自動故障檢測和恢復
+   - 連接歷史追蹤
+
+2. **CrashPreventionManager**: 防閃退管理器
+   - 全局異常鉤子
+   - 信號捕獲
+   - 已註冊的處理器調用
+
+3. **SystemRobustness**: 系統級管理器
+   - 多連接協調
+   - 統一配置
+   - 實時狀態報告
+
+### 使用方式
+```bash
+# 運行主系統
+python main_system.py --mode run
+
+# 檢查系統狀態
+python main_system.py --mode status
+
+# 直接使用防閃退系統
+python system_robustness.py
+```
