@@ -709,19 +709,150 @@ services:
 - `config/services/engine_config.yaml` - 引擎配置
 - `.vscode/settings.json` - 開發設置
 
+## 實踐部署指南
+
+### 快速部署檢查清單
+
+```python
+def verify_quantum_state_configuration():
+    """驗證量子態配置是否完整"""
+    
+    checklist = [
+        ("載入配置文件", lambda: load_config('quantum_state_config.yaml')),
+        ("驗證混合量子算法", lambda: verify_hybrid_quantum()),
+        ("驗證古典量子引擎", lambda: verify_classical_quantum()),
+        ("驗證量子啟發式優化", lambda: verify_optimization()),
+        ("驗證市場分析集成", lambda: verify_market_integration()),
+        ("檢查依賴項", lambda: check_dependencies()),
+    ]
+    
+    results = {}
+    for name, check_func in checklist:
+        try:
+            check_func()
+            results[name] = "✓ 通過"
+            print(f"✓ {name}")
+        except Exception as e:
+            results[name] = f"✗ 失敗: {e}"
+            print(f"✗ {name}: {e}")
+    
+    return results
+```
+
+### 性能基準測試
+
+```python
+def run_configuration_benchmark():
+    """運行配置性能基準測試"""
+    
+    print("量子態配置性能基準測試")
+    print("="*60)
+    
+    # 1. 量子態初始化時間
+    start = time.time()
+    states = initialize_quantum_states(population_size=50)
+    init_time = (time.time() - start) * 1000
+    print(f"量子態初始化: {init_time:.2f}ms")
+    
+    # 2. 一次迭代的時間
+    start = time.time()
+    states = execute_iteration(states)
+    iter_time = (time.time() - start) * 1000
+    print(f"單次迭代耗時: {iter_time:.2f}ms")
+    
+    # 3. 100 次迭代的總時間
+    start = time.time()
+    for _ in range(100):
+        states = execute_iteration(states)
+    total_time = time.time() - start
+    print(f"100 次迭代耗時: {total_time:.2f}秒")
+    
+    # 4. 記憶體使用
+    memory_usage = get_memory_usage()
+    print(f"記憶體使用: {memory_usage:.1f}MB")
+```
+
+### 故障診斷和恢復
+
+```python
+def diagnose_configuration_issues():
+    """診斷配置問題"""
+    
+    issues = []
+    
+    # 1. 檢查配置文件
+    if not os.path.exists('config/quantum_state_config.yaml'):
+        issues.append("缺少配置文件 quantum_state_config.yaml")
+    
+    # 2. 檢查參數範圍
+    try:
+        config = load_config()
+        if config['population_size'] > 1000:
+            issues.append("population_size 過大 (>1000)")
+        if config['max_iterations'] > 10000:
+            issues.append("max_iterations 過大 (>10000)")
+    except Exception as e:
+        issues.append(f"配置載入失敗: {e}")
+    
+    # 3. 檢查依賴項
+    try:
+        import numpy, scipy, torch
+    except ImportError as e:
+        issues.append(f"缺少依賴: {e}")
+    
+    if issues:
+        print("發現配置問題:")
+        for issue in issues:
+            print(f"  ✗ {issue}")
+    else:
+        print("✓ 配置檢查通過")
+    
+    return issues
+```
+
+## 與其他系統的交互
+
+### 與量子生成服務 (UQG) 的交互
+
+**配置交互**:
+```yaml
+# 在量子態配置中指定 UQG 參數
+uqg_integration:
+  enabled: true
+  qubit_allocation: 1024
+  operation_budget: 1165
+  cost_limit: 1.215
+```
+
+**相關文檔**: 見 `05_quantum_generation_service.md`
+
+### 與優化系統的交互
+
+**配置交互**:
+```yaml
+optimization:
+  algorithm: "hybrid_quantum_enhanced"
+  learning_rate: 0.01
+  convergence_threshold: 1e-6
+  max_iterations: 100
+```
+
 ---
 
 ## 10. 版本歷史
 
 | 版本 | 日期 | 變更 |
 |------|------|------|
+| 1.1 | 2026-03-01 | 增加實踐部署、性能測試、故障診斷 |
 | 1.0 | 2026-03-01 | 初始版本，涵蓋全面配置指南 |
 
 ---
 
 **文檔維護者**: OpenCode Agent  
 **最後更新**: 2026-03-01  
-**狀態**: ✅ 完成
+**狀態**: ✅ 完成 (v1.1 增強版)
+
+**增強內容**: +部署檢查清單、+性能基準、+故障診斷、+系統交互
 
 **待創建配置文件**:
 - [ ] `/workspaces/cosmic-ai.uk/config/core/quantum_state_config.yaml`

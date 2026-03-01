@@ -808,16 +808,190 @@ for phase_name, result in results.items():
 - `optimizer/intelligent_compression_optimizer.py`
 - `quantum_cost_optimization.py`
 
+## 實踐優化指南
+
+### 能源容量監控和調整
+
+```python
+def monitor_energy_capacity():
+    """監控能源容量使用情況"""
+    
+    # 獲取當前能源狀態
+    state = get_energy_state()
+    
+    print(f"能源容量監控:")
+    print(f"  總容量: {state['total_capacity']} 焦耳")
+    print(f"  已使用: {state['used']:.2%}")
+    print(f"  可用: {state['available']} 焦耳")
+    
+    # 根據使用情況進行優化
+    if state['used'] > 0.9:
+        print("  ⚠️  接近容量上限，建議優化")
+        optimize_energy_usage()
+    elif state['used'] > 0.7:
+        print("  ⚠️  使用率較高，監控中")
+    else:
+        print("  ✓ 正常範圍")
+```
+
+### 壓縮容量優化
+
+```python
+def optimize_compression_capacity():
+    """優化量子成本壓縮"""
+    
+    # 分析當前壓縮效率
+    efficiency = analyze_compression_efficiency()
+    
+    if efficiency['ratio'] < 10:
+        print("✓ 壓縮效率正常")
+    else:
+        print("⚠️  壓縮效率低於預期")
+        
+        # 應用優化策略
+        strategies = [
+            apply_layer_pruning,
+            apply_gate_fusion,
+            apply_circuit_optimization
+        ]
+        
+        for strategy in strategies:
+            new_efficiency = strategy()
+            if new_efficiency['ratio'] > efficiency['ratio']:
+                efficiency = new_efficiency
+    
+    return efficiency
+```
+
+### 性能基準測試
+
+```python
+def benchmark_energy_compression():
+    """基準測試能源壓縮性能"""
+    
+    print("能源壓縮性能基準")
+    print("="*60)
+    
+    # 測試原始成本
+    original_cost = measure_original_cost()
+    print(f"原始量子成本: {original_cost:.4f}")
+    
+    # 測試壓縮後成本
+    compressed_cost = measure_compressed_cost()
+    print(f"壓縮後成本: {compressed_cost:.4f}")
+    
+    # 計算壓縮比
+    compression_ratio = original_cost / compressed_cost
+    savings = (1 - compressed_cost / original_cost) * 100
+    
+    print(f"壓縮比: {compression_ratio:.2f}x")
+    print(f"節省: {savings:.1f}%")
+    
+    # 測試時間開銷
+    compression_time = measure_compression_time()
+    print(f"壓縮耗時: {compression_time*1000:.2f}ms")
+```
+
+## 故障診斷和恢復
+
+```python
+def diagnose_energy_issues():
+    """診斷能源問題"""
+    
+    issues = []
+    
+    # 1. 檢查容量是否超出
+    capacity = get_total_capacity()
+    usage = get_current_usage()
+    
+    if usage > capacity:
+        issues.append(f"容量超出: {usage:.2f} / {capacity:.2f}")
+    
+    # 2. 檢查壓縮率
+    compression_ratio = measure_compression_ratio()
+    if compression_ratio < 5:
+        issues.append(f"壓縮率過低: {compression_ratio:.2f}x")
+    
+    # 3. 檢查負載不均衡
+    load_balance = check_load_balance()
+    if load_balance['max_load'] / load_balance['min_load'] > 2:
+        issues.append("負載不均衡")
+    
+    if issues:
+        print("發現能源問題:")
+        for issue in issues:
+            print(f"  ✗ {issue}")
+    else:
+        print("✓ 能源檢查通過")
+    
+    return issues
+```
+
+## 優化策略
+
+### 層修剪 (Layer Pruning)
+
+```python
+def apply_layer_pruning():
+    """移除不必要的層"""
+    
+    # 識別低效層
+    layers = get_all_layers()
+    inefficient = [l for l in layers if l.efficiency < 0.5]
+    
+    # 移除並測試
+    for layer in inefficient:
+        remove_layer(layer)
+        impact = measure_impact()
+        
+        if impact['performance_loss'] < 5:
+            print(f"✓ 層 {layer.id} 已移除")
+        else:
+            add_layer_back(layer)
+```
+
+### 門融合 (Gate Fusion)
+
+```python
+def apply_gate_fusion():
+    """融合相鄰門以減少成本"""
+    
+    gates = get_quantum_gates()
+    
+    # 尋找可融合的相鄰門
+    for i in range(len(gates) - 1):
+        if can_fuse(gates[i], gates[i+1]):
+            fused = fuse_gates(gates[i], gates[i+1])
+            gates[i:i+2] = [fused]
+            print(f"✓ 融合門對: {gates[i].type}")
+    
+    return gates
+```
+
+## 與其他系統的交互
+
+### 與量子生成服務 (UQG) 的交互
+
+**交互方式**:
+1. 監控 UQG 的成本消耗
+2. 根據容量限制調整資源分配
+3. 應用壓縮策略以優化成本
+
+**相關文檔**: 見 `05_quantum_generation_service.md`
+
 ---
 
-## 10. 版本历史
+## 10. 版本歷史
 
-| 版本 | 日期 | 变更 |
+| 版本 | 日期 | 變更 |
 |------|------|------|
-| 1.0 | 2026-03-01 | 初始版本，涵盖能源容量和压缩容量 |
+| 1.1 | 2026-03-01 | 增加實踐優化、故障診斷、策略實現 |
+| 1.0 | 2026-03-01 | 初始版本，涵蓋能源容量和壓縮容量 |
 
 ---
 
-**文档维护者**: OpenCode Agent  
-**最后更新**: 2026-03-01  
-**状态**: ✅ 完成
+**文檔維護者**: OpenCode Agent  
+**最後更新**: 2026-03-01  
+**狀態**: ✅ 完成 (v1.1 增強版)
+
+**增強內容**: +容量監控、+壓縮優化、+性能基準、+故障診斷、+優化策略

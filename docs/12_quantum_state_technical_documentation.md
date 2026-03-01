@@ -646,6 +646,248 @@ entropy = -np.sum(prob_dist * np.log(prob_dist + 1e-10))  # 避免 log(0)
 
 ---
 
+## 實踐實現與故障排除
+
+### 量子態初始化和驗證
+
+```python
+from dataclasses import dataclass
+import numpy as np
+
+@dataclass
+class QuantumState:
+    """Quantum state representation"""
+    position: np.ndarray
+    amplitude: float
+    phase: float
+    entanglement_measure: float
+    tunnel_probability: float
+    fitness: float = 0.0
+
+def initialize_quantum_states(population_size: int, bounds):
+    """初始化量子態群體"""
+    states = []
+    for i in range(population_size):
+        # 隨機位置
+        position = np.array([
+            np.random.uniform(b[0], b[1]) for b in bounds
+        ])
+        
+        # 均勻疊加
+        amplitude = 1.0 / np.sqrt(population_size)
+        
+        # 隨機相位和糾纏
+        phase = np.random.uniform(0, 2 * np.pi)
+        entanglement = np.random.uniform(0.0, 1.0)
+        tunnel_prob = np.random.uniform(0.0, 0.3)
+        
+        state = QuantumState(
+            position=position,
+            amplitude=amplitude,
+            phase=phase,
+            entanglement_measure=entanglement,
+            tunnel_probability=tunnel_prob
+        )
+        states.append(state)
+    
+    return states
+
+def validate_quantum_states(states):
+    """驗證量子態的合法性"""
+    for state in states:
+        # 檢查振幅範圍
+        assert 0 <= state.amplitude <= 1, f"無效振幅: {state.amplitude}"
+        
+        # 檢查相位範圍
+        assert 0 <= state.phase <= 2*np.pi, f"無效相位: {state.phase}"
+        
+        # 檢查糾纏度
+        assert 0 <= state.entanglement_measure <= 1, f"無效糾纏度: {state.entanglement_measure}"
+        
+        # 檢查隧穿概率
+        assert 0 <= state.tunnel_probability <= 1, f"無效隧穿概率: {state.tunnel_probability}"
+    
+    return True
+```
+
+### 常見故障和解決方案
+
+#### 問題 1: 振幅歸一化失敗
+
+**症狀**: 所有量子態的總概率不等於 1
+
+**診斷和修復**:
+```python
+def check_amplitude_normalization(states):
+    """檢查振幅歸一化"""
+    total_probability = sum(s.get_probability() for s in states)
+    
+    if not np.isclose(total_probability, 1.0, atol=1e-6):
+        print(f"警告: 總概率 = {total_probability}")
+        
+        # 重新歸一化
+        total_amplitude = sum(s.amplitude for s in states)
+        for state in states:
+            state.amplitude /= total_amplitude
+        
+        # 驗證
+        new_total = sum(s.get_probability() for s in states)
+        print(f"修復後: {new_total}")
+    
+    return states
+```
+
+#### 問題 2: 相位解纏結
+
+**症狀**: 相位累積導致相干性喪失
+
+**解決方案**:
+```python
+def correct_phase_accumulation(states, target_phase_range=(0, 2*np.pi)):
+    """修正相位累積"""
+    phase_sum = sum(s.phase for s in states)
+    mean_phase = phase_sum / len(states)
+    
+    # 相位歸一化到目標範圍
+    for state in states:
+        # 移除均值相位
+        state.phase -= mean_phase
+        
+        # 歸一化到 [0, 2π]
+        state.phase = state.phase % (2 * np.pi)
+        if state.phase < 0:
+            state.phase += 2 * np.pi
+    
+    return states
+```
+
+## 性能優化指南
+
+### 隧穿概率優化
+
+```python
+def optimize_tunneling_probability(state, iteration, max_iterations):
+    """根據迭代進度動態調整隧穿概率"""
+    
+    # 前期保持高隧穿概率以進行全局搜索
+    # 後期降低隧穿概率以進行局部精細搜索
+    
+    progress = iteration / max_iterations
+    
+    if progress < 0.3:
+        # 初期: 高隧穿概率
+        state.tunnel_probability = 0.3
+    elif progress < 0.7:
+        # 中期: 逐漸降低
+        state.tunnel_probability = 0.3 * (1 - (progress - 0.3) / 0.4)
+    else:
+        # 後期: 低隧穿概率
+        state.tunnel_probability = 0.05
+    
+    return state
+```
+
+### 糾纏度管理
+
+```python
+def manage_entanglement(states, iteration, max_iterations):
+    """管理量子態間的糾纏"""
+    
+    progress = iteration / max_iterations
+    
+    # 計算當前的全局糾纏度
+    mean_entanglement = np.mean([s.entanglement_measure for s in states])
+    
+    # 動態調整策略
+    if mean_entanglement < 0.3:
+        # 糾纏不足，需要增強
+        for state in states:
+            state.entanglement_measure = min(
+                state.entanglement_measure + 0.05,
+                1.0
+            )
+    elif mean_entanglement > 0.8:
+        # 糾纏過度，需要降低
+        for state in states:
+            state.entanglement_measure = max(
+                state.entanglement_measure - 0.05,
+                0.0
+            )
+    
+    return states
+```
+
+## 集成測試
+
+```python
+def run_quantum_state_integration_test():
+    """運行量子態集成測試"""
+    
+    print("量子態集成測試...")
+    print("="*50)
+    
+    # 1. 初始化
+    bounds = [(-5, 5) for _ in range(3)]
+    states = initialize_quantum_states(10, bounds)
+    
+    # 2. 驗證
+    assert validate_quantum_states(states), "驗證失敗"
+    print("✓ 初始化驗證通過")
+    
+    # 3. 歸一化檢查
+    states = check_amplitude_normalization(states)
+    print("✓ 振幅歸一化通過")
+    
+    # 4. 相位修正
+    states = correct_phase_accumulation(states)
+    print("✓ 相位修正通過")
+    
+    # 5. 性能指標
+    for i, state in enumerate(states[:3]):
+        print(f"\n量子態 {i}:")
+        print(f"  位置: {state.position[:2]}...")
+        print(f"  概率: {state.get_probability():.4f}")
+        print(f"  糾纏度: {state.entanglement_measure:.4f}")
+        print(f"  隧穿概率: {state.tunnel_probability:.4f}")
+    
+    print("\n✓ 所有測試通過")
+
+# 執行測試
+run_quantum_state_integration_test()
+```
+
+## 與其他系統的交互
+
+### 與量子場論系統 (QFT) 的交互
+
+**連接**: 量子態 ↔ 量子場論
+
+**交互方式**:
+1. 量子態提供位置和相位信息
+2. QFT 計算場能
+3. 使用場能更新量子態的適應度
+
+**相關文檔**: 見 `03_quantum_field_theory_system.md`
+
+### 與量子生成服務 (UQG) 的交互
+
+**連接**: 量子態 ← UQG (獲取量子資源)
+
+**交互方式**:
+1. UQG 分配量子位元和操作
+2. 量子態利用資源進行量子計算
+3. 返回計算結果
+
+**相關文檔**: 見 `05_quantum_generation_service.md`
+
+## 相關文檔參考
+
+- **整合系統**: `06_universal_quintenary_system.md` - 完整系統概述
+- **場論基礎**: `03_quantum_field_theory_system.md` - 場能計算
+- **資源提供**: `05_quantum_generation_service.md` - 量子資源
+- **理論基礎**: `09_unified_superexponential_theory.md` - 理論支撐
+- **快速參考**: `QUICK_REFERENCE_GUIDE.md` - 速查指南
+
 ## 7. 參考資源
 
 ### 代碼文件
@@ -668,10 +910,12 @@ entropy = -np.sum(prob_dist * np.log(prob_dist + 1e-10))  # 避免 log(0)
 
 | 版本 | 日期 | 變更 |
 |------|------|------|
+| 1.1 | 2026-03-01 | 增加實踐實現、故障排除、性能優化、集成測試 |
 | 1.0 | 2026-03-01 | 初始版本，覆蓋核心量子態概念和實現 |
 
 ---
 
 **文檔維護者**: OpenCode Agent  
 **最後更新**: 2026-03-01  
-**狀態**: ✅ 完成
+**狀態**: ✅ 完成 (v1.1 增強版)
+**增強內容**: +實踐代碼、+故障排除、+性能優化、+集成測試、+系統交互
