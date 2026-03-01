@@ -10,7 +10,6 @@ from semantic_kernel.template_engine.blocks.block_types import BlockTypes
 
 logger: logging.Logger = logging.getLogger(__name__)
 
-
 class Block(KernelBaseModel):
     """A block."""
 

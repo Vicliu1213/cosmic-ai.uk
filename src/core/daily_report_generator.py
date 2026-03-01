@@ -12,7 +12,6 @@ from typing import Dict, List, Any, Optional
 from pathlib import Path
 from dataclasses import dataclass, asdict
 
-
 @dataclass
 class DailyTradingStats:
     """日常交易統計"""
@@ -31,7 +30,6 @@ class DailyTradingStats:
     realized_pnl: float
     unrealized_pnl: float
     total_pnl: float
-
 
 class DailyReportGenerator:
     """日常即時報告生成器"""
@@ -278,7 +276,6 @@ class DailyReportGenerator:
         except Exception as e:
             raise Exception(f"Error generating portfolio report: {e}")
 
-
 # 快速使用函數
 def create_daily_report(
     stats: List[DailyTradingStats],
@@ -288,12 +285,10 @@ def create_daily_report(
     generator = DailyReportGenerator()
     return generator.generate_daily_report(stats, columns=columns)
 
-
 def append_daily_stats(stats: DailyTradingStats) -> str:
     """快速追加日常統計"""
     generator = DailyReportGenerator()
     return generator.append_daily_stats(stats)
-
 
 if __name__ == "__main__":
     # 測試數據

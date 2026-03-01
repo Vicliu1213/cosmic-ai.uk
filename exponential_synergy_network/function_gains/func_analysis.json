@@ -1,0 +1,23 @@
+{
+  "function_id": "func_analysis",
+  "function_name": "\u6df1\u5ea6\u5206\u6790",
+  "base_performance": 45.0,
+  "layer_gains": {
+    "resonance_1": 5.399435230304013,
+    "resonance_2": 29.153900806248142,
+    "resonance_3": 157.41459911404476,
+    "meta_compute_1": 3.6692966676192444,
+    "meta_compute_2": 30.82811581578646
+  },
+  "exponential_gain": 12.182493960703473,
+  "synergy_amplification": 1.0,
+  "final_gain": 34147273.14546888,
+  "contributing_layers": [
+    "resonance_1",
+    "resonance_2",
+    "resonance_3",
+    "meta_compute_1",
+    "meta_compute_2"
+  ],
+  "synergy_partners": []
+}

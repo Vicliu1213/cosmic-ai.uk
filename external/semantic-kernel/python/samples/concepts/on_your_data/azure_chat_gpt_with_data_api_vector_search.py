@@ -76,7 +76,6 @@ chat_function = kernel.add_function(
     plugin_name="ChatBot", function_name="Chat", prompt_template_config=prompt_template_config
 )
 
-
 async def chat() -> bool:
     try:
         user_input = input("User:> ")
@@ -111,12 +110,10 @@ async def chat() -> bool:
             chat_history.add_message(message)
     return True
 
-
 async def main() -> None:
     chatting = True
     while chatting:
         chatting = await chat()
-
 
 if __name__ == "__main__":
     asyncio.run(main())

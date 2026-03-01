@@ -23,7 +23,6 @@ logger: logging.Logger = logging.getLogger(__name__)
 
 VALID_ARG_TYPES = [BlockTypes.VALUE, BlockTypes.VARIABLE, BlockTypes.NAMED_ARG]
 
-
 class CodeBlock(Block):
     """Create a code block.
 

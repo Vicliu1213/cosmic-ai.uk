@@ -1,0 +1,13 @@
+{
+  "subsystem_id": "trading_system",
+  "subsystem_type": "SubsystemType.TRADING_SYSTEM",
+  "name": "\u4ea4\u6613\u7cfb\u7d71",
+  "status": "active",
+  "last_sync": "2026-03-01T08:38:14.153061",
+  "connections": [
+    "quantum_engine",
+    "data_manager"
+  ],
+  "metadata": {},
+  "sync_hash": "91d6f59d61c995e438cef14927648c8bd2157f481005a14e258490ca1690237d"
+}

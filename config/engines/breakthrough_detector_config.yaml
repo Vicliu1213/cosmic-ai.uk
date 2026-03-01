@@ -1,0 +1,174 @@
+# 技術突破檢測系統配置
+# Breakthrough Detector System Configuration
+
+breakthrough_detector:
+  # 突破類型配置 / Breakthrough Type Configuration
+  breakthrough_types:
+    enabled: true
+    
+    types:
+      algorithmic:
+        enabled: true
+        description: "算法突破"
+        
+      performance:
+        enabled: true
+        description: "性能突破"
+        
+      efficiency:
+        enabled: true
+        description: "效率突破"
+        
+      scalability:
+        enabled: true
+        description: "可擴展性突破"
+        
+      novelty:
+        enabled: true
+        description: "新穎性突破"
+        
+  # 性能指標配置 / Performance Metrics Configuration
+  performance_metrics:
+    enabled: true
+    
+    # 基準值設置 / Baseline Setting
+    baselines:
+      enabled: true
+      update_frequency_days: [1, 30]
+      
+    # 改進比率 / Improvement Ratio
+    improvement_ratio:
+      enabled: true
+      calculation_method: "percentage"  # percentage, absolute
+      
+    # 單位配置 / Unit Configuration
+    units:
+      - "milliseconds"
+      - "operations_per_second"
+      - "throughput_gb_per_sec"
+      - "accuracy_percentage"
+      
+  # 統計驗證配置 / Statistical Validation Configuration
+  statistical_validation:
+    enabled: true
+    
+    # 置信度 / Confidence Level
+    confidence_level: [0.90, 0.99]
+    
+    # 最小樣本大小 / Minimum Sample Size
+    min_sample_size: [5, 100]
+    
+    # t檢驗 / t-Test
+    t_test:
+      enabled: true
+      two_tailed: true
+      
+    # p值閾值 / p-value Threshold
+    p_value_threshold: [0.001, 0.05]
+    
+    # 置信區間 / Confidence Interval
+    confidence_interval:
+      enabled: true
+      method: "bootstrap"  # bootstrap, t_distribution
+      
+  # 顯著性判定配置 / Significance Level Configuration
+  significance_levels:
+    enabled: true
+    
+    insignificant:
+      threshold: [0.0, 0.05]
+      
+    minor:
+      threshold: [0.05, 0.1]
+      
+    moderate:
+      threshold: [0.1, 0.3]
+      
+    major:
+      threshold: [0.3, 1.0]
+      
+    breakthrough:
+      threshold: [1.0, 100.0]
+      
+  # 新穎性評分配置 / Novelty Score Configuration
+  novelty_scoring:
+    enabled: true
+    
+    # 新穎性範圍 / Novelty Range
+    range: [0.0, 1.0]
+    
+    # 計算方法 / Calculation Method
+    method: "uniqueness_index"  # uniqueness_index, dissimilarity_score
+    
+    # 文獻對比 / Literature Comparison
+    literature_comparison: true
+    
+  # 可重複性檢查配置 / Reproducibility Check Configuration
+  reproducibility:
+    enabled: true
+    
+    # 複現次數 / Replication Count
+    replication_count: [3, 100]
+    
+    # 一致性閾值 / Consistency Threshold
+    consistency_threshold: [0.8, 0.99]
+    
+    # 環境控制 / Environment Control
+    environment_control: true
+    
+  # 異常值檢測配置 / Outlier Detection Configuration
+  outlier_detection:
+    enabled: true
+    
+    # 檢測方法 / Detection Method
+    method: "iqr"  # iqr, zscore, isolation_forest
+    
+    # IQR閾值 / IQR Threshold
+    iqr_threshold: [1.5, 3.0]
+    
+    # Z分數 / Z-score
+    zscore_threshold: [2.0, 4.0]
+    
+  # 報告生成配置 / Report Generation Configuration
+  reporting:
+    enabled: true
+    
+    # 報告格式 / Report Format
+    format: "json"  # json, html, pdf
+    
+    # 包含內容 / Content Inclusion
+    include_metrics: true
+    include_statistics: true
+    include_recommendations: true
+    include_visualizations: true
+    
+  # 性能配置 / Performance Configuration
+  performance:
+    enabled: true
+    
+    # 並行處理 / Parallel Processing
+    max_workers: [1, 32]
+    
+    # 快取 / Caching
+    caching_enabled: true
+    cache_ttl_hours: [1, 168]
+
+# 配置檔案 / Configuration Profiles
+profiles:
+  conservative:
+    description: "保守模式"
+    statistical_validation.confidence_level: 0.99
+    statistical_validation.p_value_threshold: 0.01
+    significance_levels.breakthrough.threshold: [5.0, 100.0]
+    
+  balanced:
+    description: "平衡模式"
+    statistical_validation.confidence_level: 0.95
+    statistical_validation.p_value_threshold: 0.05
+    significance_levels.breakthrough.threshold: [1.0, 100.0]
+    
+  aggressive:
+    description: "激進模式"
+    statistical_validation.confidence_level: 0.90
+    statistical_validation.p_value_threshold: 0.1
+    significance_levels.breakthrough.threshold: [0.5, 100.0]

@@ -73,7 +73,6 @@ class LogConfig:
         """獲取配置值"""
         return self.config.get(key, default)
 
-
 # 日誌管理器
 class LogManager:
     """統一日誌管理器"""
@@ -167,7 +166,6 @@ class LogManager:
             logger.error(full_message)
         elif level == "CRITICAL":
             logger.critical(full_message)
-
 
 # 日誌查詢工具
 class LogQueryTool:
@@ -304,13 +302,11 @@ class LogQueryTool:
         
         return summary
 
-
 # 簡單使用函數
 def create_logger(name: str) -> logging.Logger:
     """快速創建日誌記錄器"""
     manager = LogManager()
     return manager.get_logger(name)
-
 
 def log_event(
     category: str,
@@ -321,7 +317,6 @@ def log_event(
     """快速記錄事件"""
     manager = LogManager()
     manager.log_event(category, level, message, **kwargs)
-
 
 if __name__ == "__main__":
     # 測試

@@ -1,0 +1,178 @@
+# 增強經典算法模組配置
+# Enhanced Classical Algorithm Module Configuration
+
+enhanced_classical:
+  # 增強類型配置 / Enhancement Type Configuration
+  enhancement_types:
+    enabled: true
+    
+    superposition_simulation:
+      enabled: true
+      description: "疊加態模擬"
+      superposition_states: [2, 256]
+      
+    entanglement_analog:
+      enabled: true
+      description: "糾纏類比"
+      entanglement_strength: [0.0, 1.0]
+      
+    quantum_tunneling:
+      enabled: true
+      description: "量子隧道效應"
+      
+    coherence_amplification:
+      enabled: true
+      description: "相干性放大"
+      amplification_factor: [1.0, 1e6]
+      
+    interference_pattern:
+      enabled: true
+      description: "干涉圖案"
+      interference_gain: [1.0, 10.0]
+      
+  # 相干性因子配置 / Coherence Factor Configuration
+  coherence:
+    enabled: true
+    
+    # 相干性係數 / Coherence Coefficient
+    coefficient: [0.5, 2.0]
+    
+    # 衰減率 / Decay Rate
+    decay_rate: [0.0, 0.1]
+    
+    # 恢復率 / Recovery Rate
+    recovery_rate: [0.0, 0.5]
+    
+  # 疊加態模擬配置 / Superposition Simulation Configuration
+  superposition_simulation:
+    enabled: true
+    
+    # 狀態數量 / State Count
+    state_count: [2, 1024]
+    
+    # 隨機相位 / Random Phase
+    phase_range: [0.0, 6.283185]  # 0 to 2π
+    
+    # 振幅分佈 / Amplitude Distribution
+    amplitude_distribution: "dirichlet"  # dirichlet, uniform, gaussian
+    
+  # 糾纏關聯配置 / Entanglement Correlation Configuration
+  entanglement_correlation:
+    enabled: true
+    
+    # 糾纏強度 / Entanglement Strength
+    strength: [0.0, 1.0]
+    
+    # 相關矩陣計算 / Correlation Matrix
+    matrix_computation: true
+    
+    # 標準化 / Normalization
+    normalization: "max"  # max, frobenius
+    
+  # 量子隧道效應配置 / Quantum Tunneling Configuration
+  quantum_tunneling:
+    enabled: true
+    
+    # 隧道概率 / Tunneling Probability
+    probability: [0.0, 1.0]
+    
+    # 勢壘高度 / Barrier Height
+    barrier_calculation: true
+    
+    # 逃脫因子 / Escape Factor
+    escape_factor: [0.0, 10.0]
+    
+  # 相干性放大配置 / Coherence Amplification Configuration
+  coherence_amplification:
+    enabled: true
+    
+    # 相位同步 / Phase Synchronization
+    phase_sync: true
+    
+    # 相干增益 / Coherence Gain
+    gain: [1.0, 1e6]
+    
+    # 信號到噪聲比 / Signal-to-Noise Ratio
+    snr_threshold: [1.0, 100.0]
+    
+  # 干涉圖案配置 / Interference Pattern Configuration
+  interference_patterns:
+    enabled: true
+    
+    # 干涉增益 / Interference Gain
+    gain: [1.0, 10.0]
+    
+    # 建設性干涉 / Constructive Interference
+    constructive_interference: true
+    
+    # 相位差 / Phase Difference
+    phase_difference_range: [0.0, 6.283185]
+    
+  # 優化算法配置 / Optimization Algorithm Configuration
+  optimization:
+    enabled: true
+    
+    # 梯度下降 / Gradient Descent
+    gradient_descent:
+      enabled: true
+      learning_rate: [0.001, 0.1]
+      momentum: [0.0, 0.99]
+      
+    # 牛頓法 / Newton's Method
+    newtons_method:
+      enabled: true
+      second_order: true
+      
+    # 共軛梯度 / Conjugate Gradient
+    conjugate_gradient:
+      enabled: true
+      
+  # 性能配置 / Performance Configuration
+  performance:
+    enabled: true
+    
+    # 並行處理 / Parallel Processing
+    parallel:
+      enabled: true
+      max_workers: [1, 64]
+      
+    # 向量化 / Vectorization
+    vectorization: true
+    
+    # 快取 / Caching
+    caching: true
+    cache_size_mb: [10, 10000]
+    
+  # 噪聲容度配置 / Noise Tolerance Configuration
+  noise_tolerance:
+    enabled: true
+    
+    # 噪聲水平 / Noise Level
+    tolerance: [0.0, 0.1]
+    
+    # 誤差修正 / Error Correction
+    error_correction: true
+    
+    # 魯棒性 / Robustness
+    robustness_level: [0.5, 1.0]
+
+# 配置檔案 / Configuration Profiles
+profiles:
+  conservative:
+    description: "保守模式"
+    enhancement_types.superposition_simulation.superposition_states: 2
+    coherence.coefficient: 1.0
+    optimization.gradient_descent.learning_rate: 0.001
+    
+  balanced:
+    description: "平衡模式"
+    enhancement_types.superposition_simulation.superposition_states: 32
+    coherence.coefficient: 1.5
+    optimization.gradient_descent.learning_rate: 0.01
+    
+  aggressive:
+    description: "激進模式"
+    enhancement_types.superposition_simulation.superposition_states: 256
+    coherence.coefficient: 2.0
+    optimization.gradient_descent.learning_rate: 0.1
+    performance.parallel.max_workers: 64

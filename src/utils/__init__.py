@@ -27,14 +27,13 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-
 class ConfigManager:
     """配置管理器 - Configuration Manager"""
     
     _instance = None
     _config: Dict[str, Any] = {}
     
-    def __new__(cls):
+    def __new__(cls) -> Any:
         if cls._instance is None:
             cls._instance = super(ConfigManager, cls).__new__(cls)
         return cls._instance
@@ -95,7 +94,6 @@ class ConfigManager:
         """Return full configuration as dictionary."""
         return self._config.copy()
 
-
 class Logger:
     """自定義日誌器 - Custom Logger"""
     
@@ -132,11 +130,10 @@ class Logger:
         
         return cls._loggers[name]
 
-
-def timing_decorator(func):
+def timing_decorator(func) -> Any:
     """執行時間計時裝飾器 - Timing decorator for functions."""
     @wraps(func)
-    def wrapper(*args, **kwargs):
+    def wrapper(*args, **kwargs) -> Any:
         start_time = time.time()
         try:
             result = func(*args, **kwargs)
@@ -148,7 +145,6 @@ def timing_decorator(func):
             logger.error(f"❌ {func.__name__} failed after {elapsed:.3f}s: {e}")
             raise
     return wrapper
-
 
 class DataProcessor:
     """數據處理器 - Data Processor"""
@@ -204,11 +200,10 @@ class DataProcessor:
         """Split data into batches."""
         return [data[i:i + batch_size] for i in range(0, len(data), batch_size)]
 
-
 class CacheManager:
     """緩存管理器 - Cache Manager"""
     
-    def __init__(self, cache_dir: str = 'data/cache'):
+    def __init__(self, cache_dir: str = 'data/cache') -> Any:
         self.cache_dir = Path(cache_dir)
         self.cache_dir.mkdir(parents=True, exist_ok=True)
     
@@ -260,7 +255,6 @@ class CacheManager:
             logger.error(f"Cache clear error: {e}")
             return False
 
-
 class FileManager:
     """文件管理器 - File Manager"""
     
@@ -303,13 +297,11 @@ class FileManager:
             return []
         return [str(f) for f in path.glob(pattern) if f.is_file()]
 
-
 # Convenience functions
 config = ConfigManager()
 get_logger = Logger.get_logger
 cache = CacheManager()
 file_manager = FileManager()
-
 
 __all__ = [
     'ConfigManager',

@@ -24,7 +24,6 @@ from opencode.unified_api import (
     create_and_run_simulation,
 )
 
-
 class TestAPIInitialization:
     """Test ComicAIUnifiedAPI initialization."""
     
@@ -69,7 +68,6 @@ class TestAPIInitialization:
         assert isinstance(api.on_status_change, list)
         assert len(api.on_metrics_update) == 0
         assert len(api.on_status_change) == 0
-
 
 class TestSystemInitialization:
     """Test system initialization process."""
@@ -121,7 +119,6 @@ class TestSystemInitialization:
         # Components should be boolean values
         for component, value in components.items():
             assert isinstance(value, bool)
-
 
 class TestSimulationControl:
     """Test simulation control methods."""
@@ -199,7 +196,6 @@ class TestSimulationControl:
         with pytest.raises(RuntimeError):
             await api.run_simulation()
 
-
 class TestPerformanceMonitoring:
     """Test performance monitoring and metrics."""
     
@@ -271,7 +267,6 @@ class TestPerformanceMonitoring:
         assert 'agents_per_universe' in config
         assert 'num_steps' in config
 
-
 class TestCallbacks:
     """Test callback registration and invocation."""
     
@@ -329,7 +324,6 @@ class TestCallbacks:
         assert calls['metrics'] >= 1
         assert calls['status'] >= 1
 
-
 class TestResultsExport:
     """Test results export functionality."""
     
@@ -382,7 +376,6 @@ class TestResultsExport:
             finally:
                 Path(filepath).unlink(missing_ok=True)
 
-
 class TestConfiguration:
     """Test configuration handling."""
     
@@ -427,7 +420,6 @@ class TestConfiguration:
         assert config.memory_limit_mb == 100.0
         assert config.log_interval == 10
 
-
 class TestMemoryOperations:
     """Test memory-related operations."""
     
@@ -457,7 +449,6 @@ class TestMemoryOperations:
             stats = await api.optimize_memory()
             assert stats is not None
             assert isinstance(stats, dict)
-
 
 class TestIntegrationEndToEnd:
     """Test end-to-end integration workflows."""
@@ -553,7 +544,6 @@ class TestIntegrationEndToEnd:
             await api.stop_simulation()
             assert api.status == SystemStatus.STOPPED
 
-
 class TestConvenienceFunctions:
     """Test convenience functions."""
     
@@ -600,7 +590,6 @@ class TestConvenienceFunctions:
         except RuntimeError:
             # System initialization may fail - that's OK for this test
             pass
-
 
 class TestEdgeCases:
     """Test edge cases and error handling."""
@@ -649,7 +638,6 @@ class TestEdgeCases:
         api.update_metrics(simulation_steps=1)
         assert True
 
-
 class TestSystemStatus:
     """Test SystemStatus enum values."""
     
@@ -670,7 +658,6 @@ class TestSystemStatus:
         # Can be used in dict
         data = {'status': status.value}
         assert data['status'] == "running"
-
 
 # Run specific test for debugging
 if __name__ == '__main__':

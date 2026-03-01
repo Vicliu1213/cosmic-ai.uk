@@ -8,6 +8,7 @@ import sys
 import time
 import json
 from pathlib import Path
+from typing import Any
 
 # 添加到路徑
 sys.path.insert(0, str(Path(__file__).parent))
@@ -20,8 +21,7 @@ from enhanced_memory_manager import (
 from context_recovery_pipeline import ContextRecoveryPipeline, RecoveryShortcutTrigger
 from shortcut_key_system import ShortcutKeySystem
 
-
-def test_memory_operations():
+def test_memory_operations() -> Any:
     """測試基本記憶操作"""
     print("\n" + "="*60)
     print("🧪 測試 1: 基本記憶操作")
@@ -57,8 +57,7 @@ def test_memory_operations():
 
     return manager
 
-
-def test_session_persistence(manager):
+def test_session_persistence(manager) -> Any:
     """測試會話持久化"""
     print("\n" + "="*60)
     print("🧪 測試 2: 會話持久化")
@@ -77,8 +76,7 @@ def test_session_persistence(manager):
     print(f"  - 活躍任務: {len(snapshot['active_tasks'])} 個")
     print(f"  - 交易狀態: {snapshot['trading_state']}")
 
-
-def test_cleanup_mechanism(manager):
+def test_cleanup_mechanism(manager) -> Any:
     """測試自動清理機制"""
     print("\n" + "="*60)
     print("🧪 測試 3: 自動清理機制")
@@ -103,8 +101,7 @@ def test_cleanup_mechanism(manager):
     for tier_name, tier_size in stats['tier_sizes'].items():
         print(f"  {tier_name}: {tier_size:.2f} MB")
 
-
-def test_fast_recovery():
+def test_fast_recovery() -> Any:
     """測試快速恢復"""
     print("\n" + "="*60)
     print("🧪 測試 4: 快速上下文恢復 (<50ms)")
@@ -126,8 +123,7 @@ def test_fast_recovery():
     print(f"  目標: <50ms")
     print(f"  達成: {'✓' if avg_time < 50 else '✗'}")
 
-
-def test_shortcut_keys():
+def test_shortcut_keys() -> Any:
     """測試超短快捷鍵"""
     print("\n" + "="*60)
     print("🧪 測試 5: 超短快捷鍵系統")
@@ -146,8 +142,7 @@ def test_shortcut_keys():
         if len(lines) > 3:
             print(f"  ... ({len(lines)} 行)")
 
-
-def test_performance_benchmark():
+def test_performance_benchmark() -> Any:
     """性能基準測試"""
     print("\n" + "="*60)
     print("🧪 測試 6: 性能基準測試")
@@ -184,8 +179,7 @@ def test_performance_benchmark():
     access_time = time.time() - start
     print(f"  ✓ 耗時: {access_time*1000:.2f}ms ({access_time/50*1000:.2f}ms per access)")
 
-
-def print_test_summary():
+def print_test_summary() -> Any:
     """打印測試摘要"""
     print("\n" + "="*60)
     print("✅ 所有測試完成")
@@ -203,8 +197,7 @@ def print_test_summary():
     print("  - 自動清理: 啟用 ✓")
     print("  - 快捷鍵: m, r, s, stat ✓")
 
-
-def main():
+def main() -> Any:
     """主測試流程"""
     print("\n" + "="*70)
     print("🚀 增強記憶系統集成測試套件")
@@ -228,7 +221,6 @@ def main():
         import traceback
         traceback.print_exc()
         return 1
-
 
 if __name__ == "__main__":
     exit_code = main()

@@ -2,7 +2,7 @@
 
 import logging
 from re import compile
-from typing import TYPE_CHECKING, Any, ClassVar
+from typing import TYPE_CHECKING, Any, ClassVar, Optional
 
 from pydantic import model_validator
 
@@ -19,7 +19,6 @@ logger: logging.Logger = logging.getLogger(__name__)
 FUNCTION_ID_BLOCK_REGEX = r"^((?P<plugin>[0-9A-Za-z_]+)[.])?(?P<function>[0-9A-Za-z_]+)$"
 
 FUNCTION_ID_BLOCK_MATCHER = compile(FUNCTION_ID_BLOCK_REGEX)
-
 
 class FunctionIdBlock(Block):
     """Block to represent a function id. It can be used to call a function from a plugin.

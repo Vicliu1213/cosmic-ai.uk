@@ -11,7 +11,7 @@ import sys
 import time
 import threading
 from pathlib import Path
-from typing import Optional
+from typing import Optional, Any
 from datetime import datetime
 
 # 添加項目根目錄
@@ -20,11 +20,10 @@ sys.path.insert(0, project_root)
 
 from src.core.task_panel import RealTimeTaskPanel, TaskPanelConfig
 
-
 class EnhancedCliWithPanel:
     """增強型 CLI，包含實時任務面板"""
     
-    def __init__(self, panel_position: str = "top-left"):
+    def __init__(self, panel_position: str = "top-left") -> Any:
         """初始化增強 CLI"""
         self.panel_config = TaskPanelConfig(
             position=panel_position,
@@ -37,17 +36,17 @@ class EnhancedCliWithPanel:
         self.running = False
         self.last_panel_output = ""
     
-    def clear_screen(self):
+    def clear_screen(self) -> Any:
         """清屏"""
         os.system('clear' if os.name == 'posix' else 'cls')
     
-    def print_header(self):
+    def print_header(self) -> Any:
         """打印標題"""
         print("\n" + "="*80)
         print("🚀 Comic AI 任務管理系統 - 實時面板版本".center(80))
         print("="*80 + "\n")
     
-    def display_main_menu(self):
+    def display_main_menu(self) -> Any:
         """顯示主菜單"""
         print("\n📌 主菜單:")
         print("  1. 刷新任務面板")
@@ -57,7 +56,7 @@ class EnhancedCliWithPanel:
         print("  5. 退出")
         print("\n選擇操作 (1-5): ", end="")
     
-    def refresh_panel_display(self):
+    def refresh_panel_display(self) -> Any:
         """刷新面板顯示"""
         self.clear_screen()
         self.print_header()
@@ -73,7 +72,7 @@ class EnhancedCliWithPanel:
         print(f"  刷新間隔: {self.panel.config.refresh_interval}秒")
         print("-"*80)
     
-    def show_full_task_list(self):
+    def show_full_task_list(self) -> Any:
         """顯示完整任務列表"""
         self.clear_screen()
         self.print_header()
@@ -116,14 +115,14 @@ class EnhancedCliWithPanel:
                     content = task.get('content', 'Unknown')
                     print(f"  {i}. {priority_emoji} {content}")
     
-    def show_session_summary(self):
+    def show_session_summary(self) -> Any:
         """顯示會話摘要"""
         self.clear_screen()
         self.print_header()
         
         self.panel.recap.print_recap(self.panel.recap.generate_recap())
     
-    def run_interactive(self):
+    def run_interactive(self) -> Any:
         """運行交互式 CLI"""
         self.running = True
         
@@ -168,7 +167,7 @@ class EnhancedCliWithPanel:
         finally:
             self.running = False
     
-    def run_auto_update_mode(self, update_interval: int = 3):
+    def run_auto_update_mode(self, update_interval: int = 3) -> Any:
         """運行自動更新模式"""
         print("🔄 進入自動更新模式（按 Ctrl+C 退出）")
         time.sleep(1)
@@ -180,8 +179,7 @@ class EnhancedCliWithPanel:
         except KeyboardInterrupt:
             print("\n\n👋 自動更新模式已退出")
 
-
-def main():
+def main() -> Any:
     """主函數"""
     import argparse
     
@@ -237,7 +235,6 @@ def main():
     except Exception as e:
         print(f"❌ 錯誤: {e}")
         sys.exit(1)
-
 
 if __name__ == "__main__":
     main()

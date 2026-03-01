@@ -11,7 +11,6 @@ from config import config
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-
 # Endpoint for processing messages
 async def messages(req: Request):
     """
@@ -25,7 +24,6 @@ async def messages(req: Request):
     # NOTE in the context of Skills, we MUST return the response to the Copilot Studio as the response to the request
     # In other channel (ex. Teams), this would not be required, and activities would be sent to the Bot Framework
     return await bot.process(req)
-
 
 async def copilot_manifest(req: Request):
     # load manifest from file and interpolate with env vars
@@ -42,7 +40,6 @@ async def copilot_manifest(req: Request):
         text=manifest,
         content_type="application/json",
     )
-
 
 APP = web.Application()
 APP.router.add_post("/api/messages", messages)

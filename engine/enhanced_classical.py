@@ -93,7 +93,7 @@ class EnhancedClassicalOptimizer:
     def coherence_amplification(self, signals: np.ndarray) -> np.ndarray:
         """相干性放大"""
         # 使用相位同步模擬相干性
-        reference_phase = np.angle(np.mean(signals * np.exp(1j * np.angle(signals)))
+        reference_phase = np.angle(np.mean(signals * np.exp(1j * np.angle(signals))))
         
         # 相位對齊
         coherent_signals = signals * np.exp(-1j * reference_phase)
@@ -431,13 +431,13 @@ class HybridQuantumClassicalSystem:
             'recent_performance': {
                 'avg_improvement': np.mean(improvements) if improvements else 0,
                 'max_improvement': np.max(improvements) if improvements else 0,
-                'breakthrough_rate': np.mean([1 for r in recent_results 
+                'breakthrough_rate': (np.mean([1 for r in recent_results 
                                            if r.get('breakthrough_analysis', {}).get('overall', {}).get('has_breakthrough', False)])
-                                           / len(recent_results)),
+                                           / len(recent_results)) if recent_results else 0,
                 'best_method': self._find_best_method(recent_results),
-                'quantum_advantage_frequency': np.mean([1 for r in recent_results 
-                                                     if r.get('breakthrough_analysis', {}).get('overall', {}).get('quantum_advantage_achieved', False)])
-                                                     / len(recent_results))
+                'quantum_advantage_frequency': (np.mean([1 for r in recent_results 
+                                                      if r.get('breakthrough_analysis', {}).get('overall', {}).get('quantum_advantage_achieved', False)])
+                                                      / len(recent_results)) if recent_results else 0
             },
             'enhancers_active': list(self.enhancers.keys()),
             'system_status': 'optimal' if len(improvements) > 0 and np.mean(improvements) > 0.2 else 'suboptimal'

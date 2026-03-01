@@ -24,7 +24,6 @@ from opencode.live_trading import (
     MockDataSource
 )
 
-
 class TestOrderTypes(unittest.TestCase):
     """Test order type enumerations."""
     
@@ -44,7 +43,6 @@ class TestOrderTypes(unittest.TestCase):
         """Test FILLED order status."""
         self.assertEqual(OrderStatus.FILLED.value, "filled")
 
-
 class TestPositionTypes(unittest.TestCase):
     """Test position side enumerations."""
     
@@ -59,7 +57,6 @@ class TestPositionTypes(unittest.TestCase):
     def test_position_flat(self):
         """Test FLAT (no position)."""
         self.assertEqual(PositionSide.FLAT.value, "FLAT")
-
 
 class TestMarketPrice(unittest.TestCase):
     """Test market price data structure."""
@@ -97,7 +94,6 @@ class TestMarketPrice(unittest.TestCase):
         self.assertIn('close', price_dict)
         self.assertEqual(price_dict['symbol'], "BTC/USD")
 
-
 class TestOrder(unittest.TestCase):
     """Test order data structure."""
     
@@ -133,7 +129,6 @@ class TestOrder(unittest.TestCase):
         
         notional = order.quantity * order.price
         self.assertEqual(notional, 100000.0)
-
 
 class TestPosition(unittest.TestCase):
     """Test position data structure."""
@@ -180,7 +175,6 @@ class TestPosition(unittest.TestCase):
         return_rate = position.return_rate
         self.assertEqual(return_rate, 2.0)
 
-
 class TestAccountInfo(unittest.TestCase):
     """Test account information data structure."""
     
@@ -215,7 +209,6 @@ class TestAccountInfo(unittest.TestCase):
         margin_level = account.margin_level
         # Should be (105000 / 40000) * 100 = 262.5%
         self.assertAlmostEqual(margin_level, 262.5)
-
 
 class TestRiskManager(unittest.TestCase):
     """Test risk management functionality."""
@@ -275,7 +268,6 @@ class TestRiskManager(unittest.TestCase):
         """Test daily loss limit check."""
         is_valid = self.risk_manager.check_daily_loss(-2000.0)
         self.assertTrue(is_valid)
-
 
 class TestOrderExecutor(unittest.TestCase):
     """Test order execution functionality."""
@@ -344,7 +336,6 @@ class TestOrderExecutor(unittest.TestCase):
         
         self.assertEqual(self.executor.orders[order.order_id].status, OrderStatus.FILLED)
 
-
 class TestMockDataSource(unittest.TestCase):
     """Test mock data source functionality."""
     
@@ -390,7 +381,6 @@ class TestMockDataSource(unittest.TestCase):
             self.assertFalse(self.data_source.connected)
         
         asyncio.run(test_connect())
-
 
 class TestLiveTradingEngine(unittest.TestCase):
     """Test live trading engine functionality."""
@@ -441,7 +431,6 @@ class TestLiveTradingEngine(unittest.TestCase):
         self.assertGreater(equity, 0)
         self.assertLessEqual(equity, self.engine.account_info.balance * 2)  # With leverage
 
-
 class TestAsyncOperations(unittest.TestCase):
     """Test async operations in live trading."""
     
@@ -457,7 +446,6 @@ class TestAsyncOperations(unittest.TestCase):
             self.assertIsNotNone(loop)
         finally:
             loop.close()
-
 
 class TestEdgeCases(unittest.TestCase):
     """Test edge cases and error handling."""
@@ -520,7 +508,6 @@ class TestEdgeCases(unittest.TestCase):
         notional = order.quantity * order.price
         self.assertGreater(notional, 0)
 
-
 class TestIntegration(unittest.TestCase):
     """Integration tests for live trading components."""
     
@@ -578,7 +565,6 @@ class TestIntegration(unittest.TestCase):
             await data_source.disconnect()
         
         asyncio.run(test_data())
-
 
 if __name__ == '__main__':
     unittest.main()

@@ -9,9 +9,10 @@ import http.server
 import socketserver
 import urllib.parse
 from pathlib import Path
+from typing import Any
 
 class FileUploadHandler(http.server.SimpleHTTPRequestHandler):
-    def do_GET(self):
+    def do_GET(self) -> Any:
         if self.path == '/':
             self.send_response(200)
             self.send_header('Content-type', 'text/html; charset=utf-8')
@@ -151,7 +152,7 @@ class FileUploadHandler(http.server.SimpleHTTPRequestHandler):
         else:
             super().do_GET()
     
-    def do_POST(self):
+    def do_POST(self) -> Any:
         if self.path == '/upload':
             try:
                 content_type = self.headers.get('Content-Type', '')
@@ -196,7 +197,7 @@ class FileUploadHandler(http.server.SimpleHTTPRequestHandler):
                 print(f"❌ 上传错误: {e}")
                 self.send_error(500, f"上传失败: {e}")
     
-    def format_file_size(self, size_bytes):
+    def format_file_size(self, size_bytes) -> Any:
         if size_bytes < 1024:
             return f"{size_bytes} B"
         elif size_bytes < 1024 * 1024:
@@ -204,7 +205,7 @@ class FileUploadHandler(http.server.SimpleHTTPRequestHandler):
         else:
             return f"{size_bytes / (1024 * 1024):.1f} MB"
 
-def main():
+def main() -> Any:
     PORT = 8000
     
     print("🚀 启动文件上传服务器...")

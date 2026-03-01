@@ -38,7 +38,6 @@ class Task:
             return f"{seconds}s"
         return "-"
 
-
 class TriColumnTaskPanel:
     """三栏式任务面板"""
     
@@ -164,7 +163,6 @@ class TriColumnTaskPanel:
     def print_panel(self):
         """打印面板"""
         print(self.build_full_panel())
-
 
 # 测试代码
 if __name__ == "__main__":

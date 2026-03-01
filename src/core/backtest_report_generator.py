@@ -12,7 +12,6 @@ from typing import Dict, List, Any, Optional
 from pathlib import Path
 from dataclasses import dataclass, asdict
 
-
 @dataclass
 class BacktestResult:
     """回測結果數據"""
@@ -33,7 +32,6 @@ class BacktestResult:
     profit_factor: float
     best_trade: float
     worst_trade: float
-
 
 class BacktestReportGenerator:
     """回測報告生成器"""
@@ -215,7 +213,6 @@ class BacktestReportGenerator:
         
         return filepath
 
-
 # 快速使用函數
 def create_backtest_report(
     results: List[BacktestResult],
@@ -224,7 +221,6 @@ def create_backtest_report(
     """快速創建回測報告"""
     generator = BacktestReportGenerator()
     return generator.generate_report(results, columns=columns)
-
 
 if __name__ == "__main__":
     # 測試數據

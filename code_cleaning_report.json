@@ -1,0 +1,13 @@
+{
+  "timestamp": "2026-03-01T09:01:46.989348",
+  "total_files_scanned": 5,
+  "total_errors_found": 1,
+  "total_errors_fixed": 1,
+  "success_rate": 1.0,
+  "errors_by_type": {
+    "missing_return_type": 1
+  },
+  "errors_by_severity": {
+    "medium": 1
+  }
+}

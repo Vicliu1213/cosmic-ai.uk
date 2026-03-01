@@ -38,7 +38,6 @@ bot = Application[TurnState](
     )
 )
 
-
 @bot.before_turn
 async def setup_chathistory(context: TurnContext, state: TurnState):
     chat_history = state.conversation.get("chat_history") or ChatHistory()
@@ -46,7 +45,6 @@ async def setup_chathistory(context: TurnContext, state: TurnState):
     state.conversation["chat_history"] = chat_history
 
     return state
-
 
 @bot.activity("message")
 async def on_message(context: TurnContext, state: TurnState):

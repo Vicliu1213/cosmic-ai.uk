@@ -22,12 +22,10 @@ from semantic_kernel.exceptions import TextSearchException
 from semantic_kernel.functions import KernelArguments, KernelParameterMetadata
 from semantic_kernel.utils.list_handler import desync_list
 
-
-def test_text_search():
+def test_text_search() -> Any:
     search_base_class = TextSearch()
     assert search_base_class is not None
     assert search_base_class.options_class == SearchOptions
-
 
 class TestSearch(TextSearch):
     async def search(self, **kwargs) -> KernelSearchResults[Any]:
@@ -39,9 +37,8 @@ class TestSearch(TextSearch):
 
         return KernelSearchResults(results=generator(), metadata=kwargs)
 
-
 @pytest.mark.parametrize("output_type", [str, TextSearchResult, "Any"])
-async def test_create_kernel_function(output_type: str, kernel: Kernel):
+async def test_create_kernel_function(output_type: str, kernel: Kernel) -> Any:
     test_search = TestSearch()
     kernel_function = test_search._create_kernel_function(output_type=output_type)
     assert kernel_function is not None
@@ -61,8 +58,7 @@ async def test_create_kernel_function(output_type: str, kernel: Kernel):
         ['{"name":null,"value":"test","link":null}'] if output_type is TextSearchResult else ["test"]
     )
 
-
-def test_create_kernel_function_fail():
+def test_create_kernel_function_fail() -> Any:
     test_search = TestSearch()
     with pytest.raises(TextSearchException):
         test_search.create_search_function(
@@ -74,8 +70,7 @@ def test_create_kernel_function_fail():
             string_mapper=None,
         )
 
-
-async def test_create_kernel_function_inner(kernel: Kernel):
+async def test_create_kernel_function_inner(kernel: Kernel) -> Any:
     test_search = TestSearch()
 
     kernel_function = test_search._create_kernel_function(
@@ -91,8 +86,7 @@ async def test_create_kernel_function_inner(kernel: Kernel):
     assert results is not None
     assert results.value == ["test"]
 
-
-async def test_create_kernel_function_inner_with_options(kernel: Kernel):
+async def test_create_kernel_function_inner_with_options(kernel: Kernel) -> Any:
     test_search = TestSearch()
 
     kernel_function = test_search._create_kernel_function(
@@ -116,8 +110,7 @@ async def test_create_kernel_function_inner_with_options(kernel: Kernel):
     assert results is not None
     assert results.value == ["test"]
 
-
-async def test_create_kernel_function_inner_with_other_options_type(kernel: Kernel):
+async def test_create_kernel_function_inner_with_other_options_type(kernel: Kernel) -> Any:
     test_search = TestSearch()
 
     kernel_function = test_search._create_kernel_function(
@@ -141,8 +134,7 @@ async def test_create_kernel_function_inner_with_other_options_type(kernel: Kern
     assert results is not None
     assert results.value == ["test"]
 
-
-async def test_create_kernel_function_inner_no_results(kernel: Kernel):
+async def test_create_kernel_function_inner_no_results(kernel: Kernel) -> Any:
     test_search = TestSearch()
 
     kernel_function = test_search._create_kernel_function(
@@ -161,8 +153,7 @@ async def test_create_kernel_function_inner_no_results(kernel: Kernel):
         mock_search.side_effect = Exception("fail")
         await kernel_function.invoke(kernel, None)
 
-
-async def test_default_map_to_string():
+async def test_default_map_to_string() -> Any:
     test_search = TestSearch()
     assert (await test_search._map_results(results=KernelSearchResults(results=desync_list(["test"])))) == ["test"]
 
@@ -173,8 +164,7 @@ async def test_default_map_to_string():
         await test_search._map_results(results=KernelSearchResults(results=desync_list([TestClass(test="test")])))
     ) == ['{"test":"test"}']
 
-
-async def test_custom_map_to_string():
+async def test_custom_map_to_string() -> Any:
     test_search = TestSearch()
 
     class TestClass(BaseModel):
@@ -186,8 +176,7 @@ async def test_custom_map_to_string():
         )
     ) == ["test"]
 
-
-def test_create_options():
+def test_create_options() -> Any:
     options = SearchOptions()
     options_class = VectorSearchOptions
     new_options = create_options(options_class, options, top=1)
@@ -195,8 +184,7 @@ def test_create_options():
     assert isinstance(new_options, options_class)
     assert new_options.top == 1
 
-
-def test_create_options_none():
+def test_create_options_none() -> Any:
     options = None
     options_class = VectorSearchOptions
     new_options = create_options(options_class, options, top=1)
@@ -204,8 +192,7 @@ def test_create_options_none():
     assert isinstance(new_options, options_class)
     assert new_options.top == 1
 
-
-def test_create_options_from_dict():
+def test_create_options_from_dict() -> Any:
     options = {"skip": 1}
     options_class = SearchOptions
     new_options = create_options(options_class, options, top=1)  # type: ignore
@@ -215,8 +202,7 @@ def test_create_options_from_dict():
     # if a non SearchOptions object is passed in, it should be ignored
     assert new_options.skip == 0
 
-
-def test_public_create_functions_search():
+def test_public_create_functions_search() -> Any:
     test_search = TestSearch()
     function = test_search.create_search_function()
     assert function is not None

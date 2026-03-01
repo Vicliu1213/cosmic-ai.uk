@@ -1,0 +1,14 @@
+{
+  "subsystem_id": "data_manager",
+  "subsystem_type": "SubsystemType.DATA_MANAGER",
+  "name": "\u6578\u64da\u7ba1\u7406\u5668",
+  "status": "active",
+  "last_sync": "2026-03-01T08:38:14.153369",
+  "connections": [
+    "trading_system",
+    "memory_mgr",
+    "mcp_service"
+  ],
+  "metadata": {},
+  "sync_hash": "e65aa3cf5617c302c3ed8be45160bd426ce95e73b3528a71dc7576a238256407"
+}

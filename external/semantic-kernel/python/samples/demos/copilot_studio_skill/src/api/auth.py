@@ -6,7 +6,6 @@ from collections.abc import Awaitable, Callable
 from botframework.connector.auth import JwtTokenValidation, SkillValidation
 from config import Config
 
-
 class AllowedCallersClaimsValidator:
     config_key = "ALLOWED_CALLERS"
 

@@ -20,7 +20,6 @@ sys.path.insert(0, project_root)
 
 from src.core.session_recap import SessionRecap
 
-
 @dataclass
 class DualPanelConfig:
     """雙框面板配置"""
@@ -33,11 +32,10 @@ class DualPanelConfig:
     show_progress_bar: bool = True
     show_stats: bool = True
 
-
 class DualTaskPanel:
     """雙框任務面板"""
     
-    def __init__(self, config: Optional[DualPanelConfig] = None):
+    def __init__(self, config: Optional[DualPanelConfig] = None) -> Any:
         """初始化雙框面板"""
         self.config = config or DualPanelConfig()
         self.recap = SessionRecap()
@@ -281,20 +279,19 @@ class DualTaskPanel:
         panel_text = self.update()
         print(panel_text)
 
-
 class InteractiveDualPanel:
     """交互式雙框面板"""
     
-    def __init__(self):
+    def __init__(self) -> Any:
         """初始化交互式面板"""
         self.panel = DualTaskPanel()
         self.running = False
     
-    def clear_screen(self):
+    def clear_screen(self) -> Any:
         """清屏"""
         os.system('clear' if os.name == 'posix' else 'cls')
     
-    def show_menu(self):
+    def show_menu(self) -> Any:
         """顯示菜單"""
         print("\n" + "─"*60)
         print("📌 功能菜單:")
@@ -307,7 +304,7 @@ class InteractiveDualPanel:
         print("─"*60)
         print("選擇 (1-6): ", end="")
     
-    def show_full_list(self):
+    def show_full_list(self) -> Any:
         """顯示完整列表"""
         self.clear_screen()
         summary = self.panel.recap.generate_recap()
@@ -338,7 +335,7 @@ class InteractiveDualPanel:
                     content = task.get('content', 'Unknown')
                     print(f"  {i}. {priority_emoji} {content}")
     
-    def auto_update_mode(self, interval: int = 5):
+    def auto_update_mode(self, interval: int = 5) -> Any:
         """自動更新模式"""
         self.running = True
         try:
@@ -350,7 +347,7 @@ class InteractiveDualPanel:
         except KeyboardInterrupt:
             print("\n✅ 自動更新已停止")
     
-    def run(self):
+    def run(self) -> Any:
         """運行交互式面板"""
         while True:
             self.clear_screen()
@@ -392,8 +389,7 @@ class InteractiveDualPanel:
                 print(f"❌ 錯誤: {e}")
                 time.sleep(1)
 
-
-def main():
+def main() -> Any:
     """主函數"""
     import argparse
     
@@ -443,7 +439,6 @@ def main():
     except Exception as e:
         print(f"❌ 錯誤: {e}")
         sys.exit(1)
-
 
 if __name__ == "__main__":
     main()

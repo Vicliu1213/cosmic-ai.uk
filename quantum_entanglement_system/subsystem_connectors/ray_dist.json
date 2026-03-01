@@ -1,0 +1,12 @@
+{
+  "subsystem_id": "ray_dist",
+  "subsystem_type": "SubsystemType.RAY_DISTRIBUTED",
+  "name": "Ray\u5206\u5e03\u5f0f\u5f15\u64ce",
+  "status": "active",
+  "last_sync": "2026-03-01T08:38:14.154227",
+  "connections": [
+    "quantum_engine"
+  ],
+  "metadata": {},
+  "sync_hash": "43a6d59ca96c9b2d70d923f33e54067142626452a299e2dba3b73b94a0ea5b91"
+}

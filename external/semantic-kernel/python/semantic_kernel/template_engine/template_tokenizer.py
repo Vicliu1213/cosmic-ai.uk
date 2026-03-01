@@ -12,7 +12,6 @@ from semantic_kernel.template_engine.code_tokenizer import CodeTokenizer
 
 logger: logging.Logger = logging.getLogger(__name__)
 
-
 # BNF parsed by TemplateTokenizer:
 # [template]       ::= "" | [block] | [block] [template]
 # [block]          ::= [sk-block] | [text-block]

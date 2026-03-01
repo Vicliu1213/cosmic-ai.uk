@@ -1,0 +1,21 @@
+{
+  "function_id": "func_quantum_compute",
+  "function_name": "\u91cf\u5b50\u8a08\u7b97",
+  "base_performance": 100.0,
+  "layer_gains": {
+    "foundation_0": 1.0,
+    "quantum_entangle_1": 3.6692966676192444,
+    "quantum_entangle_2": 13.46373803500169,
+    "quantum_entangle_3": 49.40244910553017
+  },
+  "exponential_gain": 7.38905609893065,
+  "synergy_amplification": 1.0,
+  "final_gain": 18033.74492782851,
+  "contributing_layers": [
+    "foundation_0",
+    "quantum_entangle_1",
+    "quantum_entangle_2",
+    "quantum_entangle_3"
+  ],
+  "synergy_partners": []
+}

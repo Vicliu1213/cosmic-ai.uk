@@ -1,0 +1,231 @@
+{
+  "cycle": 47,
+  "timestamp": "2026-03-01T08:45:42.018676+00:00",
+  "nodes_state": {
+    "immortal_node_0": {
+      "vitality": 100,
+      "coherence": 0.952,
+      "regeneration_count": 48,
+      "state": {
+        "vitality": 100.0,
+        "coherence": 1.0,
+        "regeneration_count": 0,
+        "cycles_lived": 0
+      }
+    },
+    "immortal_node_1": {
+      "vitality": 100,
+      "coherence": 0.952,
+      "regeneration_count": 48,
+      "state": {
+        "vitality": 100.0,
+        "coherence": 1.0,
+        "regeneration_count": 0,
+        "cycles_lived": 0
+      }
+    },
+    "immortal_node_2": {
+      "vitality": 100,
+      "coherence": 0.952,
+      "regeneration_count": 48,
+      "state": {
+        "vitality": 100.0,
+        "coherence": 1.0,
+        "regeneration_count": 0,
+        "cycles_lived": 0,
+        "recursive_depth": 48
+      }
+    },
+    "immortal_node_3": {
+      "vitality": 100,
+      "coherence": 0.952,
+      "regeneration_count": 48,
+      "state": {
+        "vitality": 100.0,
+        "coherence": 1.0,
+        "regeneration_count": 0,
+        "cycles_lived": 0,
+        "superposition_states": 48
+      }
+    },
+    "immortal_node_4": {
+      "vitality": 100,
+      "coherence": 0.952,
+      "regeneration_count": 48,
+      "state": {
+        "vitality": 100.0,
+        "coherence": 1.0,
+        "regeneration_count": 0,
+        "cycles_lived": 0
+      }
+    },
+    "immortal_node_5": {
+      "vitality": 100,
+      "coherence": 0.952,
+      "regeneration_count": 48,
+      "state": {
+        "vitality": 100.0,
+        "coherence": 1.0,
+        "regeneration_count": 0,
+        "cycles_lived": 0
+      }
+    },
+    "immortal_node_6": {
+      "vitality": 100,
+      "coherence": 0.952,
+      "regeneration_count": 48,
+      "state": {
+        "vitality": 100.0,
+        "coherence": 1.0,
+        "regeneration_count": 0,
+        "cycles_lived": 0
+      }
+    },
+    "immortal_node_7": {
+      "vitality": 100,
+      "coherence": 0.952,
+      "regeneration_count": 48,
+      "state": {
+        "vitality": 100.0,
+        "coherence": 1.0,
+        "regeneration_count": 0,
+        "cycles_lived": 0,
+        "recursive_depth": 48
+      }
+    },
+    "immortal_node_8": {
+      "vitality": 100,
+      "coherence": 0.952,
+      "regeneration_count": 48,
+      "state": {
+        "vitality": 100.0,
+        "coherence": 1.0,
+        "regeneration_count": 0,
+        "cycles_lived": 0,
+        "superposition_states": 48
+      }
+    },
+    "immortal_node_9": {
+      "vitality": 100,
+      "coherence": 0.952,
+      "regeneration_count": 48,
+      "state": {
+        "vitality": 100.0,
+        "coherence": 1.0,
+        "regeneration_count": 0,
+        "cycles_lived": 0
+      }
+    },
+    "immortal_node_10": {
+      "vitality": 100,
+      "coherence": 0.952,
+      "regeneration_count": 48,
+      "state": {
+        "vitality": 100.0,
+        "coherence": 1.0,
+        "regeneration_count": 0,
+        "cycles_lived": 0
+      }
+    },
+    "immortal_node_11": {
+      "vitality": 100,
+      "coherence": 0.952,
+      "regeneration_count": 48,
+      "state": {
+        "vitality": 100.0,
+        "coherence": 1.0,
+        "regeneration_count": 0,
+        "cycles_lived": 0
+      }
+    },
+    "immortal_node_12": {
+      "vitality": 100,
+      "coherence": 0.952,
+      "regeneration_count": 48,
+      "state": {
+        "vitality": 100.0,
+        "coherence": 1.0,
+        "regeneration_count": 0,
+        "cycles_lived": 0,
+        "recursive_depth": 48
+      }
+    },
+    "immortal_node_13": {
+      "vitality": 100,
+      "coherence": 0.952,
+      "regeneration_count": 48,
+      "state": {
+        "vitality": 100.0,
+        "coherence": 1.0,
+        "regeneration_count": 0,
+        "cycles_lived": 0,
+        "superposition_states": 48
+      }
+    },
+    "immortal_node_14": {
+      "vitality": 100,
+      "coherence": 0.952,
+      "regeneration_count": 48,
+      "state": {
+        "vitality": 100.0,
+        "coherence": 1.0,
+        "regeneration_count": 0,
+        "cycles_lived": 0
+      }
+    },
+    "immortal_node_15": {
+      "vitality": 100,
+      "coherence": 0.952,
+      "regeneration_count": 48,
+      "state": {
+        "vitality": 100.0,
+        "coherence": 1.0,
+        "regeneration_count": 0,
+        "cycles_lived": 0
+      }
+    }
+  },
+  "loops_state": {
+    "perpetual_loop_0": {
+      "iterations": 48,
+      "total_energy_processed": 3840.0,
+      "states_cycled": 48
+    },
+    "perpetual_loop_1": {
+      "iterations": 48,
+      "total_energy_processed": 4329.599999999997,
+      "states_cycled": 96
+    },
+    "perpetual_loop_2": {
+      "iterations": 48,
+      "total_energy_processed": 4838.400000000004,
+      "states_cycled": 192
+    },
+    "perpetual_loop_3": {
+      "iterations": 48,
+      "total_energy_processed": 5366.400000000004,
+      "states_cycled": 384
+    },
+    "perpetual_loop_4": {
+      "iterations": 48,
+      "total_energy_processed": 5913.599999999995,
+      "states_cycled": 384
+    },
+    "perpetual_loop_5": {
+      "iterations": 48,
+      "total_energy_processed": 6480.0,
+      "states_cycled": 384
+    },
+    "perpetual_loop_6": {
+      "iterations": 48,
+      "total_energy_processed": 7065.599999999994,
+      "states_cycled": 384
+    },
+    "perpetual_loop_7": {
+      "iterations": 48,
+      "total_energy_processed": 7670.400000000006,
+      "states_cycled": 384
+    }
+  },
+  "energy_reservoir": 2058650.5599999921
+}

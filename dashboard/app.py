@@ -4,11 +4,11 @@ Dashboard API Server
 儀表板API伺服器實現
 """
 
-from flask import Flask, jsonify, request, render_template_string
+from flask import Flask, jsonify, request, render_template_string, Response
 import yaml
 import json
 from datetime import datetime
-from typing import Dict, Any, List
+from typing import Dict, Any, List, Tuple
 import os
 
 app = Flask(__name__)
@@ -46,7 +46,7 @@ class DashboardServer:
 dashboard = DashboardServer()
 
 @app.route('/')
-def index():
+def index() -> str:
     """主頁面"""
     html_template = """
     <!DOCTYPE html>
@@ -122,7 +122,7 @@ def index():
     return render_template_string(html_template, current_time=datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
 
 @app.route('/api/status')
-def get_status():
+def get_status() -> Response:
     """獲取系統狀態API"""
     return jsonify({
         'status': dashboard.current_status,
@@ -137,7 +137,7 @@ def get_status():
     })
 
 @app.route('/api/analysis', methods=['POST'])
-def run_analysis():
+def run_analysis() -> Response:
     """運行分析API"""
     data = request.get_json()
     theory = data.get('theory', 'heisenberg')
@@ -160,7 +160,7 @@ def run_analysis():
     return jsonify(result)
 
 @app.route('/api/history')
-def get_history():
+def get_history() -> Response:
     """獲取分析歷史"""
     return jsonify({
         'history': dashboard.analysis_history[-10:],  # 最近10條記錄

@@ -23,7 +23,6 @@ import numpy as np
 
 logger = logging.getLogger(__name__)
 
-
 @dataclass
 class DataPoint:
     """Market data point - 市場數據點"""
@@ -46,7 +45,6 @@ class DataPoint:
             'close': self.close_price,
             'volume': self.volume
         }
-
 
 class DataLoader:
     """
@@ -209,7 +207,6 @@ class DataLoader:
         
         raise ValueError(f"Cannot parse date: {date_string}")
 
-
 class DataValidator:
     """
     Data validator for quality checks.
@@ -319,7 +316,6 @@ class DataValidator:
             'avg_volume': np.mean(volumes),
             'data_span': (points[0].timestamp, points[-1].timestamp)
         }
-
 
 class DataCache:
     """
@@ -436,7 +432,6 @@ class DataCache:
     def _hash_key(key: str) -> str:
         """Generate hash for cache key."""
         return hashlib.md5(key.encode()).hexdigest()
-
 
 class FeatureExtractor:
     """
@@ -561,7 +556,6 @@ class FeatureExtractor:
             ema = price * multiplier + ema * (1 - multiplier)
         
         return float(ema)
-
 
 # Module exports
 __all__ = [

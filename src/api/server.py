@@ -31,10 +31,9 @@ logger = get_logger('comic_ai.api')
 config_manager = ConfigManager()
 config_manager.load_config('config/core/main_system_config.yaml')
 
-
 # Test clipboard endpoint
 @app.route('/test-clipboard', methods=['GET'])
-def test_clipboard():
+def test_clipboard() -> Any:
     """Test page for clipboard functionality."""
     html = """<!DOCTYPE html>
 <html>
@@ -97,7 +96,6 @@ def test_clipboard():
 </html>"""
     return html
 
-
 # Health check endpoints
 @app.route('/health', methods=['GET'])
 def health_check() -> Tuple[Dict[str, Any], int]:
@@ -108,7 +106,6 @@ def health_check() -> Tuple[Dict[str, Any], int]:
         'version': config_manager.get('system.version', '2.0.0'),
         'environment': os.getenv('COMIC_AI_ENV', 'development')
     }), 200
-
 
 @app.route('/api/status', methods=['GET'])
 def api_status() -> Tuple[Dict[str, Any], int]:
@@ -123,7 +120,6 @@ def api_status() -> Tuple[Dict[str, Any], int]:
             'database': 'ready'
         }
     }), 200
-
 
 # Trading endpoints
 @app.route('/api/trading/positions', methods=['GET'])
@@ -142,7 +138,6 @@ def get_positions() -> Tuple[Dict[str, Any], int]:
             'timestamp': datetime.now().isoformat()
         }), 500
 
-
 @app.route('/api/trading/signals', methods=['GET'])
 def get_signals() -> Tuple[Dict[str, Any], int]:
     """Get trading signals."""
@@ -158,7 +153,6 @@ def get_signals() -> Tuple[Dict[str, Any], int]:
             'error': str(e),
             'timestamp': datetime.now().isoformat()
         }), 500
-
 
 @app.route('/api/trading/execute', methods=['POST'])
 def execute_trade() -> Tuple[Dict[str, Any], int]:
@@ -189,7 +183,6 @@ def execute_trade() -> Tuple[Dict[str, Any], int]:
             'timestamp': datetime.now().isoformat()
         }), 500
 
-
 # Market data endpoints
 @app.route('/api/market/price/<symbol>', methods=['GET'])
 def get_price(symbol: str) -> Tuple[Dict[str, Any], int]:
@@ -208,7 +201,6 @@ def get_price(symbol: str) -> Tuple[Dict[str, Any], int]:
             'error': str(e),
             'timestamp': datetime.now().isoformat()
         }), 500
-
 
 @app.route('/api/market/ohlcv/<symbol>', methods=['GET'])
 def get_ohlcv(symbol: str) -> Tuple[Dict[str, Any], int]:
@@ -231,7 +223,6 @@ def get_ohlcv(symbol: str) -> Tuple[Dict[str, Any], int]:
             'timestamp': datetime.now().isoformat()
         }), 500
 
-
 # Analytics endpoints
 @app.route('/api/analytics/performance', methods=['GET'])
 def get_performance() -> Tuple[Dict[str, Any], int]:
@@ -252,7 +243,6 @@ def get_performance() -> Tuple[Dict[str, Any], int]:
             'timestamp': datetime.now().isoformat()
         }), 500
 
-
 # System endpoints
 @app.route('/api/system/config', methods=['GET'])
 def get_system_config() -> Tuple[Dict[str, Any], int]:
@@ -272,10 +262,9 @@ def get_system_config() -> Tuple[Dict[str, Any], int]:
             'timestamp': datetime.now().isoformat()
         }), 500
 
-
 # Error handlers
 @app.errorhandler(404)
-def not_found(error):
+def not_found(error) -> Any:
     """Handle 404 errors."""
     return jsonify({
         'error': 'Endpoint not found',
@@ -283,9 +272,8 @@ def not_found(error):
         'timestamp': datetime.now().isoformat()
     }), 404
 
-
 @app.errorhandler(500)
-def internal_error(error):
+def internal_error(error) -> Any:
     """Handle 500 errors."""
     logger.error(f"Internal server error: {error}")
     return jsonify({
@@ -293,12 +281,10 @@ def internal_error(error):
         'timestamp': datetime.now().isoformat()
     }), 500
 
-
 def run_api_server(host: str = '0.0.0.0', port: int = 8000, debug: bool = False) -> None:
     """Run the API server."""
     logger.info(f"🚀 Starting API server on {host}:{port}")
     app.run(host=host, port=port, debug=debug, threaded=True)
-
 
 if __name__ == '__main__':
     port = int(os.getenv('API_PORT', 8000))

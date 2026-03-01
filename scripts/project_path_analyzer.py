@@ -248,9 +248,9 @@ class ProjectPathInspector:
             backup_list_file = backup_dir / "backup_contents.txt"
             with open(backup_list_file, 'w', encoding='utf-8') as f:
                 f.write(f"Comic AI Comprehensive Backup\n")
-                f"Created: {datetime.now().isoformat()}\n")
-                f"Backup File: {backup_file}\n")
-                f"Size: {os.path.getsize(backup_file)} bytes\n")
+                f.write(f"Created: {datetime.now().isoformat()}\n")
+                f.write(f"Backup File: {backup_file}\n")
+                f.write(f"Size: {os.path.getsize(backup_file)} bytes\n")
                 
             self.logger.info(f"Backup completed: {backup_file}")
             
@@ -309,15 +309,16 @@ class ProjectPathInspector:
         print(f"""
 ╔══════════════════════════════════════════════════╗
 ║              🚀 Comic AI 綜合項目分析報告                    ║
-╚═════════════════════════════════════════════║
+╠══════════════════════════════════════════════════╣
 ║                                                              ║
 ║  📅 分析時間: {report_data['analysis_timestamp']}                        ║
 ║  📁 項目根目錄: {report_data['project_root']}             ║
 ║                                                              ║
-╠═══════════════════════════════════════╝
-        
-📊 📈 統計分析
-"""
+╠══════════════════════════════════════════════════╣
+║
+║  📊 📈 統計分析
+╚══════════════════════════════════════════════════╝
+""")
         
         print(f"• 總文件數量: {report_data['total_files_found']}")
         print(f"• 缺失文件數量: {report_data['missing_files']}")
@@ -329,6 +330,26 @@ class ProjectPathInspector:
         
         print(f"""
 🔗  連接性檢查
+""")
+        
+        connections = report_data['connection_check']
+        for check_name, result in connections.items():
+            status = "✅ 連接" if result else "❌ 未連接"
+            print(f"• {check_name}: {status}")
+        
+        if report_data['backup_file']:
+            try:
+                backup_size = os.path.getsize(report_data['backup_file'])
+            except OSError:
+                backup_size = 0
+            print(f"""
+💾 備份信息
+• 備份文件: {report_data['backup_file']}
+• 備份大小: {backup_size} bytes
+""")
+        
+        print(f"""
+🎯 建議操作
 """)
         
         connections = report_data['connection_check']

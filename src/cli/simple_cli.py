@@ -5,9 +5,9 @@
 
 import sys
 from stage1 import run_stage1, STAGE1_THEORIES
+from typing import Any
 
-
-def main_menu():
+def main_menu() -> Any:
     """主選單"""
     print("\n" + "="*50)
     print("           Comic AI 量子分析系統")
@@ -32,8 +32,7 @@ def main_menu():
             print("\n再見!")
             sys.exit(0)
 
-
-def run_analysis():
+def run_analysis() -> Any:
     """執行分析"""
     print("\n正在執行量子分析...")
     print("分析四大理論: Heisenberg, Bekenstein, Bremermann, Landauer")
@@ -56,8 +55,7 @@ def run_analysis():
     
     input("\n按 Enter 繼續...")
 
-
-def show_theories():
+def show_theories() -> Any:
     """顯示理論"""
     print("\n" + "="*50)
     print("               可用理論")
@@ -72,8 +70,7 @@ def show_theories():
     print("="*50)
     input("\n按 Enter 繼續...")
 
-
-def show_help():
+def show_help() -> Any:
     """顯示說明"""
     print("\n" + "="*50)
     print("               使用說明")
@@ -87,8 +84,7 @@ def show_help():
     print("="*50)
     input("\n按 Enter 繼續...")
 
-
-def main():
+def main() -> Any:
     """主程式"""
     print("啟動 Comic AI 系統...")
     
@@ -104,7 +100,6 @@ def main():
         elif choice == "4":
             print("\n感謝使用!")
             break
-
 
 if __name__ == "__main__":
     main()

@@ -21,7 +21,6 @@ from src.plugins.multi_agent_trading import (
     DecisionType, AgentRole, PortfolioState, MarketData
 )
 
-
 class TestTradingDecision(unittest.TestCase):
     """Test trading decision data structure."""
     
@@ -63,7 +62,6 @@ class TestTradingDecision(unittest.TestCase):
         self.assertEqual(decision_dict['decision_type'], 'sell')
         self.assertIn('timestamp', decision_dict)
 
-
 class TestPortfolioState(unittest.TestCase):
     """Test portfolio state tracking."""
     
@@ -95,7 +93,6 @@ class TestPortfolioState(unittest.TestCase):
         self.assertIn('cash', portfolio_dict)
         self.assertIn('timestamp', portfolio_dict)
 
-
 class TestMarketData(unittest.TestCase):
     """Test market data structure."""
     
@@ -114,7 +111,6 @@ class TestMarketData(unittest.TestCase):
         self.assertEqual(market_data.symbol, 'AAPL')
         self.assertGreater(market_data.ask, market_data.bid)
         self.assertIn('sma_short', market_data.indicators)
-
 
 class TestPortfolioManagementAgent(unittest.TestCase):
     """Test portfolio management agent."""
@@ -154,7 +150,6 @@ class TestPortfolioManagementAgent(unittest.TestCase):
         decision = self.agent.analyze(market_data, portfolio)
         # Decision may be None or a TradingDecision
 
-
 class TestRiskManagementAgent(unittest.TestCase):
     """Test risk management agent."""
     
@@ -190,7 +185,6 @@ class TestRiskManagementAgent(unittest.TestCase):
         
         # Should analyze without error
         decision = self.agent.analyze(market_data, portfolio)
-
 
 class TestSignalAnalysisAgent(unittest.TestCase):
     """Test signal analysis agent."""
@@ -244,7 +238,6 @@ class TestSignalAnalysisAgent(unittest.TestCase):
         )
         
         decision = self.agent.analyze(market_data, portfolio)
-
 
 class TestMultiAgentCoordinator(unittest.TestCase):
     """Test multi-agent coordinator."""
@@ -304,7 +297,6 @@ class TestMultiAgentCoordinator(unittest.TestCase):
         
         # Decision may be None or a TradingDecision
 
-
 class TestDecisionHistory(unittest.TestCase):
     """Test decision history tracking."""
     
@@ -350,7 +342,6 @@ class TestDecisionHistory(unittest.TestCase):
         # Get last 100
         history = agent.get_decision_history(limit=100)
         self.assertEqual(len(history), 100)
-
 
 if __name__ == '__main__':
     unittest.main()

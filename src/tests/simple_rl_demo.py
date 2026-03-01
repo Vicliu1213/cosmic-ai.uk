@@ -12,11 +12,12 @@ import numpy as np
 import matplotlib.pyplot as plt
 from collections import deque
 import random
+from typing import Any
 
 class SimpleAgent(nn.Module):
     """Simple neural network for CartPole"""
     
-    def __init__(self, input_size=4, hidden_size=64, output_size=2):
+    def __init__(self, input_size=4, hidden_size=64, output_size=2) -> Any:
         super(SimpleAgent, self).__init__()
         self.network = nn.Sequential(
             nn.Linear(input_size, hidden_size),
@@ -26,13 +27,13 @@ class SimpleAgent(nn.Module):
             nn.Linear(hidden_size, output_size)
         )
     
-    def forward(self, x):
+    def forward(self, x) -> Any:
         return self.network(x)
 
 class RLTrainer:
     """Basic RL training loop"""
     
-    def __init__(self, env_name='CartPole-v1'):
+    def __init__(self, env_name='CartPole-v1') -> Any:
         self.env = gym.make(env_name)
         self.agent = SimpleAgent()
         self.optimizer = optim.Adam(self.agent.parameters(), lr=0.001)
@@ -45,7 +46,7 @@ class RLTrainer:
         print(f"📊 State Space: {self.env.observation_space}")
         print(f"🎯 Action Space: {self.env.action_space}")
     
-    def select_action(self, state):
+    def select_action(self, state) -> Any:
         """Epsilon-greedy action selection"""
         if random.random() <= self.epsilon:
             return self.env.action_space.sample()
@@ -55,7 +56,7 @@ class RLTrainer:
             q_values = self.agent(state_tensor)
             return q_values.argmax().item()
     
-    def train_episode(self):
+    def train_episode(self) -> Any:
         """Train one episode"""
         state, info = self.env.reset()
         total_reward = 0
@@ -81,7 +82,7 @@ class RLTrainer:
         
         return total_reward
     
-    def train_step(self):
+    def train_step(self) -> Any:
         """Simple Q-learning update"""
         if len(self.memory) < 32:
             return
@@ -109,7 +110,7 @@ class RLTrainer:
         loss.backward()
         self.optimizer.step()
     
-    def train(self, episodes=100):
+    def train(self, episodes=100) -> Any:
         """Train for multiple episodes"""
         rewards = []
         
@@ -130,7 +131,7 @@ class RLTrainer:
         
         return rewards
     
-    def test(self, episodes=5):
+    def test(self, episodes=5) -> Any:
         """Test trained agent"""
         print(f"\n🧪 Testing agent for {episodes} episodes...")
         print("=" * 30)
@@ -163,7 +164,7 @@ class RLTrainer:
         
         return total_rewards
 
-def main():
+def main() -> Any:
     """Main demo function"""
     print("🤖 Simple RL Demo")
     print("Using KTZEN environment")

@@ -1,0 +1,29 @@
+{
+  "function_id": "func_prediction",
+  "function_name": "\u9810\u6e2c\u7cfb\u7d71",
+  "base_performance": 70.0,
+  "layer_gains": {
+    "quantum_entangle_1": 3.6692966676192444,
+    "quantum_entangle_2": 13.46373803500169,
+    "quantum_entangle_3": 49.40244910553017,
+    "amplification_1": 2.6997176151520064,
+    "amplification_2": 7.2884752015620355,
+    "amplification_3": 19.676824889255595,
+    "amplification_4": 53.121870763784756,
+    "amplification_5": 143.41405025081806
+  },
+  "exponential_gain": 54.598150033144236,
+  "synergy_amplification": 1.0,
+  "final_gain": 393051981453.76514,
+  "contributing_layers": [
+    "quantum_entangle_1",
+    "quantum_entangle_2",
+    "quantum_entangle_3",
+    "amplification_1",
+    "amplification_2",
+    "amplification_3",
+    "amplification_4",
+    "amplification_5"
+  ],
+  "synergy_partners": []
+}

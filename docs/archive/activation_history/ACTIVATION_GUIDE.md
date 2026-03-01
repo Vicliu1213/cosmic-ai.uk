@@ -3,12 +3,14 @@
 ## 快速激活
 
 ### 1. 激活虛擬環境
+
 ```bash
 cd /root/comic_ai
 source venv/bin/activate
 ```
 
 ### 2. 驗證系統狀態
+
 ```bash
 # 檢查所有核心模塊
 python3 << 'VERIFY'
@@ -23,16 +25,19 @@ pytest src/tests/ -v
 ### 3. 運行主要應用
 
 #### CLI 應用
+
 ```bash
 python3 src/cli/cli.py
 ```
 
 #### 量子交易演算法
+
 ```bash
 python3 quantum_grover_trading_algorithm.py
 ```
 
 #### 多智能體系統演示
+
 ```bash
 python3 demo_singularity_system.py
 ```
@@ -78,20 +83,26 @@ deactivate
 ## 故障排除
 
 ### 如果出現 "externally-managed-environment" 錯誤
+
 虛擬環境已設置好，使用：
+
 ```bash
 source venv/bin/activate
 ```
 
 ### 如果模塊導入失敗
+
 重新安裝依賴：
+
 ```bash
 source venv/bin/activate
 pip install -r requirements.txt --upgrade --force-reinstall
 ```
 
 ### 如果測試失敗
+
 查看詳細錯誤：
+
 ```bash
 pytest src/tests/ -vv --tb=long
 ```

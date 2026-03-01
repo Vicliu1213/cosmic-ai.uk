@@ -13,7 +13,6 @@ from botbuilder.integration.aiohttp import (
 )
 from botbuilder.schema import Activity, ActivityTypes, InputHints
 
-
 class AdapterWithErrorHandler(CloudAdapter):
     def __init__(
         self,

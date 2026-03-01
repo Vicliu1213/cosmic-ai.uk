@@ -6,8 +6,9 @@ Development environment verification for ML/RL/Quantum projects
 
 import sys
 import os
+from typing import Any
 
-def test_environment():
+def test_environment() -> Any:
     """Test all installed packages and capabilities"""
     
     print("🧪 KTZEN Environment Test")
@@ -63,7 +64,6 @@ def test_environment():
     
     # Test simple tensor operations
     try:
-        import torch
         x = torch.randn(3, 4)
         y = torch.matmul(x, x.T)
         print("✅ PyTorch tensor operations working")
@@ -72,7 +72,6 @@ def test_environment():
     
     # Test RL environment
     try:
-        import gymnasium as gym
         env = gym.make('CartPole-v1')
         obs, info = env.reset()
         print(f"✅ RL Environment (CartPole): obs shape {obs.shape}")
@@ -95,7 +94,6 @@ def test_environment():
     try:
         import matplotlib
         matplotlib.use('Agg')  # Non-interactive backend
-        import matplotlib.pyplot as plt
         plt.figure(figsize=(1, 1))
         plt.plot([0, 1], [0, 1])
         plt.close()

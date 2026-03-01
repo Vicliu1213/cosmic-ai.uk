@@ -1,6 +1,5 @@
 # Copyright (c) Microsoft. All rights reserved.
 
-
 import ast
 from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
@@ -21,7 +20,6 @@ from semantic_kernel.data.vector import (
     vectorstoremodel,
 )
 from semantic_kernel.kernel_types import OptionalOneOrMany
-
 
 @fixture
 def DictVectorStoreRecordCollection() -> type[VectorSearch]:
@@ -86,7 +84,7 @@ def DictVectorStoreRecordCollection() -> type[VectorSearch]:
         def _get_score_from_result(self, result: Any) -> float | None:
             return None
 
-        async def generator(self):
+        async def generator(self) -> Any:
             if self.inner_storage:
                 for record in self.inner_storage.values():
                     yield VectorSearchResult(record=record)
@@ -95,7 +93,6 @@ def DictVectorStoreRecordCollection() -> type[VectorSearch]:
             return ""
 
     return DictVectorStoreRecordCollection
-
 
 @fixture
 def definition() -> object:
@@ -107,13 +104,12 @@ def definition() -> object:
         ]
     )
 
-
 @fixture
 def data_model_serialize_definition() -> object:
-    def serialize(record, **kwargs):
+    def serialize(record, **kwargs) -> Any:
         return record
 
-    def deserialize(records, **kwargs):
+    def deserialize(records, **kwargs) -> Any:
         return records
 
     return VectorStoreCollectionDefinition(
@@ -126,13 +122,12 @@ def data_model_serialize_definition() -> object:
         deserialize=deserialize,
     )
 
-
 @fixture
 def data_model_to_from_dict_definition() -> object:
-    def to_dict(record, **kwargs):
+    def to_dict(record, **kwargs) -> Any:
         return record
 
-    def from_dict(records, **kwargs):
+    def from_dict(records, **kwargs) -> Any:
         return records
 
     return VectorStoreCollectionDefinition(
@@ -144,7 +139,6 @@ def data_model_to_from_dict_definition() -> object:
         to_dict=to_dict,
         from_dict=from_dict,
     )
-
 
 @fixture
 def data_model_container_definition() -> object:
@@ -169,7 +163,6 @@ def data_model_container_definition() -> object:
         from_dict=from_dict,
     )
 
-
 @fixture
 def data_model_container_serialize_definition() -> object:
     def serialize(record: dict[str, dict[str, Any]], **kwargs) -> list[dict[str, Any]]:
@@ -193,10 +186,8 @@ def data_model_container_serialize_definition() -> object:
         deserialize=deserialize,
     )
 
-
 @fixture
 def data_model_pandas_definition() -> object:
-    from pandas import DataFrame
 
     return VectorStoreCollectionDefinition(
         fields=[
@@ -220,9 +211,8 @@ def data_model_pandas_definition() -> object:
         from_dict=lambda x, **_: DataFrame(x),
     )
 
-
 @fixture
-def record_type_vanilla():
+def record_type_vanilla() -> Any:
     @vectorstoremodel
     class DataModelClass:
         def __init__(
@@ -240,9 +230,8 @@ def record_type_vanilla():
 
     return DataModelClass
 
-
 @fixture
-def record_type_vector_array():
+def record_type_vector_array() -> Any:
     @vectorstoremodel
     class DataModelClass:
         def __init__(
@@ -266,9 +255,8 @@ def record_type_vector_array():
 
     return DataModelClass
 
-
 @fixture
-def record_type_vanilla_serialize():
+def record_type_vanilla_serialize() -> Any:
     @vectorstoremodel
     class DataModelClass:
         def __init__(
@@ -286,7 +274,7 @@ def record_type_vanilla_serialize():
             return {"id": self.id, "content": self.content, "vector": self.vector}
 
         @classmethod
-        def deserialize(cls, obj: Any, **kwargs: Any):
+        def deserialize(cls, obj: Any, **kwargs: Any) -> Any:
             """Deserialize the output of the data store to an object."""
             return cls(**obj)
 
@@ -295,9 +283,8 @@ def record_type_vanilla_serialize():
 
     return DataModelClass
 
-
 @fixture
-def record_type_vanilla_to_from_dict():
+def record_type_vanilla_to_from_dict() -> Any:
     @vectorstoremodel
     class DataModelClass:
         def __init__(
@@ -315,7 +302,7 @@ def record_type_vanilla_to_from_dict():
             return {"id": self.id, "content": self.content, "vector": self.vector}
 
         @classmethod
-        def from_dict(cls, *args: Any, **kwargs: Any):
+        def from_dict(cls, *args: Any, **kwargs: Any) -> Any:
             """Deserialize the output of the data store to an object."""
             return cls(**args[0])
 
@@ -324,9 +311,8 @@ def record_type_vanilla_to_from_dict():
 
     return DataModelClass
 
-
 @fixture
-def record_type_pydantic():
+def record_type_pydantic() -> Any:
     @vectorstoremodel
     class DataModelClass(BaseModel):
         content: Annotated[str, VectorStoreField("data")]
@@ -335,9 +321,8 @@ def record_type_pydantic():
 
     return DataModelClass
 
-
 @fixture
-def record_type_dataclass():
+def record_type_dataclass() -> Any:
     @vectorstoremodel
     @dataclass
     class DataModelClass:
@@ -346,7 +331,6 @@ def record_type_dataclass():
         vector: Annotated[list[float] | str | None, VectorStoreField("vector", dimensions=5)] = None
 
     return DataModelClass
-
 
 @fixture(scope="function")
 def vector_store_record_collection(

@@ -30,11 +30,10 @@ from quantum_grover_trading_algorithm import (
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-
 class TestQuantumGroverIntegration(unittest.TestCase):
     """Test suite for Quantum Grover algorithm integration"""
     
-    def setUp(self):
+    def setUp(self) -> Any:
         """Setup test fixtures"""
         # Create test signals
         self.test_signals = [
@@ -42,7 +41,7 @@ class TestQuantumGroverIntegration(unittest.TestCase):
             for i in range(1, 9)
         ]
     
-    def test_quantum_search_basic(self):
+    def test_quantum_search_basic(self) -> Any:
         """Test basic quantum search functionality"""
         logger.info("\n" + "=" * 70)
         logger.info("TEST 1: Basic Quantum Search (3 qubits, 8 items)")
@@ -66,7 +65,7 @@ class TestQuantumGroverIntegration(unittest.TestCase):
         self.assertGreaterEqual(result_index, 0)
         self.assertLess(result_index, 8)
     
-    def test_trading_signal_scoring(self):
+    def test_trading_signal_scoring(self) -> Any:
         """Test that trading signals calculate scores correctly"""
         logger.info("\n" + "=" * 70)
         logger.info("TEST 2: Trading Signal Scoring")
@@ -89,7 +88,7 @@ class TestQuantumGroverIntegration(unittest.TestCase):
         # Verify scores are varied
         self.assertGreater(max(scores) - min(scores), 0.05)
     
-    def test_optimizer_finds_best_signal(self):
+    def test_optimizer_finds_best_signal(self) -> Any:
         """Test that optimizer can find the best signal"""
         logger.info("\n" + "=" * 70)
         logger.info("TEST 3: Optimizer Signal Selection")
@@ -113,7 +112,7 @@ class TestQuantumGroverIntegration(unittest.TestCase):
         # Verify it's one of our signals
         self.assertIn(best_signal.signal_id, [s.signal_id for s in signals])
     
-    def test_algorithm_comparison(self):
+    def test_algorithm_comparison(self) -> Any:
         """Compare quantum and classical approaches"""
         logger.info("\n" + "=" * 70)
         logger.info("TEST 4: Quantum vs Classical Algorithm Comparison")
@@ -147,7 +146,7 @@ class TestQuantumGroverIntegration(unittest.TestCase):
         self.assertGreater(q_score, 0.3)
         self.assertGreater(c_score, 0.3)
     
-    def test_scalability(self):
+    def test_scalability(self) -> Any:
         """Test algorithm scalability with different signal counts"""
         logger.info("\n" + "=" * 70)
         logger.info("TEST 5: Scalability Test")
@@ -186,11 +185,10 @@ class TestQuantumGroverIntegration(unittest.TestCase):
             self.assertGreater(results[size]['quantum_time'], 0)
             self.assertGreater(results[size]['classical_time'], 0)
 
-
 class TestQuantumGates(unittest.TestCase):
     """Test quantum gate operations"""
     
-    def test_hadamard_gate_creates_superposition(self):
+    def test_hadamard_gate_creates_superposition(self) -> Any:
         """Test that Hadamard gate creates proper superposition"""
         logger.info("\n" + "=" * 70)
         logger.info("TEST 6: Hadamard Gate Superposition")
@@ -215,7 +213,7 @@ class TestQuantumGates(unittest.TestCase):
         self.assertAlmostEqual(prob_0, 0.5, places=1)
         self.assertAlmostEqual(prob_1, 0.5, places=1)
     
-    def test_oracle_phase_flip(self):
+    def test_oracle_phase_flip(self) -> Any:
         """Test that oracle correctly flips phase of marked states"""
         logger.info("\n" + "=" * 70)
         logger.info("TEST 7: Oracle Phase Flip")
@@ -243,11 +241,10 @@ class TestQuantumGates(unittest.TestCase):
         # Verify oracle was applied
         self.assertIsNotNone(marked_state)
 
-
 class TestErrorHandling(unittest.TestCase):
     """Test error handling and edge cases"""
     
-    def test_single_signal(self):
+    def test_single_signal(self) -> Any:
         """Test with single signal"""
         logger.info("\n" + "=" * 70)
         logger.info("TEST 8: Single Signal Handling")
@@ -265,7 +262,7 @@ class TestErrorHandling(unittest.TestCase):
         # Should select the only signal
         self.assertEqual(signal.signal_id, 1)
     
-    def test_identical_signals(self):
+    def test_identical_signals(self) -> Any:
         """Test with identical signals"""
         logger.info("\n" + "=" * 70)
         logger.info("TEST 9: Identical Signals")
@@ -287,11 +284,10 @@ class TestErrorHandling(unittest.TestCase):
         # Should select one of them
         self.assertIn(signal.signal_id, [1, 2, 3, 4])
 
-
 class TestBenchmarking(unittest.TestCase):
     """Test benchmarking functionality"""
     
-    def test_algorithm_benchmark(self):
+    def test_algorithm_benchmark(self) -> Any:
         """Test algorithm benchmarking"""
         logger.info("\n" + "=" * 70)
         logger.info("TEST 10: Algorithm Benchmarking")
@@ -331,8 +327,7 @@ class TestBenchmarking(unittest.TestCase):
         for t in quantum_times + classical_times:
             self.assertGreater(t, 0)
 
-
-def run_all_tests():
+def run_all_tests() -> Any:
     """Run all integration tests"""
     logger.info("\n" + "=" * 80)
     logger.info("🧪 QUANTUM GROVER ALGORITHM - TRADING SYSTEM INTEGRATION TESTS")
@@ -375,7 +370,6 @@ def run_all_tests():
                 logger.info(f"  - {test}: {trace[:100]}...")
     
     return result.wasSuccessful()
-
 
 if __name__ == '__main__':
     success = run_all_tests()

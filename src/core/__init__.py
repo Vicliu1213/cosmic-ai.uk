@@ -8,7 +8,9 @@ Exports:
 - SingularityTradingSystem: Main singularity resonance trading system
 """
 
-def __getattr__(name):
+from typing import Any
+
+def __getattr__(name) -> Any:
     if name == 'EnhancedQuantumMarketAnalyzer':
         from .enhanced_quantum_market_analyzer import EnhancedQuantumMarketAnalyzer
         return EnhancedQuantumMarketAnalyzer

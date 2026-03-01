@@ -1,0 +1,10 @@
+{
+  "node_id": "node_trading",
+  "node_type": "trading",
+  "name": "\u4ea4\u6613\u7bc0\u9ede",
+  "ip_address": null,
+  "port": null,
+  "region": "local",
+  "neighbors": [],
+  "metadata": {}
+}

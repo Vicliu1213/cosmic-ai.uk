@@ -1,0 +1,13 @@
+{
+  "subsystem_id": "quantum_engine",
+  "subsystem_type": "SubsystemType.QUANTUM_ENGINE",
+  "name": "\u91cf\u5b50\u8a08\u7b97\u5f15\u64ce",
+  "status": "active",
+  "last_sync": "2026-03-01T08:38:14.152666",
+  "connections": [
+    "trading_system",
+    "ray_dist"
+  ],
+  "metadata": {},
+  "sync_hash": "6a7acda7fa31b2d55c997434e816667eac3be5b1a424a1c135efa58b141596c5"
+}

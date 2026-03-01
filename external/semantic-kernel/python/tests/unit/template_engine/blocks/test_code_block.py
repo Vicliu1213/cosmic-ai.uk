@@ -23,8 +23,7 @@ from semantic_kernel.template_engine.blocks.named_arg_block import NamedArgBlock
 from semantic_kernel.template_engine.blocks.val_block import ValBlock
 from semantic_kernel.template_engine.blocks.var_block import VarBlock
 
-
-def test_init():
+def test_init() -> Any:
     target = CodeBlock(
         content="plugin.function 'value'  arg1=$arg1",
     )
@@ -34,9 +33,8 @@ def test_init():
     assert target.tokens[2] == NamedArgBlock(content="arg1=$arg1")
     assert target.type == BlockTypes.CODE
 
-
 class TestCodeBlockRendering:
-    async def test_it_throws_if_a_plugins_are_empty(self, kernel: Kernel):
+    async def test_it_throws_if_a_plugins_are_empty(self, kernel: Kernel) -> Any:
         target = CodeBlock(
             content="functionName",
         )
@@ -44,7 +42,7 @@ class TestCodeBlockRendering:
         with raises(CodeBlockRenderException, match="Function `functionName` not found"):
             await target.render_code(kernel, KernelArguments())
 
-    async def test_it_throws_if_a_function_doesnt_exist(self, kernel: Kernel):
+    async def test_it_throws_if_a_function_doesnt_exist(self, kernel: Kernel) -> Any:
         target = CodeBlock(
             content="functionName",
         )
@@ -53,9 +51,9 @@ class TestCodeBlockRendering:
         with raises(CodeBlockRenderException, match="Function `functionName` not found"):
             await target.render_code(kernel, KernelArguments())
 
-    async def test_it_throws_if_a_function_call_throws(self, kernel: Kernel):
+    async def test_it_throws_if_a_function_call_throws(self, kernel: Kernel) -> Any:
         @kernel_function(name="funcName")
-        def invoke():
+        def invoke() -> Any:
             raise Exception("function exception")
 
         function = KernelFunctionFromMethod(
@@ -72,7 +70,7 @@ class TestCodeBlockRendering:
         with raises(CodeBlockRenderException, match="test.funcName"):
             await target.render_code(kernel, KernelArguments())
 
-    async def test_it_renders_code_block_consisting_of_just_a_var_block1(self, kernel: Kernel):
+    async def test_it_renders_code_block_consisting_of_just_a_var_block1(self, kernel: Kernel) -> Any:
         code_block = CodeBlock(
             content="$var",
         )
@@ -80,7 +78,7 @@ class TestCodeBlockRendering:
 
         assert result == "foo"
 
-    async def test_it_renders_code_block_consisting_of_just_a_val_block1(self, kernel: Kernel):
+    async def test_it_renders_code_block_consisting_of_just_a_val_block1(self, kernel: Kernel) -> Any:
         code_block = CodeBlock(
             content="'ciao'",
         )
@@ -88,7 +86,7 @@ class TestCodeBlockRendering:
 
         assert result == "ciao"
 
-    async def test_it_invokes_function_cloning_all_variables(self, kernel: Kernel):
+    async def test_it_invokes_function_cloning_all_variables(self, kernel: Kernel) -> Any:
         # Set up initial context variables
         arguments = KernelArguments(input="zero", var1="uno", var2="due")
 
@@ -101,7 +99,7 @@ class TestCodeBlockRendering:
         # Define the function to be invoked, which modifies the canary
         # and context variables
         @kernel_function(name="funcName")
-        def invoke(arguments: KernelArguments):
+        def invoke(arguments: KernelArguments) -> Any:
             nonlocal canary
             canary["input"] = arguments["input"]
             canary["var1"] = arguments["var1"]
@@ -136,7 +134,7 @@ class TestCodeBlockRendering:
         assert arguments["var1"] == "uno"
         assert arguments["var2"] == "due"
 
-    async def test_it_invokes_function_with_custom_variable(self, kernel: Kernel):
+    async def test_it_invokes_function_with_custom_variable(self, kernel: Kernel) -> Any:
         # Define custom variable name and value
         VAR_NAME = "varName"
         VAR_VALUE = "varValue"
@@ -155,7 +153,7 @@ class TestCodeBlockRendering:
 
         # Define the function to be invoked, which modifies the canary variable
         @kernel_function(name="funcName")
-        def invoke(arguments: "KernelArguments"):
+        def invoke(arguments: "KernelArguments") -> Any:
             nonlocal canary
             canary = arguments["varName"]
             return arguments["varName"]
@@ -181,7 +179,7 @@ class TestCodeBlockRendering:
         # Check that the canary value matches the custom variable value
         assert canary == VAR_VALUE
 
-    async def test_it_invokes_function_with_custom_value(self, kernel: Kernel):
+    async def test_it_invokes_function_with_custom_value(self, kernel: Kernel) -> Any:
         # Define a value to be used in the test
         VALUE = "value"
 
@@ -194,7 +192,7 @@ class TestCodeBlockRendering:
 
         # Define the function to be invoked, which modifies the canary variable
         @kernel_function(name="funcName")
-        def invoke(arguments):
+        def invoke(arguments) -> Any:
             nonlocal canary
             canary = arguments["input"]
             return arguments["input"]
@@ -220,7 +218,7 @@ class TestCodeBlockRendering:
         # Check that the canary value matches the value
         assert canary == VALUE
 
-    async def test_it_invokes_function_with_multiple_arguments(self, kernel: Kernel):
+    async def test_it_invokes_function_with_multiple_arguments(self, kernel: Kernel) -> Any:
         # Define a value to be used in the test
         VALUE = "value"
 
@@ -238,7 +236,7 @@ class TestCodeBlockRendering:
 
         # Define the function to be invoked, which modifies the canary variable
         @kernel_function(name="funcName")
-        def invoke(input, arg1, arg2):
+        def invoke(input, arg1, arg2) -> Any:
             nonlocal canary
             canary = f"{input} {arg1} {arg2}"
             return input
@@ -260,7 +258,7 @@ class TestCodeBlockRendering:
         # Check that the canary value matches the value
         assert canary == f"{VALUE} arg1 arg2"
 
-    async def test_it_invokes_function_with_only_named_arguments(self, kernel: Kernel):
+    async def test_it_invokes_function_with_only_named_arguments(self, kernel: Kernel) -> Any:
         code_block = CodeBlock(
             content=" ",
             tokens=[
@@ -274,7 +272,7 @@ class TestCodeBlockRendering:
 
         # Define the function to be invoked, which modifies the canary variable
         @kernel_function(name="funcName")
-        def invoke(arg1, arg2):
+        def invoke(arg1, arg2) -> Any:
             nonlocal canary
             canary = f"{arg1} {arg2}"
             return arg1
@@ -296,7 +294,7 @@ class TestCodeBlockRendering:
         # Check that the canary value matches the value
         assert canary == "arg1 arg2"
 
-    async def test_it_fails_on_function_without_args(self, kernel: Kernel):
+    async def test_it_fails_on_function_without_args(self, kernel: Kernel) -> Any:
         code_block = CodeBlock(
             content=" ",
             tokens=[
@@ -307,7 +305,7 @@ class TestCodeBlockRendering:
         )
 
         @kernel_function(name="funcName")
-        def invoke():
+        def invoke() -> Any:
             return "function without args"
 
         # Create an KernelFunction with the invoke function as its delegate
@@ -326,7 +324,6 @@ class TestCodeBlockRendering:
 but it is being called in the template with 2 arguments.",
         ):
             await code_block.render_code(kernel, KernelArguments(arg1="arg1"))
-
 
 @mark.parametrize(
     "token2",
@@ -371,7 +368,7 @@ but it is being called in the template with 2 arguments.",
         "invalid_val",
     ],
 )
-def test_block_validation(token0, token1, token2):
+def test_block_validation(token0, token1, token2) -> Any:
     with raises((
         FunctionIdBlockSyntaxError,
         VarBlockSyntaxError,
@@ -382,7 +379,6 @@ def test_block_validation(token0, token1, token2):
         CodeBlock(
             content=f"{token0} {token1} {token2}",
         )
-
 
 @mark.parametrize(
     "token2, token2valid",
@@ -441,7 +437,7 @@ def test_block_validation(token0, token1, token2):
         "invalid_named_arg_val",
     ],
 )
-def test_positional_validation(token0, token0valid, token1, token1valid, token2, token2valid):
+def test_positional_validation(token0, token0valid, token1, token1valid, token2, token2valid) -> Any:
     if not token1 and not token2valid:
         mark.skipif(f"{token0} {token1} {token2}", reason="Not applicable")
         return
@@ -460,14 +456,13 @@ def test_positional_validation(token0, token0valid, token1, token1valid, token2,
                 content=content,
             )
 
-
 @mark.parametrize(
     "case, result",
     [
         (r"{$a", False),
     ],
 )
-def test_edge_cases(case, result):
+def test_edge_cases(case, result) -> Any:
     if result:
         target = CodeBlock(
             content=case,
@@ -479,22 +474,20 @@ def test_edge_cases(case, result):
                 content=case,
             )
 
-
-def test_no_tokens():
+def test_no_tokens() -> Any:
     with raises(CodeBlockTokenError):
         CodeBlock(content="", tokens=[])
-
 
 class TestNonStringArguments:
     """Test that non-string KernelArguments are preserved when passed to functions in templates."""
 
-    async def test_function_receives_int_type(self, kernel: Kernel):
+    async def test_function_receives_int_type(self, kernel: Kernel) -> Any:
         """Test that an integer argument is passed as int, not converted to string."""
         received_value = None
         received_type = None
 
         @kernel_function(name="check_type")
-        def check_type(value: int):
+        def check_type(value: int) -> Any:
             nonlocal received_value, received_type
             received_value = value
             received_type = type(value)
@@ -511,13 +504,13 @@ class TestNonStringArguments:
         assert received_value == 42
         assert isinstance(received_value, int), f"Expected int but got {received_type}"
 
-    async def test_function_receives_list_type(self, kernel: Kernel):
+    async def test_function_receives_list_type(self, kernel: Kernel) -> Any:
         """Test that a list argument is passed as list, not converted to string."""
         received_value = None
         received_type = None
 
         @kernel_function(name="check_type")
-        def check_type(items: list):
+        def check_type(items: list) -> Any:
             nonlocal received_value, received_type
             received_value = items
             received_type = type(items)
@@ -534,13 +527,13 @@ class TestNonStringArguments:
         assert received_value == [1, 2, 3]
         assert isinstance(received_value, list), f"Expected list but got {received_type}"
 
-    async def test_function_receives_dict_type(self, kernel: Kernel):
+    async def test_function_receives_dict_type(self, kernel: Kernel) -> Any:
         """Test that a dict argument is passed as dict, not converted to string."""
         received_value = None
         received_type = None
 
         @kernel_function(name="check_type")
-        def check_type(data: dict):
+        def check_type(data: dict) -> Any:
             nonlocal received_value, received_type
             received_value = data
             received_type = type(data)
@@ -557,13 +550,13 @@ class TestNonStringArguments:
         assert received_value == {"key": "value", "num": 123}
         assert isinstance(received_value, dict), f"Expected dict but got {received_type}"
 
-    async def test_named_arg_with_non_string_type(self, kernel: Kernel):
+    async def test_named_arg_with_non_string_type(self, kernel: Kernel) -> Any:
         """Test that named arguments with non-string types are preserved."""
         received_count = None
         received_type = None
 
         @kernel_function(name="process")
-        def process(text: str, count: int):
+        def process(text: str, count: int) -> Any:
             nonlocal received_count, received_type
             received_count = count
             received_type = type(count)

@@ -21,7 +21,6 @@ VAR_BLOCK_REGEX = r"^[${1}](?P<name>[0-9A-Za-z_]+)$"
 
 VAR_BLOCK_MATCHER = compile(VAR_BLOCK_REGEX)
 
-
 class VarBlock(Block):
     """Create a variable block.
 

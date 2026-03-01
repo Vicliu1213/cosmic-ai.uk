@@ -38,7 +38,6 @@ DEFAULT_DESCRIPTION: Final[str] = (
 
 # region: Results
 
-
 @release_candidate
 class TextSearchResult(KernelBaseModel):
     """The result of a text search."""
@@ -47,9 +46,7 @@ class TextSearchResult(KernelBaseModel):
     value: str | None = None
     link: str | None = None
 
-
 TSearchResult = TypeVar("TSearchResult")
-
 
 @release_candidate
 class TextSearch:
@@ -332,7 +329,6 @@ class TextSearch:
 
         """
         ...
-
 
 __all__ = [
     "DEFAULT_DESCRIPTION",

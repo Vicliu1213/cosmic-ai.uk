@@ -19,7 +19,6 @@ sys.path.insert(0, project_root)
 
 logger = logging.getLogger(__name__)
 
-
 @dataclass
 class Task:
     """任務數據類"""
@@ -27,18 +26,17 @@ class Task:
     content: str
     status: str = "pending"  # pending, in_progress, completed, cancelled
     priority: str = "medium"  # low, medium, high
-    timestamp: str = None
-    description: str = None
+    timestamp: Optional[str] = None
+    description: Optional[str] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> Any:
         if self.timestamp is None:
             self.timestamp = datetime.now().isoformat()
-
 
 class TaskPanelPersistenceManager:
     """任務面板持久化管理器"""
     
-    def __init__(self, storage_dir: str = None):
+    def __init__(self, storage_dir: Optional[str] = None) -> Any:
         """初始化任務面板持久化管理器"""
         if storage_dir is None:
             storage_dir = os.path.join(project_root, 'data', 'task_state')
@@ -146,7 +144,7 @@ class TaskPanelPersistenceManager:
             return False
     
     def add_task(self, content: str, status: str = 'pending', priority: str = 'medium', 
-                 description: str = None) -> Task:
+                 description: Optional[str] = None) -> Task:
         """添加任務"""
         try:
             task = Task(
@@ -250,20 +248,17 @@ class TaskPanelPersistenceManager:
             logger.error(f'❌ Failed to restore session: {e}')
             return False
 
-
 # 全局實例
 _task_panel_manager = None
 
-
-def get_task_panel_manager(storage_dir: str = None) -> TaskPanelPersistenceManager:
+def get_task_panel_manager(storage_dir: Optional[str] = None) -> TaskPanelPersistenceManager:
     """獲取全局任務面板管理器實例"""
     global _task_panel_manager
     if _task_panel_manager is None:
         _task_panel_manager = TaskPanelPersistenceManager(storage_dir)
     return _task_panel_manager
 
-
-def main():
+def main() -> Any:
     """測試主函數"""
     logging.basicConfig(level=logging.INFO, format='%(message)s')
     
@@ -298,7 +293,6 @@ def main():
     print("\n💾 Exporting state...")
     export_data = manager.export_state()
     print(json.dumps(export_data, ensure_ascii=False, indent=2))
-
 
 if __name__ == "__main__":
     main()

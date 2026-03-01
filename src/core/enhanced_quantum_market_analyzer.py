@@ -28,7 +28,6 @@ from optimizer.hybrid_quantum_algorithm import (
 
 logger = logging.getLogger(__name__)
 
-
 @dataclass
 class QuantumMetrics:
     """量子指標 - Quantum Metrics"""
@@ -38,7 +37,6 @@ class QuantumMetrics:
     resonance: float
     superposition_probability: float
     decision_confidence: float
-
 
 class EnhancedQuantumMarketAnalyzer:
     """增強型量子市場分析器"""
@@ -466,12 +464,10 @@ class EnhancedQuantumMarketAnalyzer:
             'last_analysis': self.analysis_history[-1] if self.analysis_history else None
         }
 
-
 # 便利函數
 def create_analyzer(config: Optional[Dict[str, Any]] = None) -> EnhancedQuantumMarketAnalyzer:
     """創建增強型量子市場分析器"""
     return EnhancedQuantumMarketAnalyzer(config)
-
 
 if __name__ == '__main__':
     logging.basicConfig(

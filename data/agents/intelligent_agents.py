@@ -70,6 +70,16 @@ class Agent:
     quantum_coherence: float = 0.0
     entanglement_partners: List[str] = field(default_factory=list)
     superposition_states: int = 1
+    
+    # Self-evolution properties
+    error_count: int = 0
+    success_count: int = 0
+    evolution_confidence: float = 0.5
+    strategy_weights: Dict[str, float] = field(default_factory=dict)
+    learning_rate: float = 0.1
+    saturation_level: float = 0.0
+    last_evolution: Optional[datetime] = None
+    evolution_history: List[Dict[str, Any]] = field(default_factory=list)
 
 class IntelligentAgentSystem:
     """智能代理系統管理器"""
@@ -428,3 +438,133 @@ class IntelligentAgentSystem:
             'quantum_network_status': 'active',
             'timestamp': datetime.now().isoformat()
         }
+        
+    async def _handle_task_request(self, agent: Agent, message: Message) -> None:
+        """處理任務請求"""
+        try:
+            # 執行任務並跟蹤結果
+            task_type = message.content.get('task_type', '')
+            result = await self._execute_specialized_task(agent, task_type, message.content)
+            
+            if result:
+                agent.success_count += 1
+                agent.evolution_confidence = min(0.95, agent.evolution_confidence + 0.05)
+            else:
+                agent.error_count += 1
+                agent.evolution_confidence = max(0.1, agent.evolution_confidence - 0.1)
+                
+            # 檢查是否需要進化
+            await self._check_evolution_trigger(agent)
+            
+        except Exception as e:
+            agent.error_count += 1
+            self.logger.error(f"Task request error for {agent.id}: {e}")
+            
+    async def _handle_data_share(self, agent: Agent, message: Message) -> None:
+        """處理數據共享"""
+        try:
+            shared_data = message.content.get('data', {})
+            agent.memory['shared_data'] = shared_data
+            agent.success_count += 1
+        except Exception as e:
+            self.logger.error(f"Data share error for {agent.id}: {e}")
+            
+    async def _handle_quantum_entanglement(self, agent: Agent, message: Message) -> None:
+        """處理量子糾纏"""
+        try:
+            entangle_target = message.content.get('target_agent', '')
+            if entangle_target in self.agents:
+                agent.entanglement_partners.append(entangle_target)
+                agent.success_count += 1
+        except Exception as e:
+            self.logger.error(f"Quantum entanglement error for {agent.id}: {e}")
+            
+    async def _execute_specialized_task(self, agent: Agent, task_type: str, content: Dict[str, Any]) -> bool:
+        """執行專門化任務"""
+        await asyncio.sleep(0.05)
+        return np.random.random() > 0.2  # 80% 成功率
+        
+    async def _check_evolution_trigger(self, agent: Agent) -> None:
+        """檢查是否觸發進化 (改進的觸發條件)"""
+        # 改進的觸發閾值 - 更容易被激發
+        total_attempts = agent.success_count + agent.error_count
+        
+        if total_attempts > 0:
+            success_rate = agent.success_count / total_attempts
+            saturation = min(1.0, agent.success_count / 100.0)
+            agent.saturation_level = saturation
+            
+            # 改進的觸發邏輯 - 降低門檻 (從95% && AND 改為 OR 組合)
+            trigger_confidence = agent.evolution_confidence > 0.6  # 降低從 0.95
+            trigger_success_rate = success_rate > 0.65  # 降低從隱含的更高值
+            trigger_low_saturation = saturation < 0.8  # 改進的飽和度檢查
+            
+            should_evolve = (trigger_confidence and trigger_success_rate) or (trigger_success_rate and trigger_low_saturation)
+            
+            if should_evolve:
+                await self._evolve_agent(agent)
+                
+    async def _evolve_agent(self, agent: Agent) -> None:
+        """進化代理策略 (添加反饋迴路和改進的激活函數)"""
+        try:
+            agent.state = AgentState.LEARNING
+            
+            # 改進的激活函數 (從 sigmoid 改為 ReLU + 縮放)
+            activation_value = max(0, agent.evolution_confidence - 0.5) * 2.0  # ReLU-like
+            
+            # 更新策略權重 (反饋迴路)
+            if 'primary_strategy' not in agent.strategy_weights:
+                agent.strategy_weights['primary_strategy'] = 0.5
+                agent.strategy_weights['fallback_strategy'] = 0.3
+                agent.strategy_weights['innovative_strategy'] = 0.2
+                
+            # 根據成功率增強成功的策略權重
+            success_rate = agent.success_count / max(1, agent.success_count + agent.error_count)
+            weight_increase = activation_value * success_rate * agent.learning_rate
+            
+            agent.strategy_weights['primary_strategy'] = min(0.95, agent.strategy_weights['primary_strategy'] + weight_increase)
+            agent.strategy_weights['innovative_strategy'] = min(0.3, agent.strategy_weights['innovative_strategy'] + weight_increase * 0.3)
+            
+            # 歸一化權重
+            total_weight = sum(agent.strategy_weights.values())
+            if total_weight > 0:
+                for key in agent.strategy_weights:
+                    agent.strategy_weights[key] /= total_weight
+                    
+            # 進化信息記錄
+            agent.last_evolution = datetime.now()
+            agent.evolution_history.append({
+                'timestamp': datetime.now().isoformat(),
+                'confidence': agent.evolution_confidence,
+                'success_rate': success_rate,
+                'weights': agent.strategy_weights.copy()
+            })
+            
+            # 嘗試多代理協作學習
+            await self._cooperative_learn(agent)
+            
+            # 自適應學習率
+            agent.learning_rate = max(0.01, min(0.5, agent.learning_rate * (0.9 + success_rate * 0.2)))
+            
+            agent.state = AgentState.IDLE
+            self.logger.info(f"Agent {agent.id} evolved: confidence={agent.evolution_confidence:.3f}, success_rate={success_rate:.3f}")
+            
+        except Exception as e:
+            self.logger.error(f"Evolution error for {agent.id}: {e}")
+            agent.state = AgentState.ERROR
+            
+    async def _cooperative_learn(self, agent: Agent) -> None:
+        """多代理協作學習"""
+        try:
+            # 與糾纏伙伴分享學習成果
+            for partner_id in agent.entanglement_partners:
+                if partner_id in self.agents:
+                    partner = self.agents[partner_id]
+                    
+                    # 從成功的夥伴那裡學習
+                    if partner.evolution_confidence > agent.evolution_confidence:
+                        agent.strategy_weights['innovative_strategy'] += 0.05
+                        agent.learning_rate = min(0.5, agent.learning_rate + 0.02)
+                        
+        except Exception as e:
+            self.logger.error(f"Cooperative learning error for {agent.id}: {e}")

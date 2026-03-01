@@ -33,7 +33,6 @@ except ImportError:
     HAS_LOG_MANAGER = False
     LogManager = None  # type: ignore
 
-
 class AgentRole(Enum):
     """Agent role enumeration - 智能體角色"""
     PORTFOLIO_MANAGER = "portfolio_manager"
@@ -41,14 +40,12 @@ class AgentRole(Enum):
     SIGNAL_ANALYST = "signal_analyst"
     COORDINATOR = "coordinator"
 
-
 class DecisionType(Enum):
     """Decision type enumeration - 決策類型"""
     BUY = "buy"
     SELL = "sell"
     HOLD = "hold"
     REBALANCE = "rebalance"
-
 
 @dataclass
 class TradingDecision:
@@ -77,7 +74,6 @@ class TradingDecision:
             'risk_score': self.risk_score
         }
 
-
 @dataclass
 class PortfolioState:
     """Portfolio state data structure - 投資組合狀態"""
@@ -99,7 +95,6 @@ class PortfolioState:
             'timestamp': self.timestamp.isoformat()
         }
 
-
 @dataclass
 class MarketData:
     """Market data structure - 市場數據"""
@@ -110,7 +105,6 @@ class MarketData:
     ask: float
     timestamp: datetime
     indicators: Dict[str, float] = field(default_factory=dict)
-
 
 class BaseAgent(ABC):
     """
@@ -191,7 +185,6 @@ class BaseAgent(ABC):
     def get_decision_history(self, limit: int = 100) -> List[TradingDecision]:
         """Get recent decision history."""
         return self.decision_history[-limit:]
-
 
 class PortfolioManagementAgent(BaseAgent):
     """
@@ -312,7 +305,6 @@ class PortfolioManagementAgent(BaseAgent):
             rationale=f"Portfolio drift {drift:.2%} exceeds threshold {self.rebalance_threshold:.2%}",
             risk_score=drift
         )
-
 
 class RiskManagementAgent(BaseAgent):
     """
@@ -446,7 +438,6 @@ class RiskManagementAgent(BaseAgent):
             rationale=f"Emergency exit: Portfolio loss {portfolio.unrealized_pnl:.2f} exceeds limit",
             risk_score=0.99
         )
-
 
 class SignalAnalysisAgent(BaseAgent):
     """
@@ -596,7 +587,6 @@ class SignalAnalysisAgent(BaseAgent):
             )
         
         return None
-
 
 class MultiAgentCoordinator:
     """

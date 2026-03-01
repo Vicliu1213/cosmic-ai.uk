@@ -19,7 +19,6 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-
 class RiskManager:
     """风险管理器"""
     
@@ -281,8 +280,7 @@ class RiskManager:
                 "message": "生成风险报告失败"
             }
 
-
-def print_mcp_tools():
+def print_mcp_tools() -> Any:
     """输出MCP工具定义"""
     tools = {
         "tools": [
@@ -362,7 +360,6 @@ def print_mcp_tools():
         ]
     }
     print(json.dumps(tools, indent=2, ensure_ascii=False))
-
 
 if __name__ == "__main__":
     print_mcp_tools()

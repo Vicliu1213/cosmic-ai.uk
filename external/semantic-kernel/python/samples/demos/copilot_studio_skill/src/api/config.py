@@ -6,7 +6,6 @@ from dotenv import load_dotenv
 
 load_dotenv(override=True)
 
-
 class Config:
     """Bot Configuration"""
 
@@ -39,7 +38,6 @@ class Config:
 
         if not self.ALLOWED_CALLERS:
             raise Exception("Missing required configuration. ALLOWED_CALLERS must be set.")
-
 
 config = Config()
 config.validate()

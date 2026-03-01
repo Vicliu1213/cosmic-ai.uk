@@ -20,7 +20,6 @@ VAL_BLOCK_REGEX = r"^(?P<quote>[\"'])(?P<value>.*)(?P=quote)$"
 
 VAL_BLOCK_MATCHER = compile(VAL_BLOCK_REGEX, flags=S)
 
-
 class ValBlock(Block):
     """Create a value block.
 

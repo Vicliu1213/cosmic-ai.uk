@@ -1,0 +1,23 @@
+{
+  "universe_id": "universe_0",
+  "dimension": 1,
+  "state": "UniverseState.ACTIVE",
+  "creation_time": "2026-03-01T08:38:14.160531",
+  "last_sync": "2026-03-01T08:38:14.160797",
+  "subsystems": [
+    "quantum_engine",
+    "trading_system",
+    "data_manager",
+    "memory_mgr",
+    "task_panel",
+    "ray_dist",
+    "mcp_service",
+    "cli_interface"
+  ],
+  "entanglement_partners": [],
+  "metrics": {
+    "total_subsystems": 8,
+    "active_subsystems": 8,
+    "sync_timestamp": 1772354294.160808
+  }
+}

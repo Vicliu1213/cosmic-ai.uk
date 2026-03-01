@@ -23,7 +23,6 @@ from semantic_kernel.utils.telemetry.agent_diagnostics.decorators import (
 
 logger = logging.getLogger(__name__)
 
-
 class DirectLineAgent(Agent):
     """
     An Agent subclass that connects to a DirectLine Bot from Microsoft Bot Framework.

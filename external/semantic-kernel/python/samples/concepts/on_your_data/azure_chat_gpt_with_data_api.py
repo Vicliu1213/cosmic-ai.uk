@@ -64,7 +64,6 @@ chat_function = kernel.add_function(
 chat_history = ChatHistory()
 chat_history.add_system_message("I am an AI assistant here to answer your questions.")
 
-
 async def chat() -> bool:
     try:
         user_input = input("User:> ")
@@ -104,12 +103,10 @@ async def chat() -> bool:
         chat_history.add_message(message)
     return True
 
-
 async def main() -> None:
     chatting = True
     while chatting:
         chatting = await chat()
-
 
 if __name__ == "__main__":
     asyncio.run(main())

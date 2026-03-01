@@ -7,7 +7,6 @@ if TYPE_CHECKING:
     from semantic_kernel import Kernel
     from semantic_kernel.functions.kernel_arguments import KernelArguments
 
-
 @runtime_checkable
 class TextRenderer(Protocol):
     """Protocol for static (text) blocks that don't need async rendering."""

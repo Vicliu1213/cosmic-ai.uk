@@ -40,7 +40,7 @@ class DataManager:
         
         return str(compressed_path)
     
-    def decompress_file(self, compressed_path: str, output_path: str = None) -> str:
+    def decompress_file(self, compressed_path: str, output_path: Optional[str] = None) -> str:
         """解壓縮文件"""
         compressed_path = Path(compressed_path)
         
@@ -53,7 +53,7 @@ class DataManager:
         
         return str(output_path)
     
-    def create_archive(self, source_dir: str, archive_name: str = None) -> str:
+    def create_archive(self, source_dir: str, archive_name: Optional[str] = None) -> str:
         """創建壓縮存檔"""
         source_dir = Path(source_dir)
         

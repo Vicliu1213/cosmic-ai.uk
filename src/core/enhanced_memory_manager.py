@@ -25,13 +25,11 @@ from enum import Enum
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-
 class MemoryTier(Enum):
     """記憶層級 (分層策略)"""
     HOT = "hot"  # 熱記憶: 最近 24 小時，頻繁訪問
     WARM = "warm"  # 溫記憶: 1-7 天，中等訪問
     COLD = "cold"  # 冷記憶: 7+ 天，歸檔
-
 
 @dataclass
 class MemoryEntry:
@@ -44,7 +42,6 @@ class MemoryEntry:
     access_count: int = 0  # 訪問次數
     size_bytes: int = 0  # 內容大小
 
-
 @dataclass
 class SessionContext:
     """會話上下文 (快速恢復用)"""
@@ -55,7 +52,6 @@ class SessionContext:
     recent_exchanges: List[Dict[str, str]] = field(default_factory=list)  # 最近對話
     trading_state: Dict[str, Any] = field(default_factory=dict)  # 交易狀態
     memory_summary: str = ""  # 會話記憶摘要
-
 
 class EnhancedMemoryManager:
     """增強記憶管理器 (核心類)"""
@@ -391,10 +387,8 @@ class EnhancedMemoryManager:
         total = sum(f.stat().st_size for f in tier_dir.glob("*.json"))
         return total / (1024 * 1024)
 
-
 # 全局實例
 _memory_manager: Optional[EnhancedMemoryManager] = None
-
 
 def get_memory_manager() -> EnhancedMemoryManager:
     """獲取全局記憶管理器實例"""
@@ -402,7 +396,6 @@ def get_memory_manager() -> EnhancedMemoryManager:
     if _memory_manager is None:
         _memory_manager = EnhancedMemoryManager()
     return _memory_manager
-
 
 if __name__ == "__main__":
     # 演示用法

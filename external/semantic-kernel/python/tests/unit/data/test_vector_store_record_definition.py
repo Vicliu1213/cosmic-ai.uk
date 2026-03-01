@@ -5,8 +5,7 @@ from pytest import raises
 from semantic_kernel.data.vector import VectorStoreCollectionDefinition, VectorStoreField
 from semantic_kernel.exceptions import VectorStoreModelException
 
-
-def test_vector_store_record_definition():
+def test_vector_store_record_definition() -> Any:
     id_field = VectorStoreField("key", name="id")
     vsrd = VectorStoreCollectionDefinition(fields=[id_field])
     assert vsrd.fields == [VectorStoreField("key", name="id")]
@@ -20,32 +19,27 @@ def test_vector_store_record_definition():
     assert vsrd.serialize is None
     assert vsrd.deserialize is None
 
-
-def test_no_fields_fail():
+def test_no_fields_fail() -> Any:
     with raises(VectorStoreModelException):
         VectorStoreCollectionDefinition(fields=[])
 
-
-def test_no_name_fields_fail():
+def test_no_name_fields_fail() -> Any:
     with raises(VectorStoreModelException):
         VectorStoreCollectionDefinition(fields=[VectorStoreField("key", name=None)])
     with raises(VectorStoreModelException):
         VectorStoreCollectionDefinition(fields=[VectorStoreField("key", name="")])
 
-
-def test_no_key_field_fail():
+def test_no_key_field_fail() -> Any:
     with raises(VectorStoreModelException):
         VectorStoreCollectionDefinition(fields=[VectorStoreField("data", name="content")])
 
-
-def test_multiple_key_field_fail():
+def test_multiple_key_field_fail() -> Any:
     with raises(VectorStoreModelException):
         VectorStoreCollectionDefinition(
             fields=[VectorStoreField("key", name="key1"), VectorStoreField("key", name="key2")]
         )
 
-
-def test_vector_and_non_vector_field_names():
+def test_vector_and_non_vector_field_names() -> Any:
     definition = VectorStoreCollectionDefinition(
         fields=[
             VectorStoreField("key", name="id"),
@@ -56,8 +50,7 @@ def test_vector_and_non_vector_field_names():
     assert definition.vector_field_names == ["vector"]
     assert definition.data_field_names == ["content"]
 
-
-def test_try_get_vector_field():
+def test_try_get_vector_field() -> Any:
     definition = VectorStoreCollectionDefinition(
         fields=[
             VectorStoreField("key", name="id"),
@@ -68,8 +61,7 @@ def test_try_get_vector_field():
     assert definition.try_get_vector_field() == definition.fields[2]
     assert definition.try_get_vector_field("vector") == definition.fields[2]
 
-
-def test_try_get_vector_field_none():
+def test_try_get_vector_field_none() -> Any:
     definition = VectorStoreCollectionDefinition(
         fields=[
             VectorStoreField("key", name="id"),
@@ -80,8 +72,7 @@ def test_try_get_vector_field_none():
     with raises(VectorStoreModelException, match="Field vector not found."):
         definition.try_get_vector_field("vector")
 
-
-def test_try_get_vector_field_wrong_name_fail():
+def test_try_get_vector_field_wrong_name_fail() -> Any:
     definition = VectorStoreCollectionDefinition(
         fields=[
             VectorStoreField("key", name="id"),
@@ -91,8 +82,7 @@ def test_try_get_vector_field_wrong_name_fail():
     with raises(VectorStoreModelException, match="Field content is not a vector field."):
         definition.try_get_vector_field("content")
 
-
-def test_get_field_names():
+def test_get_field_names() -> Any:
     definition = VectorStoreCollectionDefinition(
         fields=[
             VectorStoreField("key", name="id"),

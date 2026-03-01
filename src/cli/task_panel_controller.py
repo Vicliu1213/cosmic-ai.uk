@@ -10,7 +10,7 @@ import json
 import argparse
 import logging
 from pathlib import Path
-from typing import Optional, List
+from typing import Optional, List, Any
 
 # 添加項目根目錄
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..'))
@@ -25,8 +25,7 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-
-def activate_panel(username: str, tasks_json: Optional[str] = None):
+def activate_panel(username: str, tasks_json: Optional[str] = None) -> Any:
     """激活任務面板"""
     manager = get_task_panel_manager()
     
@@ -51,8 +50,7 @@ def activate_panel(username: str, tasks_json: Optional[str] = None):
     
     return success
 
-
-def deactivate_panel():
+def deactivate_panel() -> Any:
     """停用任務面板"""
     manager = get_task_panel_manager()
     success = manager.deactivate()
@@ -62,8 +60,7 @@ def deactivate_panel():
         logger.error('❌ Failed to deactivate task panel')
     return success
 
-
-def add_task(content: str, priority: str = 'medium', status: str = 'pending'):
+def add_task(content: str, priority: str = 'medium', status: str = 'pending') -> Any:
     """添加任務"""
     manager = get_task_panel_manager()
     try:
@@ -77,8 +74,7 @@ def add_task(content: str, priority: str = 'medium', status: str = 'pending'):
         logger.error(f'❌ Failed to add task: {e}')
         return False
 
-
-def update_status(task_id: str, status: str):
+def update_status(task_id: str, status: str) -> Any:
     """更新任務狀態"""
     manager = get_task_panel_manager()
     task = manager.update_task_status(task_id, status)
@@ -89,8 +85,7 @@ def update_status(task_id: str, status: str):
         logger.error(f'❌ Task {task_id} not found')
         return False
 
-
-def list_tasks(status: Optional[str] = None):
+def list_tasks(status: Optional[str] = None) -> Any:
     """列出任務"""
     manager = get_task_panel_manager()
     
@@ -123,8 +118,7 @@ def list_tasks(status: Optional[str] = None):
     else:
         logger.info('  No tasks found')
 
-
-def show_summary():
+def show_summary() -> Any:
     """顯示摘要"""
     manager = get_task_panel_manager()
     summary = manager.get_summary()
@@ -140,8 +134,7 @@ def show_summary():
     if summary['session_info']:
         logger.info(f'  Session: {summary["session_info"].get("username")} ({summary["session_info"].get("role")})')
 
-
-def export_state():
+def export_state() -> Any:
     """導出狀態"""
     manager = get_task_panel_manager()
     export_data = manager.export_state()
@@ -149,8 +142,7 @@ def export_state():
     logger.info('💾 Task Panel State:')
     print(json.dumps(export_data, ensure_ascii=False, indent=2))
 
-
-def clear_all():
+def clear_all() -> Any:
     """清除所有"""
     manager = get_task_panel_manager()
     success = manager.clear_all()
@@ -160,8 +152,7 @@ def clear_all():
         logger.error('❌ Failed to clear state')
     return success
 
-
-def main():
+def main() -> Any:
     """主函數"""
     parser = argparse.ArgumentParser(
         description='Task Panel Controller - Manage persisted task states',
@@ -260,7 +251,6 @@ Examples:
         export_state()
     elif args.command == 'clear':
         clear_all()
-
 
 if __name__ == '__main__':
     main()

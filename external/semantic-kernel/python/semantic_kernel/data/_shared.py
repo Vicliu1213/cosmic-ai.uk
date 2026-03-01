@@ -17,7 +17,6 @@ from semantic_kernel.utils.feature_stage_decorator import release_candidate
 TSearchResult = TypeVar("TSearchResult")
 TSearchOptions = TypeVar("TSearchOptions", bound="SearchOptions")
 
-
 DEFAULT_RETURN_PARAMETER_METADATA: KernelParameterMetadata = KernelParameterMetadata(
     name="results",
     description="The search results.",
@@ -53,7 +52,6 @@ DEFAULT_PARAMETER_METADATA: list[KernelParameterMetadata] = [
 ]
 DEFAULT_FUNCTION_NAME: Final[str] = "search"
 
-
 @release_candidate
 class SearchOptions(ABC, KernelBaseModel):
     """Options for a search.
@@ -70,7 +68,6 @@ class SearchOptions(ABC, KernelBaseModel):
         extra="allow", populate_by_name=True, arbitrary_types_allowed=True, validate_assignment=True
     )
 
-
 @release_candidate
 class KernelSearchResults(KernelBaseModel, Generic[TSearchResult]):
     """The result of a kernel search."""
@@ -78,7 +75,6 @@ class KernelSearchResults(KernelBaseModel, Generic[TSearchResult]):
     results: AsyncIterable[TSearchResult]
     total_count: int | None = None
     metadata: Mapping[str, Any] | None = None
-
 
 class DynamicFilterFunction(Protocol):
     """Type definition for the filter update function in Text Search."""
@@ -91,7 +87,6 @@ class DynamicFilterFunction(Protocol):
     ) -> OptionalOneOrList[Callable | str] | None:
         """Signature of the function."""
         ...  # pragma: no cover
-
 
 def create_options(
     options_class: type["TSearchOptions"],
@@ -141,7 +136,6 @@ def create_options(
         if key in options.__class__.model_fields:
             setattr(options, key, value)
     return options
-
 
 def default_dynamic_filter_function(
     filter: OptionalOneOrList[Callable | str] | None = None,

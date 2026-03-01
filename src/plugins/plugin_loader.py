@@ -26,11 +26,10 @@ logger = logging.getLogger(__name__)
 PROJECT_ROOT = Path(__file__).parent.parent.parent.parent  # /root/comic_ai
 sys.path.insert(0, str(PROJECT_ROOT))
 
-
 class PluginLoader:
     """Automatic plugin loader for Comic AI"""
     
-    def __init__(self):
+    def __init__(self) -> Any:
         self.plugins_dir = PROJECT_ROOT / "src" / "plugins"
         self.loaded_plugins: Dict[str, Any] = {}
         self.config_file = PROJECT_ROOT / ".config" / "plugins_config.json"
@@ -212,7 +211,7 @@ class PluginLoader:
         
         return failed_count == 0
     
-    def write_log(self, success: int, failed: int):
+    def write_log(self, success: int, failed: int) -> Any:
         """Write plugin loading log"""
         self.log_file.parent.mkdir(parents=True, exist_ok=True)
         
@@ -231,13 +230,11 @@ class PluginLoader:
         """Get all loaded plugins"""
         return self.loaded_plugins
 
-
-def auto_load_plugins():
+def auto_load_plugins() -> Any:
     """Main entry point for auto-loading plugins"""
     loader = PluginLoader()
     loader.load_all_plugins()
     return loader.get_loaded_plugins()
-
 
 if __name__ == "__main__":
     plugins = auto_load_plugins()

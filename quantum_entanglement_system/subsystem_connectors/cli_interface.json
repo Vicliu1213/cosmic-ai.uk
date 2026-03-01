@@ -1,0 +1,12 @@
+{
+  "subsystem_id": "cli_interface",
+  "subsystem_type": "SubsystemType.CLI_INTERFACE",
+  "name": "CLI\u754c\u9762",
+  "status": "active",
+  "last_sync": "2026-03-01T08:38:14.154816",
+  "connections": [
+    "task_panel"
+  ],
+  "metadata": {},
+  "sync_hash": "af0d6cc34be4fd71a6b6ba7ff2d3b489146a175eb7df38965e23a86f816fc7a1"
+}

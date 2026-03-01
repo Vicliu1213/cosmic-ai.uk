@@ -1,0 +1,10 @@
+{
+  "node_id": "node_ray",
+  "node_type": "distributed",
+  "name": "Ray\u5206\u5e03\u5f0f\u7bc0\u9ede",
+  "ip_address": null,
+  "port": null,
+  "region": "local",
+  "neighbors": [],
+  "metadata": {}
+}

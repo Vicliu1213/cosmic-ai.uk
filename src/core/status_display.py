@@ -14,7 +14,7 @@ import json
 class StatusDisplay:
     """狀態顯示管理器"""
     
-    def __init__(self):
+    def __init__(self) -> Any:
         self.project_root = Path("/root/comic_ai")
         self.start_time = datetime.now()
         self.max_recent_tasks = 3
@@ -136,7 +136,7 @@ class StatusDisplay:
 class ComicAICLI:
     """Comic AI 主CLI界面"""
     
-    def __init__(self):
+    def __init__(self) -> Any:
         self.project_root = Path("/root/comic_ai")
         self.status_display = StatusDisplay()
         self.project_status = self.get_project_status()
@@ -160,15 +160,14 @@ class ComicAICLI:
                 'processing_speed': 'fast',
                 'efficiency': 'high'
             },
-            'uptime': str(timedelta(seconds=datetime.now().timestamp() - self.status_display.start_time.timestamp()).total_seconds() // 3600) // seconds to hours
-        }
+            'uptime': int((datetime.now().timestamp() - self.status_display.start_time.timestamp()) // 3600)
         }
         
-    def start_with_status(self):
+    def start_with_status(self) -> Any:
         """帶動狀態更新"""
         self.status_display.update_task_status("system_init", "初始化系統組件", "in_progress")
         
-    def run_main_menu(self):
+    def run_main_menu(self) -> Any:
         """運行主菜單"""
         while True:
             self.status_display.show_status_display()
@@ -203,7 +202,7 @@ class ComicAICLI:
                 print(f"\n⚠️ 無效的選擇，請輸入 1-5")
                 time.sleep(2)
                 
-    def run_stage1_analysis(self):
+    def run_stage1_analysis(self) -> Any:
         """運行Stage1分析"""
         print("\n🧊 正在執行 Stage1 量子優勢分析...")
         print("🔍 分析四大物理理論...")
@@ -232,14 +231,14 @@ class ComicAICLI:
         self.status_display.update_task_status("stage1_analysis", "Stage1量子優勢分析完成", "completed")
         time.sleep(2)
         
-    def modify_parameters(self):
+    def modify_parameters(self) -> Any:
         """修改分析參數"""
         print("\n⚙️ 參數修改介面")
         print("目前功能尚未完全實現...")
         print("請稍候系統完善！")
         time.sleep(3)
         
-    def view_analysis_results(self):
+    def view_analysis_results(self) -> Any:
         """查看分析結果"""
         print("\n📊 最新的分析結果：")
         print("📈 生成時間:", datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
@@ -255,7 +254,7 @@ class ComicAICLI:
         self.status_display.update_task_status("view_results", "查看看分析結果", "completed")
         time.sleep(3)
         
-    def show_help(self):
+    def show_help(self) -> Any:
         """顯示使用說明"""
         print("\n📖 Comic AI 使用說明")
         print("")
@@ -291,7 +290,7 @@ class ComicAICLI:
         print("  • 空格: 選入完成")
         print("")
 
-def main():
+def main() -> Any:
     """主函數數"""
     cli = ComicAICLI()
     cli.run_main_menu()

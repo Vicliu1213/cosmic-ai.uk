@@ -1,0 +1,12 @@
+{
+  "algorithm": "qaoa",
+  "layers": 3,
+  "problem": "maxcut",
+  "results": {
+    "num_qubits": 16,
+    "layers": 3,
+    "approximation_ratio": 0.9297270459671978,
+    "optimal_cut_size": 55,
+    "classical_bound": 30
+  }
+}

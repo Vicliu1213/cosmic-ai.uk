@@ -1,0 +1,13 @@
+{
+  "subsystem_id": "memory_mgr",
+  "subsystem_type": "SubsystemType.MEMORY_MANAGER",
+  "name": "\u5167\u5b58\u7ba1\u7406\u5668",
+  "status": "active",
+  "last_sync": "2026-03-01T08:38:14.153644",
+  "connections": [
+    "data_manager",
+    "task_panel"
+  ],
+  "metadata": {},
+  "sync_hash": "732235f42f50203d2690580be10c7e86ca9b7544d7593b61e7a4750cbc8f1bb8"
+}

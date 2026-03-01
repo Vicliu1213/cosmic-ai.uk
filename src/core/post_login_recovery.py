@@ -18,11 +18,10 @@ sys.path.insert(0, project_root)
 
 logger = logging.getLogger(__name__)
 
-
 class PostLoginAutoRecovery:
     """登入後自動恢復管理器"""
     
-    def __init__(self, user_id: str = None):
+    def __init__(self, user_id: Optional[str] = None) -> Any:
         """初始化恢復管理器"""
         self.user_id = user_id or 'default'
         self.memory_dir = Path('/root/comic_ai/data/user_memory')
@@ -336,8 +335,7 @@ class PostLoginAutoRecovery:
 """
         return summary.strip()
 
-
-def main():
+def main() -> Any:
     """測試主函數"""
     logging.basicConfig(level=logging.INFO, format='%(message)s')
     
@@ -398,7 +396,6 @@ def main():
     
     with open(recovery.user_memory_file, 'r', encoding='utf-8') as f:
         print(f.read())
-
 
 if __name__ == '__main__':
     main()

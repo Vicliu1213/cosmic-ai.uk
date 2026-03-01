@@ -1,0 +1,250 @@
+# 量子場論系統引擎配置
+# Quantum Field Theory Engine Configuration
+# 使用量子邏輯構成的巨大量子場
+
+quantum_field_theory:
+  # 格子配置 / Lattice Configuration
+  lattice:
+    enabled: true
+    
+    # 格子尺寸 / Lattice Size
+    size: [2, 32]  # N x N x N 立方格子
+    
+    # 格子類型 / Lattice Type
+    type: "cubic"  # cubic, hexagonal, triangular
+    
+    # 邊界條件 / Boundary Conditions
+    boundary_conditions: "periodic"  # periodic, open, mixed
+    
+    # 格子間距 / Lattice Spacing
+    spacing: [0.1, 10.0]
+    
+  # 希爾伯特空間配置 / Hilbert Space Configuration
+  hilbert_space:
+    enabled: true
+    
+    # 空間維度 / Space Dimensions
+    dimensions: [2, 1024]
+    
+    # 基態配置 / Ground State Configuration
+    ground_state:
+      enabled: true
+      initialization: "vacuum"  # vacuum, superposition
+      
+    # 態向量 / State Vector
+    state_vector:
+      enabled: true
+      dtype: "complex128"
+      
+  # 量子場點配置 / Quantum Field Point Configuration
+  field_points:
+    enabled: true
+    
+    # 空間位置 / Spatial Positions
+    positions:
+      enabled: true
+      dimension: 3  # 3D
+      coordinate_range: [-10.0, 10.0]
+      
+    # 場值 / Field Values
+    field_values:
+      enabled: true
+      dtype: "complex"
+      initial_value_range: [0.0, 1.0]
+      
+    # 量子場模式 / Quantum Field Modes
+    modes:
+      - "ground_state"
+      - "excited_state"
+      - "superposition"
+      - "entangled"
+      - "coherent"
+      - "squeezed"
+      
+    # 相位與振幅 / Phase and Amplitude
+    phase_amplitude:
+      enabled: true
+      phase_range: [0.0, 6.283185]  # 0 to 2π
+      amplitude_range: [0.0, 1.0]
+      
+    # 相干性 / Coherence
+    coherence:
+      enabled: true
+      initial_coherence: [0.8, 1.0]
+      decoherence_rate: [0.001, 0.1]
+      
+    # 糾纏 / Entanglement
+    entanglement:
+      enabled: true
+      max_entanglement_partners: [0, 1000]
+      entanglement_strength: [0.0, 1.0]
+      
+  # 量子態配置 / Quantum State Configuration
+  quantum_states:
+    enabled: true
+    
+    # 密度矩陣 / Density Matrix
+    density_matrix:
+      enabled: true
+      calculate_purity: true
+      calculate_entropy: true
+      
+    # 純度 / Purity
+    purity:
+      enabled: true
+      range: [0.0, 1.0]
+      
+    # 馮·諾依曼熵 / von Neumann Entropy
+    entropy:
+      enabled: true
+      range: [0.0, 10.0]
+      
+    # 相位因子 / Phase Factor
+    phase_factor:
+      enabled: true
+      dtype: "complex"
+      
+  # 量子算子配置 / Quantum Operator Configuration
+  operators:
+    enabled: true
+    
+    # 產生算子 / Creation Operator
+    creation:
+      enabled: true
+      symbol: "a†"
+      
+    # 湮滅算子 / Annihilation Operator
+    annihilation:
+      enabled: true
+      symbol: "a"
+      
+    # 數算子 / Number Operator
+    number:
+      enabled: true
+      symbol: "N"
+      
+    # 動量與位置 / Momentum and Position
+    momentum_position:
+      enabled: true
+      commutation_relation: true
+      
+    # 哈密頓量 / Hamiltonian
+    hamiltonian:
+      enabled: true
+      calculate_eigenvalues: true
+      calculate_eigenvectors: true
+      
+  # 糾纏圖配置 / Entanglement Graph Configuration
+  entanglement_graph:
+    enabled: true
+    
+    # 圖構造 / Graph Construction
+    construction:
+      enabled: true
+      max_nodes: [10, 100000]
+      
+    # 邊權重 / Edge Weights
+    edge_weights:
+      enabled: true
+      range: [0.0, 1.0]
+      
+    # 路徑追蹤 / Path Tracking
+    path_tracking:
+      enabled: true
+      
+  # 場能密度配置 / Field Energy Density Configuration
+  energy_density:
+    enabled: true
+    
+    # 動能 / Kinetic Energy
+    kinetic:
+      enabled: true
+      
+    # 勢能 / Potential Energy
+    potential:
+      enabled: true
+      
+    # 相互作用能 / Interaction Energy
+    interaction:
+      enabled: true
+      
+    # 能量密度範圍 / Energy Density Range
+    range: [0.0, 1e10]
+    
+  # 相干網絡配置 / Coherence Network Configuration
+  coherence_network:
+    enabled: true
+    
+    # 相干強度 / Coherence Strength
+    strength:
+      enabled: true
+      range: [0.0, 1.0]
+      
+    # 相干衰減 / Coherence Decay
+    decay:
+      enabled: true
+      rate: [0.001, 0.1]
+      
+  # 計算配置 / Computation Configuration
+  computation:
+    enabled: true
+    
+    # 數值方法 / Numerical Methods
+    methods:
+      - "finite_difference"
+      - "spectral"
+      - "monte_carlo"
+      
+    # 精度 / Precision
+    precision: "float64"  # float32, float64
+    
+    # 時間演化 / Time Evolution
+    time_evolution:
+      enabled: true
+      method: "rk4"  # rk4, rkf45, implicit
+      dt_range: [0.001, 0.1]
+      
+  # 性能配置 / Performance Configuration
+  performance:
+    enabled: true
+    
+    # 並行計算 / Parallel Computing
+    parallel:
+      enabled: true
+      max_workers: [1, 32]
+      
+    # GPU加速 / GPU Acceleration
+    gpu:
+      enabled: false
+      device: "auto"
+      
+  # 高級選項 / Advanced Options
+  advanced:
+    enabled: true
+    
+    # 調試模式 / Debug Mode
+    debug_mode: false
+
+# 配置檔案 / Configuration Profiles
+profiles:
+  conservative:
+    description: "保守模式 - 小規模量子場"
+    lattice.size: 4
+    hilbert_space.dimensions: 16
+    computation.methods: ["finite_difference"]
+    performance.parallel.max_workers: 2
+    
+  balanced:
+    description: "平衡模式 - 標準量子場"
+    lattice.size: 8
+    hilbert_space.dimensions: 256
+    computation.methods: ["spectral"]
+    performance.parallel.max_workers: 8
+    
+  aggressive:
+    description: "激進模式 - 大規模量子場"
+    lattice.size: 32
+    hilbert_space.dimensions: 1024
+    computation.methods: ["monte_carlo"]
+    performance.parallel.max_workers: 32
+    performance.gpu.enabled: true

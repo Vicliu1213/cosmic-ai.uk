@@ -1,0 +1,10 @@
+{
+  "algorithm": "amplitude_amplification",
+  "iterations": 16,
+  "results": {
+    "initial_amplitude": 0.1,
+    "final_amplitude": 1.0,
+    "amplification_factor": 10.0,
+    "iterations_used": 16
+  }
+}

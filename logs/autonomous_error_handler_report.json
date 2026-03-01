@@ -1,0 +1,95 @@
+{
+  "system": "自主錯誤處理與自動修復系統",
+  "timestamp": "2026-03-01T07:58:51.530662",
+  "total_errors_detected": 6,
+  "auto_fixed_count": 6,
+  "auto_fix_rate": 1.0,
+  "learning_report": {
+    "total_patterns": 1,
+    "patterns": {
+      "memory_high": {
+        "pattern_id": "0732dc819633",
+        "error_type": "memory_high",
+        "frequency": 6,
+        "auto_fix_rate": 1.0,
+        "solution_count": 6
+      }
+    },
+    "total_learning_records": 6,
+    "average_knowledge_gain": 0.30000000000000004
+  },
+  "recent_errors": [
+    {
+      "error_id": "6ceb72f8236b",
+      "timestamp": "2026-03-01T07:58:21.467369",
+      "error_type": "memory_high",
+      "error_message": "內存使用率偏高: 81.5%",
+      "source": "memory_detector",
+      "severity": "medium",
+      "stack_trace": "",
+      "auto_fixed": true,
+      "fix_method": "memory_high",
+      "knowledge_gain": 0.30000000000000004
+    },
+    {
+      "error_id": "7ab88dfb1ee0",
+      "timestamp": "2026-03-01T07:58:26.480227",
+      "error_type": "memory_high",
+      "error_message": "內存使用率偏高: 81.2%",
+      "source": "memory_detector",
+      "severity": "medium",
+      "stack_trace": "",
+      "auto_fixed": true,
+      "fix_method": "memory_high",
+      "knowledge_gain": 0.30000000000000004
+    },
+    {
+      "error_id": "44b9050db5b6",
+      "timestamp": "2026-03-01T07:58:31.492233",
+      "error_type": "memory_high",
+      "error_message": "內存使用率偏高: 80.5%",
+      "source": "memory_detector",
+      "severity": "medium",
+      "stack_trace": "",
+      "auto_fixed": true,
+      "fix_method": "memory_high",
+      "knowledge_gain": 0.30000000000000004
+    },
+    {
+      "error_id": "44b9050db5b6",
+      "timestamp": "2026-03-01T07:58:36.500474",
+      "error_type": "memory_high",
+      "error_message": "內存使用率偏高: 80.5%",
+      "source": "memory_detector",
+      "severity": "medium",
+      "stack_trace": "",
+      "auto_fixed": true,
+      "fix_method": "memory_high",
+      "knowledge_gain": 0.30000000000000004
+    },
+    {
+      "error_id": "85a7c3e68f76",
+      "timestamp": "2026-03-01T07:58:41.511619",
+      "error_type": "memory_high",
+      "error_message": "內存使用率偏高: 80.6%",
+      "source": "memory_detector",
+      "severity": "medium",
+      "stack_trace": "",
+      "auto_fixed": true,
+      "fix_method": "memory_high",
+      "knowledge_gain": 0.30000000000000004
+    },
+    {
+      "error_id": "6fa0b4f0c1fc",
+      "timestamp": "2026-03-01T07:58:46.526317",
+      "error_type": "memory_high",
+      "error_message": "內存使用率偏高: 80.7%",
+      "source": "memory_detector",
+      "severity": "medium",
+      "stack_trace": "",
+      "auto_fixed": true,
+      "fix_method": "memory_high",
+      "knowledge_gain": 0.30000000000000004
+    }
+  ]
+}

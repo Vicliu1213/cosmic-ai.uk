@@ -15,11 +15,10 @@ import google.generativeai as genai
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-
 class GoogleGeminiClient:
     """Google Gemini AI 客户端"""
     
-    def __init__(self, api_key: Optional[str] = None):
+    def __init__(self, api_key: Optional[str] = None) -> Any:
         """
         初始化 Gemini 客户端
         
@@ -210,11 +209,10 @@ class GoogleGeminiClient:
             lines.append(f"- {key}: {value}")
         return "\n".join(lines)
 
-
 class GeminiMCPTool:
     """Gemini MCP 工具集成"""
     
-    def __init__(self, api_key: Optional[str] = None):
+    def __init__(self, api_key: Optional[str] = None) -> Any:
         """初始化 Gemini MCP 工具"""
         self.client = GoogleGeminiClient(api_key)
     
@@ -269,8 +267,7 @@ class GeminiMCPTool:
             'created_at': datetime.now().isoformat()
         }
 
-
-def main():
+def main() -> Any:
     """主函数 - 演示用法"""
     import sys
     
@@ -319,7 +316,7 @@ def main():
         print("=" * 60)
         
         code = """
-def calculate_profit(buy_price, sell_price, quantity):
+def calculate_profit(buy_price, sell_price, quantity) -> Any:
     profit = (sell_price - buy_price) * quantity
     return profit
         """
@@ -347,7 +344,6 @@ def calculate_profit(buy_price, sell_price, quantity):
         print(f"❌ 初始化失败: {e}")
     except Exception as e:
         logger.error(f"❌ 发生错误: {e}")
-
 
 if __name__ == "__main__":
     main()

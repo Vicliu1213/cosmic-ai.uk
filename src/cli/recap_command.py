@@ -11,13 +11,12 @@ import os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../../')))
 
 from src.core.session_recap import SessionRecap
-from typing import Optional
-
+from typing import Optional, Any
 
 class RecapCommand:
     """回顧命令處理器"""
     
-    def __init__(self):
+    def __init__(self) -> Any:
         """初始化回顧命令"""
         self.recap = SessionRecap()
     
@@ -54,12 +53,10 @@ class RecapCommand:
             
             print(f"{i}. {status_emoji} [{todo.get('priority', 'medium')}] {todo.get('content', 'Unknown')}")
 
-
-def main():
+def main() -> Any:
     """主函數 - CLI 入口點"""
     recap = RecapCommand()
     recap.execute_recap(full_report=True)
-
 
 if __name__ == "__main__":
     main()

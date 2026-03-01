@@ -28,7 +28,6 @@ from opencode import (
     SkillRegistry,
 )
 
-
 class TestOpenCodeFramework:
     """Tests for OpenCode framework initialization and management"""
     
@@ -92,7 +91,6 @@ class TestOpenCodeFramework:
         skill_names = list(skills.keys())
         print(f"✅ Skills registered: {skill_names}")
 
-
 class TestUniversalAgentOrchestrator:
     """Tests for universal agent orchestrator"""
     
@@ -149,7 +147,6 @@ class TestUniversalAgentOrchestrator:
         signal_agents = orchestrator.get_agents_by_capability('signal_generation')
         assert len(signal_agents) > 0
         print(f"✅ Found {len(signal_agents)} agents with signal_generation capability")
-
 
 class TestUniversalAgent:
     """Tests for universal agent functionality"""
@@ -221,7 +218,6 @@ class TestUniversalAgent:
         
         print(f"✅ Agent task tracking works correctly")
 
-
 class TestSkillRegistry:
     """Tests for skill registry and management"""
     
@@ -255,7 +251,6 @@ class TestSkillRegistry:
         assert len(skills) > 0
         
         print(f"✅ Available skills: {skills[:5]}...")  # Print first 5
-
 
 class TestOpenCodeIntegration:
     """Integration tests for complete OpenCode system"""
@@ -331,7 +326,6 @@ class TestOpenCodeIntegration:
         
         print(f"✅ Custom configuration applied successfully")
 
-
 class TestOpenCodePerformance:
     """Performance tests for OpenCode framework"""
     
@@ -369,7 +363,6 @@ class TestOpenCodePerformance:
         avg_time = elapsed / 1000
         assert avg_time < 0.001  # Average should be less than 1ms
         print(f"✅ Agent retrieval average time: {avg_time*1000:.3f}ms")
-
 
 # Run tests
 if __name__ == '__main__':

@@ -6,7 +6,6 @@ from semantic_kernel.exceptions import TemplateSyntaxError
 from semantic_kernel.template_engine.blocks.block_types import BlockTypes
 from semantic_kernel.template_engine.template_tokenizer import TemplateTokenizer
 
-
 @mark.parametrize(
     "text, block_type",
     [
@@ -25,12 +24,11 @@ from semantic_kernel.template_engine.template_tokenizer import TemplateTokenizer
         ('{{  "}}x', BlockTypes.TEXT),
     ],
 )
-def test_it_parses_text_without_code(text, block_type):
+def test_it_parses_text_without_code(text, block_type) -> Any:
     blocks = TemplateTokenizer.tokenize(text)
 
     assert len(blocks) == 1
     assert blocks[0].type == block_type
-
 
 @mark.parametrize(
     "text, block_type",
@@ -56,12 +54,11 @@ def test_it_parses_text_without_code(text, block_type):
         ("{{  ' '  }}", BlockTypes.VALUE),
     ],
 )
-def test_it_parses_basic_blocks(text, block_type):
+def test_it_parses_basic_blocks(text, block_type) -> Any:
     blocks = TemplateTokenizer.tokenize(text)
 
     assert len(blocks) == 1
     assert blocks[0].type == block_type
-
 
 @mark.parametrize(
     "template, block_count",
@@ -72,11 +69,10 @@ def test_it_parses_basic_blocks(text, block_type):
         ("}}{{ -a\n} } {{b}}x", 3),
     ],
 )
-def test_it_tokenizes_the_right_token_count(template, block_count):
+def test_it_tokenizes_the_right_token_count(template, block_count) -> Any:
     blocks = TemplateTokenizer.tokenize(template)
 
     assert len(blocks) == block_count
-
 
 @mark.parametrize(
     "template, error",
@@ -99,12 +95,11 @@ def test_it_tokenizes_the_right_token_count(template, block_count):
         "invalid_code_block_syntax",
     ],
 )
-def test_invalid_syntax(template, error):
+def test_invalid_syntax(template, error) -> Any:
     with raises(error):
         TemplateTokenizer.tokenize(template)
 
-
-def test_it_tokenizes_edge_cases_correctly_1():
+def test_it_tokenizes_edge_cases_correctly_1() -> Any:
     blocks1 = TemplateTokenizer.tokenize("{{{{a}}")
     blocks2 = TemplateTokenizer.tokenize("{{'{{a}}")
     blocks3 = TemplateTokenizer.tokenize("{{'a}}")
@@ -121,8 +116,7 @@ def test_it_tokenizes_edge_cases_correctly_1():
     assert blocks1[0].content == "{{"
     assert blocks1[1].content == "a"
 
-
-def test_it_tokenizes_edge_cases_correctly_3():
+def test_it_tokenizes_edge_cases_correctly_3() -> Any:
     template = "}}{{{{$a}}}} {{b}}$x}}"
 
     blocks = TemplateTokenizer.tokenize(template)
@@ -144,22 +138,20 @@ def test_it_tokenizes_edge_cases_correctly_3():
     assert blocks[4].content == "$x}}"
     assert blocks[4].type == BlockTypes.TEXT
 
-
 @mark.parametrize(
     "template",
     [
         ("{{ asis 'f\\'oo' }}"),
     ],
 )
-def test_it_tokenizes_edge_cases_correctly_4(template):
+def test_it_tokenizes_edge_cases_correctly_4(template) -> Any:
     blocks = TemplateTokenizer.tokenize(template)
 
     assert len(blocks) == 1
     assert blocks[0].type == BlockTypes.CODE
     assert blocks[0].content == template[2:-2].strip()
 
-
-def test_it_tokenizes_a_typical_prompt():
+def test_it_tokenizes_a_typical_prompt() -> Any:
     template = "this is a {{ $prompt }} with {{$some}} variables and {{function $calls}} {{ and 'values' }}"
 
     blocks = TemplateTokenizer.tokenize(template)
@@ -190,8 +182,7 @@ def test_it_tokenizes_a_typical_prompt():
     assert blocks[7].content == "and 'values'"
     assert blocks[7].type == BlockTypes.CODE
 
-
-def test_it_tokenizes_a_named_args_prompt():
+def test_it_tokenizes_a_named_args_prompt() -> Any:
     template = '{{ plugin.function "direct" arg1=$arg1 arg2="arg2" }}'
 
     blocks = TemplateTokenizer.tokenize(template)

@@ -148,7 +148,13 @@
     "*.yml": "yaml",
     "*.json": "json",
     "*.config": "json",
-    "*.strategy": "python"
+    "*.strategy": "python",
+    "*_config.yaml": "yaml",
+    "*_config.yml": "yaml",
+    "quantum_*.py": "python",
+    "singularity_*.py": "python",
+    "immortal_*.py": "python",
+    "hybrid_*.py": "python"
   },
 
   "python.defaultInterpreterPath": "${workspaceFolder}/venv/bin/python",
@@ -168,7 +174,9 @@
     "${workspaceFolder}/lib",
     "${workspaceFolder}/trading_engine",
     "${workspaceFolder}/engine",
-    "${workspaceFolder}/optimizer"
+    "${workspaceFolder}/optimizer",
+    "${workspaceFolder}/config",
+    "${workspaceFolder}/immortal_perpetual_system"
   ],
   "python.analysis.autoSearchPaths": true,
   "python.linting.enabled": true,
@@ -195,7 +203,10 @@
     "--tb=short",
     "--cov=.",
     "--cov-report=html",
-    "--cov-report=term"
+    "--cov-report=term",
+    "src/tests/test_quantum*.py",
+    "src/tests/test_hybrid*.py",
+    "src/tests/test_singularity*.py"
   ],
 
   "terminal.integrated.fontFamily": "monospace",
@@ -282,7 +293,29 @@
     "Grover",
     "quantum",
     "Qiskit",
-    "teleport"
+    "teleport",
+    "singularity",
+    "immortal",
+    "perpetual",
+    "quintenary",
+    "cosmic",
+    "entanglement",
+    "coherence",
+    "superposition",
+    "amplitude",
+    "resonance",
+    "hadamard",
+    "pauli",
+    "cnot",
+    "eigenvalue",
+    "hermitian",
+    "unitary",
+    "qubit",
+    "qaoa",
+    "vqe",
+    "grover",
+    "shor",
+    "teleportation"
   ],
 
   "extensions.autoUpdate": true,
@@ -304,7 +337,11 @@
     "**/dist": true,
     "**/build": true,
     "**/.ray": true,
-    "**/backtest_results": true
+    "**/backtest_results": true,
+    "checkpoints/": true,
+    "logs/quantum_*": true,
+    "logs/immortal_*": true,
+    "logs/singularity_*": true
   },
 
   "breadcrumbs.enabled": true,
@@ -409,7 +446,9 @@
 
   "[yaml]": {
     "editor.insertSpaces": true,
-    "editor.tabSize": 2
+    "editor.tabSize": 2,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
   },
 
   "notebook.lineNumbers": "on",
@@ -460,5 +499,37 @@
     "bash": "bash",
     "javascript": "node"
   },
-  "workbench.editor.tabActionLocation": "right"
+  "workbench.editor.tabActionLocation": "right",
+
+  "// ========== 宇宙智能系統開發設置 ==========": "",
+
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.tabSize": 2
+  },
+
+  "// ========== 系統配置文件支持 ==========": "",
+  "files.associations": {
+    "*singularity*_config.yaml": "yaml",
+    "*immortal*_config.yaml": "yaml",
+    "*quintenary*_config.yaml": "yaml",
+    "*time*travel*_config.yaml": "yaml"
+  },
+
+  "// ========== 量子系統調試 ==========": "",
+  "debug.logOutput": "verbose",
+  "logMessages.logOutput": "verbose",
+
+  "// ========== 性能優化 ==========": "",
+  "files.watcherExclude": {
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true,
+    "**/node_modules/**": true,
+    "**/__pycache__/**": true,
+    "**/.pytest_cache/**": true,
+    "**/.ray/**": true,
+    "**/checkpoints/**": true,
+    "**/logs/**": true
+  }
 }

@@ -19,7 +19,6 @@ from opencode.multiverse_challenge import (
 )
 from opencode.agent_memory import KnowledgeType
 
-
 class TestMultiverseInitialization:
     """測試多宇宙系統初始化"""
     
@@ -77,7 +76,6 @@ class TestMultiverseInitialization:
             assert agent.memory is not None
             assert agent.memory.agent_id == agent.agent_id
 
-
 class TestUniverseState:
     """測試宇宙狀態管理"""
     
@@ -110,7 +108,6 @@ class TestUniverseState:
         
         # 應該至少有 3 種類型
         assert len(type_counts) >= 3
-
 
 class TestAgentBehavior:
     """測試智能體行為"""
@@ -151,7 +148,6 @@ class TestAgentBehavior:
         
         assert agent.get_success_rate() == 0.7
         assert agent.get_avg_profit() == 10.0
-
 
 class TestMultiverseSimulation:
     """測試多宇宙模擬"""
@@ -198,7 +194,6 @@ class TestMultiverseSimulation:
         assert 'final_stats' in results
         assert results['final_stats']['total_trades'] > 0
 
-
 class TestKnowledgeExchange:
     """測試知識交換"""
     
@@ -229,7 +224,6 @@ class TestKnowledgeExchange:
         
         # 應該有交易發生
         assert all_trades > 0
-
 
 class TestPerformanceTracking:
     """測試績效追蹤"""
@@ -289,7 +283,6 @@ class TestPerformanceTracking:
         assert summary['agent_count'] == 4
         assert summary['universe_count'] == 4
 
-
 class TestAsyncIntegration:
     """測試異步集成"""
     
@@ -305,7 +298,6 @@ class TestAsyncIntegration:
         assert 'results' in results
         assert 'summary' in results
         assert len(results['results']['steps']) == 5
-
 
 class TestScalability:
     """測試可擴展性"""
@@ -333,7 +325,6 @@ class TestScalability:
         # 大多數宇宙應該被訪問
         coverage = len(all_accessible_universes) / len(challenge.universes)
         assert coverage >= 0.5
-
 
 if __name__ == '__main__':
     pytest.main([__file__, '-v'])

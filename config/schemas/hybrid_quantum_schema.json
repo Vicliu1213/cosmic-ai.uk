@@ -1,0 +1,67 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Hybrid Quantum Configuration",
+  "description": "Configuration for Hybrid Quantum Services (\u6df7\u5408\u91cf\u5b50\u670d\u52d9)",
+  "type": "object",
+  "required": [
+    "hybrid_quantum"
+  ],
+  "properties": {
+    "hybrid_quantum": {
+      "type": "object",
+      "required": [
+        "enabled"
+      ],
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "version": {
+          "type": "string"
+        },
+        "classical_quantum_ratio": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "trading_signals": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean"
+            },
+            "signal_strength_threshold": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "signals": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "quantum_ensemble": {
+          "type": "object",
+          "properties": {
+            "num_members": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100
+            },
+            "voting_method": {
+              "type": "string",
+              "enum": [
+                "majority",
+                "weighted_average",
+                "bayesian"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

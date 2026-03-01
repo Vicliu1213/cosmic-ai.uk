@@ -56,7 +56,6 @@ else:
 
 logger = logging.getLogger(__name__)
 
-
 TModel = TypeVar("TModel", bound=object)
 TKey = TypeVar("TKey")
 _T = TypeVar("_T", bound="VectorStoreRecordHandler")
@@ -66,9 +65,7 @@ DEFAULT_DESCRIPTION: Final[str] = (
     "Perform a vector search for data in a vector store, using the provided search options."
 )
 
-
 # region: Fields and Collection Definitions
-
 
 @release_candidate
 class FieldTypes(str, Enum):
@@ -82,7 +79,6 @@ class FieldTypes(str, Enum):
         """Return the string representation of the enum."""
         return self.value
 
-
 @runtime_checkable
 class SerializeMethodProtocol(Protocol):
     """Data model serialization protocol.
@@ -94,7 +90,6 @@ class SerializeMethodProtocol(Protocol):
     def serialize(self, **kwargs: Any) -> Any:
         """Serialize the object to the format required by the data store."""
         ...  # pragma: no cover
-
 
 @runtime_checkable
 class ToDictFunctionProtocol(Protocol):
@@ -110,7 +105,6 @@ class ToDictFunctionProtocol(Protocol):
 
     def __call__(self, record: Any, **kwargs: Any) -> Sequence[dict[str, Any]]: ...  # pragma: no cover
 
-
 @runtime_checkable
 class FromDictFunctionProtocol(Protocol):
     """Protocol for from_dict function.
@@ -124,7 +118,6 @@ class FromDictFunctionProtocol(Protocol):
     """
 
     def __call__(self, records: Sequence[dict[str, Any]], **kwargs: Any) -> Any: ...
-
 
 @runtime_checkable
 class SerializeFunctionProtocol(Protocol):
@@ -141,7 +134,6 @@ class SerializeFunctionProtocol(Protocol):
 
     def __call__(self, record: Any, **kwargs: Any) -> Any: ...
 
-
 @runtime_checkable
 class DeserializeFunctionProtocol(Protocol):
     """Protocol for deserialize function.
@@ -157,7 +149,6 @@ class DeserializeFunctionProtocol(Protocol):
 
     def __call__(self, records: Any, **kwargs: Any) -> Any: ...
 
-
 @runtime_checkable
 class ToDictMethodProtocol(Protocol):
     """Class used internally to check if a model has a to_dict method."""
@@ -165,7 +156,6 @@ class ToDictMethodProtocol(Protocol):
     def to_dict(self, *args: Any, **kwargs: Any) -> dict[str, Any]:
         """Serialize the object to the format required by the data store."""
         ...  # pragma: no cover
-
 
 class IndexKind(str, Enum):
     """Index kinds for similarity search.
@@ -215,7 +205,6 @@ class IndexKind(str, Enum):
     DYNAMIC = "dynamic"
     DEFAULT = "default"
 
-
 class DistanceFunction(str, Enum):
     """Distance functions for similarity search.
 
@@ -261,7 +250,6 @@ class DistanceFunction(str, Enum):
     HAMMING = "hamming"
     DEFAULT = "DEFAULT"
 
-
 DISTANCE_FUNCTION_DIRECTION_HELPER: Final[dict[DistanceFunction, Callable[[int | float, int | float], bool]]] = {
     DistanceFunction.COSINE_SIMILARITY: operator.gt,
     DistanceFunction.COSINE_DISTANCE: operator.le,
@@ -271,7 +259,6 @@ DISTANCE_FUNCTION_DIRECTION_HELPER: Final[dict[DistanceFunction, Callable[[int |
     DistanceFunction.MANHATTAN: operator.le,
     DistanceFunction.HAMMING: operator.le,
 }
-
 
 @release_candidate
 @dataclass
@@ -415,7 +402,6 @@ class VectorStoreField:
             self.index_kind = index_kind or IndexKind.DEFAULT
             self.distance_function = distance_function or DistanceFunction.DEFAULT
             self.embedding_generator = embedding_generator
-
 
 @release_candidate
 class VectorStoreCollectionDefinition(KernelBaseModel):
@@ -562,9 +548,7 @@ class VectorStoreCollectionDefinition(KernelBaseModel):
         if not self.key_name:
             raise VectorStoreModelException("Memory record definition must have exactly one key field.")
 
-
 # region: Decorator
-
 
 def _parse_vector_store_record_field_instance(record_field: VectorStoreField, field: Parameter) -> VectorStoreField:
     if not record_field.name or record_field.name != field.name:
@@ -598,7 +582,6 @@ def _parse_vector_store_record_field_instance(record_field: VectorStoreField, fi
 
     return record_field
 
-
 def _parse_parameter_to_field(field: Parameter) -> VectorStoreField | None:
     # first check if there are any annotations
     if field.annotation is not _empty and hasattr(field.annotation, "__metadata__"):
@@ -614,7 +597,6 @@ def _parse_parameter_to_field(field: Parameter) -> VectorStoreField | None:
         )
     logger.debug(f'Field "{field.name}" does not have a VectorStoreField annotation, will not be part of the record.')
     return None
-
 
 def _parse_signature_to_definition(
     parameters: MappingProxyType[str, Parameter], collection_name: str | None = None
@@ -635,7 +617,6 @@ def _parse_signature_to_definition(
         collection_name=collection_name,
     )
 
-
 @release_candidate
 def vectorstoremodel(
     cls: type[TModel] | None = None,
@@ -650,7 +631,6 @@ def vectorstoremodel(
     - The class must have exactly one field with the field_type `key`.
     - When creating a Vector Field, either supply the property type directly,
     or make sure to set the property that you want the index to use first.
-
 
     Args:
         cls: The class to be decorated.
@@ -683,9 +663,7 @@ def vectorstoremodel(
     # We're called as @vectorstoremodel without parens.
     return wrap(cls)
 
-
 # region: VectorSearch Helpers
-
 
 def _get_collection_name_from_model(
     record_type: type[TModel],
@@ -697,7 +675,6 @@ def _get_collection_name_from_model(
     if definition and definition.collection_name:
         return definition.collection_name
     return None
-
 
 @pyd_dataclass
 class GetFilteredRecordOptions:
@@ -713,7 +690,6 @@ class GetFilteredRecordOptions:
     skip: int = 0
     order_by: Mapping[str, bool] | None = None
 
-
 class LambdaVisitor(NodeVisitor, Generic[TFilters]):
     """Visitor class to visit the AST nodes."""
 
@@ -726,7 +702,6 @@ class LambdaVisitor(NodeVisitor, Generic[TFilters]):
         """This method is called when a lambda expression is found."""
         self.output_filters.append(self.lambda_parser(node.body))
 
-
 @release_candidate
 class SearchType(str, Enum):
     """Enumeration for search types.
@@ -736,7 +711,6 @@ class SearchType(str, Enum):
 
     VECTOR = "vector"
     KEYWORD_HYBRID = "keyword_hybrid"
-
 
 @release_candidate
 class VectorSearchOptions(SearchOptions):
@@ -750,7 +724,6 @@ class VectorSearchOptions(SearchOptions):
     top: Annotated[int, Field(gt=0)] = 3
     include_vectors: bool = False
 
-
 @release_candidate
 class VectorSearchResult(KernelBaseModel, Generic[TModel]):
     """The result of a vector search."""
@@ -758,9 +731,7 @@ class VectorSearchResult(KernelBaseModel, Generic[TModel]):
     record: TModel
     score: float | None = None
 
-
 # region: VectorStoreRecordHandler
-
 
 @release_candidate
 class VectorStoreRecordHandler(KernelBaseModel, Generic[TKey, TModel]):
@@ -1125,9 +1096,7 @@ class VectorStoreRecordHandler(KernelBaseModel, Generic[TKey, TModel]):
             return
         setattr(inputs, field_name, vectors[0])
 
-
 # region: VectorStoreRecordCollection
-
 
 @release_candidate
 class VectorStoreCollection(VectorStoreRecordHandler[TKey, TModel], Generic[TKey, TModel]):
@@ -1532,9 +1501,7 @@ class VectorStoreCollection(VectorStoreRecordHandler[TKey, TModel], Generic[TKey
         except Exception as exc:
             raise VectorStoreOperationException(f"Error deleting record(s): {exc}") from exc
 
-
 # region: VectorStore
-
 
 @release_candidate
 class VectorStore(KernelBaseModel):
@@ -1613,9 +1580,7 @@ class VectorStore(KernelBaseModel):
         """
         pass  # pragma: no cover
 
-
 # region: Vector Search
-
 
 @release_candidate
 class VectorSearch(VectorStoreRecordHandler[TKey, TModel], Generic[TKey, TModel]):
@@ -2133,7 +2098,6 @@ class VectorSearch(VectorStoreRecordHandler[TKey, TModel], Generic[TKey, TModel]
             return_parameter=return_parameter or DEFAULT_RETURN_PARAMETER_METADATA,
         )
 
-
 @runtime_checkable
 class VectorStoreCollectionProtocol(Protocol):  # noqa: D101
     collection_name: str
@@ -2256,7 +2220,6 @@ class VectorStoreCollectionProtocol(Protocol):  # noqa: D101
         """
         ...
 
-
 @runtime_checkable
 class VectorSearchProtocol(VectorStoreCollectionProtocol, Protocol):
     """Protocol to check that a collection supports vector search."""
@@ -2341,7 +2304,6 @@ class VectorSearchProtocol(VectorStoreCollectionProtocol, Protocol):
             VectorStoreOperationNotSupportedException: If the search type is not supported.
         """
         ...
-
 
 __all__ = [
     "DEFAULT_DESCRIPTION",

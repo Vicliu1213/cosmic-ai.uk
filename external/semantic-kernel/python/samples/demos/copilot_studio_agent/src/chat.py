@@ -23,11 +23,9 @@ agent = DirectLineAgent(
     bot_endpoint=os.getenv("BOT_ENDPOINT"),
 )
 
-
 @cl.on_chat_start
 async def on_chat_start():
     cl.user_session.set("chat_history", ChatHistory())
-
 
 @cl.on_message
 async def on_message(message: cl.Message):

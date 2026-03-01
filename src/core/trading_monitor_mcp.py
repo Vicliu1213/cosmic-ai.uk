@@ -22,7 +22,6 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-
 @dataclass
 class MarketMetrics:
     """市场指标"""
@@ -32,7 +31,6 @@ class MarketMetrics:
     volume: float
     change_percent: float
     bid_ask_spread: float
-
 
 @dataclass
 class PortfolioStatus:
@@ -44,7 +42,6 @@ class PortfolioStatus:
     total_pnl: float
     risk_level: str
 
-
 @dataclass
 class SystemHealth:
     """系统健康状况"""
@@ -55,11 +52,10 @@ class SystemHealth:
     active_connections: int
     last_update: str
 
-
 class TradingSystemMonitor:
     """交易系统监控器"""
     
-    def __init__(self):
+    def __init__(self) -> Any:
         self.market_data: Dict[str, MarketMetrics] = {}
         self.portfolio: Optional[PortfolioStatus] = None
         self.system_health: Optional[SystemHealth] = None
@@ -203,7 +199,6 @@ class TradingSystemMonitor:
                 "message": "获取风险指标失败"
             }
 
-
 async def handle_mcp_request(request: Dict[str, Any]) -> Dict[str, Any]:
     """处理MCP请求"""
     monitor = TradingSystemMonitor()
@@ -241,8 +236,7 @@ async def handle_mcp_request(request: Dict[str, Any]) -> Dict[str, Any]:
             "id": request.get("id")
         }
 
-
-def print_mcp_tools():
+def print_mcp_tools() -> Any:
     """输出MCP工具定义给OpenCode"""
     tools = {
         "tools": [
@@ -283,7 +277,6 @@ def print_mcp_tools():
         ]
     }
     print(json.dumps(tools, indent=2, ensure_ascii=False))
-
 
 if __name__ == "__main__":
     # 打印工具定义供OpenCode使用

@@ -18,7 +18,7 @@ try:
     from semantic_kernel.agents import ChatCompletionAgent
     from semantic_kernel.connectors.ai.open_ai import AzureChatCompletion, OpenAIChatCompletion
     from semantic_kernel.functions import kernel_function, KernelArguments
-    from semantic_kernel.plugins import KernelPlugin
+    SK_AVAILABLE = True
 except ImportError:
     print("Semantic Kernel not installed. Using mock implementation for demo")
     ChatCompletionAgent = None
@@ -26,7 +26,7 @@ except ImportError:
     OpenAIChatCompletion = None
     kernel_function = None
     KernelArguments = None
-    KernelPlugin = None
+    SK_AVAILABLE = False
 
 # 本地量子增強多智能體系統
 from data.agents.intelligent_agents import IntelligentAgentSystem, AgentType, AgentState
@@ -66,19 +66,24 @@ class Position:
 class SemanticTradingAgents:
     """基於 Semantic Kernel 的交易智能體"""
     
-    def __init__(self, api_key: str = None, azure_endpoint: str = None):
-        self.agents = {}
-        self.kernel = None
+    def __init__(self, api_key: Optional[str] = None, azure_endpoint: Optional[str] = None):
+        self.agents: Dict[str, Any] = {}
+        self.kernel: Optional[Any] = None
         self._setup_agents(api_key, azure_endpoint)
         
-    def _setup_agents(self, api_key: str, azure_endpoint: str):
+    def _setup_agents(self, api_key: Optional[str], azure_endpoint: Optional[str]) -> None:
         """設置交易智能體"""
+        if ChatCompletionAgent is None or AzureChatCompletion is None or OpenAIChatCompletion is None:
+            logging.info("Semantic Kernel not available, using mock agents")
+            self._setup_mock_agents()
+            return
+            
         try:
             # 使用 Azure OpenAI 或 OpenAI
             if azure_endpoint:
-                service = AzureChatCompletion()
+                service = AzureChatCompletion(endpoint=azure_endpoint, api_key=api_key)
             else:
-                service = OpenAIChatCompletion()
+                service = OpenAIChatCompletion(api_key=api_key)
                 
             # 技術分析智能體
             self.agents['technical'] = ChatCompletionAgent(

@@ -1,6 +1,5 @@
 # Copyright (c) Microsoft. All rights reserved.
 
-
 from pytest import mark, raises
 
 from semantic_kernel.exceptions import FunctionIdBlockSyntaxError
@@ -9,26 +8,22 @@ from semantic_kernel.kernel import Kernel
 from semantic_kernel.template_engine.blocks.block_types import BlockTypes
 from semantic_kernel.template_engine.blocks.function_id_block import FunctionIdBlock
 
-
-def test_init():
+def test_init() -> Any:
     function_id_block = FunctionIdBlock(content="plugin.function")
     assert function_id_block.content == "plugin.function"
     assert function_id_block.plugin_name == "plugin"
     assert function_id_block.function_name == "function"
     assert function_id_block.type == BlockTypes.FUNCTION_ID
 
-
-def test_init_function_only():
+def test_init_function_only() -> Any:
     function_id_block = FunctionIdBlock(content="function")
     assert function_id_block.content == "function"
     assert not function_id_block.plugin_name
     assert function_id_block.function_name == "function"
     assert function_id_block.type == BlockTypes.FUNCTION_ID
 
-
-def test_it_trims_spaces():
+def test_it_trims_spaces() -> Any:
     assert FunctionIdBlock(content="  aa  ").content == "aa"
-
 
 @mark.parametrize(
     "name",
@@ -45,29 +40,26 @@ def test_it_trims_spaces():
         "_a01",
     ],
 )
-def test_valid_syntax(name):
+def test_valid_syntax(name) -> Any:
     target = FunctionIdBlock(content=name)
     assert target.content == name
-
 
 @mark.parametrize(
     "content",
     ["", "plugin.nope.function", "func-tion", "plu-in.function", ".function"],
     ids=["empty", "three_parts", "invalid_function", "invalid_plugin", "no_plugin"],
 )
-def test_syntax_error(content):
+def test_syntax_error(content) -> Any:
     with raises(FunctionIdBlockSyntaxError, match=rf".*{content}.*"):
         FunctionIdBlock(content=content)
 
-
-def test_render():
+def test_render() -> Any:
     kernel = Kernel()
     function_id_block = FunctionIdBlock(content="plugin.function")
     rendered_value = function_id_block.render(kernel, KernelArguments())
     assert rendered_value == "plugin.function"
 
-
-def test_render_function_only():
+def test_render_function_only() -> Any:
     kernel = Kernel()
     function_id_block = FunctionIdBlock(content="function")
     rendered_value = function_id_block.render(kernel, KernelArguments())

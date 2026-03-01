@@ -1,10 +1,8 @@
 # Copyright (c) Microsoft. All rights reserved.
 
-
 import pytest
 
 from semantic_kernel.data.vector import VectorSearch, VectorSearchOptions, VectorSearchProtocol
-
 
 async def test_search(vector_store_record_collection: VectorSearch):
     assert isinstance(vector_store_record_collection, VectorSearchProtocol)
@@ -13,7 +11,6 @@ async def test_search(vector_store_record_collection: VectorSearch):
     results = await vector_store_record_collection.search(vector=[1.0, 2.0, 3.0])
     records = [rec async for rec in results.results]
     assert records[0].record == record
-
 
 @pytest.mark.parametrize("include_vectors", [True, False])
 async def test_get_vector_search_results(vector_store_record_collection: VectorSearch, include_vectors: bool):

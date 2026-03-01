@@ -6,15 +6,13 @@ from semantic_kernel.exceptions import CodeBlockSyntaxError
 from semantic_kernel.template_engine.blocks.block_types import BlockTypes
 from semantic_kernel.template_engine.code_tokenizer import CodeTokenizer
 
-
-def test_it_parses_empty_text():
+def test_it_parses_empty_text() -> Any:
     target = CodeTokenizer()
 
     assert not target.tokenize(None)
     assert not target.tokenize("")
     assert not target.tokenize(" ")
     assert not target.tokenize(" \n ")
-
 
 @mark.parametrize(
     "template, content",
@@ -25,14 +23,13 @@ def test_it_parses_empty_text():
         (" $bar ", "$bar"),
     ],
 )
-def test_it_parses_var_blocks(template, content):
+def test_it_parses_var_blocks(template, content) -> Any:
     target = CodeTokenizer()
     blocks = target.tokenize(template)
 
     assert len(blocks) == 1
     assert blocks[0].content == content
     assert blocks[0].type == BlockTypes.VARIABLE
-
 
 @mark.parametrize(
     "template, content",
@@ -43,13 +40,12 @@ def test_it_parses_var_blocks(template, content):
         (' "bar" ', '"bar"'),
     ],
 )
-def test_it_parses_val_blocks(template, content):
+def test_it_parses_val_blocks(template, content) -> Any:
     blocks = CodeTokenizer.tokenize(template)
 
     assert len(blocks) == 1
     assert blocks[0].content == content
     assert blocks[0].type == BlockTypes.VALUE
-
 
 @mark.parametrize(
     "template, content",
@@ -62,15 +58,14 @@ def test_it_parses_val_blocks(template, content):
         (" bar ", "bar"),
     ],
 )
-def test_it_parses_function_id_blocks(template, content):
+def test_it_parses_function_id_blocks(template, content) -> Any:
     blocks = CodeTokenizer.tokenize(template)
 
     assert len(blocks) == 1
     assert blocks[0].content == content
     assert blocks[0].type == BlockTypes.FUNCTION_ID
 
-
-def test_it_parses_function_calls():
+def test_it_parses_function_calls() -> Any:
     template1 = "x.y $foo"
     template2 = "xy $foo"
     template3 = "xy '$value'"
@@ -99,8 +94,7 @@ def test_it_parses_function_calls():
     assert blocks2[1].type == BlockTypes.VARIABLE
     assert blocks3[1].type == BlockTypes.VALUE
 
-
-def test_it_supports_escaping():
+def test_it_supports_escaping() -> Any:
     template = "func 'f\\'oo'"
     blocks = CodeTokenizer.tokenize(template)
 
@@ -108,8 +102,7 @@ def test_it_supports_escaping():
     assert blocks[0].content == "func"
     assert blocks[1].content == "'f'oo'"
 
-
-def test_it_throws_when_separators_are_missing():
+def test_it_throws_when_separators_are_missing() -> Any:
     template1 = "call 'f\\\\'xy'"
     template2 = "call 'f\\\\'x"
 
@@ -119,8 +112,7 @@ def test_it_throws_when_separators_are_missing():
     with raises(CodeBlockSyntaxError):
         CodeTokenizer.tokenize(template2)
 
-
-def test_named_args():
+def test_named_args() -> Any:
     template = 'plugin.function "direct" arg1=$arg1 arg2="arg2"'
     blocks = CodeTokenizer.tokenize(template)
     assert len(blocks) == 4

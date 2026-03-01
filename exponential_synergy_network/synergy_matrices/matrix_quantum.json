@@ -1,0 +1,16 @@
+{
+  "matrix_id": "matrix_quantum",
+  "layers": [
+    "quantum_entangle_1",
+    "quantum_entangle_2",
+    "quantum_entangle_3"
+  ],
+  "aggregation_factor": 9.0,
+  "cascade_depth": 3,
+  "amplification_chain": [
+    3.6692966676192444,
+    13.46373803500169,
+    49.40244910553017
+  ],
+  "total_amplification": 2440.601977624499
+}

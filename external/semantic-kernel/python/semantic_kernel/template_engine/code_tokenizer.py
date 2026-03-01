@@ -13,7 +13,6 @@ from semantic_kernel.template_engine.blocks.var_block import VarBlock
 
 logger: logging.Logger = logging.getLogger(__name__)
 
-
 # BNF parsed by CodeTokenizer:
 # [template]       ::= "" | [variable] " " [template]
 #                         | [value] " " [template]

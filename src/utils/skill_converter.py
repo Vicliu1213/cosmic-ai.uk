@@ -12,14 +12,12 @@ from pathlib import Path
 from dataclasses import dataclass, asdict
 from enum import Enum
 
-
 class Platform(Enum):
     """支援的平臺"""
     OPENCODE = "opencode"
     CLAUDE = "claude"
     CURSOR = "cursor"
     CODELAW = "codelaw"
-
 
 @dataclass
 class UnifiedSkill:
@@ -40,7 +38,6 @@ class UnifiedSkill:
             self.capabilities = []
         if self.metadata is None:
             self.metadata = {}
-
 
 class SkillConverter:
     """Skill 配置轉換器"""
@@ -320,7 +317,6 @@ Use this skill for: {', '.join(self.skill.categories) if self.skill.categories e
             return "warning"
         return "info"
 
-
 def parse_opencode_skill(skill_md_path: str) -> UnifiedSkill:
     """解析 OpenCode SKILL.md 為統一格式
     
@@ -349,7 +345,6 @@ def parse_opencode_skill(skill_md_path: str) -> UnifiedSkill:
         categories=frontmatter.get('metadata', {}).get('categories', []),
         metadata=frontmatter.get('metadata', {})
     )
-
 
 if __name__ == "__main__":
     # 示例用法

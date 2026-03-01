@@ -15,7 +15,6 @@ import os
 # Add project root to path
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
-
 class TestGeneticAlgorithm(unittest.TestCase):
     """Test genetic algorithm functionality."""
     
@@ -62,7 +61,6 @@ class TestGeneticAlgorithm(unittest.TestCase):
         self.assertEqual(len(child1), len(parent1))
         self.assertEqual(len(child2), len(parent2))
 
-
 class TestParticleSwarmOptimization(unittest.TestCase):
     """Test particle swarm optimization."""
     
@@ -101,7 +99,6 @@ class TestParticleSwarmOptimization(unittest.TestCase):
         
         self.assertGreater(new_position, position)
 
-
 class TestSimulatedAnnealing(unittest.TestCase):
     """Test simulated annealing optimization."""
     
@@ -133,7 +130,6 @@ class TestSimulatedAnnealing(unittest.TestCase):
         
         self.assertGreater(acceptance_prob, 0)
         self.assertLessEqual(acceptance_prob, 1)
-
 
 class TestGradientDescent(unittest.TestCase):
     """Test gradient descent optimization."""
@@ -167,7 +163,6 @@ class TestGradientDescent(unittest.TestCase):
         converged = abs(losses[-1] - losses[-2]) < threshold
         self.assertTrue(converged)
 
-
 class TestDifferentialEvolution(unittest.TestCase):
     """Test differential evolution optimization."""
     
@@ -199,7 +194,6 @@ class TestDifferentialEvolution(unittest.TestCase):
         
         self.assertEqual(len(trial), len(target))
 
-
 class TestOptimizationResults(unittest.TestCase):
     """Test optimization result handling."""
     
@@ -226,7 +220,6 @@ class TestOptimizationResults(unittest.TestCase):
         # Result 1 is better (lower value for minimization)
         self.assertLess(result1['optimal_value'], result2['optimal_value'])
 
-
 class TestObjectiveFunction(unittest.TestCase):
     """Test objective function handling."""
     
@@ -251,7 +244,6 @@ class TestObjectiveFunction(unittest.TestCase):
         
         result = rosenbrock(np.array([0, 0, 0]))
         self.assertGreater(result, 0)
-
 
 if __name__ == '__main__':
     unittest.main()

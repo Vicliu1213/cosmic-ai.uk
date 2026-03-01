@@ -22,7 +22,6 @@ NAMED_ARG_REGEX = r"^(?P<name>[0-9A-Za-z_]+)[=]{1}(?P<value>[${1}](?P<var_name>[
 
 NAMED_ARG_MATCHER = compile(NAMED_ARG_REGEX)
 
-
 class NamedArgBlock(Block):
     """Create a named argument block.
 

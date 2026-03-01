@@ -19,7 +19,6 @@ import yaml
 
 from dataclasses import dataclass, asdict
 
-
 @dataclass
 class GitCommit:
     """Git 提交記錄"""
@@ -28,7 +27,6 @@ class GitCommit:
     date: str
     message: str
     files_changed: int
-
 
 @dataclass
 class SessionSummary:
@@ -41,11 +39,10 @@ class SessionSummary:
     todos: List[Dict[str, Any]]
     recommendations: List[str]
 
-
 class SessionRecap:
     """會話回顧系統"""
     
-    def __init__(self, config_path: str = "config/session_recap_config.yaml"):
+    def __init__(self, config_path: str = "config/session_recap_config.yaml") -> None:
         """初始化會話回顧系統"""
         self.config = self._load_config(config_path)
         self.logger = self._setup_logging()
@@ -56,8 +53,8 @@ class SessionRecap:
             with open(config_path, 'r', encoding='utf-8') as f:
                 return yaml.safe_load(f)
         except FileNotFoundError:
-            self.logger = logging.getLogger(__name__)
-            self.logger.warning(f"Config file not found: {config_path}")
+            logger = logging.getLogger(__name__)
+            logger.warning(f"Config file not found: {config_path}")
             return {}
     
     def _setup_logging(self) -> logging.Logger:
@@ -209,51 +206,121 @@ class SessionRecap:
         
         return summary
     
+    def _format_timestamp(self, timestamp: str) -> str:
+        """格式化時間戳"""
+        try:
+            dt = datetime.fromisoformat(timestamp)
+            return dt.strftime("%Y-%m-%d %H:%M:%S")
+        except:
+            return timestamp
+    
+    def _count_todos_by_status(self, todos: List[Dict[str, Any]]) -> Dict[str, int]:
+        """按狀態統計待辦事項"""
+        counts = {'pending': 0, 'in_progress': 0, 'completed': 0, 'cancelled': 0}
+        for todo in todos:
+            status = todo.get('status', 'unknown')
+            if status in counts:
+                counts[status] += 1
+        return counts
+    
+    def _get_priority_emoji(self, priority: str) -> str:
+        """根據優先級返回表情符號"""
+        return {
+            'high': '🔴',
+            'medium': '🟡',
+            'low': '🟢'
+        }.get(priority, '⚪')
+    
     def print_recap(self, summary: SessionSummary) -> None:
-        """打印會話回顧"""
-        print("\n" + "="*60)
-        print("📋 會話回顧摘要 (Session Recap)")
-        print("="*60)
+        """打印會話回顧 - 優化版本"""
+        print("\n" + "╔" + "═"*58 + "╗")
+        print("║" + " "*58 + "║")
+        print("║" + "  📋 會話回顧摘要 (Session Recap)".center(58) + "║")
+        print("║" + " "*58 + "║")
+        print("╚" + "═"*58 + "╝")
         
-        print(f"\n🕐 時間: {summary.timestamp}")
-        print(f"🌿 分支: {summary.git_branch}")
+        # 基本信息
+        print(f"\n📊 基本信息")
+        print("  " + "─"*54)
+        print(f"  🕐 時間: {self._format_timestamp(summary.timestamp)}")
+        print(f"  🌿 分支: {summary.git_branch}")
         
         # 最近的提交
-        if self.config.get('recap_strategy', {}).get('include_recent_commits'):
-            print("\n📝 最近的提交:")
+        if self.config.get('recap_strategy', {}).get('include_recent_commits') and summary.recent_commits:
+            print(f"\n📝 最近提交 (共 {len(summary.recent_commits)} 個)")
+            print("  " + "─"*54)
             for i, commit in enumerate(summary.recent_commits[:5], 1):
-                print(f"  {i}. [{commit.hash}] {commit.message[:50]}")
+                msg = commit.message[:45].ljust(45)
+                print(f"  {i}. [{commit.hash}] {msg} ({commit.files_changed} 文件)")
         
         # 未提交的更改
         if self.config.get('recap_strategy', {}).get('include_git_status'):
-            print(f"\n📂 未提交的更改:")
+            changes_count = len(summary.uncommitted_changes)
+            print(f"\n📂 未提交的更改 (共 {changes_count} 個)")
+            print("  " + "─"*54)
             if summary.uncommitted_changes:
                 for change in summary.uncommitted_changes[:10]:
-                    print(f"  {change}")
+                    # 清理輸出
+                    change_clean = change.strip()
+                    if change_clean:
+                        print(f"  {change_clean}")
+                if changes_count > 10:
+                    print(f"  ... 還有 {changes_count - 10} 個未顯示")
             else:
-                print("  ✅ 工作目錄乾淨")
+                print("  ✅ 工作目錄乾淨 - 所有更改已提交")
         
-        # 待辦事項
-        if self.config.get('output_format', {}).get('show_todos'):
-            print(f"\n✓ 待辦事項:")
-            for todo in summary.todos:
-                todo_status: str = str(todo.get('status', 'unknown') or 'unknown')
-                status_emoji = {
-                    'pending': '⬜',
-                    'in_progress': '🔵',
-                    'completed': '✅',
-                    'cancelled': '❌'
-                }.get(todo_status, '❓')
-                
-                print(f"  {status_emoji} {todo.get('content', 'Unknown')}")
+        # 待辦事項統計
+        if self.config.get('output_format', {}).get('show_todos') and summary.todos:
+            todo_counts = self._count_todos_by_status(summary.todos)
+            total_todos = len(summary.todos)
+            completed_count = todo_counts.get('completed', 0)
+            in_progress_count = todo_counts.get('in_progress', 0)
+            pending_count = todo_counts.get('pending', 0)
+            
+            # 進度條
+            if total_todos > 0:
+                progress_pct = (completed_count / total_todos) * 100
+                progress_bar = "█" * int(progress_pct / 10) + "░" * (10 - int(progress_pct / 10))
+                print(f"\n✓ 待辦事項統計 (進度: {progress_pct:.0f}%)")
+                print(f"  [{progress_bar}] {completed_count}/{total_todos} 已完成")
+            
+            print("  " + "─"*54)
+            
+            # 分組顯示
+            # 進行中的任務
+            in_progress_todos = [t for t in summary.todos if t.get('status') == 'in_progress']
+            if in_progress_todos:
+                print("  🔵 進行中的任務:")
+                for todo in in_progress_todos:
+                    priority_emoji = self._get_priority_emoji(todo.get('priority', 'medium'))
+                    print(f"    {priority_emoji} {todo.get('content', 'Unknown')}")
+            
+            # 待辦任務
+            pending_todos = [t for t in summary.todos if t.get('status') == 'pending']
+            if pending_todos:
+                print("  ⬜ 待辦任務:")
+                for todo in pending_todos[:3]:  # 只顯示前 3 個
+                    priority_emoji = self._get_priority_emoji(todo.get('priority', 'medium'))
+                    print(f"    {priority_emoji} {todo.get('content', 'Unknown')}")
+                if len(pending_todos) > 3:
+                    print(f"    ... 還有 {len(pending_todos) - 3} 個待辦任務")
+            
+            # 已完成的任務摘要
+            if completed_count > 0:
+                print(f"  ✅ 已完成: {completed_count} 個任務")
+        elif self.config.get('output_format', {}).get('show_todos'):
+            print(f"\n✓ 待辦事項")
+            print("  " + "─"*54)
+            print("  ✅ 沒有待辦事項")
         
         # 建議
-        if self.config.get('output_format', {}).get('show_recommendations'):
-            print(f"\n💡 建議:")
+        if self.config.get('output_format', {}).get('show_recommendations') and summary.recommendations:
+            print(f"\n💡 建議")
+            print("  " + "─"*54)
             for rec in summary.recommendations:
-                print(f"  {rec}")
+                print(f"  • {rec}")
         
-        print("\n" + "="*60 + "\n")
+        print("\n" + "╚" + "═"*58 + "╝\n")
     
     def save_recap_report(self, summary: SessionSummary) -> None:
         """保存回顧報告"""
@@ -281,8 +348,7 @@ class SessionRecap:
         
         self.logger.info(f"Recap report saved to {report_file}")
 
-
-def main():
+def main() -> Any:
     """主函數"""
     recap = SessionRecap()
     summary = recap.generate_recap()
@@ -290,7 +356,6 @@ def main():
     
     if recap.config.get('output_format', {}).get('create_recap_report'):
         recap.save_recap_report(summary)
-
 
 if __name__ == "__main__":
     main()

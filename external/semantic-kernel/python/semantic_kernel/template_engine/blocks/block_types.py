@@ -2,7 +2,6 @@
 
 from enum import Enum, auto
 
-
 class BlockTypes(Enum):
     """Block types."""
 

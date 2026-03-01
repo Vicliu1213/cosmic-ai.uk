@@ -1,0 +1,25 @@
+{
+  "function_id": "func_memory_mgmt",
+  "function_name": "\u5167\u5b58\u7ba1\u7406",
+  "base_performance": 30.0,
+  "layer_gains": {
+    "foundation_0": 1.0,
+    "amplification_1": 2.6997176151520064,
+    "amplification_2": 7.2884752015620355,
+    "amplification_3": 19.676824889255595,
+    "amplification_4": 53.121870763784756,
+    "amplification_5": 143.41405025081806
+  },
+  "exponential_gain": 20.085536923187668,
+  "synergy_amplification": 1.0,
+  "final_gain": 59245933.83689627,
+  "contributing_layers": [
+    "foundation_0",
+    "amplification_1",
+    "amplification_2",
+    "amplification_3",
+    "amplification_4",
+    "amplification_5"
+  ],
+  "synergy_partners": []
+}

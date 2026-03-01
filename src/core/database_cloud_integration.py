@@ -21,7 +21,6 @@ from abc import ABC, abstractmethod
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-
 # ============================================================================
 # 数据库基类
 # ============================================================================
@@ -54,7 +53,6 @@ class DatabaseConnector(ABC):
         """获取单条结果"""
         pass
 
-
 # ============================================================================
 # SQLite 实现
 # ============================================================================
@@ -62,7 +60,7 @@ class DatabaseConnector(ABC):
 class SQLiteConnector(DatabaseConnector):
     """SQLite 数据库连接器"""
     
-    def __init__(self, db_path: str = "data/comic_ai.db"):
+    def __init__(self, db_path: str = "data/comic_ai.db") -> Any:
         """
         初始化 SQLite 连接器
         
@@ -144,7 +142,6 @@ class SQLiteConnector(DatabaseConnector):
             logger.error(f"❌ 查询失败: {e}")
             return None
 
-
 # ============================================================================
 # MySQL 实现
 # ============================================================================
@@ -157,7 +154,7 @@ class MySQLConnector(DatabaseConnector):
                  port: int = 3306,
                  user: str = "root",
                  password: str = "",
-                 database: str = "comic_ai"):
+                 database: str = "comic_ai") -> Any:
         """
         初始化 MySQL 连接器
         
@@ -247,7 +244,6 @@ class MySQLConnector(DatabaseConnector):
             logger.error(f"❌ 查询失败: {e}")
             return None
 
-
 # ============================================================================
 # Redis 缓存实现
 # ============================================================================
@@ -259,7 +255,7 @@ class RedisCache:
                  host: str = "localhost",
                  port: int = 6379,
                  db: int = 0,
-                 password: Optional[str] = None):
+                 password: Optional[str] = None) -> Any:
         """
         初始化 Redis 缓存
         
@@ -373,7 +369,6 @@ class RedisCache:
             logger.error(f"❌ 获取统计信息失败: {e}")
             return {}
 
-
 # ============================================================================
 # 云服务集成
 # ============================================================================
@@ -386,7 +381,7 @@ class AzureCloudConnector:
                  resource_group: str,
                  client_id: str,
                  client_secret: str,
-                 tenant_id: str):
+                 tenant_id: str) -> Any:
         """
         初始化 Azure 连接器
         
@@ -459,7 +454,6 @@ class AzureCloudConnector:
             logger.error(f"❌ 获取连接字符串失败: {e}")
             return None
 
-
 # ============================================================================
 # 统一管理器
 # ============================================================================
@@ -467,7 +461,7 @@ class AzureCloudConnector:
 class DatabaseManager:
     """数据库管理器"""
     
-    def __init__(self, db_type: str = "sqlite"):
+    def __init__(self, db_type: str = "sqlite") -> Any:
         """
         初始化数据库管理器
         
@@ -570,8 +564,7 @@ class DatabaseManager:
         
         return status
 
-
-def main():
+def main() -> Any:
     """演示用法"""
     print("🚀 数据库和云服务集成演示\n")
     
@@ -598,7 +591,6 @@ def main():
     print(json.dumps(status, indent=2, ensure_ascii=False))
     
     print("\n✅ 集成完成！")
-
 
 if __name__ == "__main__":
     main()

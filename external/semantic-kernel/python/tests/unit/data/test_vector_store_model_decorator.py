@@ -1,8 +1,7 @@
 # Copyright (c) Microsoft. All rights reserved.
 
-
 from dataclasses import dataclass
-from typing import Annotated
+from typing import Annotated, Any
 
 from numpy import ndarray
 from pydantic import BaseModel, ConfigDict
@@ -12,12 +11,10 @@ from pytest import raises
 from semantic_kernel.data.vector import VectorStoreCollectionDefinition, VectorStoreField, vectorstoremodel
 from semantic_kernel.exceptions import VectorStoreModelException
 
-
-def get_field(defn, name):
+def get_field(defn, name) -> Any:
     return next(f for f in defn.fields if f.name == name)
 
-
-def test_vanilla():
+def test_vanilla() -> Any:
     @vectorstoremodel
     class DataModelClassVanilla:
         def __init__(
@@ -54,8 +51,7 @@ def test_vanilla():
     assert definition.container_mode is False
     assert definition.vector_field_names == ["vector"]
 
-
-def test_vanilla_2():
+def test_vanilla_2() -> Any:
     @vectorstoremodel()
     class DataModelClassVanilla2:
         def __init__(
@@ -71,8 +67,7 @@ def test_vanilla_2():
     definition: VectorStoreCollectionDefinition = DataModelClassVanilla2.__kernel_vectorstoremodel_definition__
     assert len(definition.fields) == 2
 
-
-def test_dataclass():
+def test_dataclass() -> Any:
     @vectorstoremodel
     @dataclass
     class DataModelClassDataclass:
@@ -100,8 +95,7 @@ def test_dataclass():
     assert definition.container_mode is False
     assert definition.vector_field_names == ["vector"]
 
-
-def test_dataclass_inverse_fail():
+def test_dataclass_inverse_fail() -> Any:
     with raises(VectorStoreModelException):
 
         @dataclass
@@ -110,8 +104,7 @@ def test_dataclass_inverse_fail():
             id: Annotated[str, VectorStoreField("key")]
             content: Annotated[str, VectorStoreField("data")]
 
-
-def test_pydantic_base_model():
+def test_pydantic_base_model() -> Any:
     @vectorstoremodel
     class DataModelClassPydantic(BaseModel):
         content: Annotated[str, VectorStoreField("data")]
@@ -138,8 +131,7 @@ def test_pydantic_base_model():
     assert definition.container_mode is False
     assert definition.vector_field_names == ["vector"]
 
-
-def test_pydantic_dataclass():
+def test_pydantic_dataclass() -> Any:
     @vectorstoremodel
     @pydantic_dataclass
     class DataModelClassPydanticDataclass:
@@ -167,26 +159,23 @@ def test_pydantic_dataclass():
     assert definition.container_mode is False
     assert definition.vector_field_names == ["vector"]
 
-
-def test_empty_model():
+def test_empty_model() -> Any:
     with raises(VectorStoreModelException):
 
         @vectorstoremodel
         class DataModelClass:
-            def __init__(self):
+            def __init__(self) -> Any:
                 pass
 
-
-def test_non_annotated_no_default():
+def test_non_annotated_no_default() -> Any:
     with raises(VectorStoreModelException):
 
         @vectorstoremodel
         class DataModelClass:
-            def __init__(self, non_vector_store_content: str):
+            def __init__(self, non_vector_store_content: str) -> Any:
                 self.non_vector_store_content = non_vector_store_content
 
-
-def test_annotated_no_vsr_field_no_default():
+def test_annotated_no_vsr_field_no_default() -> Any:
     with raises(VectorStoreModelException):
 
         @vectorstoremodel
@@ -194,11 +183,10 @@ def test_annotated_no_vsr_field_no_default():
             def __init__(
                 self,
                 annotated_content: Annotated[str, "description"],
-            ):
+            ) -> Any:
                 self.annotated_content = annotated_content
 
-
-def test_non_vector_list_and_dict():
+def test_non_vector_list_and_dict() -> Any:
     @vectorstoremodel
     @dataclass
     class DataModelClassListDict:
@@ -228,8 +216,7 @@ def test_non_vector_list_and_dict():
     assert get_field(definition, "dict3").type_ == "dict[str, str]"
     assert definition.container_mode is False
 
-
-def test_vector_fields_checks():
+def test_vector_fields_checks() -> Any:
     @vectorstoremodel
     class DataModelClassVectorFields(BaseModel):
         model_config = ConfigDict(arbitrary_types_allowed=True)

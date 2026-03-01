@@ -8,7 +8,6 @@ from datetime import datetime, timezone
 
 import numpy as np
 
-
 # =========================
 # 0. 簡易增強經典算法 (DE + random)
 # =========================
@@ -28,7 +27,6 @@ def random_search(
             best_f = f
             best_x = x
     return best_x, best_f
-
 
 def differential_evolution(
     objective: Callable[[np.ndarray], float],
@@ -62,7 +60,6 @@ def differential_evolution(
     best_idx = np.argmin(fitness)
     return pop[best_idx], fitness[best_idx]
 
-
 # =========================
 # 1. TheorySpec + 四個理論
 # =========================
@@ -79,7 +76,6 @@ class TheorySpec:
     classical_scaling: str
     quantum_scaling: str
     notes: Optional[str] = None
-
 
 STAGE1_THEORIES: Dict[str, TheorySpec] = {
     "heisenberg": TheorySpec(
@@ -132,7 +128,6 @@ STAGE1_THEORIES: Dict[str, TheorySpec] = {
     ),
 }
 
-
 # =========================
 # 2. 量子優勢結果結構
 # =========================
@@ -150,7 +145,6 @@ class QuantumAdvantageResult:
     classical_costs: List[float]
     quantum_costs: List[float]
     timestamp: str
-
 
 # =========================
 # 3. QuantumAdvantageAnalyzer（增強經典算法版）
@@ -282,7 +276,6 @@ class QuantumAdvantageAnalyzer:
             return float("inf")
         return float(classical[-1] / quantum[-1])
 
-
 # =========================
 # 4. Stage1 summary + vector
 # =========================
@@ -329,7 +322,6 @@ def build_stage1_summary(results: Dict[str, QuantumAdvantageResult]) -> Dict:
     }
     return stage1_summary
 
-
 def run_stage1() -> Dict:
     """
     一行入口：跑四個理論 → 回傳 stage1_summary
@@ -340,7 +332,6 @@ def run_stage1() -> Dict:
         results[key] = analyzer.analyze_theory(spec)
     summary = build_stage1_summary(results)
     return summary
-
 
 if __name__ == "__main__":
     s = run_stage1()

@@ -11,12 +11,19 @@ from pathlib import Path
 
 # 添加項目路徑
 sys.path.insert(0, '/root/comic_ai')
+sys.path.insert(0, str(Path(__file__).parent / 'src'))
 
 from system_robustness import (
     initialize_robustness,
     get_robustness_manager,
     ReconnectionConfig
 )
+
+try:
+    from core.session_recap import SessionRecap
+    RECAP_AVAILABLE = True
+except ImportError:
+    RECAP_AVAILABLE = False
 
 
 class ComicAISystem:
@@ -40,6 +47,46 @@ class ComicAISystem:
             logger.addHandler(handler)
             logger.setLevel(logging.INFO)
         return logger
+
+    def _run_session_recap(self) -> None:
+        """運行會話回顧"""
+        try:
+            self.logger.info("📝 運行會話回顧...")
+            recap = SessionRecap()
+            summary = recap.get_session_summary()
+            
+            if summary:
+                self.logger.info("=" * 70)
+                self.logger.info("📊 會話回顧摘要")
+                self.logger.info("=" * 70)
+                
+                # 顯示 Git 分支
+                self.logger.info(f"🌿 當前分支: {summary.git_branch}")
+                
+                # 顯示最近提交
+                if summary.recent_commits:
+                    self.logger.info("📜 最近提交:")
+                    for commit in summary.recent_commits[:3]:
+                        self.logger.info(f"  • {commit.hash[:7]} - {commit.message}")
+                
+                # 顯示未提交的變更
+                if summary.uncommitted_changes:
+                    self.logger.info(f"⚠️ 未提交的變更: {len(summary.uncommitted_changes)} 個文件")
+                    for change in summary.uncommitted_changes[:5]:
+                        self.logger.info(f"  • {change}")
+                
+                # 顯示建議
+                if summary.recommendations:
+                    self.logger.info("💡 建議:")
+                    for rec in summary.recommendations:
+                        self.logger.info(f"  • {rec}")
+                
+                self.logger.info("=" * 70)
+            else:
+                self.logger.info("ℹ️ 沒有會話記錄")
+        
+        except Exception as e:
+            self.logger.warning(f"⚠️ 會話回顧失敗: {e}")
 
     def _setup_connections(self) -> None:
         """設置受管理的連接"""
@@ -94,6 +141,10 @@ class ComicAISystem:
             self.logger.info("=" * 70)
             self.logger.info("🚀 Comic AI 系統初始化中...")
             self.logger.info("=" * 70)
+
+            # 運行自動回顧 (在啟動時)
+            if RECAP_AVAILABLE:
+                self._run_session_recap()
 
             # 初始化強健性管理器
             self.robustness = initialize_robustness()

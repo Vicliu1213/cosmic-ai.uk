@@ -1,0 +1,13 @@
+{
+  "subsystem_id": "task_panel",
+  "subsystem_type": "SubsystemType.TASK_PANEL",
+  "name": "\u4efb\u52d9\u9762\u677f",
+  "status": "active",
+  "last_sync": "2026-03-01T08:38:14.153916",
+  "connections": [
+    "memory_mgr",
+    "cli_interface"
+  ],
+  "metadata": {},
+  "sync_hash": "e55502170972d4eef7c81c60b903411de198153a9145c722898c898bbe290eae"
+}

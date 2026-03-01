@@ -20,7 +20,6 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-
 @dataclass
 class AlgorithmMetrics:
     """算法指标"""
@@ -35,7 +34,6 @@ class AlgorithmMetrics:
     sharpe_ratio: float
     sortino_ratio: float
 
-
 @dataclass
 class OptimizationResult:
     """优化结果"""
@@ -44,7 +42,6 @@ class OptimizationResult:
     parameters: Dict[str, Any]
     performance_metrics: Dict[str, float]
     improvement_percent: float
-
 
 class QuantumEngine:
     """量化引擎"""
@@ -248,8 +245,7 @@ class QuantumEngine:
                 "message": "获取引擎状态失败"
             }
 
-
-def print_mcp_tools():
+def print_mcp_tools() -> Any:
     """输出MCP工具定义"""
     tools = {
         "tools": [
@@ -322,7 +318,6 @@ def print_mcp_tools():
         ]
     }
     print(json.dumps(tools, indent=2, ensure_ascii=False))
-
 
 if __name__ == "__main__":
     print_mcp_tools()

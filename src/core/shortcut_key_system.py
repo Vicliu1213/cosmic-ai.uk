@@ -24,11 +24,10 @@ from enhanced_memory_manager import (
     EnhancedMemoryManager
 )
 
-
 class ShortcutKeySystem:
     """超短快捷鍵系統"""
 
-    def __init__(self):
+    def __init__(self) -> Any:
         self.memory_manager = get_memory_manager()
         self.shortcuts: Dict[str, Callable] = {
             'm': self.show_memory_summary,      # 記憶摘要
@@ -211,9 +210,8 @@ class ShortcutKeySystem:
         command = " ".join(args)
         return f"執行命令: {command}"
 
-
 # CLI 介面
-def main():
+def main() -> Any:
     """主程序"""
     system = ShortcutKeySystem()
 
@@ -252,7 +250,6 @@ def main():
             break
         except Exception as e:
             print(f"❌ 錯誤: {e}")
-
 
 if __name__ == "__main__":
     main()

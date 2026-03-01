@@ -1,0 +1,10 @@
+{
+  "node_id": "node_memory",
+  "node_type": "memory",
+  "name": "\u5167\u5b58\u7bc0\u9ede",
+  "ip_address": null,
+  "port": null,
+  "region": "local",
+  "neighbors": [],
+  "metadata": {}
+}

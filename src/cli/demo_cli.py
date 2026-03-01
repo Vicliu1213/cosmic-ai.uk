@@ -7,6 +7,7 @@ Comic AI 对话框演示版本 - 不需要外部依赖
 import sys
 import locale
 import os
+from typing import Any
 
 # 设置编码
 os.environ['PYTHONIOENCODING'] = 'utf-8'
@@ -18,8 +19,7 @@ except:
     except:
         pass
 
-
-def main_menu():
+def main_menu() -> Any:
     """主菜单"""
     print("\n" + "="*50)
     print("           Comic AI 量子分析系统")
@@ -44,8 +44,7 @@ def main_menu():
             print("\n再见!")
             sys.exit(0)
 
-
-def run_analysis():
+def run_analysis() -> Any:
     """执行分析演示"""
     print("\n正在执行量子分析...")
     print("分析四大理论: Heisenberg, Bekenstein, Bremermann, Landauer")
@@ -68,8 +67,7 @@ def run_analysis():
     print("="*50)
     input("\n按 Enter 繼續...")
 
-
-def show_theories():
+def show_theories() -> Any:
     """顯示理論"""
     theories = {
         "Heisenberg": "量子精密測量 - Δφ ≥ 1/N",
@@ -89,8 +87,7 @@ def show_theories():
     print("="*50)
     input("\n按 Enter 繼續...")
 
-
-def show_help():
+def show_help() -> Any:
     """顯示說明"""
     print("\n" + "="*50)
     print("               使用說明")
@@ -105,8 +102,7 @@ def show_help():
     print("="*50)
     input("\n按 Enter 繼續...")
 
-
-def main():
+def main() -> Any:
     """主程式"""
     print("啟動 Comic AI 系統...")
     
@@ -122,7 +118,6 @@ def main():
         elif choice == "4":
             print("\n感謝使用!")
             break
-
 
 if __name__ == "__main__":
     main()

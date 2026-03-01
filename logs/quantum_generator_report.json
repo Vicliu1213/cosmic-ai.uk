@@ -1,0 +1,275 @@
+{
+  "system": "MainQuantumGenerator",
+  "start_time": "2026-03-01T08:48:02.678921",
+  "end_time": "2026-03-01T08:48:02.685231",
+  "cost_analysis": {
+    "total_cost": 0.020000000000000007,
+    "total_operations": 17,
+    "avg_cost_per_op": 0.0011764705882352944,
+    "elapsed_time": 0.006315,
+    "ops_per_second": 2692.0031670625494,
+    "registers": {
+      "demo1": {
+        "name": "demo1",
+        "num_qubits": 3,
+        "total_cost": 0.003,
+        "operation_count": 3,
+        "qubit_states": [
+          {
+            "id": "demo1_q0",
+            "prob_0": 0.4999999999999999,
+            "prob_1": 0.4999999999999999,
+            "measured_value": 0,
+            "measurement_count": 1
+          },
+          {
+            "id": "demo1_q1",
+            "prob_0": 0.4999999999999999,
+            "prob_1": 0.4999999999999999,
+            "measured_value": 0,
+            "measurement_count": 1
+          },
+          {
+            "id": "demo1_q2",
+            "prob_0": 0.0,
+            "prob_1": 1.0,
+            "measured_value": 1,
+            "measurement_count": 1
+          }
+        ],
+        "entanglements": {}
+      },
+      "demo2": {
+        "name": "demo2",
+        "num_qubits": 2,
+        "total_cost": 0.003,
+        "operation_count": 2,
+        "qubit_states": [
+          {
+            "id": "demo2_q0",
+            "prob_0": 0.4999999999999999,
+            "prob_1": 0.4999999999999999,
+            "measured_value": 0,
+            "measurement_count": 1
+          },
+          {
+            "id": "demo2_q1",
+            "prob_0": 1.0,
+            "prob_1": 0.0,
+            "measured_value": 0,
+            "measurement_count": 1
+          }
+        ],
+        "entanglements": {
+          "demo2_q0": [
+            "demo2_q1"
+          ]
+        }
+      },
+      "demo3": {
+        "name": "demo3",
+        "num_qubits": 4,
+        "total_cost": 0.008,
+        "operation_count": 6,
+        "qubit_states": [
+          {
+            "id": "demo3_q0",
+            "prob_0": 0.4999999999999999,
+            "prob_1": 0.4999999999999999,
+            "measured_value": 0,
+            "measurement_count": 1
+          },
+          {
+            "id": "demo3_q1",
+            "prob_0": 0.4999999999999999,
+            "prob_1": 0.4999999999999999,
+            "measured_value": 0,
+            "measurement_count": 1
+          },
+          {
+            "id": "demo3_q2",
+            "prob_0": 0.0,
+            "prob_1": 1.0,
+            "measured_value": 1,
+            "measurement_count": 1
+          },
+          {
+            "id": "demo3_q3",
+            "prob_0": 1.0,
+            "prob_1": 0.0,
+            "measured_value": 0,
+            "measurement_count": 1
+          }
+        ],
+        "entanglements": {
+          "demo3_q0": [
+            "demo3_q2"
+          ],
+          "demo3_q1": [
+            "demo3_q3"
+          ]
+        }
+      },
+      "grover": {
+        "name": "grover",
+        "num_qubits": 3,
+        "total_cost": 0.007,
+        "operation_count": 7,
+        "qubit_states": [
+          {
+            "id": "grover_q0",
+            "prob_0": 0.4999999999999999,
+            "prob_1": 0.4999999999999999,
+            "measured_value": 1,
+            "measurement_count": 1
+          },
+          {
+            "id": "grover_q1",
+            "prob_0": 0.4999999999999999,
+            "prob_1": 0.4999999999999999,
+            "measured_value": 1,
+            "measurement_count": 1
+          },
+          {
+            "id": "grover_q2",
+            "prob_0": 0.4999999999999999,
+            "prob_1": 0.4999999999999999,
+            "measured_value": 1,
+            "measurement_count": 1
+          }
+        ],
+        "entanglements": {}
+      }
+    }
+  },
+  "execution_log": [
+    {
+      "timestamp": "2026-03-01T08:48:02.682165",
+      "register": "demo1",
+      "circuit": [
+        [
+          "hadamard",
+          0
+        ],
+        [
+          "hadamard",
+          1
+        ],
+        [
+          "pauli_x",
+          2
+        ]
+      ],
+      "results": [
+        0,
+        0,
+        1
+      ],
+      "register_cost": 0.003,
+      "total_cost": 0.003
+    },
+    {
+      "timestamp": "2026-03-01T08:48:02.682742",
+      "register": "demo2",
+      "circuit": [
+        [
+          "hadamard",
+          0
+        ],
+        [
+          "cnot",
+          0,
+          1
+        ]
+      ],
+      "results": [
+        0,
+        0
+      ],
+      "register_cost": 0.003,
+      "total_cost": 0.006
+    },
+    {
+      "timestamp": "2026-03-01T08:48:02.683562",
+      "register": "demo3",
+      "circuit": [
+        [
+          "hadamard",
+          0
+        ],
+        [
+          "hadamard",
+          1
+        ],
+        [
+          "cnot",
+          0,
+          2
+        ],
+        [
+          "cnot",
+          1,
+          3
+        ],
+        [
+          "pauli_x",
+          0
+        ]
+      ],
+      "results": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "register_cost": 0.008,
+      "total_cost": 0.013000000000000001
+    },
+    {
+      "timestamp": "2026-03-01T08:48:02.684605",
+      "register": "grover",
+      "circuit": [
+        [
+          "hadamard",
+          0
+        ],
+        [
+          "hadamard",
+          1
+        ],
+        [
+          "hadamard",
+          2
+        ],
+        [
+          "pauli_x",
+          1
+        ],
+        [
+          "pauli_x",
+          1
+        ],
+        [
+          "pauli_x",
+          1
+        ],
+        [
+          "pauli_x",
+          1
+        ]
+      ],
+      "results": [
+        1,
+        1,
+        1
+      ],
+      "register_cost": 0.007,
+      "total_cost": 0.020000000000000007
+    }
+  ],
+  "verification": {
+    "all_passed": false,
+    "total_operations": 17,
+    "total_cost": 0.020000000000000007
+  }
+}

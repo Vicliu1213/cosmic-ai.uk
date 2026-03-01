@@ -18,7 +18,6 @@ from opencode.data_integration import (
     DataAnalyzer, DataManager
 )
 
-
 class TestDataFormat(unittest.TestCase):
     """Test data format enumeration."""
     
@@ -29,7 +28,6 @@ class TestDataFormat(unittest.TestCase):
     def test_csv_format(self):
         """Test CSV format."""
         self.assertEqual(DataFormat.CSV.value, "csv")
-
 
 class TestOHLCV(unittest.TestCase):
     """Test OHLCV data structure."""
@@ -65,7 +63,6 @@ class TestOHLCV(unittest.TestCase):
         self.assertIn('open', data_dict)
         self.assertIn('close', data_dict)
 
-
 class TestDataLoader(unittest.TestCase):
     """Test data loading functionality."""
     
@@ -74,7 +71,6 @@ class TestDataLoader(unittest.TestCase):
         data = DataLoader.generate_mock_data("BTC/USD", num_records=50)
         self.assertEqual(len(data), 50)
         self.assertEqual(data[0].symbol, "BTC/USD")
-
 
 class TestDataBuffer(unittest.TestCase):
     """Test data buffer functionality."""
@@ -99,7 +95,6 @@ class TestDataBuffer(unittest.TestCase):
         
         buffer.add_data(ohlcv)
         self.assertEqual(len(buffer.buffer.get("BTC/USD", [])), 1)
-
 
 class TestDataAnalyzer(unittest.TestCase):
     """Test data analysis functionality."""
@@ -130,7 +125,6 @@ class TestDataAnalyzer(unittest.TestCase):
         self.assertIn('min', stats)
         self.assertIn('max', stats)
 
-
 class TestDataManager(unittest.TestCase):
     """Test data manager functionality."""
     
@@ -150,7 +144,6 @@ class TestDataManager(unittest.TestCase):
             self.assertIn("BTC/USD", self.manager.buffer.buffer)
         
         asyncio.run(load())
-
 
 if __name__ == '__main__':
     unittest.main()

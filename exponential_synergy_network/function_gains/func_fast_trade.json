@@ -1,0 +1,31 @@
+{
+  "function_id": "func_fast_trade",
+  "function_name": "\u9ad8\u901f\u4ea4\u6613",
+  "base_performance": 50.0,
+  "layer_gains": {
+    "amplification_1": 2.6997176151520064,
+    "amplification_2": 7.2884752015620355,
+    "amplification_3": 19.676824889255595,
+    "amplification_4": 53.121870763784756,
+    "amplification_5": 143.41405025081806,
+    "synergy_1": 4.049576422728009,
+    "synergy_2": 16.39906920351458,
+    "synergy_3": 66.40928400123764,
+    "synergy_4": 268.92947074166034
+  },
+  "exponential_gain": 90.01713130052181,
+  "synergy_amplification": 1.0,
+  "final_gain": 314917115609112.8,
+  "contributing_layers": [
+    "amplification_1",
+    "amplification_2",
+    "amplification_3",
+    "amplification_4",
+    "amplification_5",
+    "synergy_1",
+    "synergy_2",
+    "synergy_3",
+    "synergy_4"
+  ],
+  "synergy_partners": []
+}

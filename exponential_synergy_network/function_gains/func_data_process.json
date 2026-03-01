@@ -1,0 +1,23 @@
+{
+  "function_id": "func_data_process",
+  "function_name": "\u6578\u64da\u8655\u7406",
+  "base_performance": 40.0,
+  "layer_gains": {
+    "amplification_1": 2.6997176151520064,
+    "amplification_2": 7.2884752015620355,
+    "amplification_3": 19.676824889255595,
+    "amplification_4": 53.121870763784756,
+    "amplification_5": 143.41405025081806
+  },
+  "exponential_gain": 12.182493960703473,
+  "synergy_amplification": 1.0,
+  "final_gain": 35934475.33538372,
+  "contributing_layers": [
+    "amplification_1",
+    "amplification_2",
+    "amplification_3",
+    "amplification_4",
+    "amplification_5"
+  ],
+  "synergy_partners": []
+}

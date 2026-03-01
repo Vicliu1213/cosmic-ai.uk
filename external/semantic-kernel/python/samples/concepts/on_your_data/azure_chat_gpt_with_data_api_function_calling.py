@@ -83,7 +83,6 @@ req_settings.function_choice_behavior = FunctionChoiceBehavior.Auto(filters={"ex
 
 arguments = KernelArguments(settings=req_settings)
 
-
 async def chat() -> bool:
     try:
         user_input = input("User:> ")
@@ -109,7 +108,6 @@ async def chat() -> bool:
     history.add_assistant_message(str(answer))
     return True
 
-
 async def main() -> None:
     print(
         "Welcome to the chat bot!\
@@ -119,7 +117,6 @@ async def main() -> None:
     chatting = True
     while chatting:
         chatting = await chat()
-
 
 if __name__ == "__main__":
     asyncio.run(main())

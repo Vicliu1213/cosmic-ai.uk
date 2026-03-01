@@ -17,7 +17,6 @@ from typing import Dict, Any
 # Add project root to path
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
-
 class MockResponse:
     """Mock HTTP response for testing."""
     
@@ -29,7 +28,6 @@ class MockResponse:
     def json(self) -> Dict[str, Any]:
         """Get response JSON."""
         return self.data
-
 
 class TestHealthCheckEndpoint(unittest.TestCase):
     """Test health check endpoint."""
@@ -52,7 +50,6 @@ class TestHealthCheckEndpoint(unittest.TestCase):
         mock_response = MockResponse(200, {'status': 'healthy'})
         self.assertEqual(mock_response.status_code, 200)
 
-
 class TestApiStatusEndpoint(unittest.TestCase):
     """Test API status endpoint."""
     
@@ -68,7 +65,6 @@ class TestApiStatusEndpoint(unittest.TestCase):
         self.assertIn('api_version', status_data)
         self.assertIn('active_systems', status_data)
         self.assertIsInstance(status_data['active_agents'], int)
-
 
 class TestPortfolioEndpoint(unittest.TestCase):
     """Test portfolio endpoint."""
@@ -97,7 +93,6 @@ class TestPortfolioEndpoint(unittest.TestCase):
         
         total_pnl = unrealized_pnl + realized_pnl
         self.assertEqual(total_pnl, 3500.0)
-
 
 class TestTradingSignalsEndpoint(unittest.TestCase):
     """Test trading signals endpoint."""
@@ -129,7 +124,6 @@ class TestTradingSignalsEndpoint(unittest.TestCase):
         buy_signals = [s for s in signals if s['signal_type'] == 'buy']
         self.assertEqual(len(buy_signals), 1)
 
-
 class TestMarketDataEndpoint(unittest.TestCase):
     """Test market data endpoint."""
     
@@ -158,7 +152,6 @@ class TestMarketDataEndpoint(unittest.TestCase):
         self.assertGreaterEqual(price, bid)
         self.assertLessEqual(price, ask)
 
-
 class TestErrorHandling(unittest.TestCase):
     """Test error handling in API."""
     
@@ -178,7 +171,6 @@ class TestErrorHandling(unittest.TestCase):
         response = MockResponse(500, {'error': 'Internal server error'})
         self.assertEqual(response.status_code, 500)
 
-
 class TestAuthenticationEndpoint(unittest.TestCase):
     """Test authentication endpoint."""
     
@@ -193,7 +185,6 @@ class TestAuthenticationEndpoint(unittest.TestCase):
         self.assertIn('token', auth_response)
         self.assertEqual(auth_response['token_type'], 'Bearer')
         self.assertGreater(auth_response['expires_in'], 0)
-
 
 if __name__ == '__main__':
     unittest.main()

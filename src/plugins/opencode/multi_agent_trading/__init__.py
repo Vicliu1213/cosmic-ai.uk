@@ -548,7 +548,7 @@ class ConsensusCoordinatorAgent(UniverseAgent):
             'coherence_score': avg_coherence or 0.0
         }
     
-    def _universe_wisdom_integration(self, signals: List[MarketSignal], collaboration_insights: Dict = None) -> Dict:
+    def _universe_wisdom_integration(self, signals: List[MarketSignal], collaboration_insights: Optional[Dict] = None) -> Dict:
         """宇宙智慧整合 - 融合東西方智慧與量子智能"""
         collaboration_insights = collaboration_insights or {}
             

@@ -26,7 +26,6 @@ from enhanced_memory_manager import (
 
 logger = logging.getLogger(__name__)
 
-
 class ContextRecoveryPipeline:
     """快速上下文恢復管道"""
 
@@ -211,7 +210,6 @@ class ContextRecoveryPipeline:
 
         return "\n".join(output)
 
-
 # 快捷鍵觸發器
 class RecoveryShortcutTrigger:
     """快捷鍵觸發恢復"""
@@ -263,7 +261,6 @@ class RecoveryShortcutTrigger:
         output.append("="*60 + "\n")
 
         return "\n".join(output)
-
 
 if __name__ == "__main__":
     # 演示

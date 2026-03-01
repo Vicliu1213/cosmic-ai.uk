@@ -1,0 +1,10 @@
+{
+  "node_id": "node_quantum",
+  "node_type": "quantum",
+  "name": "\u91cf\u5b50\u5f15\u64ce\u7bc0\u9ede",
+  "ip_address": null,
+  "port": null,
+  "region": "local",
+  "neighbors": [],
+  "metadata": {}
+}

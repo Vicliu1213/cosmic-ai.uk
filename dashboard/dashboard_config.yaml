@@ -5,9 +5,13 @@ version: "1.0.0"
 # Server Settings
 server:
   host: "0.0.0.0"
-  port: 8080
+  port: 8443
   debug: false
   auto_reload: true
+  ssl:
+    enabled: true
+    cert: "ssl_certs/cert.pem"
+    key: "ssl_certs/key.pem"
 
 # Database Configuration
 database:
