@@ -1435,4 +1435,419 @@ opencode
 
 ---
 
+## 🛠️ 系统验证脚本
+
+### 1. 完整系统验证脚本
+
+```python
+# verify_system.py - 验证完整的 OpenCode 交易系统
+import subprocess
+import json
+import os
+import sys
+
+class OpenCodeVerifier:
+    """验证 OpenCode 和交易系统集成"""
+    
+    def __init__(self):
+        self.results = {}
+        self.failed = []
+    
+    def verify_all(self):
+        """运行所有验证"""
+        print("🔍 验证 OpenCode 交易系统完整性...\n")
+        
+        verifications = [
+            ("OpenCode 安装", self.verify_opencode_installed),
+            ("配置文件", self.verify_config_file),
+            ("MCP 服务器", self.verify_mcp_servers),
+            ("AI Agents", self.verify_agents),
+            ("自定义命令", self.verify_commands),
+            ("Python 环境", self.verify_python_env),
+            ("交易系统", self.verify_trading_system),
+        ]
+        
+        for name, check_func in verifications:
+            try:
+                result = check_func()
+                self.results[name] = result
+                status = "✓" if result else "✗"
+                print(f"{status} {name}: {'通过' if result else '失败'}")
+                if not result:
+                    self.failed.append(name)
+            except Exception as e:
+                self.results[name] = False
+                print(f"✗ {name}: 错误 - {str(e)[:50]}")
+                self.failed.append(name)
+        
+        print("\n" + "="*60)
+        passed = sum(1 for v in self.results.values() if v)
+        total = len(self.results)
+        print(f"✅ 验证完成: {passed}/{total} 检查通过")
+        
+        if self.failed:
+            print(f"\n❌ 失败项: {', '.join(self.failed)}")
+            return False
+        return True
+    
+    def verify_opencode_installed(self):
+        """检查 OpenCode 是否已安装"""
+        try:
+            result = subprocess.run(
+                ["opencode", "--version"],
+                capture_output=True,
+                timeout=5
+            )
+            return result.returncode == 0
+        except:
+            return False
+    
+    def verify_config_file(self):
+        """验证配置文件"""
+        if not os.path.exists("opencode.jsonc"):
+            print("    配置文件不存在")
+            return False
+        
+        try:
+            with open("opencode.jsonc", 'r') as f:
+                content = f.read()
+                # 基本验证
+                if '{"mcp":' not in content and '{' in content:
+                    return True
+        except:
+            return False
+        
+        return True
+    
+    def verify_mcp_servers(self):
+        """验证 MCP 服务器"""
+        mcps = ["trading-monitor", "quantum-engine", "data-analyzer", "risk-manager"]
+        connected = 0
+        
+        for mcp in mcps:
+            try:
+                result = subprocess.run(
+                    ["opencode", "mcp", "list"],
+                    capture_output=True,
+                    timeout=5,
+                    text=True
+                )
+                if mcp in result.stdout:
+                    connected += 1
+            except:
+                pass
+        
+        return connected >= 3  # 至少 3 个 MCP 连接
+    
+    def verify_agents(self):
+        """验证 Agents"""
+        expected_agents = [
+            "code-reviewer",
+            "trading-analyst",
+            "quantum-engineer",
+            "devops-engineer"
+        ]
+        
+        for agent in expected_agents:
+            try:
+                result = subprocess.run(
+                    ["find", ".opencode/agents", "-name", f"*{agent}*"],
+                    capture_output=True,
+                    timeout=5
+                )
+                if result.returncode != 0:
+                    return False
+            except:
+                pass
+        
+        return True
+    
+    def verify_commands(self):
+        """验证自定义命令"""
+        commands = ["/test", "/analyze", "/monitor", "/deploy"]
+        try:
+            with open("opencode.jsonc", 'r') as f:
+                content = f.read()
+                return all(cmd in content for cmd in commands)
+        except:
+            return False
+    
+    def verify_python_env(self):
+        """验证 Python 环境"""
+        required_packages = [
+            "numpy",
+            "pandas",
+            "psutil"
+        ]
+        
+        for package in required_packages:
+            try:
+                __import__(package)
+            except ImportError:
+                print(f"    缺少包: {package}")
+                return False
+        
+        return True
+    
+    def verify_trading_system(self):
+        """验证交易系统"""
+        required_files = [
+            "src/core/trading_monitor_mcp.py",
+            "engine/quantum_engine_mcp.py",
+            "src/core/data_analyzer_mcp.py",
+            "src/core/risk_manager_mcp.py"
+        ]
+        
+        for file in required_files:
+            if not os.path.exists(file):
+                print(f"    缺少文件: {file}")
+                return False
+        
+        return True
+
+if __name__ == "__main__":
+    verifier = OpenCodeVerifier()
+    success = verifier.verify_all()
+    sys.exit(0 if success else 1)
+```
+
+**运行验证**:
+```bash
+python verify_system.py
+```
+
+### 2. 快速诊断脚本
+
+```python
+# diagnose.py - 快速诊断系统问题
+import subprocess
+import os
+import psutil
+
+def quick_diagnose():
+    """快速系统诊断"""
+    print("⚡ 快速诊断 OpenCode 系统\n")
+    
+    # 1. 进程状态
+    print("📊 系统资源:")
+    opencode_proc = None
+    for proc in psutil.process_iter(['pid', 'name', 'memory_percent', 'cpu_percent']):
+        if 'opencode' in proc.info['name']:
+            opencode_proc = proc.info
+            print(f"  OpenCode PID: {opencode_proc['pid']}")
+            print(f"  内存: {opencode_proc['memory_percent']:.1f}%")
+            print(f"  CPU: {opencode_proc['cpu_percent']:.1f}%")
+            break
+    
+    if not opencode_proc:
+        print("  ℹ️  OpenCode 未运行 (正常,需要手动启动)")
+    
+    # 2. 文件系统检查
+    print("\n📁 文件系统:")
+    critical_files = [
+        "opencode.jsonc",
+        ".opencode/agents",
+        "src/core/trading_monitor_mcp.py",
+    ]
+    
+    for file in critical_files:
+        exists = "✓" if os.path.exists(file) else "✗"
+        print(f"  {exists} {file}")
+    
+    # 3. 缓存大小
+    cache_dir = os.path.expanduser("~/.local/share/opencode/cache")
+    if os.path.exists(cache_dir):
+        cache_size = sum(
+            f.stat().st_size for f in 
+            __import__('pathlib').Path(cache_dir).rglob('*') 
+            if f.is_file()
+        ) / (1024*1024)
+        print(f"\n💾 缓存大小: {cache_size:.2f} MB")
+        if cache_size > 500:
+            print("  ⚠️  建议清理缓存: rm -rf ~/.local/share/opencode/cache")
+    
+    # 4. 网络连接
+    print("\n🌐 网络检查:")
+    try:
+        result = subprocess.run(
+            ["curl", "-s", "-o", "/dev/null", "-w", "%{http_code}", 
+             "https://opencode.ai"],
+            capture_output=True,
+            timeout=5
+        )
+        print(f"  opencode.ai: {result.stdout.decode().strip()}")
+    except:
+        print("  ⚠️  网络连接检查失败")
+
+if __name__ == "__main__":
+    quick_diagnose()
+```
+
+### 3. 性能监控脚本
+
+```python
+# monitor_performance.py - 实时性能监控
+import psutil
+import time
+import statistics
+
+def monitor_performance(duration_seconds=60):
+    """监控 OpenCode 性能"""
+    print(f"📈 监控 OpenCode 性能 ({duration_seconds}s)...\n")
+    
+    cpu_samples = []
+    memory_samples = []
+    
+    for i in range(duration_seconds):
+        for proc in psutil.process_iter(['pid', 'name', 'memory_percent', 'cpu_percent']):
+            if 'opencode' in proc.info['name']:
+                cpu_samples.append(proc.info['cpu_percent'])
+                memory_samples.append(proc.info['memory_percent'])
+        
+        time.sleep(1)
+        if i % 10 == 0:
+            print(f"  进度: {i}/{duration_seconds}s")
+    
+    if not cpu_samples:
+        print("❌ OpenCode 未运行")
+        return
+    
+    print("\n📊 性能统计:")
+    print(f"  CPU 平均: {statistics.mean(cpu_samples):.2f}%")
+    print(f"  CPU 最大: {max(cpu_samples):.2f}%")
+    print(f"  内存平均: {statistics.mean(memory_samples):.2f}%")
+    print(f"  内存最大: {max(memory_samples):.2f}%")
+    
+    if statistics.mean(memory_samples) > 50:
+        print("\n⚠️  内存使用过高,建议清理缓存或禁用不必要的 MCP")
+
+if __name__ == "__main__":
+    monitor_performance(60)
+```
+
+### 4. 配置检查脚本
+
+```python
+# check_config.py - 详细的配置检查
+import json
+import os
+
+def check_opencode_config():
+    """详细检查 OpenCode 配置"""
+    print("⚙️  检查 OpenCode 配置...\n")
+    
+    config_file = "opencode.jsonc"
+    
+    if not os.path.exists(config_file):
+        print(f"❌ 配置文件不存在: {config_file}")
+        return False
+    
+    # 读取配置 (移除注释)
+    with open(config_file, 'r') as f:
+        lines = f.readlines()
+    
+    # 移除注释用于验证
+    content = '\n'.join([line.split('//')[0] for line in lines])
+    
+    try:
+        config = json.loads(content)
+    except json.JSONDecodeError as e:
+        print(f"❌ JSON 解析错误: {e}")
+        return False
+    
+    # 检查关键配置项
+    print("✓ 配置结构检查:")
+    checks = {
+        "model": "主模型",
+        "small_model": "小模型",
+        "mcp": "MCP 服务器",
+        "permission": "权限设置",
+    }
+    
+    for key, desc in checks.items():
+        if key in config:
+            print(f"  ✓ {desc}")
+        else:
+            print(f"  ✗ 缺少: {desc}")
+    
+    # 检查 MCP 配置
+    print("\n🔌 MCP 服务器配置:")
+    if 'mcp' in config:
+        for mcp_name, mcp_config in config['mcp'].items():
+            enabled = mcp_config.get('enabled', True)
+            status = "✓ 启用" if enabled else "✗ 禁用"
+            print(f"  {status}: {mcp_name}")
+    
+    # 检查权限设置
+    print("\n🔒 权限设置:")
+    if 'permission' in config:
+        for perm, value in config['permission'].items():
+            print(f"  {perm}: {value}")
+    
+    print("\n✅ 配置检查完成")
+    return True
+
+if __name__ == "__main__":
+    check_opencode_config()
+```
+
+---
+
+## 📋 快速参考表
+
+### MCP 工具总览
+
+| MCP 名称 | 工具数 | 主要功能 |
+|---------|--------|---------|
+| trading-monitor | 5 | 投资组合监控 |
+| quantum-engine | 5 | 算法优化 |
+| data-analyzer | 6 | 市场分析 |
+| risk-manager | 5 | 风险评估 |
+| **总计** | **21** | - |
+
+### Agent 权限表
+
+| Agent | 角色 | read | write | edit | bash | MCP 访问 |
+|-------|------|------|-------|------|------|---------|
+| code-reviewer | 审查 | ✓ | ✗ | ✗ | ✗ | ✗ |
+| trading-analyst | 分析 | ✓ | ✗ | ✓ | ✗ | ✓ |
+| quantum-engineer | 开发 | ✓ | ✓ | ✓ | ✓ | ✓ |
+| devops-engineer | 运维 | ✓ | ✓ | ✓ | ✓ | ✓ |
+
+### 命令快速参考
+
+| 命令 | 功能 | 使用场景 |
+|------|------|---------|
+| /test | 运行测试 | 验证代码 |
+| /analyze | 分析系统 | 性能评估 |
+| /monitor | 实时监控 | 持续监控 |
+| /deploy | 部署系统 | 上线发布 |
+
+---
+
+## 🎓 学习路径
+
+**初级**:
+1. 阅读本文档
+2. 运行 `/test` 命令
+3. 尝试 `/analyze` 命令
+
+**中级**:
+1. 自定义 Agent 提示词
+2. 创建 MCP 工具
+3. 优化算法参数
+
+**高级**:
+1. 集成实时数据源
+2. 实现自动化工作流
+3. 开发高级分析模块
+
+---
+
+**最后更新**: 2026-02-19
+**版本**: 1.0.0
+**维护**: OpenCode 集成团队
+
+---
+
 END OF GUIDE

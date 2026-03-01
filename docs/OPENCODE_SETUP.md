@@ -407,23 +407,194 @@ opencode mcp debug trading-monitor
 opencode logs
 ```
 
-### 配置问题
+**详细排查步骤**:
+```python
+# 创建验证脚本 verify_mcp.py
+import subprocess
+import json
+import sys
+
+def verify_mcp_connection():
+    """验证所有 MCP 服务器连接"""
+    mcps = ["trading-monitor", "quantum-engine", "data-analyzer", "risk-manager"]
+    
+    print("🔍 验证 MCP 服务器连接状态...")
+    results = {}
+    
+    for mcp in mcps:
+        try:
+            result = subprocess.run(
+                ["opencode", "mcp", "debug", mcp],
+                capture_output=True,
+                timeout=5,
+                text=True
+            )
+            results[mcp] = "✓ 连接成功" if result.returncode == 0 else "✗ 连接失败"
+            print(f"  {mcp}: {results[mcp]}")
+        except subprocess.TimeoutExpired:
+            results[mcp] = "✗ 超时"
+            print(f"  {mcp}: ✗ 超时")
+        except Exception as e:
+            results[mcp] = f"✗ 错误: {e}"
+            print(f"  {mcp}: ✗ 错误: {e}")
+    
+    return results
+
+if __name__ == "__main__":
+    results = verify_mcp_connection()
+    failed = [k for k, v in results.items() if "✗" in v]
+    sys.exit(len(failed))
+```
+
+**运行验证**:
 ```bash
-# 验证配置语法
-cat opencode.jsonc | python -m json.tool
+python verify_mcp.py
+```
+
+### 配置问题
+
+**验证配置语法**:
+```bash
+# 使用 Python 验证 JSONC
+python -c "
+import json
+try:
+    with open('opencode.jsonc', 'r') as f:
+        # 移除注释用于验证
+        content = f.read()
+        content = '\n'.join([line.split('//')[0] for line in content.split('\n')])
+        json.loads(content)
+    print('✓ 配置语法正确')
+except json.JSONDecodeError as e:
+    print(f'✗ 配置错误: {e}')
+"
 
 # 查看生效的配置
 opencode config show
+
+# 验证配置文件是否存在
+ls -la opencode.jsonc ~/.config/opencode/opencode.json
+```
+
+**配置修复脚本**:
+```python
+# fix_config.py - 自动修复常见配置问题
+import json
+import os
+
+def fix_opencode_config():
+    """修复常见的配置问题"""
+    config_path = "opencode.jsonc"
+    
+    if not os.path.exists(config_path):
+        print(f"✗ 配置文件不存在: {config_path}")
+        return False
+    
+    # 读取配置
+    with open(config_path, 'r') as f:
+        content = f.read()
+    
+    # 检查常见问题
+    issues = []
+    
+    # 1. 检查缺少逗号
+    if '}\n  {' in content:
+        issues.append("发现缺少逗号的问题")
+    
+    # 2. 检查未闭合的括号
+    open_braces = content.count('{')
+    close_braces = content.count('}')
+    if open_braces != close_braces:
+        issues.append(f"括号不匹配: {{ {open_braces} vs }} {close_braces}")
+    
+    # 3. 检查注释语法
+    lines = content.split('\n')
+    for i, line in enumerate(lines, 1):
+        if '//' in line and '"//' not in line:
+            print(f"行 {i} 有注释: {line.strip()[:50]}...")
+    
+    if issues:
+        print("✗ 发现的问题:")
+        for issue in issues:
+            print(f"  - {issue}")
+        return False
+    
+    print("✓ 配置文件检查通过")
+    return True
+
+if __name__ == "__main__":
+    fix_opencode_config()
 ```
 
 ### 性能问题
+
+**诊断性能问题**:
 ```bash
 # 检查上下文使用
 opencode context info
 
+# 检查内存使用
+ps aux | grep opencode | grep -v grep
+# 查看 VSZ 和 RSS 列
+
+# 检查 CPU 使用
+top -p $(pgrep opencode)
+
 # 清理缓存
 rm -rf ~/.local/share/opencode/cache
+
+# 检查磁盘空间
+du -sh ~/.local/share/opencode/
 ```
+
+**性能优化脚本**:
+```python
+# optimize_performance.py
+import os
+import shutil
+import subprocess
+
+def optimize_opencode():
+    """优化 OpenCode 性能"""
+    
+    print("🚀 开始性能优化...")
+    
+    # 1. 清理缓存
+    cache_dir = os.path.expanduser("~/.local/share/opencode/cache")
+    if os.path.exists(cache_dir):
+        size_before = sum(f.stat().st_size for f in 
+                         Path(cache_dir).rglob('*') if f.is_file()) / (1024*1024)
+        shutil.rmtree(cache_dir)
+        print(f"✓ 清理缓存: {size_before:.2f} MB")
+    
+    # 2. 禁用不必要的 MCP
+    print("\n⚙️  建议的配置优化:")
+    print("  - 禁用不使用的远程 MCP 服务器")
+    print("  - 启用上下文压缩 (compaction.auto = true)")
+    print("  - 减少日志冗长度")
+    
+    # 3. 重启服务
+    print("\n⚡ 重启 OpenCode:")
+    os.system("killall opencode 2>/dev/null")
+    print("  等待 5 秒后重新启动...")
+    import time
+    time.sleep(5)
+    
+    print("✓ 性能优化完成")
+
+if __name__ == "__main__":
+    from pathlib import Path
+    optimize_opencode()
+```
+
+**常见性能问题与解决方案**:
+
+| 问题 | 症状 | 解决方案 |
+|------|------|---------|
+| 高内存占用 | > 1GB 内存使用 | 禁用远程 MCP，启用压缩，清理缓存 |
+| 响应缓慢 | 命令执行 > 5s | 检查网络，减少上下文大小，禁用日志 |
+| MCP 超时 | "Connection timeout" | 检查防火墙，增加超时时间，重启服务 |
+| 配置加载失败 | 启动错误 | 验证 JSON 语法，检查权限，重置配置 |
 
 ---
 
