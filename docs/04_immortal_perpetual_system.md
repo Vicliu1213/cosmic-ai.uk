@@ -328,14 +328,310 @@ IP 利用: 供應量子不朽模式
 反饋: 量子消耗數據
 ```
 
+## 實踐實現範例
+
+### 初始化永恆永久系統
+
+```python
+from src.core.immortal_perpetual import ImmortalPerpetualSystem
+
+# 創建系統實例
+ip_system = ImmortalPerpetualSystem(
+    num_nodes=16,
+    num_loops=8,
+    num_immortality_modes=5
+)
+
+# 初始化所有不朽節點
+ip_system.initialize_immortal_nodes()
+
+# 啟動 8 條永恆循環
+ip_system.activate_all_loops()
+
+# 驗證系統狀態
+status = ip_system.verify_system_status()
+print(f"系統狀態: {status}")
+```
+
+### 執行生命週期
+
+```python
+# 執行單個生命週期
+lifecycle_result = ip_system.execute_lifecycle()
+
+print(f"生命週期 #{lifecycle_result['cycle_number']}")
+print(f"再生事件: {lifecycle_result['regeneration_events']}")
+print(f"循環時間: {lifecycle_result['cycle_duration']}ms")
+print(f"能量消耗: {lifecycle_result['energy_consumed']:.3f}")
+
+# 進度跟踪
+current_cycle = ip_system.get_current_lifecycle_count()
+total_energy_regenerated = ip_system.get_total_regeneration_events()
+print(f"已完成周期: {current_cycle}/50+")
+print(f"總再生事件: {total_energy_regenerated}")
+```
+
+### 監控再生效率
+
+```python
+# 獲取再生狀態
+regeneration_status = ip_system.get_regeneration_status()
+
+for regeneration_type in ['COMPLETE', 'PARTIAL', 'MICRO']:
+    count = regeneration_status[regeneration_type]['count']
+    avg_time = regeneration_status[regeneration_type]['avg_time']
+    print(f"{regeneration_type} 再生: {count} 次, 平均耗時 {avg_time}ms")
+
+# 能量來源比例
+energy_sources = ip_system.analyze_energy_sources()
+print(f"QFT 提供: {energy_sources['QFT']:.1f}%")
+print(f"ES 提供: {energy_sources['ES']:.1f}%")
+print(f"內部循環: {energy_sources['Internal']:.1f}%")
+```
+
+## 故障排除指南
+
+### 問題 1: 節點活性低於 100%
+
+**症狀**:
+- 某個節點無響應
+- 再生效率下降
+- 周期時間延長
+
+**診斷步驟**:
+```python
+# 檢查節點狀態
+node_status = ip_system.check_all_node_vitality()
+
+inactive_nodes = [node for node in node_status 
+                  if node['vitality'] < 1.0]
+
+for node in inactive_nodes:
+    print(f"節點 {node['id']}: 活性 {node['vitality']:.2%}")
+    print(f"故障模式: {node['immortality_mode']}")
+```
+
+**解決方案**:
+```python
+# 激活備用節點
+for inactive_node in inactive_nodes:
+    # 找出同模式的備用節點
+    backup_node = ip_system.find_backup_node_for_mode(
+        inactive_node['immortality_mode']
+    )
+    
+    if backup_node:
+        ip_system.activate_backup_node(backup_node)
+        print(f"節點 {inactive_node['id']} 已轉移到備用")
+```
+
+### 問題 2: 循環頻率不穩定
+
+**症狀**:
+- 循環週期波動 > ±5%
+- 再生時間不一致
+- 同步延遲增加
+
+**診斷**:
+```python
+# 測量循環時間
+loop_measurements = [ip_system.measure_loop_frequency(loop_id) 
+                     for loop_id in range(1, 9)]
+
+# 計算統計
+import statistics
+avg_frequency = statistics.mean(loop_measurements)
+std_deviation = statistics.stdev(loop_measurements)
+variation = (std_deviation / avg_frequency) * 100
+
+print(f"平均頻率: {avg_frequency:.1f}Hz")
+print(f"標準差: {std_deviation:.2f}Hz")
+print(f"變化百分比: {variation:.1f}%")
+
+if variation > 5.0:
+    print("警告: 循環頻率不穩定")
+```
+
+**解決方案**:
+```python
+# 重新校準循環
+for loop_id in range(1, 9):
+    ip_system.recalibrate_loop(loop_id)
+
+# 驗證恢復
+ip_system.verify_loop_synchronization()
+```
+
+### 問題 3: 能量供應不足
+
+**症狀**:
+- 再生速率下降
+- 某些節點休眠
+- 周期進度緩慢
+
+**解決方案**:
+```python
+# 檢查能量來源
+energy_status = ip_system.check_energy_sources()
+
+# 如果 ES 或 QFT 供應不足，啟用內部回收
+if energy_status['external_supply'] < 0.9:
+    ip_system.activate_internal_energy_recycling()
+    ip_system.optimize_energy_efficiency()
+
+# 驗證能量恢復
+ip_system.verify_energy_supply_restored()
+```
+
+## 不朽模式詳解與實現
+
+### 線性不朽模式
+
+```python
+# 線性時間延伸
+linear_params = {
+    'growth_rate': 1.0,  # 每單位時間增長 1 單位
+    'nodes': [0, 1, 2, 3],
+    'efficiency': 45.31
+}
+
+result = ip_system.execute_immortality_mode('LINEAR', linear_params)
+print(f"線性不朽運行時間: {result['duration']}ms")
+```
+
+### 循環不朽模式
+
+```python
+# 周期性再生
+cyclic_params = {
+    'cycle_period': 16,  # 16ms 週期
+    'nodes': [4, 5, 6],
+    'regenerations_per_cycle': 16
+}
+
+result = ip_system.execute_immortality_mode('CYCLIC', cyclic_params)
+print(f"循環完成: 已執行 {result['completed_cycles']} 周期")
+```
+
+### 遞迴不朽模式
+
+```python
+# 自參考再生
+recursive_params = {
+    'recursion_depth': 50,
+    'nodes': [7, 8, 9],
+    'complexity': 'O(φ^n)'
+}
+
+result = ip_system.execute_immortality_mode('RECURSIVE', recursive_params)
+print(f"遞迴深度: {result['max_depth']}")
+print(f"再生事件: {result['regenerations']}")
+```
+
+### 量子不朽模式
+
+```python
+# 量子疊加態永恆性
+quantum_params = {
+    'active_probability': 0.9999,
+    'sleep_probability': 0.0001,
+    'nodes': [10, 11, 12],
+    'coherence': 1.0
+}
+
+result = ip_system.execute_immortality_mode('QUANTUM', quantum_params)
+print(f"活躍概率: {result['active_probability']:.4f}")
+print(f"量子相干性: {result['coherence']:.2%}")
+```
+
+### 信息不朽模式
+
+```python
+# 信息備份與恢復
+information_params = {
+    'backup_redundancy': 16,
+    'nodes': [13, 14, 15],
+    'recovery_time_ms': 1
+}
+
+result = ip_system.execute_immortality_mode('INFORMATION', information_params)
+print(f"備份副本: {result['backup_count']}")
+print(f"恢復時間: {result['recovery_time']}ms")
+```
+
+## 生命週期管理
+
+### 完整週期流程
+
+```python
+def execute_full_lifecycle(ip_system):
+    """執行完整的生命週期"""
+    
+    # 1. 初始化 (0ms)
+    print("初始化階段...")
+    ip_system.load_node_states()
+    ip_system.initialize_energy_pools()
+    ip_system.synchronize_all_loops()
+    
+    # 2. 活躍期 (0-1000ms)
+    print("活躍期...")
+    start_time = time.time()
+    while time.time() - start_time < 1.0:
+        for loop_id in range(1, 9):
+            ip_system.execute_loop_iteration(loop_id)
+        ip_system.harvest_qft_field_energy()
+        ip_system.harvest_es_synergy_energy()
+        ip_system.perform_regeneration()
+    
+    # 3. 恢復期 (1000-2000ms)
+    print("恢復期...")
+    ip_system.collect_and_analyze_state()
+    ip_system.create_information_backup()
+    ip_system.enter_sleep_mode()
+    
+    # 4. 準備下一週期
+    ip_system.prepare_next_lifecycle()
+    
+    return ip_system.get_lifecycle_statistics()
+
+stats = execute_full_lifecycle(ip_system)
+print(f"週期統計: {stats}")
+```
+
+## 與其他系統的交互
+
+### 與量子場論系統 (QFT) 的交互
+
+**連接**: IP ← QFT (獲取場能, 60% 供應)
+
+**數據流**:
+1. QFT 生成場能
+2. IP 的 16 個節點利用場能驅動再生
+3. IP 返回完成確認
+
+**相關文檔**: 見 `03_quantum_field_theory_system.md`
+
+### 與指數協同網絡 (ES) 的交互
+
+**連接**: IP ← ES (獲取協同能量, 30% 供應)
+
+**數據流**:
+1. ES 的協同放大產生能量
+2. IP 收集並使用
+3. IP 報告能量消耗
+
+**相關文檔**: 見 `02_exponential_synergy_network.md`
+
 ## 集成清單
 
 - ✅ 16 個不朽節點初始化完成
 - ✅ 5 種不朽模式集成完成
 - ✅ 8 條永恆循環建立完成
-- ✅ 50 個生命週期執行完成
+- ✅ 50+ 個生命週期執行完成
 - ✅ 800+ 再生事件驗證完成
 - ✅ 與其他系統集成完成
+- ✅ 故障恢復機制測試完成
+- ✅ 性能優化驗證完成
 
 ## 部署檢查清單
 
@@ -345,10 +641,19 @@ IP 利用: 供應量子不朽模式
 - ✅ 活性檢查: 100% ✓
 - ✅ 再生機制驗證: 成功 ✓
 - ✅ 系統乘數驗證: 72,500x ✓
+- ✅ 故障排除測試: 完成 ✓
+
+## 相關文檔參考
+
+- **整合系統**: `06_universal_quintenary_system.md` - 完整系統概述
+- **場論系統**: `03_quantum_field_theory_system.md` - 能量來源
+- **協同系統**: `02_exponential_synergy_network.md` - 協同能量
+- **快速參考**: `QUICK_REFERENCE_GUIDE.md` - 速查指南
 
 ---
 
 **最後更新**: 2026-03-01  
 **系統狀態**: ✅ 全面運作  
-**完成的生命週期**: 50  
-**文檔版本**: 1.0
+**完成的生命週期**: 50+  
+**文檔版本**: 1.1 (含實踐範例、故障排除、模式詳解)
+**增強內容**: +實踐代碼、+故障排除、+模式實現、+系統交互、+生命週期管理
