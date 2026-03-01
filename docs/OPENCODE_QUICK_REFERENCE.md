@@ -19,6 +19,53 @@ opencode
 
 ---
 
+## 🛠️ 快速验证脚本
+
+### 系统健康检查
+
+```python
+# quick_health_check.py - 快速系统健康检查
+import subprocess
+import sys
+
+def quick_health_check():
+    """30秒内完成系统健康检查"""
+    
+    checks = {
+        "OpenCode": lambda: subprocess.run(["opencode", "--version"], capture_output=True).returncode == 0,
+        "Config": lambda: __import__('os').path.exists("opencode.jsonc"),
+        "Python": lambda: sys.version_info >= (3, 10),
+        "Dependencies": lambda: subprocess.run(["pip", "list"], capture_output=True).returncode == 0,
+    }
+    
+    print("⚡ 快速系统检查\n")
+    results = {}
+    
+    for check_name, check_func in checks.items():
+        try:
+            result = check_func()
+            status = "✓" if result else "✗"
+            results[check_name] = result
+            print(f"  {status} {check_name}")
+        except Exception as e:
+            print(f"  ✗ {check_name}: {str(e)[:30]}")
+            results[check_name] = False
+    
+    print(f"\n总体: {'✓ 通过' if all(results.values()) else '✗ 需要修复'}")
+    return all(results.values())
+
+if __name__ == "__main__":
+    success = quick_health_check()
+    sys.exit(0 if success else 1)
+```
+
+**运行**:
+```bash
+python quick_health_check.py
+```
+
+---
+
 ## 📋 核心文件 / Core Files
 
 | 文件 | 描述 | 位置 |
@@ -78,6 +125,60 @@ opencode /share               # 共享对话链接
 /deploy                       # 部署到生产环境
 ```
 
+### 命令详解
+
+#### /test - 运行测试
+```python
+# 执行后会:
+# 1. 运行所有单元测试
+# 2. 生成覆盖率报告
+# 3. 显示测试统计
+# 4. 提供修复建议 (如有失败)
+
+# 调用方式:
+# /test
+# 或在 OpenCode 中输入: /test
+```
+
+#### /analyze - 分析系统
+```python
+# 执行后会:
+# 1. 收集性能指标
+# 2. 分析交易性能
+# 3. 识别瓶颈
+# 4. 提供优化建议
+
+# 调用方式:
+# /analyze
+```
+
+#### /monitor - 实时监控
+```python
+# 持续监控:
+# • 系统健康状态
+# • 活跃交易数量
+# • 投资组合价值
+# • 风险指标
+
+# 调用方式:
+# /monitor
+# (持续运行直到 Ctrl+C)
+```
+
+#### /deploy - 部署系统
+```python
+# 完整的部署流程:
+# 1. 预部署检查
+# 2. 验证配置
+# 3. 运行集成测试
+# 4. 执行部署
+# 5. 验证成功
+
+# 调用方式:
+# /deploy
+# (需要确认)
+```
+
 ---
 
 ## 🤖 Agents
@@ -97,6 +198,144 @@ opencode /share               # 共享对话链接
 /agent trading-analyst
 分析今天的交易性能和风险指标
 ```
+
+### quantum-engineer
+用于算法开发和优化
+
+```
+/agent quantum-engineer
+优化 algo_001 算法的参数
+```
+
+### devops-engineer
+用于系统部署和运维
+
+```
+/agent devops-engineer
+部署交易系统到生产环境
+```
+
+---
+
+## 🚨 常见问题快速解决
+
+| 问题 | 解决方案 | 验证命令 |
+|------|--------|---------|
+| MCP 连接失败 | `opencode mcp list` + `opencode mcp debug <name>` | `opencode mcp list` |
+| 配置错误 | 检查 `opencode.jsonc` 语法 | `python -m json.tool opencode.jsonc` |
+| 内存占用高 | 禁用不必要的 MCP | 编辑 `opencode.jsonc` |
+| 响应缓慢 | 清理缓存 `rm -rf ~/.local/share/opencode/cache` | 重启 OpenCode |
+
+---
+
+## 📊 MCP 工具速查表
+
+### trading-monitor
+```
+• get_portfolio_status()        获取投资组合状态
+• get_market_data(symbol)       获取市场数据
+• get_system_health()           获取系统健康状态
+• get_active_trades()           获取活跃交易
+• get_risk_metrics()            获取风险指标
+```
+
+### quantum-engine
+```
+• list_algorithms()             列出所有算法
+• optimize_parameters()         优化参数
+• backtest_algorithm()          回测算法
+• compare_algorithms()          比较算法
+• get_engine_status()           获取引擎状态
+```
+
+### data-analyzer
+```
+• analyze_time_series()         时间序列分析
+• detect_patterns()             检测价格模式
+• correlation_analysis()        相关性分析
+• sentiment_analysis()          情绪分析
+• forecasting()                 价格预测
+• risk_assessment()             风险评估
+```
+
+### risk-manager
+```
+• check_position_limits()       检查头寸限制
+• calculate_var()               计算 VaR
+• stress_test()                 压力测试
+• compliance_check()            合规检查
+• get_risk_report()             获取风险报告
+```
+
+---
+
+## ⚙️ 配置速查表
+
+### 启用/禁用 MCP
+```json
+{
+  "mcp": {
+    "trading-monitor": {
+      "enabled": true
+    }
+  }
+}
+```
+
+### 修改权限
+```json
+{
+  "permission": {
+    "bash": "ask",       // 执行前询问
+    "write": "ask",      // 修改前询问
+    "edit": "allow"      // 自动允许
+  }
+}
+```
+
+### 切换模型
+```json
+{
+  "model": "anthropic/claude-sonnet-4-5",
+  "small_model": "anthropic/claude-haiku-4-5"
+}
+```
+
+---
+
+## 🎯 典型工作流
+
+### 1. 日常监控 (每天早上)
+```bash
+opencode run "检查今天的投资组合状态和风险指标"
+```
+
+### 2. 性能分析 (每周一次)
+```bash
+opencode /analyze
+```
+
+### 3. 算法优化 (按需)
+```
+/agent quantum-engineer
+优化 algo_001 以提高夏普比率
+```
+
+### 4. 系统部署 (按需)
+```bash
+opencode /deploy
+```
+
+---
+
+## 📚 相关文档
+
+- **详细安装**: `docs/OPENCODE_SETUP.md`
+- **完整指南**: `docs/OPENCODE_中文使用指南.md`
+- **MCP 参考**: `docs/COMPLETE_DOCUMENTATION_INDEX.md`
+- **快速参考**: `docs/QUICK_REFERENCE_GUIDE.md`
+
+---
 
 ### quantum-engineer
 用于算法开发，可以修改代码

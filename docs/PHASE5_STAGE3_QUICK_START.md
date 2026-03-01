@@ -670,6 +670,393 @@ print(f"Portfolio value: ${portfolio_mgr.get_portfolio_value():.2f}")
 
 ---
 
+---
+
+## Advanced Order Management Patterns
+
+### 1. Order Chaining (Conditional Orders)
+
+```python
+# Create a take-profit order that triggers when main order fills
+async def create_conditional_orders(order_mgr, base_order):
+    """Create entry order with automatic exit orders"""
+    
+    # Submit entry order
+    await order_mgr.submit_order(base_order)
+    
+    # Wait for fill
+    while base_order.status != OrderStatus.FILLED:
+        await asyncio.sleep(0.1)
+    
+    # Create take-profit order (triggered after fill)
+    tp_order = await order_mgr.create_order(
+        exchange_type=base_order.exchange_type,
+        order_type=OrderType.LIMIT,
+        side=OrderSide.SELL if base_order.side == OrderSide.BUY else OrderSide.BUY,
+        symbol=base_order.symbol,
+        quantity=base_order.quantity.filled_quantity,
+        limit_price=base_order.price.average_fill_price * 1.05  # 5% profit
+    )
+    
+    # Create stop-loss order (protective)
+    sl_order = await order_mgr.create_order(
+        exchange_type=base_order.exchange_type,
+        order_type=OrderType.MARKET,
+        side=OrderSide.SELL if base_order.side == OrderSide.BUY else OrderSide.BUY,
+        symbol=base_order.symbol,
+        quantity=base_order.quantity.filled_quantity
+    )
+    
+    return {
+        "entry": base_order,
+        "take_profit": tp_order,
+        "stop_loss": sl_order
+    }
+```
+
+### 2. Batch Order Execution
+
+```python
+async def submit_batch_orders(order_mgr, orders: List, max_concurrent=5):
+    """Execute multiple orders with rate limiting"""
+    
+    semaphore = asyncio.Semaphore(max_concurrent)
+    
+    async def submit_with_limit(order):
+        async with semaphore:
+            try:
+                success = await order_mgr.submit_order(order)
+                return order.order_id, success, None
+            except Exception as e:
+                return order.order_id, False, str(e)
+    
+    results = await asyncio.gather(*[
+        submit_with_limit(order) for order in orders
+    ])
+    
+    # Summary
+    successful = sum(1 for _, success, _ in results if success)
+    failed = sum(1 for _, success, _ in results if not success)
+    
+    print(f"Batch result: {successful} success, {failed} failed out of {len(orders)}")
+    return results
+```
+
+### 3. Dynamic Order Sizing
+
+```python
+async def calculate_position_size(position_mgr, portfolio_mgr, 
+                                   symbol: str, max_risk_percent=2.0):
+    """Calculate order size based on portfolio risk limits"""
+    
+    portfolio_value = portfolio_mgr.get_portfolio_value()
+    risk_amount = portfolio_value * (max_risk_percent / 100)
+    
+    # Get current symbol price
+    current_price = 50000  # Get from market data
+    
+    # Calculate position size
+    position_size = risk_amount / current_price
+    
+    # Apply portfolio limits
+    current_exposure = portfolio_mgr.get_symbol_exposure(symbol)
+    max_exposure = portfolio_value * 0.3  # Max 30% in one symbol
+    
+    if current_exposure + (position_size * current_price) > max_exposure:
+        position_size = (max_exposure - current_exposure) / current_price
+    
+    return position_size
+
+# Usage
+size = await calculate_position_size(position_mgr, portfolio_mgr, "BTC/USDT")
+print(f"Recommended position size: {size:.4f} BTC")
+```
+
+---
+
+## Error Handling & Recovery
+
+### 1. Resilient Order Submission
+
+```python
+async def submit_order_with_retry(order_mgr, order, max_retries=3):
+    """Submit order with automatic retry on failure"""
+    
+    for attempt in range(max_retries):
+        try:
+            success = await order_mgr.submit_order(order)
+            if success:
+                print(f"Order {order.order_id} submitted successfully")
+                return True
+        except ConnectionError as e:
+            print(f"Connection error (attempt {attempt+1}/{max_retries}): {e}")
+            await asyncio.sleep(2 ** attempt)  # Exponential backoff
+        except ValueError as e:
+            print(f"Validation error: {e}")
+            return False  # Don't retry validation errors
+        except Exception as e:
+            print(f"Unexpected error (attempt {attempt+1}/{max_retries}): {e}")
+            await asyncio.sleep(2 ** attempt)
+    
+    print(f"Failed to submit order after {max_retries} attempts")
+    return False
+```
+
+### 2. Order State Recovery
+
+```python
+async def recover_incomplete_orders(order_mgr, position_mgr):
+    """Recover from system failure by checking incomplete orders"""
+    
+    incomplete_orders = [
+        o for o in order_mgr.orders
+        if o.status in [OrderStatus.PENDING, OrderStatus.OPEN]
+    ]
+    
+    for order in incomplete_orders:
+        print(f"Recovering order {order.order_id}: {order.status.value}")
+        
+        try:
+            # Query exchange for actual status
+            actual_status = await order_mgr.query_order_status(order.order_id)
+            
+            if actual_status == OrderStatus.FILLED:
+                # Update with fill info
+                await order_mgr.fill_order(
+                    order_id=order.order_id,
+                    filled_quantity=order.quantity.original_quantity,
+                    fill_price=order.price.limit_price
+                )
+                print(f"✓ Order {order.order_id} recovered as FILLED")
+            
+            elif actual_status == OrderStatus.CANCELLED:
+                order.status = OrderStatus.CANCELLED
+                print(f"✓ Order {order.order_id} recovered as CANCELLED")
+        
+        except Exception as e:
+            print(f"✗ Failed to recover order {order.order_id}: {e}")
+```
+
+### 3. Position Safety Checks
+
+```python
+async def perform_position_safety_checks(position_mgr, portfolio_mgr):
+    """Verify position integrity and take corrective action"""
+    
+    issues = []
+    
+    for position in position_mgr.positions:
+        # Check 1: Quantity mismatch
+        order_quantity = sum(
+            o.quantity.filled_quantity for o in position.entry_orders
+            if o.status == OrderStatus.FILLED
+        )
+        
+        if position.current_quantity != order_quantity:
+            issues.append({
+                "type": "QUANTITY_MISMATCH",
+                "position_id": position.position_id,
+                "expected": order_quantity,
+                "actual": position.current_quantity
+            })
+        
+        # Check 2: Stop loss below entry price
+        if position.side == OrderSide.BUY:
+            if position.stop_loss_price >= position.entry_price:
+                issues.append({
+                    "type": "INVALID_STOP_LOSS",
+                    "position_id": position.position_id,
+                    "entry": position.entry_price,
+                    "stop_loss": position.stop_loss_price
+                })
+        
+        # Check 3: Position size exceeds portfolio
+        position_value = position.current_quantity * position.current_price
+        portfolio_value = portfolio_mgr.get_portfolio_value()
+        
+        if position_value > portfolio_value * 0.5:
+            issues.append({
+                "type": "EXCESSIVE_EXPOSURE",
+                "position_id": position.position_id,
+                "position_value": position_value,
+                "portfolio_value": portfolio_value
+            })
+    
+    if issues:
+        print(f"Found {len(issues)} safety issues:")
+        for issue in issues:
+            print(f"  - {issue['type']}: {issue}")
+    
+    return issues
+```
+
+---
+
+## Performance Optimization
+
+### 1. Order Batching for Reporting
+
+```python
+async def batch_report_generation(position_mgr, reporter, batch_size=100):
+    """Generate reports efficiently using batching"""
+    
+    all_trades = position_mgr.trades
+    
+    for i in range(0, len(all_trades), batch_size):
+        batch = all_trades[i:i+batch_size]
+        
+        metrics = await reporter.calculate_metrics(
+            trades=batch,
+            initial_capital=10000.0,
+            current_capital=10000.0  # Simplified
+        )
+        
+        print(f"Batch {i//batch_size + 1}: {metrics.total_trades} trades, "
+              f"Win rate: {metrics.win_rate:.1f}%")
+    
+    # Final aggregated metrics
+    full_metrics = await reporter.calculate_metrics(
+        trades=all_trades,
+        initial_capital=10000.0,
+        current_capital=10000.0
+    )
+    
+    return full_metrics
+```
+
+### 2. Caching for Frequent Queries
+
+```python
+class CachedPortfolioManager:
+    """Portfolio manager with caching to reduce computation"""
+    
+    def __init__(self, portfolio_mgr, cache_ttl_seconds=5):
+        self.portfolio_mgr = portfolio_mgr
+        self.cache_ttl = cache_ttl_seconds
+        self._cache = {}
+        self._cache_time = {}
+    
+    async def get_portfolio_value(self, force_refresh=False):
+        """Get portfolio value with caching"""
+        
+        if not force_refresh and "portfolio_value" in self._cache:
+            cache_age = asyncio.get_event_loop().time() - self._cache_time["portfolio_value"]
+            if cache_age < self.cache_ttl:
+                return self._cache["portfolio_value"]
+        
+        # Compute fresh value
+        value = self.portfolio_mgr.get_portfolio_value()
+        
+        self._cache["portfolio_value"] = value
+        self._cache_time["portfolio_value"] = asyncio.get_event_loop().time()
+        
+        return value
+    
+    def invalidate_cache(self):
+        """Force cache refresh"""
+        self._cache.clear()
+        self._cache_time.clear()
+```
+
+---
+
+## Integration Patterns
+
+### 1. Strategy-To-Order Flow
+
+```python
+async def strategy_to_order_pipeline(strategy, order_mgr, position_mgr):
+    """Pipeline: Strategy signal → Order → Position"""
+    
+    # Get trading signal from strategy
+    signal = await strategy.generate_signal()
+    
+    if signal is None:
+        return None
+    
+    print(f"Signal: {signal.side.value} {signal.quantity} {signal.symbol} @ {signal.price}")
+    
+    try:
+        # 1. Create order
+        order = await order_mgr.create_order(
+            exchange_type=signal.exchange,
+            order_type=signal.order_type,
+            side=signal.side,
+            symbol=signal.symbol,
+            quantity=signal.quantity,
+            limit_price=signal.price
+        )
+        
+        # 2. Submit order
+        success = await order_mgr.submit_order(order)
+        if not success:
+            print(f"Order submission failed")
+            return None
+        
+        # 3. Wait for fill
+        max_wait = 60  # seconds
+        start = asyncio.get_event_loop().time()
+        
+        while order.status != OrderStatus.FILLED:
+            if asyncio.get_event_loop().time() - start > max_wait:
+                print(f"Order timeout, cancelling...")
+                await order_mgr.cancel_order(order.order_id)
+                return None
+            
+            await asyncio.sleep(0.5)
+        
+        # 4. Open position
+        position = await position_mgr.open_position(
+            exchange_type=signal.exchange,
+            symbol=signal.symbol,
+            side=signal.side,
+            entry_price=order.price.average_fill_price,
+            quantity=order.quantity.filled_quantity,
+            stop_loss_price=signal.stop_loss,
+            take_profit_price=signal.take_profit
+        )
+        
+        print(f"✓ Position opened: {position.position_id}")
+        return position
+    
+    except Exception as e:
+        print(f"✗ Pipeline error: {e}")
+        return None
+```
+
+### 2. Multi-Symbol Monitoring
+
+```python
+async def monitor_multiple_symbols(order_monitor, portfolio_monitor, 
+                                   symbols: List[str], interval_seconds=1):
+    """Monitor orders and portfolio across multiple symbols"""
+    
+    while True:
+        try:
+            # Get portfolio snapshot
+            portfolio_snapshot = await portfolio_monitor.take_snapshot()
+            
+            print(f"\n[{datetime.now().strftime('%H:%M:%S')}] Portfolio value: ${portfolio_snapshot.portfolio_value:.2f}")
+            
+            # Check each symbol exposure
+            for symbol in symbols:
+                exposure = portfolio_monitor.portfolio_mgr.get_symbol_exposure(symbol)
+                print(f"  {symbol}: ${exposure:.2f}")
+            
+            # Check order status changes
+            order_changes = await order_monitor.check_status_updates()
+            for order, old_status, new_status in order_changes:
+                print(f"  Order {order.order_id}: {old_status.value} → {new_status.value}")
+            
+            await asyncio.sleep(interval_seconds)
+        
+        except Exception as e:
+            print(f"Monitoring error: {e}")
+            await asyncio.sleep(interval_seconds)
+```
+
+---
+
 ## Next Steps
 
 1. **Read full API documentation**: [API Reference](PHASE5_STAGE3_API_REFERENCE.md)

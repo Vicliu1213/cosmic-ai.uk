@@ -1211,6 +1211,336 @@ metrics_report = await exporter.export_metrics(metrics, ReportFormat.TEXT)
 
 ---
 
+## Best Practices Guide
+
+### 1. Order Submission Best Practices
+
+```python
+# ✓ GOOD: Comprehensive error handling with retry logic
+async def submit_order_safely(order_mgr, order, max_retries=3):
+    """Submit order with comprehensive error handling"""
+    
+    for attempt in range(max_retries):
+        try:
+            # Validate order before submission
+            if order.quantity.total_quantity <= 0:
+                raise ValueError("Invalid quantity")
+            
+            if order.price.limit_price and order.price.limit_price <= 0:
+                raise ValueError("Invalid limit price")
+            
+            # Submit order
+            success = await order_mgr.submit_order(order)
+            
+            if success:
+                logger.info(f"Order {order.order_id} submitted successfully")
+                return True
+            
+        except ValueError as e:
+            logger.error(f"Validation error: {e}")
+            return False  # Don't retry validation errors
+        
+        except ConnectionError as e:
+            logger.warning(f"Connection error (attempt {attempt+1}/{max_retries}): {e}")
+            if attempt < max_retries - 1:
+                await asyncio.sleep(2 ** attempt)  # Exponential backoff
+        
+        except Exception as e:
+            logger.exception(f"Unexpected error: {e}")
+            if attempt < max_retries - 1:
+                await asyncio.sleep(2 ** attempt)
+    
+    logger.error(f"Failed to submit order after {max_retries} attempts")
+    return False
+
+# ✗ BAD: No error handling
+async def submit_order_poorly(order_mgr, order):
+    """Don't do this - no error handling"""
+    await order_mgr.submit_order(order)  # Might crash silently
+```
+
+### 2. Position Risk Management
+
+```python
+# ✓ GOOD: Proper risk limits and checks
+async def open_position_with_risk_management(position_mgr, portfolio_mgr, 
+                                             symbol, entry_price, quantity):
+    """Open position with comprehensive risk checks"""
+    
+    # Check 1: Portfolio risk exposure
+    portfolio_value = portfolio_mgr.get_portfolio_value()
+    position_value = entry_price * quantity
+    max_position_risk = portfolio_value * 0.05  # Max 5% risk per position
+    
+    if position_value > max_position_risk:
+        logger.warning(f"Position value {position_value} exceeds risk limit {max_position_risk}")
+        return None
+    
+    # Check 2: Symbol concentration
+    current_symbol_exposure = portfolio_mgr.get_symbol_exposure(symbol)
+    max_symbol_exposure = portfolio_value * 0.30  # Max 30% per symbol
+    
+    if current_symbol_exposure + position_value > max_symbol_exposure:
+        logger.warning(f"Symbol exposure would exceed limit for {symbol}")
+        return None
+    
+    # Check 3: Calculate appropriate stop loss based on volatility
+    volatility_adjustment = 0.02  # 2% stop loss
+    stop_loss_price = entry_price * (1 - volatility_adjustment)
+    
+    # Open position with safety parameters
+    position = await position_mgr.open_position(
+        exchange_type=ExchangeType.BINANCE,
+        symbol=symbol,
+        side=OrderSide.BUY,
+        entry_price=entry_price,
+        quantity=quantity,
+        stop_loss_price=stop_loss_price,
+        take_profit_price=entry_price * 1.05  # 5% profit target
+    )
+    
+    logger.info(f"Position opened with safety checks: {position.position_id}")
+    return position
+
+# ✗ BAD: No risk management
+async def open_position_risky(position_mgr, symbol, entry_price, quantity):
+    """Don't do this - ignores risk limits"""
+    position = await position_mgr.open_position(
+        exchange_type=ExchangeType.BINANCE,
+        symbol=symbol,
+        side=OrderSide.BUY,
+        entry_price=entry_price,
+        quantity=quantity
+    )
+    return position
+```
+
+### 3. Monitoring Best Practices
+
+```python
+# ✓ GOOD: Structured monitoring with callbacks
+async def setup_monitoring_system(order_mgr, position_mgr, portfolio_mgr):
+    """Setup comprehensive monitoring system"""
+    
+    # Create monitors
+    order_monitor = OrderStatusMonitor(order_mgr)
+    portfolio_monitor = PortfolioMonitor(portfolio_mgr)
+    notifier = EventNotifier()
+    
+    # Define alert callbacks
+    async def on_order_filled(alert):
+        logger.info(f"Order filled: {alert.message}")
+        # Trigger automated actions
+        if alert.alert_type == AlertType.ORDER_FILLED:
+            # Open position if needed
+            pass
+    
+    async def on_critical_alert(alert):
+        if alert.level == AlertLevel.CRITICAL:
+            logger.critical(f"CRITICAL ALERT: {alert.message}")
+            # Take immediate action
+            # Send notifications
+            # Execute emergency procedures
+    
+    # Register callbacks
+    notifier.register_alert_callback(on_order_filled)
+    notifier.register_alert_callback(on_critical_alert)
+    
+    # Start continuous monitoring
+    while True:
+        try:
+            # Check order status changes
+            changes = await order_monitor.check_status_updates()
+            for order, old_status, new_status in changes:
+                print(f"Order status: {old_status.value} → {new_status.value}")
+            
+            # Get portfolio snapshot
+            snapshot = await portfolio_monitor.take_snapshot()
+            print(f"Portfolio: ${snapshot.portfolio_value:.2f}")
+            
+            await asyncio.sleep(1)
+        
+        except Exception as e:
+            logger.exception(f"Monitoring error: {e}")
+            await asyncio.sleep(1)
+
+# ✗ BAD: Polling without structure
+async def monitor_poorly(order_mgr):
+    """Don't do this - inefficient and error-prone"""
+    while True:
+        for order in order_mgr.orders:
+            print(order.status)
+        await asyncio.sleep(0.1)
+```
+
+### 4. Reporting and Compliance
+
+```python
+# ✓ GOOD: Comprehensive reporting with compliance
+async def generate_compliant_reports(position_mgr, reporter, exporter):
+    """Generate reports meeting compliance requirements"""
+    
+    # Calculate comprehensive metrics
+    metrics = await reporter.calculate_metrics(
+        trades=position_mgr.trades,
+        initial_capital=10000.0,
+        current_capital=10500.0
+    )
+    
+    # Generate multiple report formats for different audiences
+    
+    # 1. Executive Summary (TEXT)
+    exec_report = await exporter.export_metrics(
+        metrics=metrics,
+        format=ReportFormat.TEXT
+    )
+    print("=" * 50)
+    print("EXECUTIVE SUMMARY")
+    print("=" * 50)
+    print(exec_report)
+    
+    # 2. Detailed Analytics (JSON for systems)
+    analytics = TradeAnalytics()
+    symbol_stats = analytics.get_symbol_statistics(position_mgr.trades)
+    drawdown_analysis = analytics.get_drawdown_analysis(position_mgr.trades)
+    
+    json_report = json.dumps({
+        "metrics": metrics.__dict__,
+        "symbol_stats": symbol_stats,
+        "drawdown_analysis": drawdown_analysis,
+        "timestamp": datetime.now().isoformat()
+    }, indent=2)
+    
+    # 3. Trade-by-trade export (CSV for auditing)
+    csv_report = await exporter.export_trades(
+        trades=position_mgr.trades,
+        format=ReportFormat.CSV
+    )
+    
+    # Save reports
+    with open("report_executive.txt", "w") as f:
+        f.write(exec_report)
+    
+    with open("report_analytics.json", "w") as f:
+        f.write(json_report)
+    
+    with open("report_trades.csv", "w") as f:
+        f.write(csv_report)
+    
+    logger.info("Reports generated successfully")
+    return {
+        "executive": exec_report,
+        "analytics": json_report,
+        "trades": csv_report
+    }
+
+# ✗ BAD: Minimal reporting
+async def report_poorly(position_mgr):
+    """Don't do this - insufficient for compliance"""
+    print(f"Total trades: {len(position_mgr.trades)}")
+    print(f"Total P&L: ${sum(t.realized_pnl for t in position_mgr.trades)}")
+```
+
+---
+
+## Common Patterns & Recipes
+
+### Pattern 1: DCA (Dollar-Cost Averaging) Orders
+
+```python
+async def create_dca_orders(order_mgr, symbol: str, total_amount: float, 
+                            num_orders: int, interval_minutes: int):
+    """Create dollar-cost averaging orders"""
+    
+    amount_per_order = total_amount / num_orders
+    orders = []
+    
+    for i in range(num_orders):
+        order = await order_mgr.create_order(
+            exchange_type=ExchangeType.BINANCE,
+            order_type=OrderType.MARKET,
+            side=OrderSide.BUY,
+            symbol=symbol,
+            quantity=amount_per_order / 50000  # Current price estimate
+        )
+        orders.append(order)
+        
+        # Submit after interval
+        if i > 0:
+            await asyncio.sleep(interval_minutes * 60)
+    
+    return orders
+```
+
+### Pattern 2: Trailing Stop Orders
+
+```python
+async def monitor_trailing_stop(position_mgr, position_id: str, 
+                               trail_percent: float = 2.0):
+    """Monitor and update trailing stop loss"""
+    
+    position = position_mgr.positions.get(position_id)
+    if not position:
+        return
+    
+    highest_price = position.current_price
+    
+    while position.status == PositionStatus.OPEN:
+        position.current_price = get_current_price(position.symbol)
+        
+        # Update highest price
+        if position.current_price > highest_price:
+            highest_price = position.current_price
+        
+        # Update stop loss
+        new_stop_loss = highest_price * (1 - trail_percent / 100)
+        if new_stop_loss > position.stop_loss_price:
+            position.stop_loss_price = new_stop_loss
+        
+        # Check if hit
+        if position.hit_stop_loss():
+            logger.info(f"Trailing stop hit at {position.current_price}")
+            break
+        
+        await asyncio.sleep(1)
+```
+
+### Pattern 3: Portfolio Rebalancing
+
+```python
+async def rebalance_portfolio(position_mgr, portfolio_mgr, target_allocations: Dict[str, float]):
+    """Rebalance portfolio to target allocations"""
+    
+    portfolio_value = portfolio_mgr.get_portfolio_value()
+    
+    for symbol, target_percent in target_allocations.items():
+        target_value = portfolio_value * (target_percent / 100)
+        current_value = portfolio_mgr.get_symbol_exposure(symbol)
+        
+        diff_value = target_value - current_value
+        
+        if diff_value > 100:  # Need to buy
+            quantity = diff_value / get_current_price(symbol)
+            order = await position_mgr.open_position(
+                symbol=symbol,
+                side=OrderSide.BUY,
+                entry_price=get_current_price(symbol),
+                quantity=quantity
+            )
+            logger.info(f"Bought {quantity} of {symbol}")
+        
+        elif diff_value < -100:  # Need to sell
+            quantity = abs(diff_value) / get_current_price(symbol)
+            await position_mgr.reduce_position(
+                position_id=find_position_id(symbol),
+                quantity=quantity,
+                exit_price=get_current_price(symbol)
+            )
+            logger.info(f"Sold {quantity} of {symbol}")
+```
+
+---
+
 ## Related Documentation
 
 - [Architecture Guide](PHASE5_STAGE3_ARCHITECTURE.md)

@@ -542,6 +542,378 @@ class CustomAnalytics(TradeAnalytics):
 
 ---
 
+---
+
+## System Integration Patterns
+
+### 1. Multi-Exchange Order Management
+
+```python
+# Unified interface for multiple exchanges
+class MultiExchangeOrderManager:
+    """Manage orders across multiple exchanges simultaneously"""
+    
+    def __init__(self):
+        self.exchanges = {}  # exchange_type -> OrderManager
+        self.order_mapping = {}  # order_id -> (exchange_type, local_order_id)
+    
+    async def add_exchange(self, exchange_type: ExchangeType, config: Dict):
+        """Register a new exchange"""
+        self.exchanges[exchange_type] = OrderManager(exchange_type, config)
+    
+    async def create_order_on_exchange(self, exchange_type: ExchangeType, **kwargs) -> Order:
+        """Create order on specific exchange"""
+        if exchange_type not in self.exchanges:
+            raise ValueError(f"Exchange {exchange_type} not registered")
+        
+        order = await self.exchanges[exchange_type].create_order(**kwargs)
+        self.order_mapping[order.order_id] = (exchange_type, order.order_id)
+        return order
+    
+    async def submit_orders_to_all_exchanges(self, order_specs: List[Dict]):
+        """Submit same order to multiple exchanges (arbitrage strategy)"""
+        results = []
+        
+        for spec in order_specs:
+            exchange_type = spec.pop("exchange_type")
+            order = await self.create_order_on_exchange(exchange_type, **spec)
+            results.append(order)
+        
+        return results
+    
+    async def get_order_from_any_exchange(self, order_id: str) -> Order:
+        """Retrieve order from its exchange"""
+        if order_id not in self.order_mapping:
+            raise ValueError(f"Order {order_id} not tracked")
+        
+        exchange_type, local_id = self.order_mapping[order_id]
+        return await self.exchanges[exchange_type].get_order(local_id)
+```
+
+### 2. Event-Driven Architecture
+
+```python
+# Event bus for system-wide communication
+from dataclasses import dataclass
+from typing import Callable, List
+import asyncio
+
+@dataclass
+class OrderEvent:
+    event_type: str  # "order.created", "order.filled", "order.cancelled"
+    order_id: str
+    data: Dict[str, Any]
+    timestamp: datetime
+
+class OrderEventBus:
+    """Central event distribution system"""
+    
+    def __init__(self):
+        self.subscribers: Dict[str, List[Callable]] = {}
+    
+    def subscribe(self, event_type: str, callback: Callable):
+        """Subscribe to event type"""
+        if event_type not in self.subscribers:
+            self.subscribers[event_type] = []
+        self.subscribers[event_type].append(callback)
+    
+    async def publish(self, event: OrderEvent):
+        """Publish event to all subscribers"""
+        if event.event_type in self.subscribers:
+            tasks = [
+                cb(event) for cb in self.subscribers[event.event_type]
+            ]
+            await asyncio.gather(*tasks, return_exceptions=True)
+    
+    def unsubscribe(self, event_type: str, callback: Callable):
+        """Remove callback"""
+        if event_type in self.subscribers:
+            self.subscribers[event_type].remove(callback)
+
+# Usage
+bus = OrderEventBus()
+
+async def on_order_filled(event: OrderEvent):
+    print(f"Order {event.order_id} filled!")
+    # Trigger position opening
+
+bus.subscribe("order.filled", on_order_filled)
+
+# In OrderManager
+event = OrderEvent(
+    event_type="order.filled",
+    order_id=order.order_id,
+    data={"fill_price": 50000, "quantity": 1.0},
+    timestamp=datetime.now()
+)
+await bus.publish(event)
+```
+
+### 3. Circuit Breaker Pattern
+
+```python
+# Prevent cascading failures
+from enum import Enum
+from datetime import datetime, timedelta
+
+class CircuitState(Enum):
+    CLOSED = "closed"      # Normal operation
+    OPEN = "open"         # Failures detected, block calls
+    HALF_OPEN = "half_open"  # Testing if system recovered
+
+class OrderSubmissionCircuitBreaker:
+    """Protect order submission from repeated failures"""
+    
+    def __init__(self, failure_threshold=5, recovery_timeout_seconds=60):
+        self.failure_threshold = failure_threshold
+        self.recovery_timeout = timedelta(seconds=recovery_timeout_seconds)
+        self.state = CircuitState.CLOSED
+        self.failure_count = 0
+        self.last_failure_time = None
+        self.last_success_time = None
+    
+    async def call(self, func: Callable, *args, **kwargs):
+        """Execute function with circuit breaker protection"""
+        
+        if self.state == CircuitState.OPEN:
+            # Check if ready to recover
+            if datetime.now() - self.last_failure_time > self.recovery_timeout:
+                self.state = CircuitState.HALF_OPEN
+                print("Circuit breaker: HALF_OPEN (testing recovery)")
+            else:
+                raise RuntimeError("Circuit breaker: OPEN (service unavailable)")
+        
+        try:
+            result = await func(*args, **kwargs)
+            
+            # Success - reset state
+            if self.state == CircuitState.HALF_OPEN:
+                self.state = CircuitState.CLOSED
+                self.failure_count = 0
+                print("Circuit breaker: CLOSED (recovered)")
+            
+            self.last_success_time = datetime.now()
+            return result
+        
+        except Exception as e:
+            # Failure - increment counter
+            self.failure_count += 1
+            self.last_failure_time = datetime.now()
+            
+            if self.failure_count >= self.failure_threshold:
+                self.state = CircuitState.OPEN
+                print(f"Circuit breaker: OPEN (failures: {self.failure_count})")
+            
+            raise
+```
+
+---
+
+## Scaling Strategies
+
+### 1. Horizontal Scaling with Load Balancing
+
+```python
+# Distribute order load across multiple instances
+class LoadBalancedOrderManagementCluster:
+    """Manage orders across multiple OM nodes"""
+    
+    def __init__(self, num_nodes=3):
+        self.nodes = [OrderManager() for _ in range(num_nodes)]
+        self.current_index = 0
+        self.order_to_node = {}  # order_id -> node_index
+    
+    def _get_next_node(self):
+        """Round-robin node selection"""
+        node = self.nodes[self.current_index]
+        self.current_index = (self.current_index + 1) % len(self.nodes)
+        return node
+    
+    async def create_order(self, **kwargs) -> Order:
+        """Create order on least-loaded node"""
+        node = self._get_next_node()
+        order = await node.create_order(**kwargs)
+        self.order_to_node[order.order_id] = node
+        return order
+    
+    async def get_order(self, order_id: str) -> Order:
+        """Retrieve order from correct node"""
+        if order_id not in self.order_to_node:
+            # Search all nodes
+            for node in self.nodes:
+                orders = node.orders
+                if order_id in orders:
+                    return orders[order_id]
+        
+        node = self.order_to_node[order_id]
+        return await node.get_order(order_id)
+```
+
+### 2. Caching Layer
+
+```python
+# Reduce database/API calls with intelligent caching
+class CachedOrderManager:
+    """Order manager with caching for frequent queries"""
+    
+    def __init__(self, base_manager: OrderManager, cache_ttl_seconds=5):
+        self.base_manager = base_manager
+        self.cache_ttl = timedelta(seconds=cache_ttl_seconds)
+        self.cache = {}
+        self.cache_time = {}
+    
+    async def get_portfolio_stats(self, force_refresh=False) -> Dict:
+        """Get cached portfolio stats"""
+        cache_key = "portfolio_stats"
+        
+        if not force_refresh and cache_key in self.cache:
+            if datetime.now() - self.cache_time[cache_key] < self.cache_ttl:
+                return self.cache[cache_key]
+        
+        # Fetch fresh data
+        stats = self.base_manager.get_portfolio_stats()
+        
+        self.cache[cache_key] = stats
+        self.cache_time[cache_key] = datetime.now()
+        
+        return stats
+    
+    def invalidate_cache(self, key: str = None):
+        """Invalidate specific or all cache"""
+        if key:
+            self.cache.pop(key, None)
+            self.cache_time.pop(key, None)
+        else:
+            self.cache.clear()
+            self.cache_time.clear()
+```
+
+### 3. Rate Limiting
+
+```python
+# Control API call rate
+import time
+from collections import deque
+
+class RateLimiter:
+    """Rate limiter for order submissions"""
+    
+    def __init__(self, max_requests_per_minute=100):
+        self.max_requests = max_requests_per_minute
+        self.window_size = 60  # seconds
+        self.request_times = deque()
+    
+    async def wait_if_needed(self):
+        """Wait if rate limit would be exceeded"""
+        now = time.time()
+        
+        # Remove old requests outside window
+        while self.request_times and self.request_times[0] < now - self.window_size:
+            self.request_times.popleft()
+        
+        # If at limit, wait
+        if len(self.request_times) >= self.max_requests:
+            wait_time = self.window_size - (now - self.request_times[0])
+            await asyncio.sleep(wait_time)
+        
+        self.request_times.append(now)
+    
+    async def execute_with_limit(self, func: Callable, *args, **kwargs):
+        """Execute function respecting rate limits"""
+        await self.wait_if_needed()
+        return await func(*args, **kwargs)
+
+# Usage
+limiter = RateLimiter(max_requests_per_minute=50)
+order = await limiter.execute_with_limit(order_mgr.submit_order, order)
+```
+
+---
+
+## Deployment Architecture
+
+### Production Deployment
+
+```yaml
+# kubernetes_deployment.yaml - Example K8s deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-management-system
+  labels:
+    app: oms
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: oms
+  template:
+    metadata:
+      labels:
+        app: oms
+    spec:
+      containers:
+      - name: order-manager
+        image: cosmic-ai:phase5-oms-latest
+        ports:
+        - containerPort: 8080
+        env:
+        - name: ENVIRONMENT
+          value: "production"
+        - name: LOG_LEVEL
+          value: "INFO"
+        - name: CACHE_TTL
+          value: "5"
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "500m"
+          limits:
+            memory: "1Gi"
+            cpu: "1000m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 8080
+          initialDelaySeconds: 10
+          periodSeconds: 5
+```
+
+### Monitoring & Observability
+
+```python
+# Prometheus metrics for monitoring
+from prometheus_client import Counter, Histogram, Gauge
+
+# Metrics definitions
+orders_created = Counter('orders_created_total', 'Total orders created')
+orders_filled = Counter('orders_filled_total', 'Total orders filled')
+order_duration = Histogram('order_duration_seconds', 'Order lifetime in seconds')
+active_positions = Gauge('active_positions', 'Number of active positions')
+portfolio_value = Gauge('portfolio_value_usd', 'Portfolio total value')
+
+# Instrument the order manager
+class InstrumentedOrderManager(OrderManager):
+    async def create_order(self, **kwargs) -> Order:
+        order = await super().create_order(**kwargs)
+        orders_created.inc()
+        return order
+    
+    async def fill_order(self, order_id: str, **kwargs):
+        result = await super().fill_order(order_id, **kwargs)
+        orders_filled.inc()
+        order_duration.observe((datetime.now() - result.created_time).total_seconds())
+        return result
+```
+
+---
+
 ## Related Documentation
 
 - [API Reference](PHASE5_STAGE3_API_REFERENCE.md)
