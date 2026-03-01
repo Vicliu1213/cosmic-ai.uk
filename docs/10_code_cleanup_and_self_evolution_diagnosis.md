@@ -431,6 +431,267 @@ adaptive_scale = 1 + (error_pressure - 0.5) * 2  # 更陡峭的激活曲線
 
 ---
 
+## 8. 實踐修復實現
+
+### 自進化改進代碼
+
+```python
+# enhanced_self_evolution.py - 改進的自進化系統
+import numpy as np
+from typing import Dict, List
+from datetime import datetime
+
+class EnhancedSelfEvolvingAgent:
+    """改進的自進化智能體 - 包含反饋迴路和多智能體協同"""
+    
+    def __init__(self, agent_id: str, evolution_threshold: float = 0.3):
+        self.agent_id = agent_id
+        self.evolution_threshold = evolution_threshold
+        
+        # 進化指標
+        self.error_history = []
+        self.success_history = []
+        self.strategy_weights = {}
+        self.cumulative_improvement = 0.0
+        self.evolution_triggers = 0
+        self.peer_agents = {}
+        
+        # 自適應參數
+        self.adaptive_learning_rate = 0.01
+        self.evolution_signal_scale = 1.0
+    
+    def record_error(self, error_rate: float, error_type: str = "general"):
+        """記錄錯誤並檢查進化觸發"""
+        
+        self.error_history.append({
+            "rate": error_rate,
+            "type": error_type,
+            "timestamp": datetime.now(),
+        })
+        
+        # 檢查進化條件 (改進版本 - 更寬鬆)
+        self._check_evolution_trigger(error_rate)
+    
+    def _check_evolution_trigger(self, error_rate: float):
+        """檢查是否應該觸發進化"""
+        
+        # 改進: 條件放寬
+        recent_errors = [e["rate"] for e in self.error_history[-10:]]
+        avg_error = np.mean(recent_errors) if recent_errors else 0
+        
+        # 新的激活函數: ReLU + 自適應縮放
+        evolution_signal = max(0, avg_error - self.evolution_threshold) * self.evolution_signal_scale
+        
+        # 降低觸發門檻
+        trigger_probability = min(evolution_signal, 1.0)
+        
+        if np.random.random() < trigger_probability:
+            self.evolution_triggers += 1
+            print(f"✅ Agent {self.agent_id}: 進化觸發 (信號: {evolution_signal:.4f})")
+            self._trigger_evolution()
+    
+    def _trigger_evolution(self):
+        """執行進化邏輯"""
+        
+        # 1. 分析錯誤模式
+        error_patterns = self._analyze_error_patterns()
+        
+        # 2. 生成改進策略
+        improved_strategy = self._generate_improved_strategy(error_patterns)
+        
+        # 3. 測試新策略
+        success_rate = self._test_strategy(improved_strategy)
+        
+        # 4. 記錄成功 (新增的反饋迴路)
+        if success_rate > 0.5:
+            self._record_successful_evolution(success_rate)
+        
+        # 5. 廣播到其他智能體
+        self._broadcast_success_to_peers(improved_strategy, success_rate)
+    
+    def _analyze_error_patterns(self) -> Dict:
+        """分析錯誤模式"""
+        
+        patterns = {}
+        for error in self.error_history[-20:]:
+            error_type = error["type"]
+            if error_type not in patterns:
+                patterns[error_type] = []
+            patterns[error_type].append(error["rate"])
+        
+        return patterns
+    
+    def _generate_improved_strategy(self, patterns: Dict) -> Dict:
+        """根據錯誤模式生成改進策略"""
+        
+        strategy = {
+            "improvements": [],
+            "learning_rate": self.adaptive_learning_rate * 1.5,
+            "confidence": 0.7,
+        }
+        
+        for error_type, rates in patterns.items():
+            avg_rate = np.mean(rates)
+            strategy["improvements"].append({
+                "type": error_type,
+                "reduction_target": avg_rate * 0.7,  # 目標降低 30%
+            })
+        
+        return strategy
+    
+    def _test_strategy(self, strategy: Dict) -> float:
+        """測試新策略的成功率"""
+        
+        # 模擬測試
+        success_rate = np.random.uniform(0.4, 0.9)
+        return success_rate
+    
+    def _record_successful_evolution(self, improvement: float):
+        """記錄成功的進化"""
+        
+        self.success_history.append({
+            "improvement": improvement,
+            "timestamp": datetime.now(),
+        })
+        
+        self.cumulative_improvement += improvement
+        
+        # 調整自適應參數
+        self._update_adaptive_parameters()
+        
+        print(f"📈 Agent {self.agent_id}: 進化成功! 改進率: {improvement:.2%}")
+    
+    def _update_adaptive_parameters(self):
+        """動態調整進化參數"""
+        
+        # 根據最近的成功率調整學習率
+        recent_success = len([s for s in self.success_history if 
+                            (datetime.now() - s["timestamp"]).seconds < 3600])
+        
+        if recent_success > 5:
+            # 最近成功多次，加快學習
+            self.adaptive_learning_rate *= 1.1
+            self.evolution_signal_scale *= 1.05
+        else:
+            # 成功率低，減速
+            self.adaptive_learning_rate *= 0.95
+            self.evolution_signal_scale *= 0.95
+        
+        # 確保在合理範圍內
+        self.adaptive_learning_rate = np.clip(self.adaptive_learning_rate, 0.001, 0.1)
+        self.evolution_signal_scale = np.clip(self.evolution_signal_scale, 0.5, 2.0)
+    
+    def _broadcast_success_to_peers(self, strategy: Dict, success_rate: float):
+        """廣播成功的策略到其他智能體"""
+        
+        for peer_id, peer_agent in self.peer_agents.items():
+            peer_agent.learn_from_peer(self.agent_id, strategy, success_rate)
+    
+    def learn_from_peer(self, peer_id: str, strategy: Dict, success_rate: float):
+        """從其他智能體學習成功的策略"""
+        
+        print(f"  📚 Agent {self.agent_id}: 從 Agent {peer_id} 學習 (成功率: {success_rate:.2%})")
+        
+        # 將策略權重記錄為參考
+        self.strategy_weights[f"peer_{peer_id}"] = success_rate
+    
+    def register_peer(self, peer_agent):
+        """註冊其他智能體作為同行"""
+        self.peer_agents[peer_agent.agent_id] = peer_agent
+    
+    def get_statistics(self) -> Dict:
+        """獲取統計信息"""
+        
+        return {
+            "agent_id": self.agent_id,
+            "total_errors": len(self.error_history),
+            "evolution_triggers": self.evolution_triggers,
+            "successful_evolutions": len(self.success_history),
+            "cumulative_improvement": self.cumulative_improvement,
+            "trigger_rate": len(self.success_history) / max(len(self.error_history), 1),
+            "adaptive_learning_rate": self.adaptive_learning_rate,
+            "evolution_signal_scale": self.evolution_signal_scale,
+        }
+
+# 使用示例
+if __name__ == "__main__":
+    print("🤖 改進的自進化系統測試\n")
+    
+    # 創建多個智能體
+    agents = [
+        EnhancedSelfEvolvingAgent(f"Agent_{i}", evolution_threshold=0.3)
+        for i in range(3)
+    ]
+    
+    # 註冊為同行 (多智能體協同)
+    for i, agent in enumerate(agents):
+        for j, other in enumerate(agents):
+            if i != j:
+                agent.register_peer(other)
+    
+    # 模擬錯誤和進化
+    print("📊 模擬系統運行:\n")
+    for step in range(50):
+        for agent in agents:
+            error_rate = np.random.uniform(0.1, 0.9)
+            agent.record_error(error_rate)
+    
+    # 打印統計
+    print("\n📈 最終統計:\n")
+    for agent in agents:
+        stats = agent.get_statistics()
+        print(f"  {stats['agent_id']}:")
+        print(f"    進化觸發: {stats['evolution_triggers']} 次")
+        print(f"    成功進化: {stats['successful_evolutions']} 次")
+        print(f"    觸發率: {stats['trigger_rate']:.2%}")
+        print(f"    累積改進: {stats['cumulative_improvement']:.2f}\n")
+```
+
+### 修復執行清單
+
+```python
+# execute_fixes.py - 自動執行代碼修復
+
+def execute_all_fixes():
+    """執行所有優先修復"""
+    
+    fixes = [
+        {
+            "priority": "🔴 高",
+            "file": "singularity_trading_system.py",
+            "fix": "添加缺失的類型提示導入",
+            "duration": 30,
+            "code": "from typing import Any, Dict, List, Optional, Tuple",
+        },
+        {
+            "priority": "🔴 高",
+            "file": "enhanced_quantum_market_analyzer.py",
+            "fix": "修復變數作用域和 None 檢查",
+            "duration": 20,
+        },
+        {
+            "priority": "🔴 高",
+            "file": "intelligent_agents.py",
+            "fix": "實現自進化方法",
+            "duration": 60,
+        },
+    ]
+    
+    total_time = sum(f["duration"] for f in fixes)
+    
+    print("🔧 代碼修復計劃:\n")
+    for fix in fixes:
+        print(f"  [{fix['priority']}] {fix['file']}")
+        print(f"    修復: {fix['fix']}")
+        print(f"    預計時間: {fix['duration']} 分鐘\n")
+    
+    print(f"⏱️  總預計時間: {total_time} 分鐘 (~{total_time/60:.1f} 小時)\n")
+    
+    return fixes
+```
+
+---
+
 ## 結論
 
 ### 9. 糾錯自進化智能體不自動進化的原因總結

@@ -254,38 +254,289 @@ python scripts/code_quality_checker.py
 
 ---
 
-### 🔧 自動修復命令
+## 🛠️ 自動化代碼質量檢查工具
 
-```bash
-# 自動修複所有 pre-commit 問題
-pre-commit run --all-files
+### 完整代碼質量檢查器
 
-# 自動排序導入
-isort src/
+```python
+# code_quality_checker.py - 完整的代碼質量檢查系統
+import os
+import re
+import subprocess
+import ast
+from pathlib import Path
+from typing import Dict, List, Tuple
 
-# 自動修複空行和尾部空格
-autopep8 --in-place --aggressive src/file.py
+class CodeQualityChecker:
+    """完整的代碼質量檢查工具"""
+    
+    def __init__(self, project_path: str = "."):
+        self.project_path = project_path
+        self.issues = {
+            "critical": [],
+            "warning": [],
+            "info": [],
+        }
+        self.total_files = 0
+        self.passed_files = 0
+    
+    def check_all_python_files(self) -> Dict:
+        """檢查所有 Python 文件"""
+        
+        print("🔍 掃描 Python 文件...\n")
+        
+        python_files = list(Path(self.project_path).rglob("*.py"))
+        self.total_files = len(python_files)
+        
+        for py_file in python_files:
+            if self._should_skip(py_file):
+                continue
+            
+            self._check_file(py_file)
+        
+        return self._generate_report()
+    
+    def _should_skip(self, file_path: Path) -> bool:
+        """判斷是否應該跳過該文件"""
+        
+        skip_dirs = {"__pycache__", ".venv", "venv", ".git", "node_modules"}
+        skip_files = {"__pycache__.py"}
+        
+        parts = file_path.parts
+        if any(part in skip_dirs for part in parts):
+            return True
+        
+        if file_path.name in skip_files:
+            return True
+        
+        return False
+    
+    def _check_file(self, file_path: Path):
+        """檢查單個文件"""
+        
+        try:
+            with open(file_path, 'r', encoding='utf-8') as f:
+                content = f.read()
+            
+            # 1. 語法檢查
+            self._check_syntax(file_path, content)
+            
+            # 2. Import 檢查
+            self._check_imports(file_path, content)
+            
+            # 3. 類型提示檢查
+            self._check_type_hints(file_path, content)
+            
+            # 4. 縮進檢查
+            self._check_indentation(file_path, content)
+            
+            # 5. 命名規範檢查
+            self._check_naming_conventions(file_path, content)
+            
+            self.passed_files += 1
+            
+        except Exception as e:
+            self.issues["critical"].append(f"無法掃描 {file_path}: {e}")
+    
+    def _check_syntax(self, file_path: Path, content: str):
+        """檢查 Python 語法"""
+        
+        try:
+            ast.parse(content)
+        except SyntaxError as e:
+            self.issues["critical"].append(
+                f"[語法錯誤] {file_path}:{e.lineno} - {e.msg}"
+            )
+    
+    def _check_imports(self, file_path: Path, content: str):
+        """檢查 Import 聲明"""
+        
+        # 檢查缺失的 typing imports
+        if "-> Any" in content or "Dict[" in content or "List[" in content:
+            if "from typing import" not in content:
+                self.issues["warning"].append(
+                    f"[缺失 Import] {file_path} - 使用了類型註解但未導入 typing"
+                )
+        
+        # 檢查未使用的導入
+        tree = ast.parse(content)
+        imports = set()
+        used_names = set()
+        
+        for node in ast.walk(tree):
+            if isinstance(node, (ast.Import, ast.ImportFrom)):
+                for alias in node.names:
+                    imports.add(alias.name.split('.')[0])
+            elif isinstance(node, ast.Name):
+                used_names.add(node.id)
+        
+        unused = imports - used_names
+        for unused_import in unused:
+            if not unused_import.startswith('_'):
+                self.issues["info"].append(
+                    f"[未使用導入] {file_path} - '{unused_import}'"
+                )
+    
+    def _check_type_hints(self, file_path: Path, content: str):
+        """檢查類型提示完整性"""
+        
+        # 尋找函數定義但缺少返回類型
+        func_pattern = r'def\s+\w+\s*\([^)]*\)\s*:'
+        no_return_hint = r'def\s+\w+\s*\([^)]*\)\s*:->'
+        
+        funcs = re.findall(func_pattern, content)
+        hints = re.findall(no_return_hint, content)
+        
+        if len(funcs) > len(hints):
+            self.issues["info"].append(
+                f"[類型提示] {file_path} - 某些函數缺少返回類型提示"
+            )
+    
+    def _check_indentation(self, file_path: Path, content: str):
+        """檢查縮進規範"""
+        
+        lines = content.split('\n')
+        for i, line in enumerate(lines, 1):
+            if line and not line[0].isspace() and not line.startswith('#'):
+                # 檢查 tab vs space
+                if '\t' in line[:20]:
+                    self.issues["warning"].append(
+                        f"[縮進混亂] {file_path}:{i} - 發現 Tab 字符,應使用空格"
+                    )
+    
+    def _check_naming_conventions(self, file_path: Path, content: str):
+        """檢查命名規範"""
+        
+        tree = ast.parse(content)
+        
+        for node in ast.walk(tree):
+            if isinstance(node, ast.FunctionDef):
+                # 函數應使用 snake_case
+                if not re.match(r'^[a-z_][a-z0-9_]*$', node.name):
+                    if not node.name.startswith('__'):
+                        self.issues["info"].append(
+                            f"[命名規範] {file_path}:{node.lineno} - 函數 '{node.name}' 應使用 snake_case"
+                        )
+            
+            elif isinstance(node, ast.ClassDef):
+                # 類應使用 PascalCase
+                if not re.match(r'^[A-Z][a-zA-Z0-9]*$', node.name):
+                    self.issues["info"].append(
+                        f"[命名規範] {file_path}:{node.lineno} - 類 '{node.name}' 應使用 PascalCase"
+                    )
+    
+    def _generate_report(self) -> Dict:
+        """生成檢查報告"""
+        
+        report = {
+            "total_files": self.total_files,
+            "passed_files": self.passed_files,
+            "failed_files": self.total_files - self.passed_files,
+            "critical_issues": len(self.issues["critical"]),
+            "warnings": len(self.issues["warning"]),
+            "info": len(self.issues["info"]),
+            "all_passed": len(self.issues["critical"]) == 0,
+        }
+        
+        return report
+    
+    def print_report(self):
+        """打印檢查報告"""
+        
+        report = self._generate_report()
+        
+        print("\n" + "="*60)
+        print("📊 代碼質量檢查報告")
+        print("="*60)
+        
+        print(f"\n✅ 檢查統計:")
+        print(f"  總文件數: {report['total_files']}")
+        print(f"  通過文件: {report['passed_files']}")
+        print(f"  失敗文件: {report['failed_files']}")
+        
+        print(f"\n⚠️  問題統計:")
+        print(f"  🔴 Critical: {report['critical_issues']}")
+        print(f"  🟡 Warning:  {report['warnings']}")
+        print(f"  ℹ️  Info:     {report['info']}")
+        
+        if self.issues["critical"]:
+            print(f"\n🔴 Critical 問題:")
+            for issue in self.issues["critical"][:5]:
+                print(f"  - {issue}")
+            if len(self.issues["critical"]) > 5:
+                print(f"  ... 還有 {len(self.issues['critical'])-5} 個問題")
+        
+        if self.issues["warning"]:
+            print(f"\n🟡 Warning 問題:")
+            for issue in self.issues["warning"][:5]:
+                print(f"  - {issue}")
+        
+        if report["all_passed"]:
+            print("\n✅ 所有檢查通過!")
+        else:
+            print("\n❌ 有問題需要修復")
+        
+        return report
 
-# 檢查特定文件的語法
-python -m py_compile src/file.py
-
-# 運行代碼質量檢查
-python scripts/code_quality_checker.py
-
-# 運行所有測試
-python -m pytest src/tests/ -v
+if __name__ == "__main__":
+    checker = CodeQualityChecker(".")
+    checker.check_all_python_files()
+    report = checker.print_report()
 ```
 
----
+**運行檢查**:
+```bash
+python code_quality_checker.py
+```
 
-### 🚨 常見錯誤快速參考
+### Pre-commit Hook 配置
 
-| 錯誤類型 | 症狀 | 檢查命令 | 修復方法 |
-|---------|------|---------|---------|
-| 缺失 Import | `NameError` | `grep "-> Any" file.py` | 添加 `from typing import Any` |
-| 語法錯誤 | `SyntaxError` | `python -m py_compile file.py` | 检查括号匹配 |
-| 縮進錯誤 | `IndentationError` | 查看 IDE 缩進指示 | 使用 4 個空格 |
-| 未使用導入 | Linting 警告 | `flake8 file.py` | 移除未使用的導入 |
+```yaml
+# .pre-commit-config.yaml - 自動代碼檢查配置
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-json
+      - id: check-added-large-files
+      - id: check-merge-conflict
+      - id: detect-private-key
+  
+  - repo: https://github.com/psf/black
+    rev: 23.3.0
+    hooks:
+      - id: black
+        language_version: python3.10
+  
+  - repo: https://github.com/pycqa/isort
+    rev: 5.12.0
+    hooks:
+      - id: isort
+        args: ["--profile", "black"]
+  
+  - repo: https://github.com/pycqa/flake8
+    rev: 6.0.0
+    hooks:
+      - id: flake8
+        args: ["--max-line-length=127", "--select=E9,F63,F7,F82"]
+  
+  - repo: https://github.com/pycqa/pylint
+    rev: pylint-2.17.4
+    hooks:
+      - id: pylint
+        args: ["--disable=R,C", "--exit-zero"]
+```
+
+**安裝和使用**:
+```bash
+pip install pre-commit
+pre-commit install
+pre-commit run --all-files
+```
 
 ---
 
