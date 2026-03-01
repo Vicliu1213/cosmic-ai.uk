@@ -470,8 +470,144 @@ except Exception as e:
    https://ai.google.dev/
    ```
 
+## 实践代码示例
+
+### 基本使用
+
+```python
+import google.generativeai as genai
+import os
+
+# 配置 API
+api_key = os.getenv('GOOGLE_API_KEY')
+genai.configure(api_key=api_key)
+
+# 创建模型实例
+model = genai.GenerativeModel('gemini-pro')
+
+# 生成文本
+response = model.generate_content("解释量子计算的基本原理")
+print(response.text)
+```
+
+### 流式响应
+
+```python
+def stream_gemini_response(prompt):
+    """流式获取 Gemini 响应"""
+    
+    model = genai.GenerativeModel('gemini-pro')
+    
+    print(f"提示: {prompt}")
+    print("响应:")
+    
+    response = model.generate_content(
+        prompt,
+        stream=True
+    )
+    
+    for chunk in response:
+        print(chunk.text, end='', flush=True)
+    print()
+
+# 使用示例
+stream_gemini_response("写一个 Python 函数来计算斐波那契数列")
+```
+
+### 错误处理
+
+```python
+def safe_gemini_call(prompt):
+    """安全的 Gemini API 调用"""
+    
+    try:
+        model = genai.GenerativeModel('gemini-pro')
+        response = model.generate_content(prompt)
+        return response.text
+    
+    except genai.types.APIError as e:
+        print(f"API 错误: {e}")
+        return None
+    
+    except genai.types.APIConnectionError as e:
+        print(f"连接错误: {e}")
+        return None
+    
+    except Exception as e:
+        print(f"未知错误: {e}")
+        return None
+
+# 使用示例
+result = safe_gemini_call("你好，Gemini")
+if result:
+    print(f"结果: {result}")
+```
+
+## 性能优化
+
+### 请求队列管理
+
+```python
+from queue import Queue
+import threading
+
+class GeminiAPIQueue:
+    """Gemini API 请求队列"""
+    
+    def __init__(self, max_workers=3):
+        self.queue = Queue()
+        self.max_workers = max_workers
+        self.workers = []
+        self._start_workers()
+    
+    def _start_workers(self):
+        """启动工作线程"""
+        for _ in range(self.max_workers):
+            worker = threading.Thread(target=self._worker)
+            worker.daemon = True
+            worker.start()
+            self.workers.append(worker)
+    
+    def _worker(self):
+        """工作线程"""
+        model = genai.GenerativeModel('gemini-pro')
+        
+        while True:
+            prompt, callback = self.queue.get()
+            try:
+                response = model.generate_content(prompt)
+                callback(response.text)
+            except Exception as e:
+                callback(f"Error: {e}")
+            finally:
+                self.queue.task_done()
+    
+    def submit_request(self, prompt, callback):
+        """提交请求"""
+        self.queue.put((prompt, callback))
+
+# 使用示例
+api_queue = GeminiAPIQueue(max_workers=3)
+
+def handle_response(text):
+    print(f"收到: {text[:100]}...")
+
+api_queue.submit_request("什么是机器学习？", handle_response)
+```
+
+## 故障排除表
+
+| 问题 | 症状 | 解决方案 |
+|------|------|--------|
+| 无效的 API 密钥 | 401 认证错误 | 检查 GOOGLE_API_KEY 环境变量 |
+| API 配额超限 | 429 速率限制 | 等待或升级配额 |
+| 网络连接错误 | 连接超时 | 检查网络连接 |
+| 模型不可用 | 404 不是找到 | 检查模型名称是否正确 |
+| 内容过滤 | 400 坏请求 | 修改提示内容 |
+
 ---
 
-**最后更新**: 2026-02-19  
-**版本**: 1.0.0
+**最后更新**: 2026-03-01  
+**版本**: 1.1 (含实践代码和性能优化)
+**增强内容**: +基本使用示例、+流式响应、+错误处理、+队列管理、+故障排除表
 

@@ -506,6 +506,154 @@ az login --service-principal \
 | 认证 | 无 | 用户名/密码 | 应用认证 | 服务账户 |
 | 备份 | 本地文件 | 托管备份 | Azure Backup | Cloud Backup |
 
+## 实践代码示例
+
+### 连接管理
+
+```python
+import mysql.connector
+import redis
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+class DatabaseManager:
+    """数据库连接管理"""
+    
+    def __init__(self):
+        self.mysql_config = {
+            'host': os.getenv('DB_HOST', 'localhost'),
+            'user': os.getenv('DB_USER'),
+            'password': os.getenv('DB_PASSWORD'),
+            'database': os.getenv('DB_NAME')
+        }
+        self.connection = None
+    
+    def connect(self):
+        """建立连接"""
+        try:
+            self.connection = mysql.connector.connect(**self.mysql_config)
+            print("✓ 数据库连接成功")
+            return self.connection
+        except Exception as e:
+            print(f"✗ 连接失败: {e}")
+            return None
+    
+    def disconnect(self):
+        """断开连接"""
+        if self.connection:
+            self.connection.close()
+            print("✓ 连接已关闭")
+
+class CacheManager:
+    """Redis 缓存管理"""
+    
+    def __init__(self):
+        self.redis_client = redis.Redis(
+            host=os.getenv('REDIS_HOST', 'localhost'),
+            port=int(os.getenv('REDIS_PORT', 6379)),
+            password=os.getenv('REDIS_PASSWORD'),
+            decode_responses=True
+        )
+    
+    def set_cache(self, key, value, ttl=3600):
+        """设置缓存"""
+        self.redis_client.setex(key, ttl, value)
+        print(f"✓ 缓存已设置: {key}")
+    
+    def get_cache(self, key):
+        """获取缓存"""
+        value = self.redis_client.get(key)
+        if value:
+            print(f"✓ 缓存命中: {key}")
+        else:
+            print(f"✗ 缓存未命中: {key}")
+        return value
+```
+
+### 性能测试
+
+```python
+def benchmark_database_performance():
+    """数据库性能基准测试"""
+    
+    db = DatabaseManager()
+    db.connect()
+    
+    import time
+    
+    print("数据库性能测试")
+    print("="*60)
+    
+    # 1. 插入性能
+    start = time.time()
+    for i in range(1000):
+        db.execute_query(
+            "INSERT INTO test_table (value) VALUES (%s)",
+            (f"value_{i}",)
+        )
+    insert_time = time.time() - start
+    print(f"插入 1000 行: {insert_time:.2f}秒")
+    
+    # 2. 查询性能
+    start = time.time()
+    result = db.execute_query("SELECT * FROM test_table LIMIT 1000")
+    query_time = time.time() - start
+    print(f"查询 1000 行: {query_time*1000:.2f}毫秒")
+    
+    # 3. 缓存性能
+    cache = CacheManager()
+    start = time.time()
+    for i in range(1000):
+        cache.set_cache(f"key_{i}", f"value_{i}")
+    cache_time = time.time() - start
+    print(f"缓存写入 1000 条: {cache_time*1000:.2f}毫秒")
+    
+    db.disconnect()
+```
+
+### 故障恢复
+
+```python
+def test_failover():
+    """测试故障转移"""
+    
+    db = DatabaseManager()
+    
+    print("故障转移测试")
+    print("="*60)
+    
+    # 1. 主数据库故障
+    try:
+        db.connect()
+        print("✓ 主数据库已连接")
+    except:
+        print("✗ 主数据库连接失败，尝试备用...")
+        
+        # 切换到备用数据库
+        db.mysql_config['host'] = os.getenv('DB_BACKUP_HOST')
+        if db.connect():
+            print("✓ 已切换到备用数据库")
+    
+    # 2. 缓存故障
+    cache = CacheManager()
+    try:
+        cache.get_cache('test')
+        print("✓ 缓存服务可用")
+    except:
+        print("✗ 缓存服务不可用，使用直接数据库查询")
+```
+
+## 故障排除指南
+
+| 问题 | 原因 | 解决方案 |
+|------|------|--------|
+| MySQL 连接失败 | 主机/密码错误 | 检查 .env 文件和防火墙 |
+| Redis 超时 | 网络问题 | 检查 Redis 服务状态 |
+| 认证失败 | 凭证无效 | 重新生成密钥和密码 |
+| 性能下降 | 缓存未使用 | 增加 Redis TTL 时间 |
+
 ---
 
 ## 🔐 安全建议
@@ -533,6 +681,7 @@ az login --service-principal \
 
 ---
 
-**最后更新**: 2026-02-19  
-**版本**: 1.0.0
+**最后更新**: 2026-03-01  
+**版本**: 1.1 (含实践代码和故障排除)
+**增强内容**: +连接管理代码、+性能测试、+故障恢复、+故障排除表
 
