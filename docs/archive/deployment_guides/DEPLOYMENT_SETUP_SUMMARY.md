@@ -198,6 +198,133 @@ cat .env.deployment
 
 ---
 
+## 🔍 快速故障排除 (Quick Troubleshooting)
+
+### 常見問題速查表
+
+| 問題 | 症狀 | 解決方案 |
+|------|------|---------|
+| SSL 證書過期 | 瀏覽器警告 | `sudo certbot renew --force-renewal` |
+| 連接被拒絕 | `Connection refused` | 檢查服務是否運行: `systemctl status comic-ai` |
+| 配置讀取失敗 | `.env` 錯誤 | 驗證 `.env` 文件格式: `python -m dotenv list` |
+| 數據庫鎖定 | 操作超時 | 重啟應用: `systemctl restart comic-ai` |
+| 內存泄漏 | 緩慢變慢 | 檢查進程: `ps aux \| grep python` |
+
+### 自動化故障排除腳本
+
+```bash
+#!/bin/bash
+# scripts/quick_fix.sh
+# 快速故障排除腳本
+
+echo "🔧 Running Quick Troubleshoot..."
+
+# 檢查配置
+echo "Validating configuration..."
+python3 scripts/config_validator.py
+
+# 檢查服務
+echo "Checking services..."
+python3 scripts/deployment_monitor.py
+
+# 清理緩存
+echo "Cleaning cache..."
+rm -rf /tmp/comic_ai_cache/*
+
+# 重啟服務
+echo "Restarting service..."
+systemctl restart comic-ai
+
+echo "✅ Troubleshoot complete!"
+```
+
+---
+
+## 🛠️ 自動化部署工具
+
+### 一鍵部署腳本
+
+```bash
+#!/bin/bash
+# scripts/auto_deploy.sh
+# 完整自動化部署腳本
+
+set -e
+
+echo "🚀 Starting automated deployment..."
+
+# Step 1: 驗證環境
+echo "1️⃣ Validating environment..."
+python3 scripts/config_validator.py || exit 1
+
+# Step 2: 備份
+echo "2️⃣ Creating backup..."
+mkdir -p data/backups
+tar -czf data/backups/pre_deploy_$(date +%Y%m%d_%H%M%S).tar.gz data/ config/
+
+# Step 3: 安裝依賴
+echo "3️⃣ Installing dependencies..."
+pip install -r requirements.txt --quiet
+
+# Step 4: 初始化數據庫
+echo "4️⃣ Initializing database..."
+python3 -c "from src.core import init_db; init_db()"
+
+# Step 5: 啟動服務
+echo "5️⃣ Starting services..."
+systemctl restart redis-server
+systemctl restart comic-ai
+
+# Step 6: 驗證部署
+echo "6️⃣ Verifying deployment..."
+sleep 5
+curl -s https://localhost:8443/health > /dev/null && echo "✅ Deployment successful!" || echo "❌ Deployment failed!"
+
+echo "🎉 Automated deployment complete!"
+```
+
+### 健康檢查 Cron 任務
+
+```bash
+# /etc/cron.d/comic-ai-health
+# 每 5 分鐘運行一次健康檢查
+
+*/5 * * * * root python3 /root/comic_ai/scripts/deployment_monitor.py >> /var/log/comic-ai-health.log 2>&1
+0 * * * * root python3 /root/comic_ai/scripts/backup.sh >> /var/log/comic-ai-backup.log 2>&1
+0 0 * * 0 root python3 /root/comic_ai/scripts/maintenance.sh >> /var/log/comic-ai-maintenance.log 2>&1
+```
+
+---
+
+## 📊 部署性能基準線
+
+| 指標 | 目標值 | 當前狀態 |
+|-----|-------|--------|
+| 應用啟動時間 | < 10s | 待測試 |
+| API 響應時間 | < 500ms | 待測試 |
+| 內存使用量 | < 500MB | 待測試 |
+| CPU 利用率 | < 50% | 待測試 |
+| 磁盤 I/O | < 100MB/s | 待測試 |
+| 數據庫查詢 | < 100ms (95%) | 待測試 |
+
+### 性能測試命令
+
+```bash
+# 負載測試
+ab -n 1000 -c 10 https://localhost:8443/health
+
+# 內存分析
+python -m memory_profiler scripts/deployment_monitor.py
+
+# 性能分析
+python -m cProfile -s cumulative src/cli/cli.py
+
+# 磁盤使用
+du -sh data/ config/ logs/
+```
+
+---
+
 ## 📞 需要幫助？
 
 查看相關文檔：
