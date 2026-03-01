@@ -707,6 +707,353 @@ class DataManager:
 
 ---
 
+## 🎯 實戰交易案例
+
+### 案例 1: 日內交易策略 (Day Trading)
+
+```python
+# day_trading_strategy.py - 日內交易實現
+import asyncio
+from datetime import datetime, timedelta
+from opencode import LiveTradingEngine, DataManager
+
+class DayTradingStrategy:
+    """日內交易策略 - 利用日內波動"""
+    
+    def __init__(self, engine: LiveTradingEngine, manager: DataManager):
+        self.engine = engine
+        self.manager = manager
+        self.trades_today = 0
+        self.max_trades_per_day = 10
+        self.profit_target = 500  # 日目標利潤
+        self.loss_limit = 200     # 日虧損限制
+        self.current_daily_pnl = 0.0
+    
+    async def should_trade_today(self) -> bool:
+        """檢查今日是否應繼續交易"""
+        # 時間限制: 只在市場開放時間交易
+        now = datetime.now()
+        market_open = now.replace(hour=9, minute=30)
+        market_close = now.replace(hour=16, minute=0)
+        
+        if not (market_open <= now <= market_close):
+            return False
+        
+        # 交易次數限制
+        if self.trades_today >= self.max_trades_per_day:
+            return False
+        
+        # 盈利目標達成
+        if self.current_daily_pnl >= self.profit_target:
+            return False
+        
+        # 虧損限制
+        if self.current_daily_pnl <= -self.loss_limit:
+            return False
+        
+        return True
+    
+    async def identify_entry_signal(self, symbol: str) -> dict:
+        """識別入場信號"""
+        analysis = self.manager.get_analysis(symbol)
+        
+        # 簡單的技術分析信號
+        sma_20 = analysis['sma_20']
+        sma_50 = analysis['sma_50']
+        rsi = analysis['rsi']
+        current_price = analysis['current_price']
+        
+        signal = None
+        confidence = 0.0
+        
+        # 黃金交叉: SMA20 > SMA50 且 RSI < 70
+        if sma_20 > sma_50 and rsi < 70:
+            signal = 'BUY'
+            confidence = (sma_20 - sma_50) / sma_50 * 100  # 百分比
+        
+        # 死亡交叉: SMA20 < SMA50 且 RSI > 30
+        elif sma_20 < sma_50 and rsi > 30:
+            signal = 'SELL'
+            confidence = (sma_50 - sma_20) / sma_50 * 100
+        
+        return {
+            'signal': signal,
+            'confidence': min(confidence, 100),  # 限制在 0-100
+            'entry_price': current_price
+        }
+    
+    async def calculate_position_size(self, account_equity: float) -> float:
+        """計算倉位大小 - 風險管理"""
+        risk_per_trade = account_equity * 0.02  # 每筆交易風險 2% 的帳戶
+        stop_loss_distance = 50  # 假設止損距離 $50
+        
+        position_size = risk_per_trade / stop_loss_distance
+        
+        # 限制最大倉位
+        max_position = account_equity * 0.1 / 50000  # 假設 $50,000 的標的
+        
+        return min(position_size, max_position)
+    
+    async def execute_trade(self, symbol: str):
+        """執行交易"""
+        if not await self.should_trade_today():
+            print(f"❌ 不應交易 - 已達限制")
+            return
+        
+        # 識別信號
+        signal_info = await self.identify_entry_signal(symbol)
+        
+        if signal_info['signal'] is None:
+            print(f"⚠️ 無交易信號")
+            return
+        
+        # 獲取帳戶信息
+        account = self.engine.get_account_info()
+        position_size = await self.calculate_position_size(account.equity)
+        
+        # 執行交易
+        if signal_info['signal'] == 'BUY':
+            order_id = await self.engine.place_buy_order(
+                symbol=symbol,
+                price=signal_info['entry_price'],
+                quantity=position_size
+            )
+            print(f"✅ 買單: {order_id}, 信心度: {signal_info['confidence']:.1f}%")
+        
+        elif signal_info['signal'] == 'SELL':
+            order_id = await self.engine.place_sell_order(
+                symbol=symbol,
+                price=signal_info['entry_price'],
+                quantity=position_size
+            )
+            print(f"✅ 賣單: {order_id}, 信心度: {signal_info['confidence']:.1f}%")
+        
+        self.trades_today += 1
+    
+    async def monitor_positions(self):
+        """持續監控倉位"""
+        while True:
+            positions = self.engine.get_positions()
+            
+            for position in positions:
+                # 檢查止損
+                if position.unrealized_pnl < -200:
+                    print(f"🛑 止損觸發: {position.symbol}")
+                    await self.engine.close_position(position.symbol)
+                
+                # 檢查止盈
+                elif position.unrealized_pnl > 300:
+                    print(f"💰 止盈觸發: {position.symbol}")
+                    await self.engine.close_position(position.symbol)
+            
+            # 更新每日損益
+            stats = self.engine.get_stats()
+            self.current_daily_pnl = stats.get('total_pnl', 0)
+            
+            await asyncio.sleep(10)  # 每 10 秒檢查一次
+
+# 使用示例
+async def run_day_trading():
+    engine = LiveTradingEngine("DAY_TRADING_ACCOUNT", 10000)
+    await engine.initialize()
+    await engine.start_trading()
+    
+    manager = DataManager()
+    await manager.load_mock_data("BTC/USD", 500)
+    
+    strategy = DayTradingStrategy(engine, manager)
+    
+    # 執行交易和監控
+    while True:
+        await strategy.execute_trade("BTC/USD")
+        await asyncio.sleep(60)  # 每分鐘檢查一次
+```
+
+### 案例 2: 波段交易策略 (Swing Trading)
+
+```python
+# swing_trading_strategy.py - 波段交易實現
+class SwingTradingStrategy:
+    """波段交易 - 持有多天捕捉趨勢"""
+    
+    def __init__(self, engine, manager):
+        self.engine = engine
+        self.manager = manager
+        self.open_positions = {}
+        self.trend_strength = {}
+    
+    async def analyze_trend(self, symbol: str, lookback_days=20) -> dict:
+        """分析趨勢強度"""
+        analysis = self.manager.get_analysis(symbol)
+        
+        # 簡化趨勢分析
+        price_change = analysis['close'] - analysis['open']
+        volatility = analysis.get('volatility', 0)
+        trend_strength = abs(price_change) / (volatility + 1)
+        
+        trend_direction = 'UP' if price_change > 0 else 'DOWN'
+        
+        return {
+            'direction': trend_direction,
+            'strength': trend_strength,
+            'entry_price': analysis['close']
+        }
+    
+    async def hold_position(self, position_id: str, max_hold_days=5):
+        """持有倉位指定天數"""
+        positions = self.engine.get_positions()
+        position = next((p for p in positions if p.symbol == position_id), None)
+        
+        if not position:
+            return
+        
+        hold_duration = datetime.now() - position.opened_at
+        
+        if hold_duration.days >= max_hold_days:
+            await self.engine.close_position(position_id)
+            print(f"✅ 平倉波段: {position_id} (持有 {hold_duration.days} 天)")
+```
+
+---
+
+## ⚠️ 高級風險管理
+
+### 風險指標監控
+
+```python
+# risk_monitoring.py - 綜合風險監控系統
+class AdvancedRiskMonitor:
+    """進階風險監控"""
+    
+    def __init__(self, engine, max_portfolio_risk_percent=5):
+        self.engine = engine
+        self.max_portfolio_risk = max_portfolio_risk_percent
+        self.risk_alerts = []
+    
+    def calculate_portfolio_value_at_risk(self) -> float:
+        """計算投資組合風險價值 (Value at Risk, VaR)"""
+        positions = self.engine.get_positions()
+        account = self.engine.get_account_info()
+        
+        # 計算所有倉位的潛在虧損
+        total_var = 0
+        for position in positions:
+            position_var = position.quantity * abs(position.entry_price - position.current_price)
+            total_var += position_var
+        
+        # VaR 百分比
+        var_percent = (total_var / account.equity) * 100
+        
+        return var_percent
+    
+    def check_correlation_risk(self) -> bool:
+        """檢查相關性風險"""
+        positions = self.engine.get_positions()
+        
+        # 簡化: 檢查是否過度集中在某個資產類別
+        symbols = {}
+        for pos in positions:
+            asset_class = pos.symbol.split('/')[0]
+            symbols[asset_class] = symbols.get(asset_class, 0) + 1
+        
+        # 如果某個資產類別佔超過 60%
+        max_concentration = max(symbols.values()) / len(positions) if positions else 0
+        
+        if max_concentration > 0.6:
+            self.risk_alerts.append(f"⚠️ 集中度風險: {max_concentration*100:.1f}%")
+            return False
+        
+        return True
+    
+    def check_margin_requirement(self) -> bool:
+        """檢查保證金要求"""
+        account = self.engine.get_account_info()
+        
+        # 保證金率應 > 100%
+        if account.margin_level < 100:
+            self.risk_alerts.append(f"🔴 保證金不足: {account.margin_level}%")
+            return False
+        
+        return True
+    
+    async def emergency_stop(self):
+        """緊急停止 - 平倉所有倉位"""
+        positions = self.engine.get_positions()
+        
+        print("🛑 執行緊急停止...")
+        
+        for position in positions:
+            await self.engine.close_position(position.symbol)
+            print(f"  ✓ 平倉: {position.symbol}")
+```
+
+---
+
+## 📊 交易記錄和分析
+
+```python
+# trading_analysis.py - 交易分析和改進
+class TradeAnalyzer:
+    """分析和改進交易績效"""
+    
+    def __init__(self, engine):
+        self.engine = engine
+    
+    def analyze_win_rate(self):
+        """分析勝率"""
+        stats = self.engine.get_stats()
+        
+        total_trades = stats.get('total_trades', 0)
+        winning_trades = stats.get('winning_trades', 0)
+        
+        win_rate = (winning_trades / total_trades * 100) if total_trades > 0 else 0
+        
+        return {
+            'total_trades': total_trades,
+            'winning_trades': winning_trades,
+            'win_rate': win_rate
+        }
+    
+    def analyze_average_win_loss(self):
+        """分析平均獲利和損失"""
+        stats = self.engine.get_stats()
+        
+        avg_win = stats.get('avg_win', 0)
+        avg_loss = stats.get('avg_loss', 0)
+        
+        ratio = (avg_win / abs(avg_loss)) if avg_loss != 0 else 0
+        
+        return {
+            'average_win': avg_win,
+            'average_loss': avg_loss,
+            'win_loss_ratio': ratio
+        }
+    
+    def generate_trading_report(self):
+        """生成交易報告"""
+        win_analysis = self.analyze_win_rate()
+        ratio_analysis = self.analyze_average_win_loss()
+        stats = self.engine.get_stats()
+        
+        report = f"""
+=== 交易績效報告 ===
+總交易數: {win_analysis['total_trades']}
+勝場數: {win_analysis['winning_trades']}
+勝率: {win_analysis['win_rate']:.2f}%
+
+平均獲利: ${ratio_analysis['average_win']:.2f}
+平均損失: ${ratio_analysis['average_loss']:.2f}
+獲利/損失比: {ratio_analysis['win_loss_ratio']:.2f}
+
+總損益: ${stats.get('total_pnl', 0):.2f}
+收益率: {stats.get('return_rate', 0):.2f}%
+        """
+        
+        return report
+```
+
+---
+
 ## 📞 支持
 
 如有問題，請查看：

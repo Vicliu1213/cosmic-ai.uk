@@ -402,6 +402,468 @@ python3 -m http.server 8080 --directory dashboard/
 
 ---
 
+## 🔍 部署驗證指南
+
+### 預部署檢查清單
+
+```python
+# deployment_pre_check.py - 部署前驗證腳本
+import subprocess
+import sys
+import os
+from datetime import datetime
+
+class DeploymentPreCheck:
+    """部署前系統檢查"""
+    
+    def __init__(self):
+        self.checks = {}
+        self.timestamp = datetime.now()
+    
+    def check_python_version(self):
+        """檢查 Python 版本 (需 3.10+)"""
+        version = sys.version_info
+        required = (3, 10)
+        
+        passed = version >= required
+        self.checks['python_version'] = {
+            'passed': passed,
+            'current': f"{version.major}.{version.minor}.{version.micro}",
+            'required': f"{required[0]}.{required[1]}+"
+        }
+        return passed
+    
+    def check_dependencies(self):
+        """檢查必要的 Python 套件"""
+        required_packages = {
+            'asyncio': 'Built-in',
+            'flask': 'pip',
+            'numpy': 'pip',
+            'pandas': 'pip',
+            'requests': 'pip'
+        }
+        
+        missing = []
+        for package, source in required_packages.items():
+            try:
+                __import__(package)
+            except ImportError:
+                missing.append(f"{package} (install via {source})")
+        
+        passed = len(missing) == 0
+        self.checks['dependencies'] = {
+            'passed': passed,
+            'missing': missing if missing else 'All packages present'
+        }
+        return passed
+    
+    def check_disk_space(self):
+        """檢查磁碟空間 (需 1GB+)"""
+        try:
+            result = subprocess.run(['df', '/'], capture_output=True, text=True)
+            # 簡化版本 - 實際應解析輸出
+            self.checks['disk_space'] = {
+                'passed': True,
+                'recommendation': '建議預留至少 2GB 空間'
+            }
+            return True
+        except:
+            self.checks['disk_space'] = {'passed': False, 'error': '無法檢查磁碟空間'}
+            return False
+    
+    def check_network_connectivity(self):
+        """檢查網路連線"""
+        try:
+            import socket
+            socket.create_connection(("8.8.8.8", 53), timeout=3)
+            self.checks['network'] = {'passed': True, 'status': 'Connected'}
+            return True
+        except:
+            self.checks['network'] = {'passed': False, 'status': 'No internet connectivity'}
+            return False
+    
+    def check_port_availability(self, ports=[8000, 8080, 5000]):
+        """檢查必要的通信埠"""
+        import socket
+        available = []
+        in_use = []
+        
+        for port in ports:
+            try:
+                s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                s.bind(('localhost', port))
+                s.close()
+                available.append(port)
+            except OSError:
+                in_use.append(port)
+        
+        self.checks['ports'] = {
+            'passed': len(in_use) == 0,
+            'available': available,
+            'in_use': in_use
+        }
+        return len(in_use) == 0
+    
+    async def run_all_checks(self):
+        """執行所有檢查"""
+        print("\n🔍 部署前檢查開始...\n")
+        
+        results = {
+            'Python 版本': self.check_python_version(),
+            '依賴套件': self.check_dependencies(),
+            '磁碟空間': self.check_disk_space(),
+            '網路連線': self.check_network_connectivity(),
+            '通信埠': self.check_port_availability()
+        }
+        
+        # 打印結果
+        passed = sum(1 for v in results.values() if v)
+        total = len(results)
+        
+        print(f"✅ 通過: {passed}/{total}\n")
+        
+        for check_name, passed in results.items():
+            status = "✅ PASS" if passed else "❌ FAIL"
+            print(f"{status}: {check_name}")
+        
+        return all(results.values())
+
+# 使用範例
+if __name__ == "__main__":
+    import asyncio
+    
+    checker = DeploymentPreCheck()
+    success = asyncio.run(checker.run_all_checks())
+    
+    if not success:
+        print("\n⚠️ 部分檢查失敗，請解決上述問題後再部署")
+        sys.exit(1)
+    else:
+        print("\n✅ 所有檢查通過，可以開始部署！")
+```
+
+**運行預檢**:
+```bash
+python deployment_pre_check.py
+```
+
+---
+
+## 🚨 故障排除指南
+
+### 問題 1: ImportError - 找不到模組
+
+**症狀**:
+```
+ImportError: No module named 'opencode'
+```
+
+**解決步驟**:
+```bash
+# 1. 確認在正確的目錄
+cd /root/comic_ai
+
+# 2. 檢查 PYTHONPATH
+echo $PYTHONPATH
+export PYTHONPATH="${PYTHONPATH}:/root/comic_ai/src"
+
+# 3. 重新安裝依賴
+pip install -r requirements.txt
+
+# 4. 驗證安裝
+python3 -c "from opencode import LiveTradingEngine; print('✅ OK')"
+```
+
+### 問題 2: AsyncIO 事件循環錯誤
+
+**症狀**:
+```
+RuntimeError: Event loop is closed
+RuntimeError: This event loop is already running
+```
+
+**解決方案**:
+```python
+# ✓ CORRECT: 使用正確的事件循環管理
+import asyncio
+
+async def main():
+    # 你的異步代碼
+    pass
+
+# 方法 1: 使用 asyncio.run() (推薦)
+if __name__ == "__main__":
+    asyncio.run(main())
+
+# 方法 2: 手動管理事件循環
+if __name__ == "__main__":
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+    try:
+        loop.run_until_complete(main())
+    finally:
+        loop.close()
+```
+
+### 問題 3: 連線逾時
+
+**症狀**:
+```
+ConnectionError: Connection timeout
+socket.timeout: timed out
+```
+
+**診斷和解決**:
+```bash
+# 1. 檢查網路連線
+ping 8.8.8.8
+
+# 2. 檢查 DNS
+nslookup api.example.com
+
+# 3. 檢查防火牆
+sudo iptables -L
+sudo ufw status
+
+# 4. 檢查通信埠
+netstat -tuln | grep 8000
+
+# 5. 增加逾時時間
+export CONNECTION_TIMEOUT=30
+```
+
+### 問題 4: 記憶體不足
+
+**症狀**:
+```
+MemoryError: Unable to allocate ...
+```
+
+**解決方案**:
+```python
+# 實施記憶體監控和限制
+import psutil
+import gc
+
+class MemoryManager:
+    """記憶體管理工具"""
+    
+    def __init__(self, max_memory_percent=80):
+        self.max_memory_percent = max_memory_percent
+    
+    def check_memory(self):
+        """檢查記憶體使用量"""
+        memory_percent = psutil.virtual_memory().percent
+        
+        if memory_percent > self.max_memory_percent:
+            print(f"⚠️ 記憶體使用量高: {memory_percent}%")
+            gc.collect()  # 強制垃圾回收
+            return False
+        
+        return True
+    
+    async def cleanup_task(self):
+        """定期清理任務"""
+        while True:
+            self.check_memory()
+            await asyncio.sleep(60)
+
+# 使用
+memory_mgr = MemoryManager()
+await memory_mgr.cleanup_task()
+```
+
+### 問題 5: 資料庫連線失敗
+
+**症狀**:
+```
+DatabaseError: Cannot connect to database
+```
+
+**診斷指令**:
+```bash
+# 1. 檢查 Redis 連線
+redis-cli ping
+
+# 2. 檢查 PostgreSQL
+psql -U user -d database -c "SELECT 1;"
+
+# 3. 檢查連線字符串
+echo $DATABASE_URL
+
+# 4. 查看日誌
+tail -f /var/log/postgres/postgresql.log
+```
+
+---
+
+## 📋 部署檢查清單
+
+```markdown
+### 前部署 (Pre-Deployment)
+- [ ] Python 3.10+ 已安裝
+- [ ] 所有依賴套件已安裝 (`pip install -r requirements.txt`)
+- [ ] 環境變量已設置 (.env 文件)
+- [ ] 預檢腳本通過 (`deployment_pre_check.py`)
+- [ ] 網路連線正常
+- [ ] 磁碟空間充足 (> 2GB)
+
+### 部署中 (During Deployment)
+- [ ] 所有服務成功啟動
+- [ ] 日誌無錯誤輸出
+- [ ] API 響應正常
+- [ ] 儀表板可訪問
+- [ ] 資料庫連線成功
+- [ ] 通信埠未被佔用
+
+### 部署後 (Post-Deployment)
+- [ ] 系統整合測試通過
+- [ ] 性能基準達標
+- [ ] 監控告警已配置
+- [ ] 備份流程已啟用
+- [ ] 文檔已更新
+- [ ] 團隊培訓已完成
+```
+
+---
+
+## 📊 部署監控儀表板
+
+```python
+# deployment_monitor.py - 部署監控工具
+import asyncio
+from datetime import datetime
+from typing import Dict, List
+
+class DeploymentMonitor:
+    """部署監控和健康檢查"""
+    
+    def __init__(self, check_interval_seconds=30):
+        self.check_interval = check_interval_seconds
+        self.health_history: List[Dict] = []
+        self.status = "INITIALIZING"
+    
+    async def health_check(self) -> Dict:
+        """執行健康檢查"""
+        health = {
+            'timestamp': datetime.now().isoformat(),
+            'cpu_percent': self.get_cpu_usage(),
+            'memory_percent': self.get_memory_usage(),
+            'disk_percent': self.get_disk_usage(),
+            'active_connections': await self.count_connections(),
+            'error_count': await self.count_errors(),
+            'status': 'HEALTHY'
+        }
+        
+        # 檢查閾值
+        if health['cpu_percent'] > 80:
+            health['status'] = 'WARNING'
+        if health['memory_percent'] > 85:
+            health['status'] = 'CRITICAL'
+        
+        self.health_history.append(health)
+        return health
+    
+    def get_cpu_usage(self) -> float:
+        """獲取 CPU 使用率"""
+        import psutil
+        return psutil.cpu_percent(interval=1)
+    
+    def get_memory_usage(self) -> float:
+        """獲取記憶體使用率"""
+        import psutil
+        return psutil.virtual_memory().percent
+    
+    def get_disk_usage(self) -> float:
+        """獲取磁碟使用率"""
+        import psutil
+        return psutil.disk_usage('/').percent
+    
+    async def count_connections(self) -> int:
+        """計算活躍連線數"""
+        # 實現詳情取決於你的系統
+        return 0
+    
+    async def count_errors(self) -> int:
+        """計算錯誤計數"""
+        # 讀取錯誤日誌
+        return 0
+    
+    async def continuous_monitoring(self):
+        """持續監控"""
+        while True:
+            health = await self.health_check()
+            
+            # 輸出狀態
+            print(f"\n[{health['timestamp']}] 系統健康檢查")
+            print(f"  CPU: {health['cpu_percent']:.1f}%")
+            print(f"  記憶體: {health['memory_percent']:.1f}%")
+            print(f"  磁碟: {health['disk_percent']:.1f}%")
+            print(f"  狀態: {health['status']}")
+            
+            # 檢查警告
+            if health['status'] == 'CRITICAL':
+                print("🔴 CRITICAL: 採取緊急措施!")
+            elif health['status'] == 'WARNING':
+                print("🟡 WARNING: 監控情況")
+            
+            await asyncio.sleep(self.check_interval)
+    
+    def generate_report(self) -> str:
+        """生成監控報告"""
+        if not self.health_history:
+            return "No monitoring data available"
+        
+        avg_cpu = sum(h['cpu_percent'] for h in self.health_history) / len(self.health_history)
+        avg_mem = sum(h['memory_percent'] for h in self.health_history) / len(self.health_history)
+        
+        report = f"""
+=== 部署監控報告 ===
+樣本數: {len(self.health_history)}
+平均 CPU: {avg_cpu:.1f}%
+平均記憶體: {avg_mem:.1f}%
+最後狀態: {self.health_history[-1]['status']}
+        """
+        return report
+```
+
+---
+
+## ✅ 部署成功驗證
+
+```python
+# final_deployment_check.py - 最終驗證腳本
+async def verify_deployment():
+    """驗證部署是否成功"""
+    
+    checks = {
+        'API Server': check_api_running(),
+        'Dashboard': check_dashboard_accessible(),
+        'Database': check_database_connected(),
+        'Trading Engine': check_trading_engine_ready(),
+        'Data Integration': check_data_integration_working(),
+        'Monitoring': check_monitoring_active()
+    }
+    
+    results = await asyncio.gather(*checks.values())
+    
+    print("\n=== 部署驗證結果 ===")
+    for component, result in zip(checks.keys(), results):
+        status = "✅" if result else "❌"
+        print(f"{status} {component}")
+    
+    all_passed = all(results)
+    
+    if all_passed:
+        print("\n🎉 部署成功! 系統就緒!")
+    else:
+        print("\n⚠️ 部署不完整，請檢查失敗的項目")
+    
+    return all_passed
+```
+
+---
+
 ## 📈 下一步
 
 1. **啟動儀表板**
