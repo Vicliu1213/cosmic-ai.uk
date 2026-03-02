@@ -190,7 +190,7 @@ opencode_evolution:
     
     # 調試選項 / Debug Options
     debug:
-      enabled: false
+      enabled: true
       verbose_logging: true
       save_all_metrics: true
       
@@ -217,7 +217,7 @@ profiles:
     
   balanced:
     description: "平衡模式 - 標準進化配置"
-    configuration_variants.storage.max_variants: 200
+    configuration_variants.storage.max_variants: 100
     agent_analysis.comparison.enabled: true
     configuration_optimization.method: "evolutionary"
     configuration_optimization.evolution.population_size: 50

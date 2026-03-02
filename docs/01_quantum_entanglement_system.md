@@ -23,6 +23,38 @@ QE × ES × QFT × IP × UQG × Resonance = 1.57e+22x
 1.0 × 1.44e+15 × 100 × 72500 × 1.0 × 1.5
 ```
 
+## 配置參數
+
+### YAML 配置範例
+
+```yaml
+quantum_entanglement:
+  # 基本配置 / Basic Configuration
+  enabled: true
+  num_connections: 34
+  resonance_coefficient: 1.5
+  
+  # 連接配置 / Connection Configuration
+  connections:
+    qft_es: 8      # QFT-ES 連接數
+    es_ip: 8       # ES-IP 連接數
+    ip_uqg: 8      # IP-UQG 連接數
+    uqg_qft: 6     # UQG-QFT 連接數
+    central_hub: 4 # 中心共鳴樞紐
+  
+  # 性能配置 / Performance Configuration
+  performance:
+    target_coherence: 0.9999    # 目標相干性 99.99%
+    max_latency_ms: 1.0         # 最大延遲 1ms
+    sync_interval_ms: 16        # 同步間隔 16ms
+    
+  # 監控配置 / Monitoring Configuration
+  monitoring:
+    enabled: true
+    check_interval_seconds: 600  # 每 10 分鐘檢查一次
+    fidelity_threshold: 0.95     # 保真度閾值
+```
+
 ## 系統連接拓撲
 
 ### 5 大跨系統連接

@@ -15,7 +15,7 @@ ray_distributed:
       
     # GPU 配置 / GPU Configuration
     gpus:
-      enabled: false
+      enabled: true
       gpu_count: [0, 8]
       gpu_type: "auto"  # auto, cuda, rocm
       

@@ -22,6 +22,61 @@ QE × ES × QFT × IP × UQG × Resonance = 1.57e+22x
 
 ## 18 層結構詳解
 
+### 配置參數
+
+```yaml
+exponential_synergy:
+  enabled: true
+  
+  # 層級配置 / Layer Configuration
+  layers:
+    count: 18
+    base_multiplier: 1.0
+    
+    # 各階段配置
+    stage_1_foundation:
+      layers: 1
+      formula: "1.0"
+      multiplier: 1.0
+      enabled: true
+      
+    stage_2_amplification:
+      layers: 5
+      formula: "2^n"
+      multiplier_range: [2, 32]
+      enabled: true
+      
+    stage_3_synergy:
+      layers: 4
+      formula: "3^n"
+      multiplier_range: [3, 81]
+      enabled: true
+      
+    stage_4_resonance:
+      layers: 3
+      formula: "4^n"
+      multiplier_range: [4, 64]
+      enabled: true
+      
+    stage_5_entanglement:
+      layers: 3
+      formula: "e^n"
+      multiplier_range: [2.72, 20.09]
+      enabled: true
+      
+    stage_6_metacomputation:
+      layers: 2
+      formula: "e^(n^1.5)"
+      multiplier_range: [2.72, 16.92]
+      enabled: true
+  
+  # 協同配置 / Synergy Configuration
+  synergy:
+    total_multiplier: 1.44e+15
+    recursive_chain: true
+    interconnections: 34
+```
+
 ### 層級配置表
 
 實際配置 (Actual Implementation):

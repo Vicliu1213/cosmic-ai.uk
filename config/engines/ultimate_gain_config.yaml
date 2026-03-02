@@ -174,7 +174,7 @@ ultimate_gain_calculation:
     
     # 調試選項 / Debug Options
     debug:
-      enabled: false
+      enabled: true
       verbose_logging: true
       save_intermediate_states: true
       

@@ -215,7 +215,7 @@ quantum_field_theory:
       
     # GPU加速 / GPU Acceleration
     gpu:
-      enabled: false
+      enabled: true
       device: "auto"
       
   # 高級選項 / Advanced Options
