@@ -1,0 +1,675 @@
+# ============================================================================
+# 量子共振引擎完整配置
+# Quantum Resonance Engine - Complete Configuration
+# ============================================================================
+# 版本: 2.0 | 日期: 2026-03-02 | 狀態: ✅ 完全配置
+# 此配置文件定義量子增強交易系統的所有量子操作參數
+# ============================================================================
+
+# ============================================================================
+# 1. 量子引擎全局配置
+# ============================================================================
+quantum_engine:
+  enabled: true
+  version: "2.0"
+  name: "Singularity Quantum Resonance Engine"
+  description: "量子共振驅動的高頻交易引擎"
+  
+  # 部署配置
+  deployment:
+    mode: "distributed"              # local / distributed / cloud
+    tier: "enterprise"                # standalone / enterprise / cosmic
+    scaling: "auto"                   # manual / auto
+    
+  # 資源管理
+  resources:
+    max_cpus: 16
+    max_memory_gb: 64
+    max_gpu_count: 1
+    max_threads: 256
+
+# ============================================================================
+# 2. 量子態管理
+# ============================================================================
+quantum_state_management:
+  enabled: true
+  
+  # 量子空間配置
+  space:
+    dimension: 512                    # 量子態維度 (2^n): 256, 512, 1024
+    hilbert_space_type: "continuous"  # continuous / discrete
+    encoding_method: "amplitude"      # amplitude / phase / angle
+    
+  # 疊加態 (Superposition)
+  superposition:
+    enabled: true
+    max_superposition_states: 512
+    superposition_type: "equal"       # equal / weighted / custom
+    
+    # 初始化配置
+    initialization:
+      method: "hadamard"              # hadamard / uniform / custom
+      seed: 42                        # 重現性
+      
+  # 糾纏態 (Entanglement)
+  entanglement:
+    enabled: true
+    
+    # 糾纏參數
+    config:
+      max_entangled_pairs: 512        # 最大糾纏對
+      entanglement_depth: 16          # 糾纏深度
+      bell_basis_optimization: true   # Bell 基優化
+      
+    # Bell 態保真度
+    bell_state:
+      fidelity_target: 0.98           # 目標保真度 (0.9-0.99)
+      bell_type: "phi_plus"           # phi_plus / phi_minus / psi_plus / psi_minus
+      
+    # 糾纏驗證
+    verification:
+      enabled: true
+      method: "vonneumann_entropy"    # vonneumann_entropy / concurrence / negativity
+      min_entropy: 0.9                # 最小熵值
+      
+  # 相干性保護
+  coherence:
+    target: 0.99                      # 相干性目標 (0.9-0.999)
+    
+    # 相干性測量
+    measurement:
+      enabled: true
+      method: "purity"                # purity / l1 / linear_entropy
+      update_frequency_hz: 10         # 更新頻率
+      
+    # 退相干修正 (Decoherence Correction)
+    decoherence:
+      enabled: true
+      correction_method: "surface_code"  # surface_code / stabilizer / repetition
+      
+      # 錯誤修正
+      error_correction:
+        enabled: true
+        code_distance: 5
+        error_threshold: 0.001
+        syndrome_extraction: true
+        
+    # 相干性保護機制
+    protection:
+      enabled: true
+      dynamical_decoupling: true      # 動態解耦
+      dd_frequency_hz: 100            # 解耦頻率
+      pulse_type: "xy4"               # xy4 / cpmg / uhrig
+
+# ============================================================================
+# 3. 量子門電路
+# ============================================================================
+quantum_gates:
+  enabled: true
+  
+  # 可用量子門
+  available_gates:
+    # 單量子比特門
+    single_qubit:
+      - name: "Hadamard"
+        symbol: "H"
+        description: "創建等概率疊加態"
+        matrix_rows: 2
+        unitary: true
+        
+      - name: "Pauli-X"
+        symbol: "X"
+        description: "比特翻轉"
+        matrix_rows: 2
+        unitary: true
+        
+      - name: "Pauli-Y"
+        symbol: "Y"
+        description: "Pauli Y 旋轉"
+        matrix_rows: 2
+        unitary: true
+        
+      - name: "Pauli-Z"
+        symbol: "Z"
+        description: "相位翻轉"
+        matrix_rows: 2
+        unitary: true
+        
+      - name: "Phase"
+        symbol: "S/T"
+        description: "相位門"
+        parameter: "theta"
+        matrix_rows: 2
+        unitary: true
+        
+      - name: "Rx"
+        symbol: "Rx(θ)"
+        description: "X 軸旋轉"
+        parameter: "theta"
+        angle_range: [0, "2π"]
+        matrix_rows: 2
+        unitary: true
+        
+      - name: "Ry"
+        symbol: "Ry(θ)"
+        description: "Y 軸旋轉"
+        parameter: "theta"
+        angle_range: [0, "2π"]
+        matrix_rows: 2
+        unitary: true
+        
+      - name: "Rz"
+        symbol: "Rz(θ)"
+        description: "Z 軸旋轉"
+        parameter: "theta"
+        angle_range: [0, "2π"]
+        matrix_rows: 2
+        unitary: true
+    
+    # 多量子比特門
+    multi_qubit:
+      - name: "CNOT"
+        symbol: "⊕"
+        description: "受控非門 (糾纏)"
+        control_qubits: 1
+        target_qubits: 1
+        matrix_rows: 4
+        creates_entanglement: true
+        
+      - name: "CZ"
+        symbol: "CZ"
+        description: "受控相位門"
+        control_qubits: 1
+        target_qubits: 1
+        matrix_rows: 4
+        creates_entanglement: true
+        
+      - name: "SWAP"
+        symbol: "⇌"
+        description: "交換門"
+        control_qubits: 0
+        target_qubits: 2
+        matrix_rows: 4
+        unitary: true
+        
+      - name: "Toffoli"
+        symbol: "CCX"
+        description: "受控受控非門"
+        control_qubits: 2
+        target_qubits: 1
+        matrix_rows: 8
+        creates_entanglement: true
+        
+      - name: "Fredkin"
+        symbol: "CSWAP"
+        description: "受控交換"
+        control_qubits: 1
+        target_qubits: 2
+        matrix_rows: 8
+        unitary: true
+  
+  # 電路優化
+  circuit_optimization:
+    enabled: true
+    
+    # 優化策略
+    strategies:
+      gate_cancellation: true         # 消除相反的門
+      single_qubit_optimization: true # 單比特優化
+      commutation_analysis: true      # 可交換性分析
+      
+    # 優化目標
+    optimization_targets:
+      minimize_depth: true            # 最小化深度
+      minimize_gate_count: true       # 最小化門數
+      minimize_two_qubit: true        # 最小化雙量子比特門
+      
+    # 優化級別
+    level: "aggressive"               # none / basic / standard / aggressive
+    
+  # 電路編譯
+  circuit_compilation:
+    enabled: true
+    
+    # 編譯配置
+    config:
+      native_gates: ["rx", "ry", "rz", "cnot"]  # 本地門集
+      basis_gates: ["u3", "cx"]                  # 基礎門集
+      coupling_map: "all_to_all"                 # 耦合拓撲
+      
+    # 編譯優化
+    optimization:
+      level: "aggressive"
+      translate_parameterized: true
+      
+  # 量子電路限制
+  limits:
+    max_circuit_depth: 20             # 最大電路深度
+    max_gate_count: 500               # 最大門數
+    max_two_qubit_gates: 100          # 最大雙量子比特門
+    max_qubits: 512                   # 最大量子比特
+
+# ============================================================================
+# 4. 量子共振機制
+# ============================================================================
+quantum_resonance:
+  enabled: true
+  
+  # 共振參數
+  resonance:
+    type: "harmonic"                  # harmonic / sympathetic / constructive
+    frequency_hz: 3.33                # 共振頻率 (Hz)
+    amplitude: 1.0                    # 幅度 [0, 1]
+    phase_offset: 0.0                 # 相位偏移 (radians)
+    
+  # 耦合配置
+  coupling:
+    type: "spin_spin"                 # spin_spin / dipole_dipole / exchange
+    coupling_strength: 0.85           # 耦合強度 [0.5, 1.0]
+    range_type: "long_range"          # nearest_neighbor / long_range / all_to_all
+    
+    # 耦合常數
+    constants:
+      hopping: 0.1                    # 躍遷常數
+      interaction: 0.05               # 相互作用常數
+      external_field: 0.02            # 外場常數
+      
+  # 共振強化
+  reinforcement:
+    enabled: true
+    factor: 1.2                       # 強化因子 [1.0, 2.0]
+    decay_factor: 0.02                # 衰減因子 [0.001, 0.1]
+    
+    # 正反饋機制
+    positive_feedback:
+      enabled: true
+      gain: 1.15
+      saturation_threshold: 0.95
+      
+    # 負反饋機制
+    negative_feedback:
+      enabled: true
+      gain: 0.95
+      suppression_threshold: 0.05
+
+# ============================================================================
+# 5. 量子場論 (Quantum Field Theory)
+# ============================================================================
+quantum_field:
+  enabled: true
+  
+  # 場配置
+  field:
+    dimension: 512                    # 場維度 [256, 1024]
+    lattice_type: "cubic"             # cubic / hexagonal / random / triangular
+    volume: 512                       # 場體積
+    
+    # 格子點
+    lattice:
+      spacing: 0.1                    # 格子間距
+      points_per_dimension: 8         # 每維格點數
+      boundary_conditions: "periodic" # periodic / open / reflective
+      
+  # 場相互作用
+  interactions:
+    type: "yukawa"                    # yukawa / coulomb / contact
+    coupling_constant: 0.05
+    range: 10                         # 相互作用範圍
+    
+  # 場動力學
+  dynamics:
+    enabled: true
+    solver: "runge_kutta"             # runge_kutta / leap_frog / verlet
+    time_step: 0.001
+    total_time: 100
+    
+  # 勢能配置
+  potential:
+    type: "harmonic"                  # harmonic / quartic / double_well
+    strength: 1.0
+    
+    # 諧振勢
+    harmonic:
+      frequency: 1.0
+      
+    # 四次勢
+    quartic:
+      coupling: 0.1
+
+# ============================================================================
+# 6. 量子啟發式搜索
+# ============================================================================
+quantum_inspired_search:
+  enabled: true
+  
+  # Grover 算法
+  grover:
+    enabled: true
+    algorithm: "grover"
+    
+    # Grover 參數
+    config:
+      search_space_size: 1048576      # 2^20
+      iterations: 32                  # √N 迭代
+      success_probability_target: 0.95
+      
+    # Oracle 配置
+    oracle:
+      type: "amplitude_amplification" # amplitude_amplification / phase_kickback
+      marked_elements: "optimal_parameters"
+      
+    # 初始態
+    initial_state:
+      type: "equal_superposition"
+      
+  # VQE (Variational Quantum Eigensolver)
+  vqe:
+    enabled: true
+    algorithm: "vqe"
+    
+    # VQE 參數
+    config:
+      ansatz: "hardware_efficient"    # hardware_efficient / uccsd / custom
+      optimizer: "cobyla"             # cobyla / adam / spsa
+      max_iterations: 100
+      convergence_threshold: 1e-6
+      
+  # QAOA (Quantum Approximate Optimization Algorithm)
+  qaoa:
+    enabled: true
+    algorithm: "qaoa"
+    
+    # QAOA 參數
+    config:
+      max_depth: 10
+      initial_beta: 0.7
+      initial_gamma: 0.7
+      optimizer: "cobyla"
+      
+  # 量子退火
+  quantum_annealing:
+    enabled: true
+    algorithm: "quantum_annealing"
+    
+    # 退火參數
+    config:
+      annealing_time: 1.0             # 總退火時間
+      temperature: 1.0                # 初始溫度
+      cooling_schedule: "exponential" # exponential / linear / sigmoid
+
+# ============================================================================
+# 7. 量子-古典混合執行
+# ============================================================================
+hybrid_execution:
+  enabled: true
+  
+  # 執行分配
+  allocation:
+    quantum_portion: 0.30             # 30% 量子計算
+    classical_portion: 0.70           # 70% 古典計算
+    switching_threshold: 0.5          # 決策切換點
+    
+  # 協調機制
+  coordination:
+    type: "sequential"                # sequential / parallel / adaptive
+    
+    # 順序協調
+    sequential:
+      enabled: true
+      order: ["quantum_preprocessing", "classical_analysis", "quantum_optimization"]
+      
+    # 並行協調
+    parallel:
+      enabled: true
+      quantum_threads: 4
+      classical_threads: 12
+      synchronization: "barrier"
+      
+    # 自適應協調
+    adaptive:
+      enabled: true
+      profiling_enabled: true
+      adjustment_frequency: 100
+      
+  # 數據轉換
+  data_transformation:
+    quantum_encoding: "amplitude"     # amplitude / angle / binary
+    classical_decoding: "probability" # probability / expectation / amplitude
+    
+  # 性能監控
+  performance_monitoring:
+    enabled: true
+    metrics:
+      - "quantum_execution_time"
+      - "classical_execution_time"
+      - "hybrid_overhead"
+      - "speedup_factor"
+    update_frequency_ms: 100
+
+# ============================================================================
+# 8. 量子噪聲模型
+# ============================================================================
+noise_model:
+  enabled: true
+  
+  # 噪聲類型
+  noise_types:
+    
+    # 比特翻轉噪聲
+    bit_flip:
+      enabled: true
+      error_rate: 0.001              # 每個門 0.1%
+      
+    # 相位阻尼
+    phase_damping:
+      enabled: true
+      error_rate: 0.002
+      
+    # 幅度阻尼
+    amplitude_damping:
+      enabled: true
+      t1_time_us: 50                 # T1 弛豫時間
+      gate_time_ns: 50               # 門時間
+      
+    # 熱弛豫
+    thermal_relaxation:
+      enabled: true
+      temperature_k: 0.015           # 15 mK
+      coupling_strength: 0.01
+      
+    # 1/f 噪聲 (低頻閃爍)
+    one_over_f_noise:
+      enabled: true
+      alpha: 1.0                     # 分形指數
+      
+  # 噪聲緩解
+  mitigation:
+    enabled: true
+    
+    # 緩解方法
+    methods:
+      zero_noise_extrapolation: true
+      probabilistic_error_cancellation: true
+      symmetry_verification: true
+      readout_error_mitigation: true
+      
+    # 校準
+    calibration:
+      enabled: true
+      frequency_days: 1
+      calibration_dataset_size: 1000
+
+# ============================================================================
+# 9. 監控和診斷
+# ============================================================================
+monitoring:
+  enabled: true
+  
+  # 實時監控
+  real_time:
+    enabled: true
+    update_frequency_hz: 100
+    
+    # 監控指標
+    metrics:
+      - metric: "quantum_coherence"
+        threshold: 0.95
+        alert_level: "warning"
+        
+      - metric: "gate_fidelity"
+        threshold: 0.99
+        alert_level: "critical"
+        
+      - metric: "entanglement_entropy"
+        threshold: 0.9
+        alert_level: "warning"
+        
+      - metric: "circuit_depth"
+        threshold: 20
+        alert_level: "warning"
+        
+  # 日誌記錄
+  logging:
+    enabled: true
+    level: "INFO"                     # DEBUG / INFO / WARNING / ERROR
+    retention_days: 30
+    compress_old_logs: true
+    
+    # 日誌輸出
+    outputs:
+      - type: "file"
+        path: "logs/quantum_engine.log"
+      - type: "stdout"
+      - type: "remote"
+        endpoint: "http://localhost:8080/logs"
+        
+  # 診斷工具
+  diagnostics:
+    enabled: true
+    
+    # 診斷測試
+    tests:
+      - "quantum_state_validation"
+      - "circuit_depth_analysis"
+      - "gate_error_analysis"
+      - "decoherence_measurement"
+      - "entanglement_verification"
+      
+    # 診斷頻率
+    frequency: "every_1h"             # on_demand / every_1h / every_24h
+
+# ============================================================================
+# 10. 性能參數
+# ============================================================================
+performance:
+  enabled: true
+  
+  # 吞吐量 (Throughput)
+  throughput:
+    target_circuits_per_second: 1000
+    batch_size: 16
+    max_queue_depth: 1000
+    
+  # 延遲 (Latency)
+  latency:
+    target_circuit_execution_ms: 10
+    max_allowed_latency_ms: 100
+    p95_latency_ms: 50
+    p99_latency_ms: 80
+    
+  # 準確度 (Accuracy)
+  accuracy:
+    fidelity_target: 0.99
+    measurement_fidelity: 0.98
+    state_preparation_fidelity: 0.99
+    
+  # 資源效率 (Resource Efficiency)
+  efficiency:
+    memory_per_qubit_mb: 0.1
+    cpu_per_circuit_percent: 2
+    network_bandwidth_mbps: 100
+    
+  # 可擴展性 (Scalability)
+  scalability:
+    min_qubits: 1
+    max_qubits: 512
+    scaling_factor: 2.0               # 每次擴展的倍數
+
+# ============================================================================
+# 11. 集成配置
+# ============================================================================
+integration:
+  enabled: true
+  
+  # 外部量子服務
+  external_services:
+    - name: "IBM Quantum"
+      enabled: false
+      endpoint: "https://api.quantum-computing.ibm.com"
+      max_tasks: 10
+      
+    - name: "Google Quantum AI"
+      enabled: false
+      endpoint: "https://quantumai.google"
+      max_tasks: 10
+      
+  # 本地模擬
+  local_simulators:
+    - name: "Qiskit AER"
+      enabled: true
+      method: "statevector"           # statevector / density_matrix / unitary / stabilizer
+      max_qubits: 20
+      
+    - name: "Cirq"
+      enabled: true
+      simulator: "dense"              # dense / sparse
+      
+  # 消息格式
+  message_format:
+    type: "qasm"                      # qasm / qpy / json
+    version: "3.0"
+    
+  # API 接口
+  api:
+    enabled: true
+    port: 8000
+    version: "v1"
+
+# ============================================================================
+# 12. 安全和訪問控制
+# ============================================================================
+security:
+  enabled: true
+  
+  # 認證
+  authentication:
+    enabled: true
+    method: "oauth2"                  # oauth2 / api_key / mTLS
+    
+  # 授權
+  authorization:
+    enabled: true
+    rbac:
+      roles:
+        - name: "admin"
+          permissions: ["read", "write", "execute", "delete"]
+        - name: "operator"
+          permissions: ["read", "write", "execute"]
+        - name: "viewer"
+          permissions: ["read"]
+          
+  # 加密
+  encryption:
+    enabled: true
+    algorithm: "AES-256"
+    key_rotation_days: 90
+    
+  # 審計日誌
+  audit_logging:
+    enabled: true
+    log_all_access: true
+    retention_days: 365
+
+# ============================================================================
+# EOF - 量子共振引擎完整配置
+# ============================================================================
