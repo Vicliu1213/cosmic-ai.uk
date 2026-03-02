@@ -1,0 +1,39 @@
+{
+  "triangular": {
+    "strategy": "triangular_arbitrage",
+    "start_date": "2025-12-02T05:11:54.307821",
+    "end_date": "2026-03-02T05:11:54.307821",
+    "total_return": 2.74,
+    "annual_return": 11.12,
+    "sharpe_ratio": 21.0711,
+    "max_drawdown": 0.0,
+    "win_rate": 1.0,
+    "profit_factor": Infinity,
+    "calmar_ratio": 0,
+    "total_trades": 586,
+    "winning_trades": 586,
+    "losing_trades": 0,
+    "avg_winning_trade": 0.05,
+    "avg_losing_trade": 0,
+    "monthly_returns": []
+  },
+  "wormhole": {
+    "strategy": "wormhole_arbitrage",
+    "start_date": "2025-12-02T05:11:54.307821",
+    "end_date": "2026-03-02T05:11:54.307821",
+    "total_return": 0.0,
+    "annual_return": 0.0,
+    "sharpe_ratio": 0.0,
+    "max_drawdown": 0.0,
+    "win_rate": 0.0,
+    "profit_factor": 0.0,
+    "calmar_ratio": 0.0,
+    "total_trades": 0,
+    "winning_trades": 0,
+    "losing_trades": 0,
+    "avg_winning_trade": 0.0,
+    "avg_losing_trade": 0.0,
+    "monthly_returns": []
+  },
+  "combined_annual_return": 11.119646068188247
+}

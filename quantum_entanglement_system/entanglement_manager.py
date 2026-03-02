@@ -410,17 +410,17 @@ class QuantumEntanglementSystem:
 class GlobalSyncManager:
     """全局同步管理器"""
     
-    _instance = None
-    _system = None
+    _instance: Optional['GlobalSyncManager'] = None
+    _system: Optional[QuantumEntanglementSystem] = None
     
-    def __new__(cls):
+    def __new__(cls) -> 'GlobalSyncManager':
         if cls._instance is None:
             cls._instance = super().__new__(cls)
         return cls._instance
     
-    def __init__(self):
-        if self._system is None:
-            self._system = QuantumEntanglementSystem()
+    def __init__(self) -> None:
+        if GlobalSyncManager._system is None:
+            GlobalSyncManager._system = QuantumEntanglementSystem()
     
     def register_subsystem(self, subsystem_id: str, name: str,
                           subsystem_type: SubsystemType,
@@ -432,12 +432,18 @@ class GlobalSyncManager:
             name=name,
             connections=connections or []
         )
-        self._system.register_subsystem(subsystem)
+        system = GlobalSyncManager._system
+        if system is not None:
+            system.register_subsystem(subsystem)
     
     def get_system(self) -> QuantumEntanglementSystem:
         """獲取系統實例"""
-        return self._system
+        system = GlobalSyncManager._system
+        if system is None:
+            system = GlobalSyncManager._system = QuantumEntanglementSystem()
+        return system
     
     def print_status(self) -> None:
         """打印狀態"""
-        print(self._system.generate_sync_report())
+        system = self.get_system()
+        print(system.generate_sync_report())
