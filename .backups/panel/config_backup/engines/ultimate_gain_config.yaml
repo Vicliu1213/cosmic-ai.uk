@@ -1,0 +1,215 @@
+# 終極增益計算引擎配置
+# Ultimate Gain Calculation Engine Configuration
+# 整合所有子系統的增益數據，計算無限增益係數
+
+ultimate_gain_calculation:
+  # 數據加載配置 / Data Loading Configuration
+  data_loading:
+    enabled: true
+    
+    # 報告加載 / Report Loading
+    report_loading:
+      enabled: true
+      report_dirs: ["reports", "logs", "data/results"]
+      file_extensions: [".json", ".jsonl", ".yaml"]
+      recursive_search: true
+      batch_size: [10, 1000]
+      
+    # 緩存配置 / Caching Configuration
+    caching:
+      enabled: true
+      cache_dir: "cache/ultimate_gain"
+      cache_ttl_seconds: [3600, 604800]  # [1 hour, 7 days]
+      max_cache_size_mb: [100, 10000]
+      
+  # 增益計算配置 / Gain Calculation Configuration
+  gain_calculation:
+    enabled: true
+    
+    # 層級增益 / Hierarchical Gains
+    hierarchical_gains:
+      enabled: true
+      
+      # 基礎層 / Foundation Layer
+      foundation_layer:
+        enabled: true
+        multiplier: [1.0, 10.0]
+        contribution_weight: [0.1, 1.0]
+        
+      # 優化層 / Optimization Layer
+      optimization_layer:
+        enabled: true
+        multiplier: [1.0, 100.0]
+        contribution_weight: [0.1, 1.0]
+        
+      # 協同層 / Synergy Layer
+      synergy_layer:
+        enabled: true
+        multiplier: [1.0, 1000.0]
+        contribution_weight: [0.1, 1.0]
+        
+      # 超越層 / Transcendence Layer
+      transcendence_layer:
+        enabled: true
+        multiplier: [1.0, 1e6]
+        contribution_weight: [0.1, 1.0]
+        
+    # 層間協同效應 / Inter-Layer Synergy
+    inter_layer_synergy:
+      enabled: true
+      
+      # 協同係數 / Synergy Coefficient
+      synergy_coefficient: [0.5, 5.0]
+      
+      # 協同擴增 / Synergy Amplification
+      amplification_factor: [1.0, 100.0]
+      
+      # 相互作用強度 / Interaction Strength
+      interaction_strength: [0.1, 2.0]
+      
+    # 無限增益計算 / Infinite Gain Calculation
+    infinite_gain:
+      enabled: true
+      
+      # 遞迴深度 / Recursion Depth
+      recursion_depth: [1, 100]
+      
+      # 疊加係數 / Superposition Coefficient
+      superposition_coefficient: [1.0, 1e10]
+      
+      # 量子增益 / Quantum Gain
+      quantum_gain_factor: [1.0, 1e15]
+      
+      # 收斂閾值 / Convergence Threshold
+      convergence_threshold: [1e-10, 1e-1]
+      
+  # 數據聚合配置 / Data Aggregation Configuration
+  data_aggregation:
+    enabled: true
+    
+    # 統計方法 / Statistics Method
+    statistics_method: "mean"  # mean, median, mode, weighted_average
+    
+    # 異常值處理 / Outlier Handling
+    outlier_handling:
+      enabled: true
+      method: "iqr"  # iqr, zscore, isolation_forest
+      threshold: [1.5, 3.0]
+      
+    # 權重配置 / Weighting Configuration
+    weighting:
+      enabled: true
+      
+      # 動態權重 / Dynamic Weighting
+      dynamic_weighting: true
+      
+      # 時間權重衰減 / Time Weight Decay
+      time_decay_factor: [0.9, 0.99]
+      
+  # 驗證配置 / Validation Configuration
+  validation:
+    enabled: true
+    
+    # 一致性檢查 / Consistency Check
+    consistency_check:
+      enabled: true
+      tolerance: [0.001, 0.1]
+      
+    # 完整性檢查 / Completeness Check
+    completeness_check:
+      enabled: true
+      required_fields_coverage: [0.8, 1.0]
+      
+    # 邏輯檢查 / Logic Check
+    logic_check:
+      enabled: true
+      check_monotonicity: true
+      check_bounds: true
+      
+  # 報告生成配置 / Report Generation Configuration
+  reporting:
+    enabled: true
+    
+    # 輸出格式 / Output Format
+    output_format: "json"  # json, yaml, html, pdf
+    
+    # 報告內容 / Report Content
+    report_content:
+      include_calculation_steps: true
+      include_layer_breakdown: true
+      include_synergy_analysis: true
+      include_validation_results: true
+      include_recommendations: true
+      
+    # 輸出位置 / Output Location
+    output_location: "reports/ultimate_gain"
+    save_intermediate_results: true
+    
+  # 性能配置 / Performance Configuration
+  performance:
+    enabled: true
+    
+    # 並行處理 / Parallel Processing
+    parallel_processing:
+      enabled: true
+      max_workers: [1, 32]
+      batch_size: [10, 10000]
+      
+    # 記憶體配置 / Memory Configuration
+    memory:
+      max_memory_mb: [256, 32768]
+      enable_compression: true
+      
+    # 時間配置 / Timing Configuration
+    timing:
+      max_execution_time_seconds: [60, 3600]
+      timeout_handler: "graceful"  # graceful, terminate
+      
+  # 高級選項 / Advanced Options
+  advanced:
+    enabled: true
+    
+    # 實驗模式 / Experimental Mode
+    experimental_mode: false
+    
+    # 調試選項 / Debug Options
+    debug:
+      enabled: true
+      verbose_logging: true
+      save_intermediate_states: true
+      
+    # 擴展計算 / Extended Computation
+    extended_computation:
+      enabled: true
+      extra_iterations: [0, 1000]
+      refinement_passes: [1, 10]
+
+# 配置檔案 / Configuration Profiles
+profiles:
+  conservative:
+    description: "保守模式 - 基礎增益計算"
+    gain_calculation.hierarchical_gains.foundation_layer.multiplier: 2.0
+    gain_calculation.hierarchical_gains.optimization_layer.multiplier: 10.0
+    gain_calculation.inter_layer_synergy.synergy_coefficient: 1.0
+    data_aggregation.statistics_method: "median"
+    performance.parallel_processing.max_workers: 4
+    
+  balanced:
+    description: "平衡模式 - 標準增益計算"
+    gain_calculation.hierarchical_gains.foundation_layer.multiplier: 5.0
+    gain_calculation.hierarchical_gains.optimization_layer.multiplier: 50.0
+    gain_calculation.hierarchical_gains.synergy_layer.multiplier: 500.0
+    gain_calculation.inter_layer_synergy.synergy_coefficient: 2.0
+    data_aggregation.statistics_method: "weighted_average"
+    performance.parallel_processing.max_workers: 8
+    
+  aggressive:
+    description: "激進模式 - 無限增益計算"
+    gain_calculation.hierarchical_gains.foundation_layer.multiplier: 10.0
+    gain_calculation.hierarchical_gains.optimization_layer.multiplier: 100.0
+    gain_calculation.hierarchical_gains.synergy_layer.multiplier: 1000.0
+    gain_calculation.hierarchical_gains.transcendence_layer.multiplier: 1e6
+    gain_calculation.inter_layer_synergy.synergy_coefficient: 5.0
+    gain_calculation.infinite_gain.enabled: true
+    gain_calculation.infinite_gain.recursion_depth: 100
+    performance.parallel_processing.max_workers: 32

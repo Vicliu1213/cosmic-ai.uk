@@ -1,0 +1,51 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Universal Quintenary Cosmic System Configuration",
+  "description": "Configuration for Universal Quintenary Cosmic System (\u901a\u7528\u4e94\u5143\u5b87\u5b99\u7cfb\u7d71)",
+  "type": "object",
+  "required": [
+    "universal_quintenary"
+  ],
+  "properties": {
+    "universal_quintenary": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "version": {
+          "type": "string"
+        },
+        "total_system_nodes": {
+          "type": "integer",
+          "minimum": 100,
+          "maximum": 1000
+        },
+        "system_multiplier": {
+          "type": "number",
+          "minimum": 10000000000.0,
+          "maximum": 1e+30
+        },
+        "integration_level": {
+          "type": "string",
+          "enum": [
+            "basic",
+            "intermediate",
+            "advanced",
+            "cosmic"
+          ]
+        },
+        "resonance_matrix": {
+          "type": "object",
+          "properties": {
+            "matrix_dimension": {
+              "type": "integer",
+              "minimum": 5,
+              "maximum": 100
+            }
+          }
+        }
+      }
+    }
+  }
+}

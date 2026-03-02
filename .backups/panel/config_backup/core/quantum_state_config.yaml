@@ -1,0 +1,177 @@
+# ============================================================================
+# 量子態系統核心配置 (Quantum State System Configuration)
+# ============================================================================
+# 這個檔案配置量子態系統的核心參數，包括狀態空間優化、概率決策、
+# 相關性分析和信號處理。
+# ============================================================================
+
+# ============================================================================
+# 1. 量子態系統全局配置 (Global Settings)
+# ============================================================================
+quantum_state:
+  enabled: true
+  version: "1.0"
+  
+  # 狀態空間優化器 (State Space Optimizer)
+  state_space_optimizer:
+    dimension: 128              # 狀態空間維度 [64, 256]
+    learning_rate: 0.01        # 梯度下降學習率 [0.001, 0.1]
+    pca_components: "auto"     # PCA 組件數 ("auto" 或整數)
+    normalization: "standard"  # "standard", "minmax", 或 "robust"
+  
+  # 概率決策引擎 (Probabilistic Decision Engine)
+  probabilistic_decision:
+    coherence_threshold: 0.85   # 決策相干性閾值 [0.7, 0.95]
+    signal_strength_weight: 1.0 # 信號強度權重
+    
+  # 相關性分析 (Correlation Analyzer)
+  correlation_analyzer:
+    method: "pearson"           # "pearson" 或 "spearman"
+    mutual_information_bins: 10 # 互信息直方圖分箱數 [5, 20]
+    
+  # 信號處理 (Signal Processor)
+  signal_processor:
+    resonance_analysis:
+      sampling_frequency: 100   # Hz [50, 200]
+      quality_factor: 10.0      # 共振濾波品質因子 [5.0, 20.0]
+      filter_order: 4           # Butterworth 濾波器階數 [2, 6]
+    
+    fft_settings:
+      nperseg: 256              # FFT 段大小 [128, 512]
+      overlap: 0.5              # 重疊比率 [0.25, 0.75]
+
+# ============================================================================
+# 2. 增強型量子引擎配置 (Enhanced Quantum Engine)
+# ============================================================================
+enhanced_quantum_engine:
+  enabled: true
+  version: "1.0"
+  
+  # 基本參數
+  base:
+    max_iterations: 100         # 最大迭代數 [50, 500]
+    population_size: 50         # 種群大小 [20, 200]
+    convergence_threshold: 1e-6 # 收斂閾值 [1e-8, 1e-4]
+    
+  # 量子門操作配置
+  quantum_gates:
+    num_gates: 8                # 量子門數量 [5, 15]
+    gate_types:
+      - "hadamard"              # Hadamard 門
+      - "pauli_x"               # Pauli-X 門
+      - "pauli_y"               # Pauli-Y 門
+      - "pauli_z"               # Pauli-Z 門
+      - "phase_shift"           # Phase Shift 門
+      - "cnot"                  # CNOT 門
+      - "toffoli"               # Toffoli 門
+      - "swap"                  # SWAP 門
+  
+  # 相干性和糾纏參數
+  coherence:
+    initial_coherence: 0.9      # 初始相干性 [0.5, 1.0]
+    coherence_decay_rate: 0.01  # 相干性衰減率 [0.001, 0.1]
+    
+  entanglement:
+    initial_entanglement: 0.7   # 初始糾纏度 [0.3, 0.9]
+    entanglement_strength: 0.8  # 糾纏強度 [0.5, 1.0]
+    max_entanglement_distance: 10 # 最大糾纏距離 [5, 20]
+
+# ============================================================================
+# 3. 量子信號生成器配置 (Quantum Signal Generator)
+# ============================================================================
+quantum_signal_generator:
+  enabled: true
+  market_lookback: 20           # 回看周期（K線數）[10, 50]
+  
+  # 目標函數參數
+  objective_function:
+    momentum_window: 5          # 動量計算窗口 [3, 10]
+    volume_normalize_window: 20 # 成交量歸一化窗口 [10, 30]
+    sigmoid_scaling: true
+  
+  # 量子集合預測器
+  ensemble_predictor:
+    num_predictors: 5           # 集合中的預測器數量 [3, 10]
+    population_size_base: 20    # 基礎種群大小 [10, 50]
+    gates_increment: 1          # 每個預測器的門增量
+    iterations_increment: 10    # 每個預測器的迭代增量
+
+# ============================================================================
+# 4. 性能和穩定性配置 (Performance & Stability)
+# ============================================================================
+performance:
+  # 內存管理 (Memory Management)
+  memory:
+    max_population_storage: "1GB"
+    cache_enabled: true
+    cache_size: "500MB"
+  
+  # 數值穩定性 (Numerical Stability)
+  numerical_stability:
+    epsilon: 1e-10              # 數值精度閾值 [1e-12, 1e-8]
+    overflow_limit: 1e308       # IEEE 754 上限
+    underflow_limit: 1e-323     # IEEE 754 下限
+    clipping_enabled: true      # 啟用幅度裁剪
+    clip_range: [-1.0, 1.0]     # 幅度裁剪範圍
+  
+  # 並行化 (Parallelization)
+  parallelization:
+    enabled: true
+    num_workers: 4              # 並行工作進程數 [1, 8]
+    backend: "ray"              # "ray", "multiprocessing", 或 "threading"
+
+# ============================================================================
+# 5. 日志和監控配置 (Logging & Monitoring)
+# ============================================================================
+logging:
+  level: "INFO"                 # "DEBUG", "INFO", "WARNING", "ERROR"
+  file: "logs/quantum_state.log"
+  max_size: "10MB"
+  backup_count: 5
+  
+  # 監控 (Monitoring)
+  monitoring:
+    track_fitness_evolution: true
+    track_entanglement_levels: true
+    track_phase_alignment: true
+    track_amplitude_distribution: true
+    track_coherence_decay: true
+    sample_interval: 5          # 每 N 次迭代採樣一次
+
+# ============================================================================
+# 6. 驗證和檢查點 (Validation & Checkpointing)
+# ============================================================================
+validation:
+  # 狀態驗證 (State Validation)
+  check_amplitude_normalization: true
+  check_probability_conservation: true
+  check_phase_continuity: true
+  check_entanglement_bounds: true
+  check_coherence_bounds: true
+  
+  # 檢查點 (Checkpointing)
+  checkpoint:
+    enabled: true
+    save_interval: 10           # 每 10 次迭代保存一次 [1, 50]
+    checkpoint_dir: "checkpoints/quantum_state"
+    max_checkpoints: 10         # 最多保存 10 個檢查點 [5, 50]
+    save_best_only: true        # 只保存最佳適應度的檢查點
+
+# ============================================================================
+# 7. 默認配置選擇 (Default Configuration Profile)
+# ============================================================================
+# 選項: "conservative", "balanced", "aggressive"
+# - conservative: 追求穩定性，適合生產環境
+# - balanced: 平衡精度和速度
+# - aggressive: 追求最佳精度，適合研究
+default_profile: "balanced"
+
+# ============================================================================
+# 8. 系統限制和約束 (System Constraints)
+# ============================================================================
+constraints:
+  max_state_dimension: 512      # 最大狀態空間維度
+  min_population_size: 10       # 最小種群大小
+  max_population_size: 1000     # 最大種群大小
+  timeout_seconds: 3600         # 單次操作超時時間（秒）
+  max_memory_percent: 80        # 最大內存使用百分比

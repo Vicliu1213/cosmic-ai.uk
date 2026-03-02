@@ -1,0 +1,282 @@
+# ============================================================================
+# 混合量子增強算法配置 (Hybrid Quantum-Enhanced Algorithm Configuration)
+# ============================================================================
+# 這個檔案配置混合量子增強算法，用於交易信號生成、市場預測和集合方法。
+# 支持量子和古典算法的動態組合。
+# ============================================================================
+
+# ============================================================================
+# 1. 混合量子增強算法全局配置
+# ============================================================================
+hybrid_quantum_algorithm:
+  enabled: true
+  version: "1.0"
+  description: "Hybrid Quantum-Enhanced Trading Algorithm"
+
+# ============================================================================
+# 2. 交易信號生成配置 (Trading Signal Generation)
+# ============================================================================
+trading_signals:
+  quantum_enhancement_enabled: true
+  base_signal_weight: 0.8       # 基礎信號權重 [0.5, 0.95]
+  quantum_boost_weight: 0.2    # 20% 量子增強 [0.05, 0.5]
+  confidence_threshold: 0.65   # 信號置信度閾值 [0.5, 0.9]
+  
+  # 信號成分配置 (Signal Components)
+  components:
+    momentum:
+      enabled: true
+      weight: 0.4               # 動量權重 [0.2, 0.6]
+      lookback: 5               # 動量回看周期 [3, 20]
+      
+    volume:
+      enabled: true
+      weight: 0.3               # 成交量權重 [0.1, 0.5]
+      lookback: 20              # 成交量回看周期 [10, 50]
+      
+    volatility:
+      enabled: true
+      weight: 0.3               # 波動率權重 [0.1, 0.5]
+      lookback: 14              # 波動率計算周期 (通常 ATR 14天)
+      
+    trend:
+      enabled: true
+      weight: 0.3               # 趨勢權重 [0.1, 0.5]
+      fast_ema: 12              # 快速 EMA 周期
+      slow_ema: 26              # 慢速 EMA 周期
+  
+  # 信號聚合方法 (Signal Aggregation)
+  aggregation:
+    method: "weighted_average"  # "weighted_average", "majority_voting", "neural_network"
+    normalization: "softmax"    # "softmax", "minmax", "standard"
+    add_random_noise: false     # 添加隨機噪聲以避免過度擬合
+    noise_std: 0.01             # 噪聲標準差 [0.001, 0.1]
+
+# ============================================================================
+# 3. 量子集合預測配置 (Quantum Ensemble Prediction)
+# ============================================================================
+ensemble:
+  num_models: 5                 # 集合中的模型數量 [3, 10]
+  aggregation_method: "weighted_average"  # "weighted_average", "median", "mode"
+  
+  # 相干性和糾纏權重
+  coherence_weight: 0.5         # 相位相干性權重 [0.1, 0.9]
+  entanglement_weight: 0.5      # 糾纏度權重 [0.1, 0.9]
+  
+  # 模型多樣性
+  diversity_settings:
+    enforce_diversity: true     # 強制模型多樣性
+    min_correlation: 0.3        # 模型間最小相關性 [0.0, 0.5]
+    diversity_penalty: 0.1      # 多樣性懲罰項 [0.0, 0.3]
+
+# ============================================================================
+# 4. 市場數據設置 (Market Data Configuration)
+# ============================================================================
+market_data:
+  lookback_period: 20           # 歷史數據回看周期（K線數）[10, 100]
+  update_frequency: "1H"        # 更新頻率 ("1H", "4H", "1D")
+  
+  # 數據驗證 (Data Validation)
+  data_validation:
+    check_nan: true             # 檢查 NaN 值
+    remove_outliers: true       # 移除異常值
+    outlier_std_threshold: 3.0  # 異常值標準差倍數 [2.0, 5.0]
+    
+    # 數據清理
+    cleaning:
+      handle_gaps: true         # 處理數據缺失
+      interpolation_method: "linear"  # "linear", "spline", "forward_fill"
+      min_data_points: 50       # 最少數據點數
+  
+  # 特徵縮放 (Feature Scaling)
+  scaling:
+    method: "robust"            # "standard", "minmax", "robust"
+    robust_quantile_range: [0.25, 0.75]  # 健壯縮放四分位數範圍
+
+# ============================================================================
+# 5. 量子算法配置 (Quantum Algorithm Configuration)
+# ============================================================================
+quantum_algorithm:
+  # 基本參數
+  population_size: 50           # 種群大小 [20, 200]
+  max_iterations: 100           # 最大迭代數 [50, 500]
+  
+  # 量子特性
+  quantum_gates: 8              # 量子門數量 [5, 15]
+  entanglement_strength: 0.8    # 糾纏強度 [0.5, 1.0]
+  tunneling_probability: 0.15   # 量子隧穿概率 [0.05, 0.3]
+  
+  # 收斂控制
+  convergence:
+    tolerance: 1e-6             # 收斂容差 [1e-8, 1e-4]
+    stagnation_generations: 20  # 停滯代數 [10, 50] - 達到此值則早停
+    early_stopping_enabled: true # 啟用早停
+    
+  # 適應度函數
+  fitness_function:
+    type: "sharpe_ratio"        # "sharpe_ratio", "sortino_ratio", "custom"
+    risk_free_rate: 0.02        # 無風險利率年化值
+    
+
+# ============================================================================
+# 6. 古典備選算法配置 (Classical Algorithm Configuration)
+# ============================================================================
+classical_algorithm:
+  enabled: true
+  method: "genetic"             # "genetic", "particle_swarm", "differential_evolution"
+  
+  # 遺傳算法參數
+  genetic:
+    population_size: 50
+    mutation_rate: 0.05
+    crossover_rate: 0.9
+    elite_preservation: 0.1
+    
+  # 粒子群優化參數
+  particle_swarm:
+    num_particles: 30
+    inertia_weight: 0.7
+    cognitive_coefficient: 1.5
+    social_coefficient: 1.5
+    max_velocity: 0.5
+    
+  # 差分進化參數
+  differential_evolution:
+    strategy: "best/1/bin"
+    f_scaling: 0.8
+    cr_crossover: 0.9
+    population_size: 50
+
+# ============================================================================
+# 7. 性能監測配置 (Performance Monitoring)
+# ============================================================================
+performance_monitoring:
+  track_signal_accuracy: true
+  track_convergence_speed: true
+  track_quantum_advantage: true
+  track_computational_cost: true
+  track_memory_usage: true
+  
+  report_interval: 100          # 迭代次數間隔 [10, 1000]
+  
+  # 性能指標
+  metrics:
+    sharpe_ratio: true
+    max_drawdown: true
+    win_rate: true
+    profit_factor: true
+    calmar_ratio: true
+    
+  # 日志記錄
+  logging:
+    verbose: false              # 詳細日志輸出
+    log_file: "logs/hybrid_quantum_algorithm.log"
+    save_predictions: false     # 保存預測結果
+
+# ============================================================================
+# 8. 風險管理配置 (Risk Management)
+# ============================================================================
+risk_management:
+  enabled: true
+  
+  # 位置大小管理
+  position_sizing:
+    method: "fixed_fraction"    # "fixed_fraction", "kelly", "volatility_based"
+    max_position_size: 0.1      # 最大頭寸大小（資金比例）
+    min_position_size: 0.01     # 最小頭寸大小
+    
+  # 止損和止盈
+  stop_loss:
+    enabled: true
+    percentage: 2.0             # 止損百分比 [0.5, 5.0]
+    trailing: false             # 使用跟蹤止損
+    
+  take_profit:
+    enabled: true
+    percentage: 5.0             # 止盈百分比 [1.0, 10.0]
+    
+  # 最大衝突
+  max_drawdown:
+    enabled: true
+    threshold: 0.2              # 最大回撤閾值 [0.05, 0.5]
+    enforce_hard_limit: false   # 強制執行硬限制
+
+# ============================================================================
+# 9. 交易執行配置 (Trade Execution)
+# ============================================================================
+trade_execution:
+  # 訂單類型
+  order_type: "market"          # "market", "limit", "stop"
+  slippage_percentage: 0.05     # 滑點百分比 [0.01, 0.2]
+  
+  # 執行延遲
+  execution_delay_ms: 100       # 執行延遲（毫秒）[0, 1000]
+  
+  # 批次設置
+  batch_size: 10                # 批次大小 [1, 100]
+  batch_wait_seconds: 60        # 批次等待時間（秒）
+
+# ============================================================================
+# 10. 系統積分配置 (System Integration)
+# ============================================================================
+system_integration:
+  # 數據源
+  data_source: "live"           # "live", "backtest", "simulation"
+  
+  # 交易所集成
+  exchange:
+    name: "binance"             # 交易所名稱
+    sandbox_mode: true          # 沙箱模式（測試）
+    
+  # API 配置
+  api:
+    timeout_seconds: 30
+    max_retries: 3
+    retry_delay_seconds: 1
+    
+  # 消息隊列
+  message_queue:
+    enabled: true
+    backend: "redis"            # "redis", "rabbitmq", "kafka"
+    timeout_seconds: 5
+
+# ============================================================================
+# 11. 配置預設檔案選擇 (Configuration Profiles)
+# ============================================================================
+# 選項: "conservative", "balanced", "aggressive"
+# - conservative: 低風險，適合保守型投資者
+# - balanced: 平衡風險和回報
+# - aggressive: 高風險高回報，適合激進型投資者
+default_profile: "balanced"
+
+profiles:
+  conservative:
+    base_signal_weight: 0.9
+    quantum_boost_weight: 0.1
+    confidence_threshold: 0.75
+    max_position_size: 0.05
+    stop_loss_percentage: 1.0
+    
+  balanced:
+    base_signal_weight: 0.8
+    quantum_boost_weight: 0.2
+    confidence_threshold: 0.65
+    max_position_size: 0.1
+    stop_loss_percentage: 2.0
+    
+  aggressive:
+    base_signal_weight: 0.7
+    quantum_boost_weight: 0.3
+    confidence_threshold: 0.55
+    max_position_size: 0.2
+    stop_loss_percentage: 3.0
+
+# ============================================================================
+# 12. 完整性檢查和驗證 (Integrity Checks)
+# ============================================================================
+validation:
+  check_weights_sum_to_one: true
+  check_thresholds_in_range: true
+  check_positive_timeframes: true
+  sanity_check_on_startup: true
+  raise_on_config_error: false  # false = 警告, true = 異常

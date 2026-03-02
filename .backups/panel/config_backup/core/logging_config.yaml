@@ -1,0 +1,93 @@
+# 系統日誌配置
+# System Logging Configuration
+
+logging:
+  version: 1
+  disable_existing_loggers: false
+  
+  # 日誌格式定義
+  formatters:
+    standard:
+      format: '[%(asctime)s] [%(name)s] [%(levelname)s] %(message)s'
+      datefmt: '%Y-%m-%d %H:%M:%S'
+    
+    json:
+      format: '{"timestamp": "%(asctime)s", "logger": "%(name)s", "level": "%(levelname)s", "message": "%(message)s"}'
+      datefmt: '%Y-%m-%d %H:%M:%S'
+    
+    detailed:
+      format: '[%(asctime)s] [%(name)s:%(lineno)d] [%(levelname)s] %(funcName)s() - %(message)s'
+      datefmt: '%Y-%m-%d %H:%M:%S'
+
+  # 日誌處理器
+  handlers:
+    console:
+      class: logging.StreamHandler
+      level: ${LOGGING_LEVEL}
+      formatter: standard
+      stream: ext://sys.stdout
+    
+    file:
+      class: logging.handlers.RotatingFileHandler
+      level: ${LOGGING_LEVEL}
+      formatter: json
+      filename: ${LOG_DIR}/comic_ai.log
+      maxBytes: 524288000  # 500MB
+      backupCount: 20
+    
+    error_file:
+      class: logging.handlers.RotatingFileHandler
+      level: ERROR
+      formatter: detailed
+      filename: ${LOG_DIR}/errors.log
+      maxBytes: 104857600  # 100MB
+      backupCount: 10
+    
+    trading_file:
+      class: logging.handlers.RotatingFileHandler
+      level: INFO
+      formatter: json
+      filename: ${LOG_DIR}/trading.log
+      maxBytes: 524288000  # 500MB
+      backupCount: 20
+
+  # 日誌記錄器
+  loggers:
+    comic_ai:
+      level: ${LOGGING_LEVEL}
+      handlers: [console, file]
+      propagate: false
+    
+    comic_ai.trading:
+      level: INFO
+      handlers: [console, trading_file]
+      propagate: false
+    
+    comic_ai.quantum:
+      level: INFO
+      handlers: [console, file]
+      propagate: false
+    
+    comic_ai.api:
+      level: DEBUG
+      handlers: [console, file]
+      propagate: false
+
+  # 根日誌記錄器
+  root:
+    level: ${LOGGING_LEVEL}
+    handlers: [console, file, error_file]
+
+# 日誌輪轉設置
+rotation:
+  max_size: ${LOGGING_MAX_SIZE}
+  backup_count: ${LOGGING_BACKUP_COUNT}
+  retention_days: 90
+
+# 日誌歸檔
+archival:
+  enabled: true
+  archive_path: ${LOG_DIR}/archive
+  compress: true
+  compression_format: gz
+  archive_after_days: 30

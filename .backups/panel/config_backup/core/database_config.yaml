@@ -1,0 +1,77 @@
+# 數據庫配置
+# Database Configuration
+
+database:
+  # 主數據庫 (SQLite)
+  main:
+    type: ${DATABASE_TYPE}
+    path: ${DATABASE_PATH}
+    timeout: 30
+    check_same_thread: false
+    
+    # 備份設置
+    backup:
+      enabled: true
+      path: ${DATABASE_BACKUP_PATH}
+      auto_backup: true
+      backup_interval: 86400  # 24小時
+      retention_days: 30
+    
+    # 優化設置
+    optimization:
+      vacuum_interval: 604800  # 7天
+      analyze_interval: 86400  # 1天
+      cache_size: 10000
+      journal_mode: WAL
+
+  # Redis 緩存
+  redis:
+    enabled: true
+    host: ${REDIS_HOST}
+    port: ${REDIS_PORT}
+    db: ${REDIS_DB}
+    password: ${REDIS_PASSWORD}
+    
+    # 連接池
+    connection_pool:
+      max_connections: 50
+      timeout: 10
+    
+    # 數據過期策略
+    expiration:
+      default_ttl: 3600  # 1小時
+      cache_ttl: 1800    # 30分鐘
+      session_ttl: 86400 # 24小時
+
+  # 時間序列數據庫 (可選)
+  timeseries:
+    enabled: false
+    type: influxdb
+    host: localhost
+    port: 8086
+    database: comic_ai
+    retention_policy: 30d
+
+# 數據保留政策
+data_retention:
+  # 交易數據
+  trading_data:
+    retention_days: 365
+    archive_after_days: 90
+  
+  # 日誌數據
+  log_data:
+    retention_days: 90
+    archive_after_days: 30
+  
+  # 市場數據
+  market_data:
+    retention_days: 730  # 2年
+    archive_after_days: 180
+
+# 數據遷移設置
+migration:
+  enabled: true
+  auto_upgrade: true
+  backup_before_migration: true
+  migration_timeout: 3600  # 1小時

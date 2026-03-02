@@ -1,0 +1,156 @@
+# 代碼自動清洗與修復工具配置
+# Code Cleaning Engine Configuration
+# 利用自主錯誤處理系統進行代碼自動清洗和修復
+
+code_cleaning:
+  # 掃描配置 / Scanning Configuration
+  scanning:
+    enabled: true
+    max_files_per_scan: [100, 10000]  # [min, max] 每次掃描最大文件數
+    file_extensions: [".py"]
+    recursive_scan: true
+    ignore_patterns:  # 忽略模式
+      - "__pycache__"
+      - ".git"
+      - "node_modules"
+      - ".venv"
+      - "venv"
+    batch_size: [10, 1000]  # [min, max] 批處理大小
+    
+  # 錯誤檢測配置 / Error Detection Configuration
+  error_detection:
+    enabled: true
+    
+    # 類型提示檢測 / Type Hint Detection
+    type_hints:
+      enabled: true
+      severity: "high"
+      auto_fix: true
+      check_optional_types: true
+      check_return_types: true
+      
+    # 變數作用域檢測 / Variable Scope Detection
+    variable_scope:
+      enabled: true
+      severity: "high"
+      auto_fix: true
+      check_unbound_variables: true
+      check_none_assignments: true
+      
+    # 導入錯誤檢測 / Import Error Detection
+    import_errors:
+      enabled: true
+      severity: "critical"
+      auto_fix: false  # 需要驗證
+      validate_imports: true
+      suggest_alternatives: true
+      
+    # None 類型調用檢測 / None Type Call Detection
+    none_type_calls:
+      enabled: true
+      severity: "critical"
+      auto_fix: true
+      require_safe_guards: true
+      
+  # 修復策略配置 / Fix Strategy Configuration
+  fix_strategies:
+    aggressive: [true, false]  # [enable, default]
+    conservative: [true, false]
+    
+    # 類型修復 / Type Fixing
+    type_fixes:
+      add_optional_imports: true
+      add_type_annotations: true
+      fix_return_types: true
+      fix_parameter_types: true
+      
+    # 作用域修復 / Scope Fixing
+    scope_fixes:
+      initialize_unbound_variables: true
+      add_none_checks: true
+      add_safe_guards: true
+      
+  # 驗證配置 / Validation Configuration
+  validation:
+    enabled: true
+    
+    # 語法驗證 / Syntax Validation
+    syntax_check:
+      enabled: true
+      compile_check: true
+      
+    # 語義驗證 / Semantic Validation
+    semantic_check:
+      enabled: true
+      check_type_consistency: true
+      check_variable_usage: true
+      
+    # LSP 驗證 / LSP Validation
+    lsp_validation:
+      enabled: true
+      check_diagnostics: true
+      severity_threshold: "medium"  # critical, high, medium, low
+      
+  # 報告配置 / Reporting Configuration
+  reporting:
+    enabled: true
+    output_format: "json"  # json, yaml, txt
+    save_reports: true
+    report_dir: "reports/code_cleaning"
+    include_fixes: true
+    include_statistics: true
+    
+    # 統計選項 / Statistics Options
+    statistics:
+      total_files_scanned: true
+      total_errors_found: true
+      total_errors_fixed: true
+      error_distribution_by_type: true
+      error_distribution_by_severity: true
+      fix_success_rate: true
+      
+  # 性能配置 / Performance Configuration
+  performance:
+    parallel_workers: [1, 16]  # [min, max] 並行工作線程
+    use_multiprocessing: true
+    memory_limit_mb: [256, 4096]
+    timeout_seconds: [30, 300]
+    
+  # 高級選項 / Advanced Options
+  advanced:
+    preserve_formatting: true
+    create_backups: true
+    backup_dir: "backups/code_cleaning"
+    dry_run: false  # 如果為 true，只報告不修改
+    max_fixes_per_file: [10, 1000]
+    confidence_threshold: [0.5, 0.99]  # 修復置信度
+
+# 配置檔案 / Configuration Profiles
+profiles:
+  conservative:
+    description: "保守模式 - 只修復明確的錯誤"
+    scanning.max_files_per_scan: 1000
+    error_detection.type_hints.auto_fix: false
+    error_detection.variable_scope.auto_fix: false
+    validation.semantic_check.enabled: true
+    performance.parallel_workers: 4
+    advanced.dry_run: true
+    
+  balanced:
+    description: "平衡模式 - 標準修復策略"
+    scanning.max_files_per_scan: 5000
+    error_detection.type_hints.auto_fix: true
+    error_detection.variable_scope.auto_fix: true
+    validation.semantic_check.enabled: true
+    performance.parallel_workers: 8
+    advanced.dry_run: false
+    
+  aggressive:
+    description: "激進模式 - 全面修復所有問題"
+    scanning.max_files_per_scan: 10000
+    error_detection.type_hints.auto_fix: true
+    error_detection.variable_scope.auto_fix: true
+    error_detection.import_errors.auto_fix: true
+    validation.semantic_check.enabled: true
+    performance.parallel_workers: 16
+    advanced.dry_run: false
