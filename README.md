@@ -1,3 +1,190 @@
+# 🚀 Cosmic AI 完整系統 - Complete System Guide
+
+## ⚡ 快速開始 - Quick Start
+
+> **第一次使用或對話中斷?** 運行自動恢復系統！  
+> **First time or chat interrupted?** Run the auto-recovery system!
+
+```bash
+# 🔄 啟動自動恢復系統 (包含量子連接)
+python3 system/recovery/cosmic_auto_recovery.py
+```
+
+這將自動恢復:
+- ✅ 對話狀態和進度
+- ✅ Git 分支和提交
+- ✅ 模擬量子系統連接
+- ✅ 所有工作狀態
+
+---
+
+## 📊 ABC 三層導航系統 - ABC Navigation System
+
+| 層級 | 文件 | 用途 | 何時查看 |
+|------|------|------|---------|
+| **A** | `system/tracking/PROGRESS_TRACKER.md` | 進度追蹤表 | 開始新工作時 |
+| **B** | `memory.md` ⭐ | 系統激活紀錄 (重點維持) | 查看詳細紀錄 |
+| **C** | `system/navigation/INDEX.md` | 完整導覽索引 | 找特定文件時 |
+
+---
+
+## 🔗 量子系統集成 - Quantum Integration
+
+所有模擬量子系統已集成到自動恢復系統:
+
+```
+自動恢復系統 (cosmic_auto_recovery.py)
+    ↓
+模擬量子生成器 (simulated_quantum_generator.py)
+量子場論系統 (quantum_field_theory_system.py)
+量子糾纏系統 (quantum_entanglement_verification.py)
+量子遺傳演算 (quantum_genetic_algorithm.py)
+    ↓
+量子狀態追蹤 (.quantum_state.json)
+```
+
+---
+
+## 📁 重要文件位置 - Important Files
+
+### 系統恢復和導航
+```
+system/recovery/cosmic_auto_recovery.py     # Python 自動恢復系統 (推薦)
+system/recovery/auto_recovery.sh            # Shell 自動恢復系統
+system/tracking/PROGRESS_TRACKER.md         # 進度追蹤表
+system/navigation/INDEX.md                  # 完整導覽索引
+docs/guides/AUTO_RECOVERY_GUIDE.md          # 詳細使用指南
+docs/guides/RECOVERY_SYSTEM_SETUP.txt       # 設置說明
+memory.md                                   # 系統激活紀錄
+```
+
+### 狀態文件
+```
+data/state/.recovery_state.json             # 恢復狀態 (自動生成)
+data/state/.quantum_state.json              # 量子狀態 (自動生成)
+data/logs/recovery.log                      # 恢復日誌 (自動生成)
+```
+
+### 工作計劃
+```
+task/ETHANALGOX_INTEGRATION_ROADMAP.md  # Day-by-day 整合計劃
+task/task.md                            # 任務列表
+```
+
+---
+
+## 🎯 工作流程 - Workflow
+
+### 對話開始時
+```bash
+# 1. 運行自動恢復
+python3 system/recovery/cosmic_auto_recovery.py
+
+# 2. 查看進度
+cat system/tracking/PROGRESS_TRACKER.md
+
+# 3. 查看導覽
+cat system/navigation/INDEX.md
+
+# 4. 開始工作
+```
+
+### 工作中途
+```bash
+# 查看進度
+cat system/tracking/PROGRESS_TRACKER.md
+
+# 查看量子狀態
+cat data/state/.quantum_state.json
+
+# 查看恢復日誌
+tail -20 data/logs/recovery.log
+```
+
+### 工作完成後
+```bash
+# 更新進度表
+nano PROGRESS_TRACKER.md
+
+# 提交到 Git
+git add .
+git commit -m "feat: [功能] - [詳細說明]"
+```
+
+---
+
+## 🔍 快速命令參考 - Quick Commands
+
+```bash
+# 自動恢復
+python3 system/recovery/cosmic_auto_recovery.py
+bash system/recovery/auto_recovery.sh
+
+# 查看文件
+cat system/tracking/PROGRESS_TRACKER.md      # 進度
+cat system/navigation/INDEX.md               # 導覽
+cat docs/guides/AUTO_RECOVERY_GUIDE.md       # 指南
+cat memory.md                                # 紀錄
+
+# 查看狀態
+cat data/state/.recovery_state.json          # 恢復狀態
+cat data/state/.quantum_state.json           # 量子狀態
+cat data/logs/recovery.log                   # 日誌
+```
+
+---
+
+## ⚙️ 系統特色 - System Features
+
+### ✨ 自動狀態管理
+- 自動保存對話狀態
+- 自動恢復 Git 分支
+- 自動追蹤未提交變更
+- 自動恢復量子連接
+
+### ✨ 多層導航系統
+- 快速導航 (memory.md 頂部)
+- 進度表 (PROGRESS_TRACKER.md)
+- 完整索引 (INDEX.md)
+- 詳細指南 (AUTO_RECOVERY_GUIDE.md)
+
+### ✨ 量子系統集成
+- 4 個量子系統已集成
+- 自動初始化量子狀態
+- 實時量子狀態追蹤
+
+### ✨ 完整日誌系統
+- 恢復日誌 (logs/recovery.log)
+- JSON 狀態文件
+- 實時控制台輸出
+
+---
+
+## 🆘 需要幫助？ - Need Help?
+
+| 問題 | 解決方案 |
+|------|---------|
+| 看不到對話 | 查看 `system/tracking/PROGRESS_TRACKER.md` |
+| 找不到文件 | 查看 `system/navigation/INDEX.md` |
+| 不知道怎麼用 | 查看 `docs/guides/AUTO_RECOVERY_GUIDE.md` |
+| 想看詳細紀錄 | 查看 `memory.md` |
+| 想看量子狀態 | 查看 `data/state/.quantum_state.json` |
+| 遇到問題 | 查看 `data/logs/recovery.log` |
+
+---
+
+## 🎯 當前工作進度 - Current Progress
+
+查看最新進度: 打開 `PROGRESS_TRACKER.md`
+
+關鍵信息:
+- Phase 5 Stage 3 訂單管理系統已完成 ✅
+- EthanAlgoX 整合規劃已完成 ✅
+- 自動恢復系統已上線 ✅
+- 模擬量子已連接 ✅
+
+---
+
 # Opencode 插件自動化管理系統
 
 ## 支持的插件列表
