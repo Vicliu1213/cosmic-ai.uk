@@ -33,7 +33,11 @@ import threading
 import time
 
 # 配置编码
-sys.stdout.reconfigure(encoding='utf-8') if hasattr(sys.stdout, 'reconfigure') else None
+try:
+    if hasattr(sys.stdout, 'reconfigure'):
+        sys.stdout.reconfigure(encoding='utf-8')
+except Exception:
+    pass
 
 logging.basicConfig(
     level=logging.INFO,

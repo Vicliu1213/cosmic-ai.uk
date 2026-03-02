@@ -1,0 +1,65 @@
+{
+  "timestamp": "2026-03-02T16:10:05.473078",
+  "event_type": "fault_detected",
+  "component_type": "fault_tolerance",
+  "component_id": "ft_main_01",
+  "severity": "high",
+  "description": "容錯系統檢測到高內存使用率",
+  "fault_description": "內存使用率達到85%",
+  "repair_action": null,
+  "repair_duration_ms": null,
+  "success": null,
+  "error_message": null,
+  "data_backup": null,
+  "recovery_metrics": null
+}
+{
+  "timestamp": "2026-03-02T16:10:05.473295",
+  "event_type": "repair_initiated",
+  "component_type": "fault_tolerance",
+  "component_id": "ft_main_01",
+  "severity": "high",
+  "description": "自動修復機制已啟動",
+  "fault_description": null,
+  "repair_action": "memory_cleanup_aggressive",
+  "repair_duration_ms": null,
+  "success": null,
+  "error_message": null,
+  "data_backup": null,
+  "recovery_metrics": null
+}
+{
+  "timestamp": "2026-03-02T16:10:05.473415",
+  "event_type": "repair_success",
+  "component_type": "fault_tolerance",
+  "component_id": "ft_main_01",
+  "severity": "high",
+  "description": "容錯系統已恢復正常",
+  "fault_description": null,
+  "repair_action": null,
+  "repair_duration_ms": 1234.5,
+  "success": true,
+  "error_message": null,
+  "data_backup": null,
+  "recovery_metrics": {
+    "memory_before": "85%",
+    "memory_after": "45%",
+    "downtime_ms": 1234.5,
+    "services_recovered": 5
+  }
+}
+{
+  "timestamp": "2026-03-02T16:10:05.473546",
+  "event_type": "auto_healing_triggered",
+  "component_type": "error_correction",
+  "component_id": "ec_main_01",
+  "severity": "medium",
+  "description": "量子纠错系統自動治愈機制觸發",
+  "fault_description": null,
+  "repair_action": "continuous_error_correction",
+  "repair_duration_ms": null,
+  "success": null,
+  "error_message": null,
+  "data_backup": null,
+  "recovery_metrics": null
+}

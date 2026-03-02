@@ -36,7 +36,11 @@ import psutil
 import hashlib
 
 # 配置編碼
-sys.stdout.reconfigure(encoding='utf-8') if hasattr(sys.stdout, 'reconfigure') else None
+try:
+    if hasattr(sys.stdout, 'reconfigure'):
+        sys.stdout.reconfigure(encoding='utf-8')
+except Exception:
+    pass
 os.environ['PYTHONIOENCODING'] = 'utf-8'
 
 # 日志配置

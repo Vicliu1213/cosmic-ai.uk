@@ -16,6 +16,10 @@
 8. [API 參考](#api-參考)
 9. [故障排查](#故障排查)
 10. [最佳實踐](#最佳實踐)
+11. [容錯拓撲系統](#容錯拓撲系統)
+12. [量子糾錯編碼系統](#量子糾錯編碼系統)
+13. [自進化學習機制](#自進化學習機制)
+14. [三大系統集成架構](#三大系統集成架構)
 
 ---
 
@@ -770,6 +774,333 @@ Level 3 (系統故障):
   - 自動切換到備份系統
   - 從最後一個檢查點恢復
   - 啟動手動干預流程
+```
+
+---
+
+## 容錯拓撲系統 (Fault Tolerance Topology System)
+
+### 10.1 系統概述
+
+容錯拓撲系統為宇宙智能體提供多層次的故障檢測、隔離和恢復機制：
+
+```
+┌─────────────────────────────────────────┐
+│  故障偵測引擎 (Fault Detection Engine)   │
+│  - 實時健康監控                         │
+│  - 故障模式識別                         │
+│  - 異常行為檢測                         │
+└────────────────┬────────────────────────┘
+                 │
+┌────────────────▼────────────────────────┐
+│  故障隔離管理器 (Fault Isolation Mgr)    │
+│  - 電路斷路器模式                       │
+│  - 超時隔離                             │
+│  - 自動重啟                             │
+└────────────────┬────────────────────────┘
+                 │
+┌────────────────▼────────────────────────┐
+│  故障轉移管理器 (Failover Manager)       │
+│  - 自動備份轉換                         │
+│  - 負載均衡                             │
+│  - 狀態恢復                             │
+└─────────────────────────────────────────┘
+```
+
+### 10.2 核心功能
+
+| 功能 | 說明 | 配置參數 |
+|------|------|---------|
+| 健康檢查 | 每 1000ms 監控一次 | `detection_interval_ms` |
+| 故障隔離 | 自動隔離故障組件 | `isolation_strategy` |
+| 故障轉移 | 5秒內完成轉移 | `failover_timeout_sec` |
+| 備份副本 | 保持 2 個備份副本 | `backup_replicas` |
+| 故障閾值 | 50% 故障率觸發轉移 | `failure_threshold` |
+
+### 10.3 集成文件
+
+- **模塊**: `cosmic_engine/cosmic/fault_tolerance.py`
+- **主引擎**: `FaultToleranceOrchestrator`
+- **配置**: `cosmic_engine/config/cosmic_config.yaml` (fault_tolerance 部分)
+- **測試**: `cosmic_engine/tests/test_fault_tolerance_integration.py`
+
+### 10.4 使用示例
+
+```python
+from cosmic.fault_tolerance import FaultToleranceOrchestrator
+
+# 初始化容錯系統
+ft_config = {
+    "enabled": True,
+    "detection_interval_ms": 1000,
+    "isolation_strategy": "automatic",
+    "failover_timeout_sec": 5
+}
+
+orchestrator = FaultToleranceOrchestrator(ft_config, agents)
+
+# 執行健康檢查
+health_status = orchestrator.perform_health_check()
+
+# 處理故障
+recovery_result = orchestrator.handle_fault(
+    component_id="agent_1",
+    fault_type="memory_leak",
+    severity="high"
+)
+```
+
+---
+
+## 量子糾錯編碼系統 (Quantum Error Correction System)
+
+### 11.1 系統概述
+
+量子糾錯系統實現三種主要的量子誤差修正碼，用於保護量子信息免受環境噪聲影響：
+
+```
+┌─────────────────────────────────────┐
+│  量子糾錯引擎                        │
+├─────────────────────────────────────┤
+│ 重複碼 (3-qubit)     │ 編碼效率 67% │
+│ Shor碼 (9-qubit)     │ 編碼效率 50% │
+│ 表面碼 (25-qubit)    │ 編碼效率 4%  │
+└─────────────────────────────────────┘
+```
+
+### 11.2 糾錯碼詳解
+
+#### 11.2.1 重複碼 (Repetition Code)
+- **物理比特數**: 3
+- **邏輯比特**: 1
+- **最小距離**: 3
+- **糾正能力**: 單比特錯誤
+- **使用場景**: 輕量級應用
+
+#### 11.2.2 Shor碼 (Shor Code)
+- **物理比特數**: 9
+- **邏輯比特**: 1
+- **最小距離**: 3
+- **糾正能力**: 任意單比特錯誤 (bit-flip + phase-flip)
+- **使用場景**: 中等可靠性需求
+
+#### 11.2.3 表面碼 (Surface Code)
+- **物理比特網格**: 5×5 = 25
+- **邏輯比特**: 1
+- **距離**: 可配置 (通常 3-7)
+- **糾正能力**: 多比特錯誤
+- **使用場景**: 高可靠性需求
+
+### 11.3 工作流程
+
+```
+邏輯態 → 編碼 → 傳輸/處理 → 綜合症提取 → 糾錯 → 解碼 → 恢復邏輯態
+         ├────────────────┤
+         物理層次 (容易出錯)
+```
+
+### 11.4 集成文件
+
+- **模塊**: `cosmic_engine/cosmic/error_correction.py`
+- **主引擎**: `QuantumErrorCorrectionEngine`
+- **代碼類**: `RepetitionCode`, `ShorCode`, `SurfaceCode`
+- **配置**: `cosmic_engine/config/cosmic_config.yaml` (error_correction 部分)
+- **測試**: `cosmic_engine/tests/test_error_correction_integration.py`
+
+### 11.5 使用示例
+
+```python
+from cosmic.error_correction import QuantumErrorCorrectionEngine
+
+# 初始化糾錯系統
+ec_config = {
+    "enabled": True,
+    "code_type": "shor",
+    "syndrome_check_interval_ms": 500
+}
+
+engine = QuantumErrorCorrectionEngine(ec_config)
+
+# 編碼邏輯態
+logical_qubit = [1.0, 0.0]  # |0⟩ 狀態
+encoded = engine.encode_state("shor", logical_qubit)
+
+# 檢測和糾正錯誤
+errors = engine.detect_errors("shor", encoded)
+corrected = engine.correct_errors("shor", encoded)
+
+# 解碼恢復邏輯態
+recovered = engine.decode_state("shor", corrected)
+```
+
+---
+
+## 自進化學習機制 (Self-Evolution Learning System)
+
+### 12.1 系統概述
+
+自進化學習系統集成三種先進的機器學習算法，實現多智能體的持續進化和知識積累：
+
+```
+┌──────────────────────────────────────┐
+│   自進化引擎                          │
+├──────────────────────────────────────┤
+│ PPO 近端策略優化    │ 主要學習算法    │
+│ CMA-ES 進化策略     │ 種群進化        │
+│ 知識蒸餾 Teacher-Std │ 知識轉移        │
+└──────────────────────────────────────┘
+```
+
+### 12.2 學習算法
+
+#### 12.2.1 PPO (Proximal Policy Optimization)
+- **優勢**: 樣本高效、穩定收斂
+- **配置**:
+  - γ (折扣因子): 0.99
+  - λ (GAE 參數): 0.95
+  - 裁剪比率: 0.2
+  - 熵係數: 0.01
+
+#### 12.2.2 CMA-ES (Covariance Matrix Adaptation Evolution Strategy)
+- **優勢**: 無梯度優化、多模式搜索
+- **配置**:
+  - 種群大小: 30
+  - 變異率: 0.15
+  - 選擇壓力: 2.0
+
+#### 12.2.3 知識蒸餾 (Knowledge Distillation)
+- **優勢**: 模型壓縮、遷移學習
+- **配置**:
+  - 溫度: 3.0
+  - 蒸餾權重 (α): 0.5
+
+### 12.3 進化流程
+
+```
+初始種群
+   ↓
+[策略評估] ← 多智能體並行執行
+   ↓
+[體驗收集] ← 軌跡記錄
+   ↓
+[知識蒸餾] ← 教師-學生轉移
+   ↓
+[策略更新]
+   ├─ PPO 梯度優化
+   ├─ CMA-ES 種群進化
+   └─ 重複次數達到
+   ↓
+[課程進度] ← 難度漸進
+   ↓
+改進種群 (下一代)
+```
+
+### 12.4 集成文件
+
+- **模塊**: `cosmic_engine/cosmic/self_evolution.py`
+- **主引擎**: `SelfEvolutionEngine`
+- **學習器類**: `PPOLearner`, `CMAESEvolutionStrategy`, `KnowledgeDistiller`
+- **配置**: `cosmic_engine/config/cosmic_config.yaml` (self_evolution 部分)
+- **測試**: `cosmic_engine/tests/test_self_evolution_integration.py`
+
+### 12.5 使用示例
+
+```python
+from cosmic.self_evolution import SelfEvolutionEngine
+
+# 初始化自進化系統
+se_config = {
+    "enabled": True,
+    "learning_algorithm": "ppo",
+    "exploration_rate": 0.3
+}
+
+engine = SelfEvolutionEngine(se_config, agents)
+
+# 選擇學習算法
+engine.select_algorithm("ppo")
+
+# 更新策略
+experience = {
+    "states": [[1.0, 2.0, 3.0]],
+    "actions": [0],
+    "rewards": [1.0]
+}
+result = engine.update_policy(experience)
+
+# 執行知識蒸餾
+engine.run_distillation_cycle()
+
+# 獲取學習指標
+metrics = engine.get_learning_metrics()
+```
+
+---
+
+## 三大系統集成架構
+
+### 13.1 系統交互
+
+```
+┌─────────────────────────────────────────────────┐
+│         多智能體執行層 (Agents)                  │
+└──────────────────┬──────────────────────────────┘
+                   │
+    ┌──────────────┼──────────────┐
+    ▼              ▼              ▼
+┌──────────┐ ┌──────────┐ ┌──────────┐
+│ 容錯系統 │ │ 糾錯系統 │ │ 進化系統 │
+├──────────┤ ├──────────┤ ├──────────┤
+│ 故障檢測 │ │ 量子保護 │ │ 策略優化 │
+│ 故障隔離 │ │ 誤差修正 │ │ 知識遷移 │
+│ 故障轉移 │ │ 性能優化 │ │ 種群進化 │
+└──────────┘ └──────────┘ └──────────┘
+    │              │              │
+    └──────────────┼──────────────┘
+                   ▼
+         ┌──────────────────┐
+         │  系統監控 & 日誌  │
+         │  Ray Dashboard   │
+         └──────────────────┘
+```
+
+### 13.2 配置統一
+
+所有三個系統的配置統一在 `cosmic_engine/config/cosmic_config.yaml`:
+
+```yaml
+fault_tolerance:
+  enabled: true
+  detection_interval_ms: 1000
+  isolation_strategy: "automatic"
+
+error_correction:
+  enabled: true
+  code_type: "shor"
+  syndrome_check_interval_ms: 500
+
+self_evolution:
+  enabled: true
+  learning_algorithm: "ppo"
+  exploration_rate: 0.3
+```
+
+### 13.3 集成測試
+
+運行完整集成測試:
+
+```bash
+# 測試容錯系統
+pytest cosmic_engine/tests/test_fault_tolerance_integration.py -v
+
+# 測試糾錯系統
+pytest cosmic_engine/tests/test_error_correction_integration.py -v
+
+# 測試進化系統
+pytest cosmic_engine/tests/test_self_evolution_integration.py -v
+
+# 運行所有集成測試
+pytest cosmic_engine/tests/ -v
 ```
 
 ---

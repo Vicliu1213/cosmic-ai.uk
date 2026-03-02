@@ -4,6 +4,20 @@ import numpy as np
 from typing import Dict, List, Any, Optional, Tuple
 from datetime import datetime
 import json
+import logging
+
+# 導入真實量子模擬器
+try:
+    from .quantum_simulator import (
+        get_simulator, run_grover, run_vqe, run_qaoa, run_shor,
+        QISKIT_AVAILABLE
+    )
+    USE_REAL_QUANTUM = True
+except ImportError:
+    USE_REAL_QUANTUM = False
+    logging.warning("Real quantum simulator not available")
+
+logger = logging.getLogger(__name__)
 
 class QuantumTaskManager:
     """量子任務管理系統"""
@@ -23,26 +37,37 @@ class QuantumTaskManager:
         
         用於在無序資料庫中快速搜尋
         """
-        start_time = time.time()
         try:
-            # 模擬量子搜尋
-            iterations = int(np.sqrt(search_space))
-            time.sleep(0.1 + random.random() * 0.05)
-            
-            result = {
-                'algorithm': 'grover',
-                'search_space': search_space,
-                'target': target or f'solution_{random.randint(1, search_space)}',
-                'iterations': iterations,
-                'found': True,
-                'execution_time': time.time() - start_time,
-                'timestamp': datetime.now().isoformat(),
-                'amplitude_amplification': 0.98
-            }
-            self._update_metrics('grover', result['execution_time'])
-            self.task_history.append(result)
-            return result
+            if USE_REAL_QUANTUM:
+                # 使用真實量子模擬器
+                # 限制搜尋空間到合理的 8 量子位大小
+                qubits = int(np.ceil(np.log2(search_space)))
+                if qubits > 8:
+                    qubits = 8
+                actual_space = 2 ** qubits
+                return run_grover(search_space=actual_space, target_string=target)
+            else:
+                # 回退到模擬實現
+                start_time = time.time()
+                iterations = int(np.sqrt(search_space))
+                time.sleep(0.1 + random.random() * 0.05)
+                
+                result = {
+                    'algorithm': 'grover',
+                    'search_space': search_space,
+                    'target': target or f'solution_{random.randint(1, search_space)}',
+                    'iterations': iterations,
+                    'found': True,
+                    'execution_time': time.time() - start_time,
+                    'timestamp': datetime.now().isoformat(),
+                    'amplitude_amplification': 0.98,
+                    'backend': 'simulated'
+                }
+                self._update_metrics('grover', result['execution_time'])
+                self.task_history.append(result)
+                return result
         except Exception as e:
+            logger.error(f"Grover error: {e}")
             return {'error': str(e), 'algorithm': 'grover'}
 
     def run_shor(self, number: int = 15, iterations: int = 3) -> Dict[str, Any]:
@@ -50,39 +75,43 @@ class QuantumTaskManager:
         
         用於大數因數分解的量子演算法
         """
-        start_time = time.time()
         try:
-            time.sleep(0.2 + random.random() * 0.08)
-            
-            # 模擬因數分解結果
-            if number == 15:
-                factors = [3, 5]
+            if USE_REAL_QUANTUM:
+                return run_shor(number=number)
             else:
-                # 簡單分解
-                factors = []
-                n = number
-                d = 2
-                while d * d <= n:
-                    while n % d == 0:
-                        factors.append(d)
-                        n //= d
-                    d += 1
-                if n > 1:
-                    factors.append(n)
-            
-            result = {
-                'algorithm': 'shor',
-                'number': number,
-                'factors': factors,
-                'iterations': iterations,
-                'execution_time': time.time() - start_time,
-                'timestamp': datetime.now().isoformat(),
-                'quantum_period_confidence': 0.96
-            }
-            self._update_metrics('shor', result['execution_time'])
-            self.task_history.append(result)
-            return result
+                # 回退到古典分解
+                start_time = time.time()
+                time.sleep(0.2 + random.random() * 0.08)
+                
+                if number == 15:
+                    factors = [3, 5]
+                else:
+                    factors = []
+                    n = number
+                    d = 2
+                    while d * d <= n:
+                        while n % d == 0:
+                            factors.append(d)
+                            n //= d
+                        d += 1
+                    if n > 1:
+                        factors.append(n)
+                
+                result = {
+                    'algorithm': 'shor',
+                    'number': number,
+                    'factors': factors,
+                    'iterations': iterations,
+                    'execution_time': time.time() - start_time,
+                    'timestamp': datetime.now().isoformat(),
+                    'quantum_period_confidence': 0.96,
+                    'backend': 'simulated'
+                }
+                self._update_metrics('shor', result['execution_time'])
+                self.task_history.append(result)
+                return result
         except Exception as e:
+            logger.error(f"Shor error: {e}")
             return {'error': str(e), 'algorithm': 'shor'}
 
     def run_annealing(self, problem_size: int = 100, temperature_steps: int = 50) -> Dict[str, Any]:
@@ -120,25 +149,31 @@ class QuantumTaskManager:
         
         用於計算分子基態能量
         """
-        start_time = time.time()
         try:
-            time.sleep(0.25 + random.random() * 0.1)
-            
-            result = {
-                'algorithm': 'vqe',
-                'molecule': molecule,
-                'ansatz': ansatz,
-                'optimizer': optimizer,
-                'ground_state_energy': -1.85 if molecule == "H2" else -0.95,
-                'iterations': random.randint(50, 150),
-                'convergence': random.random() * 0.15,
-                'execution_time': time.time() - start_time,
-                'timestamp': datetime.now().isoformat()
-            }
-            self._update_metrics('vqe', result['execution_time'])
-            self.task_history.append(result)
-            return result
+            if USE_REAL_QUANTUM:
+                return run_vqe(molecule=molecule, ansatz=ansatz, depth=2)
+            else:
+                # 回退到模擬實現
+                start_time = time.time()
+                time.sleep(0.25 + random.random() * 0.1)
+                
+                result = {
+                    'algorithm': 'vqe',
+                    'molecule': molecule,
+                    'ansatz': ansatz,
+                    'optimizer': optimizer,
+                    'ground_state_energy': -1.85 if molecule == "H2" else -0.95,
+                    'iterations': random.randint(50, 150),
+                    'convergence': random.random() * 0.15,
+                    'execution_time': time.time() - start_time,
+                    'timestamp': datetime.now().isoformat(),
+                    'backend': 'simulated'
+                }
+                self._update_metrics('vqe', result['execution_time'])
+                self.task_history.append(result)
+                return result
         except Exception as e:
+            logger.error(f"VQE error: {e}")
             return {'error': str(e), 'algorithm': 'vqe'}
 
     def run_qaoa(self, graph_nodes: int = 10, layers: int = 3) -> Dict[str, Any]:
@@ -146,27 +181,33 @@ class QuantumTaskManager:
         
         用於圖論優化問題
         """
-        start_time = time.time()
         try:
-            time.sleep(0.18 + random.random() * 0.07)
-            
-            result = {
-                'algorithm': 'qaoa',
-                'graph_nodes': graph_nodes,
-                'layers': layers,
-                'optimal_cut_value': graph_nodes * 0.7,
-                'approximation_ratio': 0.88,
-                'parameters': {
-                    'beta': [random.random() * np.pi for _ in range(layers)],
-                    'gamma': [random.random() * np.pi for _ in range(layers)]
-                },
-                'execution_time': time.time() - start_time,
-                'timestamp': datetime.now().isoformat()
-            }
-            self._update_metrics('qaoa', result['execution_time'])
-            self.task_history.append(result)
-            return result
+            if USE_REAL_QUANTUM:
+                return run_qaoa(graph_nodes=min(graph_nodes, 8), layers=layers)
+            else:
+                # 回退到模擬實現
+                start_time = time.time()
+                time.sleep(0.18 + random.random() * 0.07)
+                
+                result = {
+                    'algorithm': 'qaoa',
+                    'graph_nodes': graph_nodes,
+                    'layers': layers,
+                    'optimal_cut_value': graph_nodes * 0.7,
+                    'approximation_ratio': 0.88,
+                    'parameters': {
+                        'beta': [random.random() * np.pi for _ in range(layers)],
+                        'gamma': [random.random() * np.pi for _ in range(layers)]
+                    },
+                    'execution_time': time.time() - start_time,
+                    'timestamp': datetime.now().isoformat(),
+                    'backend': 'simulated'
+                }
+                self._update_metrics('qaoa', result['execution_time'])
+                self.task_history.append(result)
+                return result
         except Exception as e:
+            logger.error(f"QAOA error: {e}")
             return {'error': str(e), 'algorithm': 'qaoa'}
 
     def _update_metrics(self, algorithm: str, execution_time: float):
