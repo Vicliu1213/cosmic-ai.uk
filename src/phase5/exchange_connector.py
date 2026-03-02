@@ -367,6 +367,261 @@ class BinanceConnector(BaseExchangeConnector):
             self.logger.error(f"Failed to get Binance balance: {e}")
             return None
 
+    async def get_ticker(self, symbol: str) -> Optional[Dict[str, Any]]:
+        """Get current ticker price for symbol.
+        
+        Args:
+            symbol: Trading pair (e.g., 'BTCUSDT')
+            
+        Returns:
+            Ticker data or None if failed
+        """
+        try:
+            await self.wait_for_rate_limit()
+            
+            response = self.session.get(
+                f"{self._get_base_url()}/v3/ticker/price",
+                params={"symbol": symbol},
+                timeout=self.config.timeout_seconds
+            )
+            response.raise_for_status()
+            return response.json()
+            
+        except Exception as e:
+            self.logger.error(f"Failed to get ticker for {symbol}: {e}")
+            return None
+
+    async def get_order_book(self, symbol: str, limit: int = 20) -> Optional[Dict[str, Any]]:
+        """Get order book for symbol.
+        
+        Args:
+            symbol: Trading pair
+            limit: Number of levels (5, 10, 20, etc.)
+            
+        Returns:
+            Order book data or None if failed
+        """
+        try:
+            await self.wait_for_rate_limit()
+            
+            response = self.session.get(
+                f"{self._get_base_url()}/v3/depth",
+                params={"symbol": symbol, "limit": limit},
+                timeout=self.config.timeout_seconds
+            )
+            response.raise_for_status()
+            return response.json()
+            
+        except Exception as e:
+            self.logger.error(f"Failed to get order book for {symbol}: {e}")
+            return None
+
+    async def place_limit_order(
+        self,
+        symbol: str,
+        side: str,
+        quantity: float,
+        price: float,
+        client_order_id: Optional[str] = None
+    ) -> Optional[Dict[str, Any]]:
+        """Place a limit order on Binance.
+        
+        Args:
+            symbol: Trading pair (e.g., 'BTCUSDT')
+            side: 'BUY' or 'SELL'
+            quantity: Order quantity
+            price: Limit price
+            client_order_id: Optional custom order ID
+            
+        Returns:
+            Order response or None if failed
+        """
+        try:
+            await self.wait_for_rate_limit()
+            
+            timestamp = int(datetime.utcnow().timestamp() * 1000)
+            params = {
+                "symbol": symbol,
+                "side": side.upper(),
+                "type": "LIMIT",
+                "timeInForce": "GTC",
+                "quantity": quantity,
+                "price": price,
+                "timestamp": timestamp,
+                "recvWindow": 5000
+            }
+            
+            if client_order_id:
+                params["newClientOrderId"] = client_order_id
+            
+            params["signature"] = self._get_signature(params)
+            
+            response = self.session.post(
+                f"{self._get_base_url()}/v3/order",
+                params=params,
+                headers={"X-MBX-APIKEY": self.config.api_key},
+                timeout=self.config.timeout_seconds
+            )
+            response.raise_for_status()
+            
+            self.logger.info(
+                f"Placed limit order: {side} {quantity} {symbol} @ {price}"
+            )
+            return response.json()
+            
+        except Exception as e:
+            self.logger.error(f"Failed to place limit order: {e}")
+            return None
+
+    async def place_market_order(
+        self,
+        symbol: str,
+        side: str,
+        quantity: float,
+        client_order_id: Optional[str] = None
+    ) -> Optional[Dict[str, Any]]:
+        """Place a market order on Binance.
+        
+        Args:
+            symbol: Trading pair
+            side: 'BUY' or 'SELL'
+            quantity: Order quantity
+            client_order_id: Optional custom order ID
+            
+        Returns:
+            Order response or None if failed
+        """
+        try:
+            await self.wait_for_rate_limit()
+            
+            timestamp = int(datetime.utcnow().timestamp() * 1000)
+            params = {
+                "symbol": symbol,
+                "side": side.upper(),
+                "type": "MARKET",
+                "quantity": quantity,
+                "timestamp": timestamp,
+                "recvWindow": 5000
+            }
+            
+            if client_order_id:
+                params["newClientOrderId"] = client_order_id
+            
+            params["signature"] = self._get_signature(params)
+            
+            response = self.session.post(
+                f"{self._get_base_url()}/v3/order",
+                params=params,
+                headers={"X-MBX-APIKEY": self.config.api_key},
+                timeout=self.config.timeout_seconds
+            )
+            response.raise_for_status()
+            
+            self.logger.info(f"Placed market order: {side} {quantity} {symbol}")
+            return response.json()
+            
+        except Exception as e:
+            self.logger.error(f"Failed to place market order: {e}")
+            return None
+
+    async def cancel_order(
+        self,
+        symbol: str,
+        order_id: Optional[str] = None,
+        client_order_id: Optional[str] = None
+    ) -> Optional[Dict[str, Any]]:
+        """Cancel an order on Binance.
+        
+        Args:
+            symbol: Trading pair
+            order_id: Binance order ID
+            client_order_id: Client order ID
+            
+        Returns:
+            Cancel response or None if failed
+        """
+        try:
+            await self.wait_for_rate_limit()
+            
+            timestamp = int(datetime.utcnow().timestamp() * 1000)
+            params = {
+                "symbol": symbol,
+                "timestamp": timestamp,
+                "recvWindow": 5000
+            }
+            
+            if order_id:
+                params["orderId"] = order_id
+            elif client_order_id:
+                params["origClientOrderId"] = client_order_id
+            else:
+                raise ValueError("Either orderId or clientOrderId must be provided")
+            
+            params["signature"] = self._get_signature(params)
+            
+            response = self.session.delete(
+                f"{self._get_base_url()}/v3/order",
+                params=params,
+                headers={"X-MBX-APIKEY": self.config.api_key},
+                timeout=self.config.timeout_seconds
+            )
+            response.raise_for_status()
+            
+            self.logger.info(f"Cancelled order: {order_id or client_order_id}")
+            return response.json()
+            
+        except Exception as e:
+            self.logger.error(f"Failed to cancel order: {e}")
+            return None
+
+    async def get_order_status(
+        self,
+        symbol: str,
+        order_id: Optional[str] = None,
+        client_order_id: Optional[str] = None
+    ) -> Optional[Dict[str, Any]]:
+        """Get order status from Binance.
+        
+        Args:
+            symbol: Trading pair
+            order_id: Binance order ID
+            client_order_id: Client order ID
+            
+        Returns:
+            Order status or None if failed
+        """
+        try:
+            await self.wait_for_rate_limit()
+            
+            timestamp = int(datetime.utcnow().timestamp() * 1000)
+            params = {
+                "symbol": symbol,
+                "timestamp": timestamp,
+                "recvWindow": 5000
+            }
+            
+            if order_id:
+                params["orderId"] = order_id
+            elif client_order_id:
+                params["origClientOrderId"] = client_order_id
+            else:
+                raise ValueError("Either orderId or clientOrderId must be provided")
+            
+            params["signature"] = self._get_signature(params)
+            
+            response = self.session.get(
+                f"{self._get_base_url()}/v3/order",
+                params=params,
+                headers={"X-MBX-APIKEY": self.config.api_key},
+                timeout=self.config.timeout_seconds
+            )
+            response.raise_for_status()
+            return response.json()
+            
+        except Exception as e:
+            self.logger.error(f"Failed to get order status: {e}")
+            return None
+
 
 # ============================================================================
 # Kraken Exchange Connector
@@ -502,6 +757,259 @@ class KrakenConnector(BaseExchangeConnector):
             self.logger.error(f"Failed to get Kraken balance: {e}")
             return None
 
+    async def get_ticker(self, symbol: str) -> Optional[Dict[str, Any]]:
+        """Get current ticker price for symbol.
+        
+        Args:
+            symbol: Trading pair (e.g., 'XBTUSDT')
+            
+        Returns:
+            Ticker data or None if failed
+        """
+        try:
+            await self.wait_for_rate_limit()
+            
+            response = self.session.get(
+                f"{self._get_base_url()}/0/public/Ticker",
+                params={"pair": symbol},
+                timeout=self.config.timeout_seconds
+            )
+            response.raise_for_status()
+            result = response.json()
+            
+            if result.get("error"):
+                self.logger.error(f"Kraken API error: {result['error']}")
+                return None
+                
+            return result.get("result", {})
+            
+        except Exception as e:
+            self.logger.error(f"Failed to get Kraken ticker for {symbol}: {e}")
+            return None
+
+    async def place_limit_order(
+        self,
+        symbol: str,
+        side: str,
+        quantity: float,
+        price: float,
+        client_order_id: Optional[str] = None
+    ) -> Optional[Dict[str, Any]]:
+        """Place a limit order on Kraken.
+        
+        Args:
+            symbol: Trading pair (e.g., 'XBTUSDT')
+            side: 'buy' or 'sell'
+            quantity: Order quantity
+            price: Limit price
+            client_order_id: Optional custom order ID
+            
+        Returns:
+            Order response or None if failed
+        """
+        try:
+            await self.wait_for_rate_limit()
+            
+            nonce = str(int(datetime.utcnow().timestamp() * 1000))
+            data = {
+                "nonce": nonce,
+                "pair": symbol,
+                "type": side.lower(),
+                "ordertype": "limit",
+                "price": price,
+                "volume": quantity
+            }
+            
+            if client_order_id:
+                data["userref"] = client_order_id
+            
+            urlpath = "/0/private/AddOrder"
+            signature = self._get_kraken_signature(urlpath, data, nonce)
+            
+            headers = {
+                "API-Sign": signature,
+                "API-Key": self.config.api_key
+            }
+            
+            response = self.session.post(
+                f"{self._get_base_url()}{urlpath}",
+                headers=headers,
+                data=data,
+                timeout=self.config.timeout_seconds
+            )
+            response.raise_for_status()
+            result = response.json()
+            
+            if result.get("error"):
+                self.logger.error(f"Kraken API error: {result['error']}")
+                return None
+            
+            self.logger.info(
+                f"Placed Kraken limit order: {side} {quantity} {symbol} @ {price}"
+            )
+            return result.get("result", {})
+            
+        except Exception as e:
+            self.logger.error(f"Failed to place Kraken limit order: {e}")
+            return None
+
+    async def place_market_order(
+        self,
+        symbol: str,
+        side: str,
+        quantity: float,
+        client_order_id: Optional[str] = None
+    ) -> Optional[Dict[str, Any]]:
+        """Place a market order on Kraken.
+        
+        Args:
+            symbol: Trading pair
+            side: 'buy' or 'sell'
+            quantity: Order quantity
+            client_order_id: Optional custom order ID
+            
+        Returns:
+            Order response or None if failed
+        """
+        try:
+            await self.wait_for_rate_limit()
+            
+            nonce = str(int(datetime.utcnow().timestamp() * 1000))
+            data = {
+                "nonce": nonce,
+                "pair": symbol,
+                "type": side.lower(),
+                "ordertype": "market",
+                "volume": quantity
+            }
+            
+            if client_order_id:
+                data["userref"] = client_order_id
+            
+            urlpath = "/0/private/AddOrder"
+            signature = self._get_kraken_signature(urlpath, data, nonce)
+            
+            headers = {
+                "API-Sign": signature,
+                "API-Key": self.config.api_key
+            }
+            
+            response = self.session.post(
+                f"{self._get_base_url()}{urlpath}",
+                headers=headers,
+                data=data,
+                timeout=self.config.timeout_seconds
+            )
+            response.raise_for_status()
+            result = response.json()
+            
+            if result.get("error"):
+                self.logger.error(f"Kraken API error: {result['error']}")
+                return None
+            
+            self.logger.info(f"Placed Kraken market order: {side} {quantity} {symbol}")
+            return result.get("result", {})
+            
+        except Exception as e:
+            self.logger.error(f"Failed to place Kraken market order: {e}")
+            return None
+
+    async def cancel_order(
+        self,
+        order_id: str,
+        client_order_id: Optional[str] = None
+    ) -> Optional[Dict[str, Any]]:
+        """Cancel an order on Kraken.
+        
+        Args:
+            order_id: Kraken order ID
+            client_order_id: Client order ID
+            
+        Returns:
+            Cancel response or None if failed
+        """
+        try:
+            await self.wait_for_rate_limit()
+            
+            nonce = str(int(datetime.utcnow().timestamp() * 1000))
+            data = {
+                "nonce": nonce,
+                "txid": order_id
+            }
+            
+            urlpath = "/0/private/CancelOrder"
+            signature = self._get_kraken_signature(urlpath, data, nonce)
+            
+            headers = {
+                "API-Sign": signature,
+                "API-Key": self.config.api_key
+            }
+            
+            response = self.session.post(
+                f"{self._get_base_url()}{urlpath}",
+                headers=headers,
+                data=data,
+                timeout=self.config.timeout_seconds
+            )
+            response.raise_for_status()
+            result = response.json()
+            
+            if result.get("error"):
+                self.logger.error(f"Kraken API error: {result['error']}")
+                return None
+            
+            self.logger.info(f"Cancelled Kraken order: {order_id}")
+            return result.get("result", {})
+            
+        except Exception as e:
+            self.logger.error(f"Failed to cancel Kraken order: {e}")
+            return None
+
+    async def get_order_status(self, order_id: str) -> Optional[Dict[str, Any]]:
+        """Get order status from Kraken.
+        
+        Args:
+            order_id: Kraken order ID
+            
+        Returns:
+            Order status or None if failed
+        """
+        try:
+            await self.wait_for_rate_limit()
+            
+            nonce = str(int(datetime.utcnow().timestamp() * 1000))
+            data = {
+                "nonce": nonce,
+                "txid": order_id
+            }
+            
+            urlpath = "/0/private/QueryOrders"
+            signature = self._get_kraken_signature(urlpath, data, nonce)
+            
+            headers = {
+                "API-Sign": signature,
+                "API-Key": self.config.api_key
+            }
+            
+            response = self.session.post(
+                f"{self._get_base_url()}{urlpath}",
+                headers=headers,
+                data=data,
+                timeout=self.config.timeout_seconds
+            )
+            response.raise_for_status()
+            result = response.json()
+            
+            if result.get("error"):
+                self.logger.error(f"Kraken API error: {result['error']}")
+                return None
+            
+            return result.get("result", {})
+            
+        except Exception as e:
+            self.logger.error(f"Failed to get Kraken order status: {e}")
+            return None
+
 
 # ============================================================================
 # Coinbase Exchange Connector
@@ -634,6 +1142,260 @@ class CoinbaseConnector(BaseExchangeConnector):
 
         except Exception as e:
             self.logger.error(f"Failed to get Coinbase balance: {e}")
+            return None
+
+    async def get_ticker(self, symbol: str) -> Optional[Dict[str, Any]]:
+        """Get current ticker price for symbol.
+        
+        Args:
+            symbol: Trading pair (e.g., 'BTC-USD')
+            
+        Returns:
+            Ticker data or None if failed
+        """
+        try:
+            await self.wait_for_rate_limit()
+            
+            path = f"/api/v3/brokerage/products/{symbol}"
+            timestamp, signature, key_id = self._get_coinbase_signature("GET", path)
+            
+            headers = {
+                "CB-ACCESS-KEY": self.config.api_key,
+                "CB-ACCESS-SIGN": signature,
+                "CB-ACCESS-TIMESTAMP": timestamp,
+                "CB-ACCESS-PASSPHRASE": self.config.passphrase or ""
+            }
+            
+            response = self.session.get(
+                f"{self._get_base_url()}{path}",
+                headers=headers,
+                timeout=self.config.timeout_seconds
+            )
+            response.raise_for_status()
+            return response.json()
+            
+        except Exception as e:
+            self.logger.error(f"Failed to get Coinbase ticker for {symbol}: {e}")
+            return None
+
+    async def place_limit_order(
+        self,
+        symbol: str,
+        side: str,
+        quantity: float,
+        price: float,
+        client_order_id: Optional[str] = None
+    ) -> Optional[Dict[str, Any]]:
+        """Place a limit order on Coinbase.
+        
+        Args:
+            symbol: Trading pair (e.g., 'BTC-USD')
+            side: 'BUY' or 'SELL'
+            quantity: Order quantity
+            price: Limit price
+            client_order_id: Optional custom order ID
+            
+        Returns:
+            Order response or None if failed
+        """
+        try:
+            await self.wait_for_rate_limit()
+            import json as json_lib
+            
+            body = json_lib.dumps({
+                "product_id": symbol,
+                "side": side.lower(),
+                "order_configuration": {
+                    "limit_limit_gtc": {
+                        "base_size": str(quantity),
+                        "limit_price": str(price)
+                    }
+                }
+            })
+            
+            if client_order_id:
+                body = json_lib.dumps({
+                    "product_id": symbol,
+                    "side": side.lower(),
+                    "client_order_id": client_order_id,
+                    "order_configuration": {
+                        "limit_limit_gtc": {
+                            "base_size": str(quantity),
+                            "limit_price": str(price)
+                        }
+                    }
+                })
+            
+            path = "/api/v3/brokerage/orders"
+            timestamp, signature, key_id = self._get_coinbase_signature("POST", path, body)
+            
+            headers = {
+                "CB-ACCESS-KEY": self.config.api_key,
+                "CB-ACCESS-SIGN": signature,
+                "CB-ACCESS-TIMESTAMP": timestamp,
+                "CB-ACCESS-PASSPHRASE": self.config.passphrase or "",
+                "Content-Type": "application/json"
+            }
+            
+            response = self.session.post(
+                f"{self._get_base_url()}{path}",
+                headers=headers,
+                data=body,
+                timeout=self.config.timeout_seconds
+            )
+            response.raise_for_status()
+            
+            self.logger.info(
+                f"Placed Coinbase limit order: {side} {quantity} {symbol} @ {price}"
+            )
+            return response.json()
+            
+        except Exception as e:
+            self.logger.error(f"Failed to place Coinbase limit order: {e}")
+            return None
+
+    async def place_market_order(
+        self,
+        symbol: str,
+        side: str,
+        quantity: float,
+        client_order_id: Optional[str] = None
+    ) -> Optional[Dict[str, Any]]:
+        """Place a market order on Coinbase.
+        
+        Args:
+            symbol: Trading pair
+            side: 'BUY' or 'SELL'
+            quantity: Order quantity
+            client_order_id: Optional custom order ID
+            
+        Returns:
+            Order response or None if failed
+        """
+        try:
+            await self.wait_for_rate_limit()
+            import json as json_lib
+            
+            body = json_lib.dumps({
+                "product_id": symbol,
+                "side": side.lower(),
+                "order_configuration": {
+                    "market_market_ioc": {
+                        "base_size": str(quantity)
+                    }
+                }
+            })
+            
+            if client_order_id:
+                body = json_lib.dumps({
+                    "product_id": symbol,
+                    "side": side.lower(),
+                    "client_order_id": client_order_id,
+                    "order_configuration": {
+                        "market_market_ioc": {
+                            "base_size": str(quantity)
+                        }
+                    }
+                })
+            
+            path = "/api/v3/brokerage/orders"
+            timestamp, signature, key_id = self._get_coinbase_signature("POST", path, body)
+            
+            headers = {
+                "CB-ACCESS-KEY": self.config.api_key,
+                "CB-ACCESS-SIGN": signature,
+                "CB-ACCESS-TIMESTAMP": timestamp,
+                "CB-ACCESS-PASSPHRASE": self.config.passphrase or "",
+                "Content-Type": "application/json"
+            }
+            
+            response = self.session.post(
+                f"{self._get_base_url()}{path}",
+                headers=headers,
+                data=body,
+                timeout=self.config.timeout_seconds
+            )
+            response.raise_for_status()
+            
+            self.logger.info(f"Placed Coinbase market order: {side} {quantity} {symbol}")
+            return response.json()
+            
+        except Exception as e:
+            self.logger.error(f"Failed to place Coinbase market order: {e}")
+            return None
+
+    async def cancel_order(self, order_id: str) -> Optional[Dict[str, Any]]:
+        """Cancel an order on Coinbase.
+        
+        Args:
+            order_id: Coinbase order ID
+            
+        Returns:
+            Cancel response or None if failed
+        """
+        try:
+            await self.wait_for_rate_limit()
+            
+            path = f"/api/v3/brokerage/orders/batch/cancel"
+            body = json.dumps({"order_ids": [order_id]})
+            
+            timestamp, signature, key_id = self._get_coinbase_signature("POST", path, body)
+            
+            headers = {
+                "CB-ACCESS-KEY": self.config.api_key,
+                "CB-ACCESS-SIGN": signature,
+                "CB-ACCESS-TIMESTAMP": timestamp,
+                "CB-ACCESS-PASSPHRASE": self.config.passphrase or "",
+                "Content-Type": "application/json"
+            }
+            
+            response = self.session.post(
+                f"{self._get_base_url()}{path}",
+                headers=headers,
+                data=body,
+                timeout=self.config.timeout_seconds
+            )
+            response.raise_for_status()
+            
+            self.logger.info(f"Cancelled Coinbase order: {order_id}")
+            return response.json()
+            
+        except Exception as e:
+            self.logger.error(f"Failed to cancel Coinbase order: {e}")
+            return None
+
+    async def get_order_status(self, order_id: str) -> Optional[Dict[str, Any]]:
+        """Get order status from Coinbase.
+        
+        Args:
+            order_id: Coinbase order ID
+            
+        Returns:
+            Order status or None if failed
+        """
+        try:
+            await self.wait_for_rate_limit()
+            
+            path = f"/api/v3/brokerage/orders/historical/{order_id}"
+            timestamp, signature, key_id = self._get_coinbase_signature("GET", path)
+            
+            headers = {
+                "CB-ACCESS-KEY": self.config.api_key,
+                "CB-ACCESS-SIGN": signature,
+                "CB-ACCESS-TIMESTAMP": timestamp,
+                "CB-ACCESS-PASSPHRASE": self.config.passphrase or ""
+            }
+            
+            response = self.session.get(
+                f"{self._get_base_url()}{path}",
+                headers=headers,
+                timeout=self.config.timeout_seconds
+            )
+            response.raise_for_status()
+            return response.json()
+            
+        except Exception as e:
+            self.logger.error(f"Failed to get Coinbase order status: {e}")
             return None
 
 
