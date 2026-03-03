@@ -10,8 +10,8 @@ terraform {
 
 # 建立一個隨機的寵物名稱（只是字串，不會收費）
 resource "random_pet" "my_pet" {
-  prefix = "hello"
-  length = 2
+  prefix    = "hello"
+  separator = "-"
 }
 
 # 輸出結果，讓計畫可以看到
