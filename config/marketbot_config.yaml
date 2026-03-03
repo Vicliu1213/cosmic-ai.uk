@@ -1,0 +1,352 @@
+# MarketBot Gateway 集成配置 v2.0
+# 🤖 MarketBot Configuration for Cosmic AI Integration
+# 支持 25+ 多渠道交付 | Multi-channel support
+
+marketbot:
+  # Gateway 連接配置
+  gateway:
+    # Gateway 服務地址 (TypeScript gateway 運行位置)
+    url: "http://127.0.0.1:18789"
+    
+    # 認證配置
+    auth:
+      enabled: false  # 如果 Gateway 啟用了認證
+      token: "${MARKETBOT_TOKEN}"  # 從環境變數讀取
+      api_key: "${MARKETBOT_API_KEY}"
+      type: "bearer"  # 認證類型 (bearer, api_key, custom)
+    
+    # 連接超時和重試
+    timeout: 10          # 請求超時 (秒)
+    max_retries: 3       # 重試次數
+    retry_delay: 2       # 重試延遲 (秒)
+    connect_timeout: 5   # 連接超時
+    
+    # 連接池配置
+    pool_size: 100       # 連接池大小
+    max_overflow: 10     # 最大溢出連接
+  
+  # 默認通知渠道 (優先級: 中文IM > 國際渠道)
+  default_channels:
+    - dingtalk      # 釘釘 (中國 - 首選)
+    - wecom         # 企業微信 (中國 - 次選)
+    - telegram      # Telegram (國際)
+    - discord       # Discord (國際)
+  
+  # 中文IM 配置 (優先為中國用戶)
+  chinese_im:
+    enabled: true
+    channels:
+      - dingtalk
+      - wecom
+      - feishu
+    fallback_international: true  # 中文IM失敗時降級到國際渠道
+  
+  # 國際渠道配置
+  international:
+    enabled: true
+    channels:
+      - telegram
+      - discord
+      - slack
+      - webhook
+  
+  # 信號優先級映射
+  priority_mapping:
+    LOW: 
+      confidence_range: [0.0, 0.5]
+      marketbot_priority: "LOW"
+      channels:
+        - telegram
+        - discord
+    NORMAL:
+      confidence_range: [0.5, 0.7]
+      marketbot_priority: "NORMAL"
+      channels:
+        - dingtalk
+        - telegram
+    HIGH:
+      confidence_range: [0.7, 0.85]
+      marketbot_priority: "HIGH"
+      channels:
+        - dingtalk
+        - wecom
+        - telegram
+    CRITICAL:
+      confidence_range: [0.85, 1.0]
+      marketbot_priority: "CRITICAL"
+      channels:
+        - dingtalk
+        - wecom
+        - telegram
+        - discord
+  
+  # 信號類型映射
+  signal_mapping:
+    BUY: 
+      emoji: "📈"
+      description: "買入信號"
+      action: "LONG"
+    SELL:
+      emoji: "📉"
+      description: "賣出信號"
+      action: "SHORT"
+    HOLD:
+      emoji: "⏸️"
+      description: "持倉信號"
+      action: "NEUTRAL"
+    LIQUIDATE:
+      emoji: "⚠️"
+      description: "清倉信號"
+      action: "EXIT"
+  
+  # 消息配置
+  messages:
+    # 交易信號消息
+    trading_signal:
+      enabled: true
+      template: "trading_signal"
+      priority: "HIGH"
+      tags:
+        - trading
+        - signal
+        - cosmic
+    
+    # 投資組合更新
+    portfolio_update:
+      enabled: true
+      template: "portfolio_update"
+      priority: "NORMAL"
+      interval: 300  # 5 分鐘
+      tags:
+        - portfolio
+    
+    # 風險告警
+    risk_alert:
+      enabled: true
+      template: "risk_alert"
+      priority: "CRITICAL"
+      tags:
+        - risk
+        - alert
+    
+    # 交易成交
+    trade_filled:
+      enabled: true
+      template: "trade_filled"
+      priority: "HIGH"
+      tags:
+        - trade
+        - execution
+    
+    # 代理決策
+    agent_decision:
+      enabled: true
+      template: "agent_decision"
+      priority: "NORMAL"
+      tags:
+        - agent
+        - decision
+  
+  # 監控面板配置
+  dashboard:
+    enabled: true
+    refresh_interval: 5  # 面板刷新間隔 (秒)
+    max_history: 100     # 保留最近 100 條信號
+    display_charts: true
+    enable_grafana: true
+    grafana_url: "http://127.0.0.1:3000"
+    grafana_dashboard_id: "cosmic-trading"
+  
+  # 消息格式配置
+  message:
+    # 是否在消息中包含完整數據
+    include_data: true
+    
+    # 是否在消息中包含風險評估
+    include_risk: true
+    
+    # 是否在消息中包含代理投票
+    include_agent_votes: true
+    
+    # 消息範本
+    templates:
+      default: |
+        🚀 {emoji} {signal_action} 信號
+        ━━━━━━━━━━━━━━━━━━━━━━
+        📊 交易對: {symbol}
+        💡 操作: {action}
+        📈 信心度: {confidence:.1%}
+        💰 價格: ${price:.2f}
+        📦 數量: {quantity:.4f}
+        🎯 策略: {strategy}
+        🕐 時間: {timestamp}
+        ━━━━━━━━━━━━━━━━━━━━━━
+      
+      minimal: |
+        {emoji} {symbol} {action} @ {price}
+      
+      detailed: |
+        🚀 {emoji} {signal_action} 信號 - {symbol}
+        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        
+        📊 交易詳情:
+          • 交易對: {symbol}
+          • 操作: {action}
+          • 信心度: {confidence:.1%}
+          • 價格: ${price:.2f}
+          • 數量: {quantity:.4f}
+        
+        🎯 策略信息:
+          • 策略名稱: {strategy}
+          • 時間戳: {timestamp}
+        
+        ⚠️ 風險提示:
+          • 請在確認後執行交易
+          • 注意市場流動性
+          • 設置止損點位
+        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  
+  # 監控配置
+  monitoring:
+    enabled: true
+    update_interval: 60  # 秒
+    store_history: true
+    max_history: 10000
+  
+  # 性能配置
+  performance:
+    connection_pool_size: 100
+    message_queue_size: 10000
+    batch_size: 100
+    batch_timeout: 5
+    flush_interval: 5
+
+# ============================================================================
+# 渠道配置 (Channel Configurations)
+# ============================================================================
+
+channels:
+  # 釘釘 (DingTalk) - 中國企業IM
+  dingtalk:
+    enabled: true
+    webhook_url: "${DINGTALK_WEBHOOK_URL}"
+    app_id: "${DINGTALK_APP_ID}"
+    app_secret: "${DINGTALK_APP_SECRET}"
+    at_users: []  # 需要 @ 的用戶ID列表
+    at_all: false
+    msg_type: "text"  # text, markdown, card
+    retry_on_failure: true
+  
+  # 企業微信 (WeChat Work) - 中國企業IM
+  wecom:
+    enabled: true
+    corp_id: "${WECOM_CORP_ID}"
+    agent_id: "${WECOM_AGENT_ID}"
+    secret: "${WECOM_SECRET}"
+    webhook_url: "${WECOM_WEBHOOK_URL}"
+    touser: "${WECOM_TOUSER}"  # 接收用戶
+    msg_type: "text"  # text, markdown, image
+    api_base: "https://qyapi.weixin.qq.com"
+    retry_on_failure: true
+  
+  # 飛書 (Feishu) - 字節跳動企業IM
+  feishu:
+    enabled: true
+    app_id: "${FEISHU_APP_ID}"
+    app_secret: "${FEISHU_APP_SECRET}"
+    webhook_url: "${FEISHU_WEBHOOK_URL}"
+    msg_type: "text"
+    retry_on_failure: true
+  
+  # Telegram - 國際即時通訊
+  telegram:
+    enabled: true
+    bot_token: "${TELEGRAM_BOT_TOKEN}"
+    chat_id: "${TELEGRAM_CHAT_ID}"
+    parse_mode: "HTML"  # HTML, Markdown, MarkdownV2
+    disable_notification: false
+    retry_on_failure: true
+  
+  # Discord - 遊戲和社區
+  discord:
+    enabled: true
+    webhook_url: "${DISCORD_WEBHOOK_URL}"
+    username: "Cosmic Trading Bot"
+    avatar_url: "https://example.com/avatar.png"
+    retry_on_failure: true
+  
+  # Slack - 企業協作平台
+  slack:
+    enabled: false
+    bot_token: "${SLACK_BOT_TOKEN}"
+    channel: "${SLACK_CHANNEL}"
+    username: "Cosmic Trading"
+    icon_emoji: ":robot_face:"
+  
+  # Email - 郵件通知
+  email:
+    enabled: false
+    smtp_host: "${SMTP_HOST}"
+    smtp_port: 587
+    use_tls: true
+    from_address: "${EMAIL_FROM}"
+    from_name: "Cosmic Trading"
+    password: "${EMAIL_PASSWORD}"
+    to_addresses: []
+  
+  # 通用 Webhook
+  webhook:
+    enabled: true
+    endpoints: []  # 可以添加多個 webhook 端點
+    retry_on_failure: true
+
+# ============================================================================
+# 日誌配置 (Logging)
+# ============================================================================
+
+logging:
+  level: INFO
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: "logs/marketbot_integration.log"
+  modules:
+    marketbot_connector: "DEBUG"
+    base_bridge: "INFO"
+
+# ============================================================================
+# 安全配置 (Security)
+# ============================================================================
+
+security:
+  # SSL/TLS
+  ssl:
+    enabled: true
+    verify_cert: true
+    ca_bundle: null  # 自定義 CA bundle 路徑
+  
+  # IP 白名單
+  whitelist:
+    enabled: false
+    ips: []
+  
+  # 簽名驗證
+  signature:
+    enabled: true
+    algorithm: "sha256"
+    secret: "${SIGNATURE_SECRET}"
+
+# ============================================================================
+# 開發和測試 (Development & Testing)
+# ============================================================================
+
+development:
+  # 模擬模式 (不實際發送到 Gateway)
+  mock_mode: false
+  
+  # 調試信息
+  debug: false
+  
+  # 測試配置
+  test:
+    enabled: true
+    test_channels: ["telegram"]  # 測試時只發送到這些渠道
+    mock_gateway_responses: true
