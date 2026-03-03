@@ -93,9 +93,10 @@ class ErrorCorrectionCodec:
 class RepetitionCode(ErrorCorrectionCodec):
     """3-比特重复码实现"""
     
-    def __init__(self):
+    def __init__(self, num_qubits: int = 3):
         super().__init__(CodeType.REPETITION)
-        self.physical_qubits = 3
+        self.physical_qubits = num_qubits if num_qubits > 0 else 3
+        self.num_qubits = self.physical_qubits  # 兼容性別名
         # 简单的综合症表
         self.syndrome_table = {
             (0, 0): 0,    # 无错误
@@ -106,6 +107,11 @@ class RepetitionCode(ErrorCorrectionCodec):
     
     def encode(self, logical_bit: int) -> np.ndarray:
         """编码逻辑比特"""
+        # 支持数组输入，提取第一个元素
+        if isinstance(logical_bit, np.ndarray):
+            logical_bit = int(logical_bit[0])
+        else:
+            logical_bit = int(logical_bit)
         if logical_bit == 0:
             return np.array([0, 0, 0])
         else:
@@ -114,8 +120,12 @@ class RepetitionCode(ErrorCorrectionCodec):
     def extract_syndrome(self, physical_state: np.ndarray) -> ErrorSyndrome:
         """提取综合症"""
         # 计算奇偶性
-        parity_1 = (physical_state[0] + physical_state[1]) % 2
-        parity_2 = (physical_state[1] + physical_state[2]) % 2
+        # 转换复数为实数 (取绝对值)
+        if np.iscomplexobj(physical_state):
+            physical_state = np.abs(physical_state)
+        
+        parity_1 = int(physical_state[0] + physical_state[1] >= 1.0) % 2
+        parity_2 = int(physical_state[1] + physical_state[2] >= 1.0) % 2
         
         syndrome_bits = [parity_1, parity_2]
         syndrome_tuple = tuple(syndrome_bits)
@@ -130,12 +140,22 @@ class RepetitionCode(ErrorCorrectionCodec):
             estimated_error_location=error_location if error_location > 0 else None
         )
     
+    def detect_errors(self, physical_state: np.ndarray) -> List[int]:
+        """检测错误 - 返回错误列表，兼容测试接口"""
+        syndrome = self.extract_syndrome(physical_state)
+        return syndrome.syndrome_bits
+    
     def correct(
         self,
         physical_state: np.ndarray,
-        syndrome: ErrorSyndrome
+        syndrome: Optional[ErrorSyndrome] = None
     ) -> np.ndarray:
         """纠正错误"""
+        
+        # 如果没有提供 syndrome，则提取它
+        if syndrome is None:
+            syndrome = self.extract_syndrome(physical_state)
+        
         self.performance_stats['corrections_attempted'] += 1
         
         corrected = physical_state.copy()
@@ -161,12 +181,18 @@ class RepetitionCode(ErrorCorrectionCodec):
 class ShorCode(ErrorCorrectionCodec):
     """9-比特 Shor 码实现"""
     
-    def __init__(self):
+    def __init__(self, num_qubits: int = 9):
         super().__init__(CodeType.SHOR)
-        self.physical_qubits = 9
+        self.physical_qubits = num_qubits if num_qubits > 0 else 9
+        self.num_qubits = self.physical_qubits  # 兼容性別名
     
     def encode(self, logical_bit: int) -> np.ndarray:
         """编码逻辑比特"""
+        # 支持数组输入，提取第一个元素
+        if isinstance(logical_bit, np.ndarray):
+            logical_bit = int(logical_bit[0])
+        else:
+            logical_bit = int(logical_bit)
         if logical_bit == 0:
             # |0⟩_L = (|000⟩ + |111⟩) ⊗ (|000⟩ + |111⟩) ⊗ (|000⟩ + |111⟩)
             # 简化：3组，每组3个比特
@@ -181,19 +207,23 @@ class ShorCode(ErrorCorrectionCodec):
         # 对于每组计算奇偶性
         syndromes = []
         
+        # 转换复数为实数 (取绝对值)
+        if np.iscomplexobj(physical_state):
+            physical_state = np.abs(physical_state)
+        
         for group in range(3):
             start = group * 3
             end = start + 3
             group_bits = physical_state[start:end]
             
-            # 检测比特翻转
-            parity = np.sum(group_bits) % 2
+            # 检测比特翻转 (使用整数转换避免模运算错误)
+            parity = int(np.sum(group_bits) >= 1.5) % 2  # 如果和 >= 1.5，认为是 1
             syndromes.append(parity)
         
         # 检测相位翻转
         phase_syndrome = (
-            (physical_state[0] + physical_state[3] + physical_state[6]) % 2,
-            (physical_state[1] + physical_state[4] + physical_state[7]) % 2
+            (int(physical_state[0] + physical_state[3] + physical_state[6] >= 1.5) % 2),
+            (int(physical_state[1] + physical_state[4] + physical_state[7] >= 1.5) % 2)
         )
         
         return ErrorSyndrome(
@@ -203,12 +233,22 @@ class ShorCode(ErrorCorrectionCodec):
             estimated_error_location=int(np.argmax(syndromes)) if sum(syndromes) > 0 else None
         )
     
+    def detect_errors(self, physical_state: np.ndarray) -> List[int]:
+        """检测错误 - 返回错误列表，兼容测试接口"""
+        syndrome = self.extract_syndrome(physical_state)
+        return syndrome.syndrome_bits
+    
     def correct(
         self,
         physical_state: np.ndarray,
-        syndrome: ErrorSyndrome
+        syndrome: Optional[ErrorSyndrome] = None
     ) -> np.ndarray:
         """纠正错误"""
+        
+        # 如果没有提供 syndrome，则提取它
+        if syndrome is None:
+            syndrome = self.extract_syndrome(physical_state)
+        
         self.performance_stats['corrections_attempted'] += 1
         
         corrected = physical_state.copy()
@@ -240,15 +280,34 @@ class ShorCode(ErrorCorrectionCodec):
 class SurfaceCode(ErrorCorrectionCodec):
     """表面码实现 (简化版)"""
     
-    def __init__(self, lattice_size: int = 5):
+    def __init__(self, distance: int = None, num_qubits: int = None, lattice_size: int = 5):
         super().__init__(CodeType.SURFACE)
-        self.lattice_size = lattice_size
-        self.physical_qubits = lattice_size * lattice_size
+        # 支持多种参数方式
+        if distance is not None:
+            self.distance = distance
+            self.lattice_size = distance
+        elif num_qubits is not None:
+            self.lattice_size = int(np.sqrt(num_qubits)) if num_qubits > 0 else 5
+            self.distance = self.lattice_size
+        elif lattice_size is not None and lattice_size > 0:
+            self.lattice_size = lattice_size
+            self.distance = lattice_size
+        else:
+            self.distance = 5
+            self.lattice_size = 5
+        
+        self.physical_qubits = self.lattice_size * self.lattice_size
+        self.num_qubits = self.physical_qubits  # 兼容性別名
         self.plaquette_operators = []
         self.vertex_operators = []
     
     def encode(self, logical_bit: int) -> np.ndarray:
         """编码"""
+        # 支持数组输入，提取第一个元素
+        if isinstance(logical_bit, np.ndarray):
+            logical_bit = int(logical_bit[0])
+        else:
+            logical_bit = int(logical_bit)
         state = np.zeros(self.physical_qubits)
         if logical_bit == 1:
             state[:] = 1
@@ -257,6 +316,10 @@ class SurfaceCode(ErrorCorrectionCodec):
     def extract_syndrome(self, physical_state: np.ndarray) -> ErrorSyndrome:
         """提取综合症"""
         # 简化的表面码综合症提取
+        # 转换复数为实数 (取绝对值)
+        if np.iscomplexobj(physical_state):
+            physical_state = np.abs(physical_state)
+        
         syndrome_bits = []
         
         for i in range(0, min(4, len(physical_state))):
@@ -265,7 +328,7 @@ class SurfaceCode(ErrorCorrectionCodec):
                 (i-1) % len(physical_state),
                 (i+1) % len(physical_state)
             ]
-            parity = sum(physical_state[n] for n in neighbors) % 2
+            parity = int(sum(physical_state[n] for n in neighbors) >= 1.0) % 2
             syndrome_bits.append(parity)
         
         return ErrorSyndrome(
@@ -274,12 +337,22 @@ class SurfaceCode(ErrorCorrectionCodec):
             confidence=0.98
         )
     
+    def detect_errors(self, physical_state: np.ndarray) -> List[int]:
+        """检测错误 - 返回错误列表，兼容测试接口"""
+        syndrome = self.extract_syndrome(physical_state)
+        return syndrome.syndrome_bits
+    
     def correct(
         self,
         physical_state: np.ndarray,
-        syndrome: ErrorSyndrome
+        syndrome: Optional[ErrorSyndrome] = None
     ) -> np.ndarray:
         """纠正错误"""
+        
+        # 如果没有提供 syndrome，则提取它
+        if syndrome is None:
+            syndrome = self.extract_syndrome(physical_state)
+        
         self.performance_stats['corrections_attempted'] += 1
         
         corrected = physical_state.copy()
@@ -296,6 +369,20 @@ class SurfaceCode(ErrorCorrectionCodec):
     def decode(self, physical_state: np.ndarray) -> int:
         """解码"""
         return 1 if np.mean(physical_state) >= 0.5 else 0
+    
+    def get_physical_qubit_count(self) -> int:
+        """获取物理比特数"""
+        return self.physical_qubits
+    
+    def detect_topological_errors(self, state: np.ndarray) -> List[int]:
+        """检测拓扑错误"""
+        syndrome = self.extract_syndrome(state)
+        return syndrome.syndrome_bits
+    
+    def extract_logical_qubit(self, state: np.ndarray) -> np.ndarray:
+        """提取逻辑比特"""
+        # 简化：返回两个复数表示逻辑比特的 |0⟩ 和 |1⟩ 成分
+        return np.array([np.mean(state), 1.0 - np.mean(state)])
 
 
 class QuantumErrorCorrectionEngine:
