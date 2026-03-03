@@ -79,11 +79,13 @@ def stop_daemon(logger: logging.Logger):
             os.killpg(os.getpgid(daemon_process.pid), signal.SIGTERM)
             daemon_process.wait(timeout=5)
             logger.info("✅ 守護程序已停止")
+            daemon_process = None
     except Exception as e:
         logger.warning(f"⚠️  停止守護程序時出錯: {e}")
         try:
             if daemon_process:
                 os.killpg(os.getpgid(daemon_process.pid), signal.SIGKILL)
+                daemon_process = None
         except:
             pass
 

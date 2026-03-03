@@ -6,6 +6,7 @@ import os
 import secrets
 import json
 import inspect
+import logging
 from typing import Optional, Dict, List, Any
 from dataclasses import asdict
 from pathlib import Path
@@ -13,6 +14,9 @@ import yaml
 
 from src.server.state import global_state
 from src.utils.action_protocol import is_passive_action
+
+# Setup logging
+log = logging.getLogger(__name__)
 
 # Input Model
 from pydantic import BaseModel
