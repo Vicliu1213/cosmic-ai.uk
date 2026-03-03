@@ -11,7 +11,6 @@ repos:
         name: Check Python syntax
         language: python
         types: [python]
-        stages: [commit]
       
       # Check for merge conflicts
       - id: check-merge-conflict
@@ -41,7 +40,6 @@ repos:
         language: python
         types: [python]
         args: ['--max-line-length=127', '--select=E9,F63,F7,F82']
-        stages: [commit]
 
   # Import sorting with isort
   - repo: https://github.com/PyCQA/isort
@@ -52,7 +50,6 @@ repos:
         language: python
         types: [python]
         args: ['--profile=black', '--line-length=127']
-        stages: [commit]
 
   # Type checking with mypy
   - repo: https://github.com/pre-commit/mirrors-mypy
@@ -64,7 +61,6 @@ repos:
         types: [python]
         additional_dependencies: ['types-all', 'numpy']
         args: ['--ignore-missing-imports', '--no-error-summary']
-        stages: [commit]
         exclude: ^(tests/|external/|demo_)
 
   # Security checks
@@ -76,7 +72,6 @@ repos:
         language: python
         types: [python]
         args: ['-ll', '-i', '-x']
-        stages: [commit]
         exclude: ^(tests/|external/)
 
 # Global settings
@@ -88,6 +83,3 @@ fail_fast: false
 
 # Show all errors
 verbose: false
-
-# Minimum hook run time threshold (seconds)
-minimum_pre_commit_framework_version: '2.16.0'
