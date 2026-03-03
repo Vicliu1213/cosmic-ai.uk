@@ -1,0 +1,137 @@
+{
+  "timestamp": "2026-03-02T20:59:38.838476+00:00",
+  "report_type": "Advanced Multi-Strategy Portfolio Optimization",
+  "num_strategies": 6,
+  "individual_strategy_rankings": [
+    {
+      "rank": 1,
+      "strategy": "4. Hummingbot: Avellaneda-Stoikov",
+      "return": 216.97000000000003,
+      "sharpe": 1.41,
+      "max_drawdown": 40.45,
+      "score": 5.142650000000001
+    },
+    {
+      "rank": 2,
+      "strategy": "3. Hummingbot: Pure Market Making",
+      "return": 106.81,
+      "sharpe": 1.26,
+      "max_drawdown": 28.57,
+      "score": 2.9676500000000003
+    },
+    {
+      "rank": 3,
+      "strategy": "1. Cosmic: Triangular Arbitrage",
+      "return": 22.67,
+      "sharpe": 0.56,
+      "max_drawdown": 13.43,
+      "score": 0.8119500000000001
+    },
+    {
+      "rank": 4,
+      "strategy": "2. Cosmic: Wormhole Arbitrage",
+      "return": 22.39,
+      "sharpe": 0.55,
+      "max_drawdown": 14.26,
+      "score": 0.7839
+    },
+    {
+      "rank": 5,
+      "strategy": "6. Hybrid: Cosmic + Hummingbot",
+      "return": 19.27,
+      "sharpe": 0.48,
+      "max_drawdown": 12.86,
+      "score": 0.6725
+    },
+    {
+      "rank": 6,
+      "strategy": "5. LLM-TradeBot: Practical v2",
+      "return": -18.79,
+      "sharpe": 1.66,
+      "max_drawdown": 79.14,
+      "score": 0.09709999999999996
+    }
+  ],
+  "optimization_scenarios": {
+    "aggressive": {
+      "optimization_type": "Constrained Portfolio Optimization",
+      "constraints": {
+        "min_diversification": 1,
+        "max_concentration": 1.0,
+        "min_weight": 0.01,
+        "risk_limit": 0.5
+      },
+      "weights": {
+        "1. Cosmic: Triangular Arbitrage": 0.0,
+        "2. Cosmic: Wormhole Arbitrage": 0.0,
+        "3. Hummingbot: Pure Market Making": 0.0,
+        "4. Hummingbot: Avellaneda-Stoikov": 0.9999999999,
+        "5. LLM-TradeBot: Practical v2": 0.0,
+        "6. Hybrid: Cosmic + Hummingbot": 0.0
+      },
+      "portfolio_metrics": {
+        "total_return": 216.969999978303,
+        "sharpe_ratio": 1.4099999998589998,
+        "max_drawdown": 40.449999995955004,
+        "risk_adjusted_score": 5.1426499994857355
+      },
+      "active_strategies": 1,
+      "optimizer_success": true,
+      "optimizer_message": "Optimization terminated successfully"
+    },
+    "balanced": {
+      "optimization_type": "Constrained Portfolio Optimization",
+      "constraints": {
+        "min_diversification": 2,
+        "max_concentration": 0.6,
+        "min_weight": 0.05,
+        "risk_limit": 0.25
+      },
+      "weights": {
+        "1. Cosmic: Triangular Arbitrage": 0.5717986674950292,
+        "2. Cosmic: Wormhole Arbitrage": 0.0,
+        "3. Hummingbot: Pure Market Making": 0.0,
+        "4. Hummingbot: Avellaneda-Stoikov": 0.4282013324049708,
+        "5. LLM-TradeBot: Practical v2": 0.0,
+        "6. Hybrid: Cosmic + Hummingbot": 0.0
+      },
+      "portfolio_metrics": {
+        "total_return": 105.86951888401886,
+        "sharpe_ratio": 0.9239711324882252,
+        "max_drawdown": 25.000000000239314,
+        "risk_adjusted_score": 2.6663615101650127
+      },
+      "active_strategies": 2,
+      "optimizer_success": true,
+      "optimizer_message": "Optimization terminated successfully"
+    },
+    "conservative": {
+      "optimization_type": "Constrained Portfolio Optimization",
+      "constraints": {
+        "min_diversification": 3,
+        "max_concentration": 0.4,
+        "min_weight": 0.1,
+        "risk_limit": 0.15
+      },
+      "weights": {
+        "1. Cosmic: Triangular Arbitrage": 0.42658196917339747,
+        "2. Cosmic: Wormhole Arbitrage": 0.14683606154656148,
+        "3. Hummingbot: Pure Market Making": 0.0,
+        "4. Hummingbot: Avellaneda-Stoikov": 0.0,
+        "5. LLM-TradeBot: Practical v2": 0.0,
+        "6. Hybrid: Cosmic + Hummingbot": 0.4265819691733956
+      },
+      "portfolio_metrics": {
+        "total_return": 21.178507205159764,
+        "sharpe_ratio": 0.5244050817909414,
+        "max_drawdown": 13.308722207222562,
+        "risk_adjusted_score": 0.7483443927857982
+      },
+      "active_strategies": 3,
+      "optimizer_success": true,
+      "optimizer_message": "Optimization terminated successfully"
+    }
+  },
+  "best_scenario": "aggressive",
+  "recommendation": "Recommended portfolio allocation strategy: AGGRESSIVE with 1 active strategies, expected return: 216.97%, Sharpe ratio: 1.41"
+}

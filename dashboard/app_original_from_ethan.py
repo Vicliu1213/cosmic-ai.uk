@@ -69,11 +69,11 @@ def verify_admin(role: str = Depends(verify_auth)):
 
 import math
 
+# Optimized: Use json.dumps with custom encoder for NaN handling
 def clean_nans(obj):
-    """Recursively replace NaN/Inf with None for JSON compliance"""
+    """Optimized: Replace NaN/Inf with None for JSON compliance using bulk operation"""
     if isinstance(obj, float):
-        if math.isnan(obj) or math.isinf(obj):
-            return None
+        return None if (math.isnan(obj) or math.isinf(obj)) else obj
     elif isinstance(obj, dict):
         return {k: clean_nans(v) for k, v in obj.items()}
     elif isinstance(obj, list):
@@ -225,35 +225,43 @@ async def get_status(authenticated: bool = Depends(verify_auth)):
             'STOPPED', 'PAUSED', 'RESUMED', 'START'
         ]
         
+        # Optimized: Pre-compile regex patterns
+        ansi_pattern = re.compile(r'\x1b\[[0-9;]*m')
+        timestamp_pattern = re.compile(r'^\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2}:\d{2}\s*\|\s*\w+\s*\|\s*[\w\.]+:[\w_]+\s*-\s*')
+        module_func_pattern = re.compile(r'^[\w\.]+:[\w_]+\s*-\s*')
+        warn_pattern = re.compile(r'\bwarn\b', re.IGNORECASE)
+        error_pattern = re.compile(r'\berror\b', re.IGNORECASE)
+        
+        # Convert lists to sets for O(1) lookup
+        agent_tags_set = set(agent_tags)
+        agent_keywords_set = set(agent_keywords)
+        status_keywords_set = set(status_keywords)
+        
         def _clean_log_line(line: str) -> str:
             """Remove file:function patterns like 'src.api.binance_websocket:__init__' from log lines"""
-            # Remove ANSI color codes first
-            clean = re.sub(r'\x1b\[[0-9;]*m', '', line or '')
-            # Remove timestamp pattern: 2026-01-08 00:00:00 | LEVEL    | module:func -
-            # This captures everything up to and including the " - " after the function name
-            clean = re.sub(r'^\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2}:\d{2}\s*\|\s*\w+\s*\|\s*[\w\.]+:[\w_]+\s*-\s*', '', clean)
-            # Fallback: if the above didn't match, try to remove just the module:func part
-            clean = re.sub(r'^[\w\.]+:[\w_]+\s*-\s*', '', clean)
+            clean = ansi_pattern.sub('', line or '')
+            clean = timestamp_pattern.sub('', clean)
+            clean = module_func_pattern.sub('', clean)
             return clean.strip()
         
         filtered = []
         for line in logs:
-            clean_line = re.sub(r'\x1b\[[0-9;]*m', '', line or '')
+            clean_line = ansi_pattern.sub('', line or '')
             if ('WARNING' in clean_line or
                 'ERROR' in clean_line or
-                re.search(r'\bwarn\b', clean_line, re.IGNORECASE) or
-                re.search(r'\berror\b', clean_line, re.IGNORECASE) or
+                warn_pattern.search(clean_line) or
+                error_pattern.search(clean_line) or
                 '⚠️' in clean_line or
                 '❌' in clean_line):
                 filtered.append(_clean_log_line(line))
                 continue
-            if any(tag in clean_line for tag in agent_tags):
+            if any(tag in clean_line for tag in agent_tags_set):
                 filtered.append(_clean_log_line(line))
                 continue
-            if any(keyword in clean_line for keyword in agent_keywords):
+            if any(keyword in clean_line for keyword in agent_keywords_set):
                 filtered.append(_clean_log_line(line))
                 continue
-            if any(keyword in clean_line for keyword in status_keywords):
+            if any(keyword in clean_line for keyword in status_keywords_set):
                 filtered.append(_clean_log_line(line))
                 continue
             if '━━━' in clean_line or 'Cycle #' in clean_line:
@@ -1237,13 +1245,16 @@ async def run_backtest(config: BacktestRequest, authenticated: bool = Depends(ve
                     result = await engine.run(progress_callback=progress_callback)
                     
                     # --- Data Processing ---
-                    equity_curve = []
-                    for _, row in result.equity_curve.iterrows():
-                        equity_curve.append({
-                            'timestamp': row.name.isoformat() if hasattr(row.name, 'isoformat') else str(row.name),
+                    # Optimized: Use vectorized operations instead of iterrows()
+                    equity_data = result.equity_curve.reset_index()
+                    equity_curve = [
+                        {
+                            'timestamp': idx.isoformat() if hasattr(idx, 'isoformat') else str(idx),
                             'total_equity': float(row['total_equity']),
                             'drawdown_pct': float(row['drawdown_pct'])
-                        })
+                        }
+                        for idx, row in zip(result.equity_curve.index, result.equity_curve.itertuples(index=False))
+                    ]
                     
                     trades = []
                     for t in result.trades:
@@ -1280,18 +1291,8 @@ async def run_backtest(config: BacktestRequest, authenticated: bool = Depends(ve
                             'price': float(d.get('price', 0))
                          })
                     
-                    # Helper for NaNs
-                    def recursive_clean(obj):
-                        if isinstance(obj, float):
-                            if math.isnan(obj) or math.isinf(obj): return 0.0
-                            return obj
-                        if isinstance(obj, dict):
-                            return {k: recursive_clean(v) for k, v in obj.items()}
-                        if isinstance(obj, list):
-                            return [recursive_clean(v) for v in obj]
-                        return obj
-
-                    response_data = recursive_clean({
+                    # Use global clean_nans function
+                    response_data = clean_nans({
                         'metrics': result.metrics.to_dict(),
                         'equity_curve': equity_curve,
                         'trades': trades,

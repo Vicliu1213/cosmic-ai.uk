@@ -2,7 +2,7 @@
 
 ## ⚡ 快速開始 - Quick Start
 
-> **第一次使用或對話中斷?** 運行自動恢復系統！  
+> **第一次使用或對話中斷?** 運行自動恢復系統！
 > **First time or chat interrupted?** Run the auto-recovery system!
 
 ```bash
@@ -11,6 +11,7 @@ python3 system/recovery/cosmic_auto_recovery.py
 ```
 
 這將自動恢復:
+
 - ✅ 對話狀態和進度
 - ✅ Git 分支和提交
 - ✅ 模擬量子系統連接
@@ -48,6 +49,7 @@ python3 system/recovery/cosmic_auto_recovery.py
 ## 📁 重要文件位置 - Important Files
 
 ### 系統恢復和導航
+
 ```
 system/recovery/cosmic_auto_recovery.py     # Python 自動恢復系統 (推薦)
 system/recovery/auto_recovery.sh            # Shell 自動恢復系統
@@ -59,6 +61,7 @@ memory.md                                   # 系統激活紀錄
 ```
 
 ### 狀態文件
+
 ```
 data/state/.recovery_state.json             # 恢復狀態 (自動生成)
 data/state/.quantum_state.json              # 量子狀態 (自動生成)
@@ -66,6 +69,7 @@ data/logs/recovery.log                      # 恢復日誌 (自動生成)
 ```
 
 ### 工作計劃
+
 ```
 task/ETHANALGOX_INTEGRATION_ROADMAP.md  # Day-by-day 整合計劃
 task/task.md                            # 任務列表
@@ -76,6 +80,7 @@ task/task.md                            # 任務列表
 ## 🎯 工作流程 - Workflow
 
 ### 對話開始時
+
 ```bash
 # 1. 運行自動恢復
 python3 system/recovery/cosmic_auto_recovery.py
@@ -90,6 +95,7 @@ cat system/navigation/INDEX.md
 ```
 
 ### 工作中途
+
 ```bash
 # 查看進度
 cat system/tracking/PROGRESS_TRACKER.md
@@ -102,6 +108,7 @@ tail -20 data/logs/recovery.log
 ```
 
 ### 工作完成後
+
 ```bash
 # 更新進度表
 nano PROGRESS_TRACKER.md
@@ -137,23 +144,27 @@ cat data/logs/recovery.log                   # 日誌
 ## ⚙️ 系統特色 - System Features
 
 ### ✨ 自動狀態管理
+
 - 自動保存對話狀態
 - 自動恢復 Git 分支
 - 自動追蹤未提交變更
 - 自動恢復量子連接
 
 ### ✨ 多層導航系統
+
 - 快速導航 (memory.md 頂部)
 - 進度表 (PROGRESS_TRACKER.md)
 - 完整索引 (INDEX.md)
 - 詳細指南 (AUTO_RECOVERY_GUIDE.md)
 
 ### ✨ 量子系統集成
+
 - 4 個量子系統已集成
 - 自動初始化量子狀態
 - 實時量子狀態追蹤
 
 ### ✨ 完整日誌系統
+
 - 恢復日誌 (logs/recovery.log)
 - JSON 狀態文件
 - 實時控制台輸出
@@ -178,6 +189,7 @@ cat data/logs/recovery.log                   # 日誌
 查看最新進度: 打開 `PROGRESS_TRACKER.md`
 
 關鍵信息:
+
 - Phase 5 Stage 3 訂單管理系統已完成 ✅
 - EthanAlgoX 整合規劃已完成 ✅
 - 自動恢復系統已上線 ✅
@@ -188,8 +200,9 @@ cat data/logs/recovery.log                   # 日誌
 # Opencode 插件自動化管理系統
 
 ## 支持的插件列表
+
 - opencode
-- oh-my-opencode  
+- oh-my-opencode
 - claude-vcode
 - worktree
 - pty
@@ -208,11 +221,13 @@ cat data/logs/recovery.log                   # 日誌
 ## 快速開始
 
 ### 1. 自動下載和安裝所有插件
+
 ```bash
 curl -sSL https://raw.githubusercontent.com/your-repo/opencode-plugins/main/install.sh | bash
 ```
 
 ### 2. 個別插件安裝
+
 ```bash
 # 安裝特定插件
 ./scripts/install-plugin.sh <plugin-name>
@@ -223,6 +238,7 @@ curl -sSL https://raw.githubusercontent.com/your-repo/opencode-plugins/main/inst
 ```
 
 ### 3. 創建獨立虛擬空間
+
 ```bash
 # 為每個插件創建隔離環境
 ./scripts/create-env.sh <plugin-name>
@@ -246,26 +262,31 @@ curl -sSL https://raw.githubusercontent.com/your-repo/opencode-plugins/main/inst
 ## 插件介紹
 
 ### 🛠️ 開發工具
+
 - **opencode**: 核心開發環境
 - **claude-vcode**: AI 輔助編碼
 - **worktree**: Git 工作樹管理
 - **code-snippet**: 代碼片段管理
 
 ### 💾 記憶管理
+
 - **supermemory**: 智能記憶系統
 - **mem0s**: 零記憶管理
 
 ### 🎨 用戶界面
+
 - **browser**: 網頁瀏覽器
 - **arise**: 界面增強
 - **notificator**: 通知系統
 
 ### ⚡ 性能工具
+
 - **morph-fast-apply**: 快速應用工具
 - **type-inject**: 類型注入
 - **pty**: 終端模擬器
 
 ### 🌱 自動化
+
 - **plantator**: 自動化種植
 - **dcp**: 數據處理管道
 - **skillful**: 技能管理
@@ -284,7 +305,7 @@ curl -sSL https://raw.githubusercontent.com/your-repo/opencode-plugins/main/inst
 
 【主要工作流程 | Main Workflows】
 ├─ 🔵 插件安裝流程 | Plugin Installation → Window 1: Task Panel
-├─ 🟠 環境初始化  | Environment Setup  → Window 2: System Setup  
+├─ 🟠 環境初始化  | Environment Setup  → Window 2: System Setup
 ├─ 🟢 插件激活   | Plugin Activation  → Window 3: Plugin Runner
 ├─ 🔴 錯誤監控   | Error Monitoring   → Window 4: Error Logger
 └─ 🟣 性能監測   | Performance Check  → Window 5: Performance Monitor
@@ -301,6 +322,7 @@ curl -sSL https://raw.githubusercontent.com/your-repo/opencode-plugins/main/inst
 系統每天自動運行兩次完整檢查和更新 | System runs two complete checks and updates daily:
 
 #### 📅 清晨路徑 | Morning Path: 06:00 AM
+
 ```bash
 #!/bin/bash
 # 清晨自動更新流程 | Morning Auto-Update Flow
@@ -337,6 +359,7 @@ echo "✅ 清晨更新完成！下次更新於 18:00 | Morning update complete! 
 ```
 
 #### 📅 傍晚路徑 | Evening Path: 18:00 PM
+
 ```bash
 #!/bin/bash
 # 傍晚自動更新流程 | Evening Auto-Update Flow
@@ -463,7 +486,7 @@ alias schedule-daily='op scheduler --add-daily'
 # 中文註解 | English Comments
 daily_updates:
   enabled: true                    # 啟用每日更新 | Enable daily updates
-  
+
   morning:
     time: "06:00"                  # 清晨時間 | Morning time
     timezone: "Asia/Taipei"        # 時區 | Timezone
@@ -475,7 +498,7 @@ daily_updates:
       - morning_report             # 日報 | Morning report
     notify_on_error: true          # 錯誤通知 | Error notification
     log_file: "logs/morning-update.log"
-  
+
   evening:
     time: "18:00"                  # 傍晚時間 | Evening time
     timezone: "Asia/Taipei"        # 時區 | Timezone
@@ -487,7 +510,7 @@ daily_updates:
       - evening_report             # 晚報 | Evening report
     notify_on_error: true          # 錯誤通知 | Error notification
     log_file: "logs/evening-update.log"
-  
+
   real_time_monitoring:
     enabled: true                  # 啟用實時監控 | Enable real-time monitoring
     update_interval_seconds: 1     # 更新間隔 | Update interval
@@ -527,6 +550,7 @@ op env deactivate
 ## 故障排除
 
 如果遇到問題：
+
 1. 檢查網絡連接
 2. 確認 Python 版本 ≥ 3.8
 3. 清理緩存：`op clean --cache`

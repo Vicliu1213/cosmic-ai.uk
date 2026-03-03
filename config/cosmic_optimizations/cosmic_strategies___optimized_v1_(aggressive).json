@@ -1,0 +1,35 @@
+{
+  "name": "Cosmic Strategies - Optimized v1 (Aggressive)",
+  "description": "更激進的信號生成，更容易觸發共振",
+  "strategies": [
+    {
+      "name": "Cosmic: Triangular Arbitrage (Optimized)",
+      "config": {
+        "timeframe": "1h",
+        "lookback_periods": 28,
+        "volatility_threshold": 0.016,
+        "min_confidence": 0.48,
+        "max_position_size": 0.12,
+        "arbitrage_type": "triangular",
+        "resonance_threshold": 0.52,
+        "use_hybrid_execution": true,
+        "enable_risk_scaling": true
+      }
+    },
+    {
+      "name": "Cosmic: Wormhole Arbitrage (Optimized)",
+      "config": {
+        "timeframe": "1h",
+        "lookback_periods": 32,
+        "volatility_threshold": 0.015,
+        "min_confidence": 0.45,
+        "max_position_size": 0.15,
+        "arbitrage_type": "wormhole",
+        "resonance_threshold": 0.5,
+        "use_hybrid_execution": true,
+        "enable_quantum_resonance": true,
+        "enable_risk_scaling": true
+      }
+    }
+  ]
+}

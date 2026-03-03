@@ -1,0 +1,36 @@
+{
+  "timestamp": "2026-03-02T21:07:34.030785+00:00",
+  "algorithm": "Enhanced Quantum-Classical Hybrid (QAOA+VQE+Grover)",
+  "quantum_features": {
+    "quantum_feature_map": true,
+    "quantum_annealing": true,
+    "grover_search": true,
+    "classical_refinement": true
+  },
+  "quantum_parameters": {
+    "n_qubits": 3,
+    "n_states": 8,
+    "entanglement_entropy": 2.325375778702357,
+    "state_fidelity": 1.0
+  },
+  "quantum_resources": {
+    "circuit_depth": 7,
+    "gate_count": 0,
+    "entanglement_total": 0.0,
+    "grover_iterations": 1
+  },
+  "optimization_results": {
+    "optimal_weights": {
+      "1. Cosmic: Triangular Arbitrage": 0.0,
+      "2. Cosmic: Wormhole Arbitrage": 0.0,
+      "3. Hummingbot: Pure Market Making": 0.40000000000000074,
+      "4. Hummingbot: Avellaneda-Stoikov": 0.5999999999999993,
+      "5. LLM-TradeBot: Practical v2": 0.0,
+      "6. Hybrid: Cosmic + Hummingbot": 0.0
+    },
+    "portfolio_score": 2.7220800000000023,
+    "expected_return": 172.90599999999995,
+    "expected_sharpe": 1.3499999999999999,
+    "expected_drawdown": 35.69799999999999
+  }
+}

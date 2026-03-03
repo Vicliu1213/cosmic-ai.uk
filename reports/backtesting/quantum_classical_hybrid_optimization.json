@@ -1,0 +1,78 @@
+{
+  "timestamp": "2026-03-02T21:02:06.230079+00:00",
+  "algorithm": "Quantum-Classical Hybrid (QAOA-inspired)",
+  "quantum_parameters": {
+    "n_qubits": 3,
+    "n_states": 8,
+    "circuit_depth": 15,
+    "total_entanglement_score": 4.163336342344337e-17,
+    "quantum_phases_encoded": 6
+  },
+  "optimization_results": {
+    "optimal_weights": {
+      "1. Cosmic: Triangular Arbitrage": 1.3877787807814464e-16,
+      "2. Cosmic: Wormhole Arbitrage": 0.0,
+      "3. Hummingbot: Pure Market Making": 0.3999999999999995,
+      "4. Hummingbot: Avellaneda-Stoikov": 0.6000000000000002,
+      "5. LLM-TradeBot: Practical v2": 1.110223024625157e-16,
+      "6. Hybrid: Cosmic + Hummingbot": 0.0
+    },
+    "portfolio_score": 2.7220799999999987,
+    "expected_return": 172.90600000000003,
+    "expected_sharpe": 1.3499999999999999,
+    "expected_drawdown": 35.69800000000001
+  },
+  "optimization_history": [
+    {
+      "iteration": 1,
+      "phase": "quantum",
+      "weights": "[0.171 0.175 0.159 0.185 0.149 0.161]",
+      "score": 1.3232158998676784,
+      "circuit_depth": 3,
+      "entanglement": 5.551115123125783e-17
+    },
+    {
+      "iteration": 2,
+      "phase": "quantum",
+      "weights": "[0.175 0.171 0.143 0.186 0.148 0.177]",
+      "score": 1.301821999869818,
+      "circuit_depth": 6,
+      "entanglement": 5.551115123125783e-17
+    },
+    {
+      "iteration": 3,
+      "phase": "quantum",
+      "weights": "[0.189 0.155 0.152 0.174 0.162 0.168]",
+      "score": 1.2857668998714231,
+      "circuit_depth": 9,
+      "entanglement": 5.551115123125783e-17
+    },
+    {
+      "iteration": 4,
+      "phase": "quantum",
+      "weights": "[0.134 0.173 0.154 0.185 0.17  0.184]",
+      "score": 1.3144114998685588,
+      "circuit_depth": 12,
+      "entanglement": 5.551115123125783e-17
+    },
+    {
+      "iteration": 5,
+      "phase": "quantum",
+      "weights": "[0.165 0.182 0.161 0.162 0.168 0.162]",
+      "score": 1.2682531998731748,
+      "circuit_depth": 15,
+      "entanglement": 5.551115123125783e-17
+    },
+    {
+      "iteration": 6,
+      "phase": "classical_refinement",
+      "weights": "[1.38777878e-16 0.00000000e+00 4.00000000e-01 6.00000000e-01\n 1.11022302e-16 0.00000000e+00]",
+      "score": 2.7220799999999987,
+      "improvement_pct": 105.71699601495166
+    }
+  ],
+  "convergence_summary": {
+    "total_iterations": 6,
+    "improvement_pct": NaN
+  }
+}

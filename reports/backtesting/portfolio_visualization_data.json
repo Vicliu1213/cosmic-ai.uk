@@ -1,0 +1,102 @@
+{
+  "strategies": [
+    {
+      "name": "1. Cosmic: Triangular Arbitrage",
+      "return": 22.67,
+      "sharpe": 0.56,
+      "drawdown": 13.43,
+      "pnl": 30844.53
+    },
+    {
+      "name": "2. Cosmic: Wormhole Arbitrage",
+      "return": 22.39,
+      "sharpe": 0.55,
+      "drawdown": 14.26,
+      "pnl": 30591.7
+    },
+    {
+      "name": "3. Hummingbot: Pure Market Making",
+      "return": 106.81,
+      "sharpe": 1.26,
+      "drawdown": 28.57,
+      "pnl": 51749.92
+    },
+    {
+      "name": "4. Hummingbot: Avellaneda-Stoikov",
+      "return": 216.97000000000003,
+      "sharpe": 1.41,
+      "drawdown": 40.45,
+      "pnl": 105965.59
+    },
+    {
+      "name": "5. LLM-TradeBot: Practical v2",
+      "return": -18.79,
+      "sharpe": 1.66,
+      "drawdown": 79.14,
+      "pnl": -7199.29
+    },
+    {
+      "name": "6. Hybrid: Cosmic + Hummingbot",
+      "return": 19.27,
+      "sharpe": 0.48,
+      "drawdown": 12.86,
+      "pnl": 27671.03
+    }
+  ],
+  "scenarios": [
+    {
+      "type": "Constrained Portfolio Optimization",
+      "weights": {
+        "1. Cosmic: Triangular Arbitrage": 0.0,
+        "2. Cosmic: Wormhole Arbitrage": 0.0,
+        "3. Hummingbot: Pure Market Making": 0.0,
+        "4. Hummingbot: Avellaneda-Stoikov": 0.9999999999,
+        "5. LLM-TradeBot: Practical v2": 0.0,
+        "6. Hybrid: Cosmic + Hummingbot": 0.0
+      },
+      "portfolio": {
+        "total_return": 216.969999978303,
+        "sharpe_ratio": 1.4099999998589998,
+        "max_drawdown": 40.449999995955004,
+        "risk_adjusted_score": 5.1426499994857355
+      },
+      "diversification": 1
+    },
+    {
+      "type": "Constrained Portfolio Optimization",
+      "weights": {
+        "1. Cosmic: Triangular Arbitrage": 0.5717986674950292,
+        "2. Cosmic: Wormhole Arbitrage": 0.0,
+        "3. Hummingbot: Pure Market Making": 0.0,
+        "4. Hummingbot: Avellaneda-Stoikov": 0.4282013324049708,
+        "5. LLM-TradeBot: Practical v2": 0.0,
+        "6. Hybrid: Cosmic + Hummingbot": 0.0
+      },
+      "portfolio": {
+        "total_return": 105.86951888401886,
+        "sharpe_ratio": 0.9239711324882252,
+        "max_drawdown": 25.000000000239314,
+        "risk_adjusted_score": 2.6663615101650127
+      },
+      "diversification": 2
+    },
+    {
+      "type": "Constrained Portfolio Optimization",
+      "weights": {
+        "1. Cosmic: Triangular Arbitrage": 0.42658196917339747,
+        "2. Cosmic: Wormhole Arbitrage": 0.14683606154656148,
+        "3. Hummingbot: Pure Market Making": 0.0,
+        "4. Hummingbot: Avellaneda-Stoikov": 0.0,
+        "5. LLM-TradeBot: Practical v2": 0.0,
+        "6. Hybrid: Cosmic + Hummingbot": 0.4265819691733956
+      },
+      "portfolio": {
+        "total_return": 21.178507205159764,
+        "sharpe_ratio": 0.5244050817909414,
+        "max_drawdown": 13.308722207222562,
+        "risk_adjusted_score": 0.7483443927857982
+      },
+      "diversification": 3
+    }
+  ]
+}

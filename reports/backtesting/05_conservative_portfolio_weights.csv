@@ -1,0 +1,7 @@
+策略名称,配置权重(%),配置状态
+1. Cosmic: Triangular Arbitrage,42.66,活跃
+6. Hybrid: Cosmic + Hummingbot,42.66,活跃
+2. Cosmic: Wormhole Arbitrage,14.68,活跃
+3. Hummingbot: Pure Market Making,0.00,未配置
+4. Hummingbot: Avellaneda-Stoikov,0.00,未配置
+5. LLM-TradeBot: Practical v2,0.00,未配置

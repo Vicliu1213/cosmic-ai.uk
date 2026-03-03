@@ -213,7 +213,7 @@ class ResonanceCoordinator:
         resonance_score = agreement_ratio * (1.0 - min(1.0, magnitude_variance / 2.0))
         
         # Determine if resonance occurred
-        resonance_detected = resonance_score > 0.6
+        resonance_detected = bool(resonance_score > 0.6)
         
         return resonance_detected, {
             "resonance_score": float(resonance_score),

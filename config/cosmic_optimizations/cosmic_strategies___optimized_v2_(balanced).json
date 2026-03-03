@@ -1,0 +1,33 @@
+{
+  "name": "Cosmic Strategies - Optimized v2 (Balanced)",
+  "description": "平衡積極性和穩定性",
+  "strategies": [
+    {
+      "name": "Cosmic: Triangular Arbitrage (Balanced)",
+      "config": {
+        "timeframe": "1h",
+        "lookback_periods": 25,
+        "volatility_threshold": 0.018,
+        "min_confidence": 0.52,
+        "max_position_size": 0.1,
+        "arbitrage_type": "triangular",
+        "resonance_threshold": 0.55,
+        "use_hybrid_execution": true
+      }
+    },
+    {
+      "name": "Cosmic: Wormhole Arbitrage (Balanced)",
+      "config": {
+        "timeframe": "1h",
+        "lookback_periods": 28,
+        "volatility_threshold": 0.017,
+        "min_confidence": 0.5,
+        "max_position_size": 0.12,
+        "arbitrage_type": "wormhole",
+        "resonance_threshold": 0.53,
+        "use_hybrid_execution": true,
+        "enable_quantum_resonance": true
+      }
+    }
+  ]
+}

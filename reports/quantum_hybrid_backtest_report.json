@@ -1,0 +1,56 @@
+{
+  "backtest_period": {
+    "start_date": "2025-09-03T19:59:27.284548",
+    "end_date": "2026-03-02T19:59:27.284557",
+    "days": 180,
+    "years": 0.4931506849315068
+  },
+  "capital": {
+    "initial": 100000.0,
+    "final": 127768.0444856789,
+    "profit": 27768.044485678867,
+    "return_pct": 27.768044485678896,
+    "annualized_return_pct": 56.307423540404436
+  },
+  "trading": {
+    "total_trades": 2010434,
+    "winning_trades": 2003167,
+    "losing_trades": 7267,
+    "win_rate": 99.63853575894558,
+    "avg_trade_size": 0.013811965220285206
+  },
+  "daily_results": {
+    "winning_days": 181,
+    "losing_days": 0,
+    "win_rate_pct": 100.0,
+    "avg_daily_profit": 153.41461041811533,
+    "daily_std": 17.73190825907201
+  },
+  "risk_metrics": {
+    "max_drawdown_pct": 0,
+    "sharpe_ratio": 130.23941069906425,
+    "calmar_ratio": 0,
+    "profit_factor": 10.0
+  },
+  "strategy_contributions": {
+    "QIA": 613.4809247039389,
+    "NFH": 163.83122358428142,
+    "QCP": 717.0295142591981,
+    "MIR": 409.14282114891466,
+    "QGR": 6554.535220773505,
+    "SRB": 4458.587486214244,
+    "FPE": 3101.897007943102,
+    "QMR": 3466.1328389000337,
+    "MTR": 3643.827744341501,
+    "QSA": 2045.9835569314353,
+    "IQA": 1336.6206846460655,
+    "VSA": 517.2298316058303,
+    "QHA": 739.7456306268198
+  },
+  "performance_summary": {
+    "status": "❌ FAIL",
+    "annualized_return": 0.5630742354040443,
+    "target_return": 1.0,
+    "achievement_ratio": 0.5630742354040443
+  }
+}

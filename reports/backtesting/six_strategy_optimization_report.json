@@ -1,0 +1,117 @@
+{
+  "timestamp": "2026-03-02T21:38:13.697194+00:00",
+  "num_strategies": 6,
+  "individual_results": {
+    "1. Cosmic: Triangular Arbitrage": {
+      "strategy_name": "1. Cosmic: Triangular Arbitrage",
+      "total_return_pct": 22.67,
+      "sharpe_ratio": 0.56,
+      "max_drawdown_pct": 13.43,
+      "total_trades": 365,
+      "win_rate": 0.45,
+      "total_pnl": 30844.53,
+      "final_capital": 122670.00000000001
+    },
+    "2. Cosmic: Wormhole Arbitrage": {
+      "strategy_name": "2. Cosmic: Wormhole Arbitrage",
+      "total_return_pct": 22.39,
+      "sharpe_ratio": 0.55,
+      "max_drawdown_pct": 14.26,
+      "total_trades": 365,
+      "win_rate": 0.45,
+      "total_pnl": 30591.7,
+      "final_capital": 122390.0
+    },
+    "3. Hummingbot: Pure Market Making": {
+      "strategy_name": "3. Hummingbot: Pure Market Making",
+      "total_return_pct": 106.81,
+      "sharpe_ratio": 1.26,
+      "max_drawdown_pct": 28.57,
+      "total_trades": 365,
+      "win_rate": 0.45,
+      "total_pnl": 51749.92,
+      "final_capital": 206810.00000000003
+    },
+    "4. Hummingbot: Avellaneda-Stoikov": {
+      "strategy_name": "4. Hummingbot: Avellaneda-Stoikov",
+      "total_return_pct": 216.97,
+      "sharpe_ratio": 1.41,
+      "max_drawdown_pct": 40.45,
+      "total_trades": 365,
+      "win_rate": 0.45,
+      "total_pnl": 105965.59,
+      "final_capital": 316970.0
+    },
+    "5. LLM-TradeBot: Practical v2": {
+      "strategy_name": "5. LLM-TradeBot: Practical v2",
+      "total_return_pct": -18.79,
+      "sharpe_ratio": 1.66,
+      "max_drawdown_pct": 79.14,
+      "total_trades": 365,
+      "win_rate": 0.45,
+      "total_pnl": -7199.29,
+      "final_capital": 81210.0
+    },
+    "6. Hybrid: Cosmic + Hummingbot": {
+      "strategy_name": "6. Hybrid: Cosmic + Hummingbot",
+      "total_return_pct": 19.27,
+      "sharpe_ratio": 0.48,
+      "max_drawdown_pct": 12.86,
+      "total_trades": 365,
+      "win_rate": 0.45,
+      "total_pnl": 27671.03,
+      "final_capital": 119269.99999999999
+    }
+  },
+  "ranking": [
+    {
+      "rank": 1,
+      "strategy": "4. Hummingbot: Avellaneda-Stoikov",
+      "overall_score": 4.18
+    },
+    {
+      "rank": 2,
+      "strategy": "3. Hummingbot: Pure Market Making",
+      "overall_score": 3.02
+    },
+    {
+      "rank": 3,
+      "strategy": "5. LLM-TradeBot: Practical v2",
+      "overall_score": 1.55
+    },
+    {
+      "rank": 4,
+      "strategy": "1. Cosmic: Triangular Arbitrage",
+      "overall_score": 1.08
+    },
+    {
+      "rank": 5,
+      "strategy": "2. Cosmic: Wormhole Arbitrage",
+      "overall_score": 1.04
+    },
+    {
+      "rank": 6,
+      "strategy": "6. Hybrid: Cosmic + Hummingbot",
+      "overall_score": 0.9
+    }
+  ],
+  "optimal_portfolio_weights": {
+    "1. Cosmic: Triangular Arbitrage": 0.0,
+    "2. Cosmic: Wormhole Arbitrage": 0.0,
+    "3. Hummingbot: Pure Market Making": 0.0,
+    "4. Hummingbot: Avellaneda-Stoikov": 1.0,
+    "5. LLM-TradeBot: Practical v2": 0.0,
+    "6. Hybrid: Cosmic + Hummingbot": 0.0
+  },
+  "portfolio_metrics": {
+    "portfolio_return_pct": 216.97,
+    "portfolio_sharpe": 1.41,
+    "portfolio_max_drawdown_pct": 40.45,
+    "diversification_score": 1
+  },
+  "optimization_params": {
+    "algorithm": "Differential Evolution",
+    "objective": "Maximize Sharpe + Return, Minimize Drawdown",
+    "constraints": "Weights sum to 1, each in [0, 1]"
+  }
+}
