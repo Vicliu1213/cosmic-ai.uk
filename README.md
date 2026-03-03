@@ -25,7 +25,37 @@ python3 system/recovery/cosmic_auto_recovery.py
 |------|------|------|---------|
 | **A** | `system/tracking/PROGRESS_TRACKER.md` | 進度追蹤表 | 開始新工作時 |
 | **B** | `memory.md` ⭐ | 系統激活紀錄 (重點維持) | 查看詳細紀錄 |
-| **C** | `system/navigation/INDEX.md` | 完整導覽索引 | 找特定文件時 |
+| **C** | `docs/INDEX.md` | 完整文檔索引 | 找特定文件時 |
+| **D** | `system/navigation/INDEX.md` | 完整導覽索引 | 找系統導航時 |
+
+---
+
+## 📚 文檔結構 - Documentation Structure
+
+> **重要**: 為了更好的組織，我們已將根目錄中的相似文檔整合到 `docs/` 目錄下。
+
+### 快速索引 - Quick Index
+
+- 📖 **[完整文檔索引](docs/INDEX.md)** - 所有文檔的主索引
+- 🚀 **[快速參考指南](docs/QUICK_REFERENCE.md)** - 所有快速入門材料整合
+- ⚡ **[激活指南](docs/ACTIVATION_GUIDE.md)** - 系統激活程序
+- 📊 **[實施階段](docs/IMPLEMENTATION_PHASES.md)** - 所有階段文檔
+
+### 文檔分類 - Documentation Categories
+
+```
+docs/
+├── INDEX.md                     # 主文檔索引
+├── ACTIVATION_GUIDE.md          # 激活指南整合
+├── IMPLEMENTATION_PHASES.md     # 階段文檔整合
+├── QUICK_REFERENCE.md           # 快速參考整合
+├── guides/                      # 用戶指南
+├── system/                      # 系統文檔
+├── strategies/                  # 策略文檔
+└── archive/                     # 歷史文檔存檔
+    ├── activation_history/      # 激活歷史
+    └── session_reports/         # 會話報告
+```
 
 ---
 
