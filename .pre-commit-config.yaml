@@ -59,7 +59,7 @@ repos:
         name: mypy - Static type checker
         language: python
         types: [python]
-        additional_dependencies: ['types-all', 'numpy']
+        additional_dependencies: ['types-PyYAML', 'types-requests']
         args: ['--ignore-missing-imports', '--no-error-summary']
         exclude: ^(tests/|external/|demo_)
 

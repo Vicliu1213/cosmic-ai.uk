@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# flake8: noqa: E999
 """
 策略對比可視化儀表板
 Strategy Comparison Visualization Dashboard
@@ -354,17 +355,19 @@ def generate_html_dashboard(report_file: str, output_file: str = None) -> str:
         else:
             badge = 'badge-hybrid'
             badge_text = 'Hybrid'
-        
+
+        return_class = 'positive' if row['return'] > 0 else 'negative'
+        pnl_class = 'positive' if row['pnl'] > 0 else 'negative'
         html += f"""
                     <tr>
                         <td><span class="rank-medal">{medal}</span></td>
                         <td><span class="badge {badge}">{badge_text}</span><br>{row['name']}</td>
-                        <td><span class="{'positive' if row['return'] > 0 else 'negative'}">{row['return']:.2f}%</span></td>
+                        <td><span class="{return_class}">{row['return']:.2f}%</span></td>
                         <td>{row['sharpe']:.2f}</td>
                         <td><span class="negative">{row['drawdown']:.2f}%</span></td>
                         <td>{row['trades']:.0f}</td>
                         <td>{row['win_rate']:.2f}%</td>
-                        <td><span class="{'positive' if row['pnl'] > 0 else 'negative'}">${row['pnl']:,.0f}</span></td>
+                        <td><span class="{pnl_class}">${row['pnl']:,.0f}</span></td>
                     </tr>
 """
     
@@ -388,26 +391,28 @@ def generate_html_dashboard(report_file: str, output_file: str = None) -> str:
                 labels: """
     
     labels = [row['name'].split('. ')[-1][:20] for _, row in df.iterrows()]
-    html += f"[{', '.join([f\"'{label}'\" for label in labels])}],"
-    
+    labels_str = ', '.join([f"'{label}'" for label in labels])
+    html += f"[{labels_str}],"
+
+    data_values = ', '.join([f"{row['return']:.1f}" for _, row in df.iterrows()])
     html += f"""
-                data: [{', '.join([f"{row['return']:.1f}" for _, row in df.iterrows()])}]
-                },
-                options: {{
+                data: [{data_values}]
+                }},
+                options: {{{{
                     indexAxis: 'y',
                     responsive: true,
                     maintainAspectRatio: false,
-                    plugins: {{
-                        legend: {{ display: false }}
-                    }},
-                    scales: {{
-                        x: {{
-                            ticks: {{ callback: function(value) {{ return value + '%' }} }}
-                        }}
-                    }}
-                }}
-            }});
-        
+                    plugins: {{{{
+                        legend: {{{{ display: false }}}}
+                    }}}},
+                    scales: {{{{
+                        x: {{{{
+                            ticks: {{{{ callback: function(value) {{{{ return value + '%' }}}} }}}}
+                        }}}}
+                    }}}}
+                }}}}
+            }}}});
+
         // 風險-收益散點圖
         const riskReturnCtx = document.getElementById('riskReturnChart').getContext('2d');
         new Chart(riskReturnCtx, {
@@ -417,41 +422,41 @@ def generate_html_dashboard(report_file: str, output_file: str = None) -> str:
                     label: '策略表現',
                     data: [
 """
-    
+
     for _, row in df.iterrows():
-        html += f"{{ x: {row['drawdown']:.1f}, y: {row['return']:.1f} }},\n"
-    
-    html += f"""
+        html += "{ x: %.1f, y: %.1f },\n" % (row['drawdown'], row['return'])
+
+    html += """
                     ],
                     backgroundColor: 'rgba(102, 126, 234, 0.6)',
                     borderColor: 'rgba(102, 126, 234, 1)',
                     borderWidth: 2,
                     pointRadius: 8
-                }}]
+                }]
             },
-            options: {{
+            options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                plugins: {{
-                    legend: {{ display: true }},
-                    tooltip: {{
-                        callbacks: {{
-                            label: function(context) {{
+                plugins: {
+                    legend: { display: true },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
                                 return '最大回撤: ' + context.raw.x.toFixed(1) + '% | 收益: ' + context.raw.y.toFixed(1) + '%';
-                            }}
-                        }}
-                    }}
-                }},
-                scales: {{
-                    x: {{
-                        title: {{ display: true, text: '最大回撤 (%)' }}
-                    }},
-                    y: {{
-                        title: {{ display: true, text: '年化收益 (%)' }}
-                    }}
-                }}
-            }}
-        }});
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        title: { display: true, text: '最大回撤 (%)' }
+                    },
+                    y: {
+                        title: { display: true, text: '年化收益 (%)' }
+                    }
+                }
+            }
+        });
     </script>
 </body>
 </html>

@@ -23,6 +23,7 @@ from enum import Enum
 from typing import Dict, List, Optional, Any, Callable
 from dataclasses import dataclass
 import logging
+import numpy as np
 
 logger = logging.getLogger(__name__)
 
