@@ -1,0 +1,3202 @@
+{
+  "timestamp": "/workspaces/cosmic-ai.uk",
+  "summary": {
+    "total_init_files": 224,
+    "total_main_files": 21,
+    "init_files_ok": 224,
+    "init_files_error": 0,
+    "main_files_ok": 21,
+    "main_files_error": 0,
+    "empty_files": 0
+  },
+  "init_files": {
+    "__init__.py": {
+      "path": "__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/__init__.py",
+      "size": {
+        "bytes": 562,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "agents/__init__.py": {
+      "path": "agents/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/agents/__init__.py",
+      "size": {
+        "bytes": 1478,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "agents/core/__init__.py": {
+      "path": "agents/core/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/agents/core/__init__.py",
+      "size": {
+        "bytes": 111,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "agents/engine/__init__.py": {
+      "path": "agents/engine/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/agents/engine/__init__.py",
+      "size": {
+        "bytes": 342,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "agents/engine/cosmic/__init__.py": {
+      "path": "agents/engine/cosmic/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/agents/engine/cosmic/__init__.py",
+      "size": {
+        "bytes": 43,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "agents/engine/examples/__init__.py": {
+      "path": "agents/engine/examples/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/agents/engine/examples/__init__.py",
+      "size": {
+        "bytes": 113,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "agents/engine/scripts/__init__.py": {
+      "path": "agents/engine/scripts/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/agents/engine/scripts/__init__.py",
+      "size": {
+        "bytes": 118,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "agents/engine/src/bio_photonics/__init__.py": {
+      "path": "agents/engine/src/bio_photonics/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/agents/engine/src/bio_photonics/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "agents/engine/src/chaos_resonance/__init__.py": {
+      "path": "agents/engine/src/chaos_resonance/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/agents/engine/src/chaos_resonance/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "agents/engine/src/consciousness_field/__init__.py": {
+      "path": "agents/engine/src/consciousness_field/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/agents/engine/src/consciousness_field/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "agents/engine/src/cosmic_engineering/__init__.py": {
+      "path": "agents/engine/src/cosmic_engineering/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/agents/engine/src/cosmic_engineering/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "agents/engine/src/cosmic_intelligence/__init__.py": {
+      "path": "agents/engine/src/cosmic_intelligence/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/agents/engine/src/cosmic_intelligence/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "agents/engine/src/fractal_recursion/__init__.py": {
+      "path": "agents/engine/src/fractal_recursion/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/agents/engine/src/fractal_recursion/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "agents/engine/src/neuro_quantum_synergy/__init__.py": {
+      "path": "agents/engine/src/neuro_quantum_synergy/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/agents/engine/src/neuro_quantum_synergy/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "agents/engine/src/perfect_fortress/__init__.py": {
+      "path": "agents/engine/src/perfect_fortress/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/agents/engine/src/perfect_fortress/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "agents/engine/src/platform_heterogeneous/__init__.py": {
+      "path": "agents/engine/src/platform_heterogeneous/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/agents/engine/src/platform_heterogeneous/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "agents/engine/src/quantum_bio_fusion/__init__.py": {
+      "path": "agents/engine/src/quantum_bio_fusion/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/agents/engine/src/quantum_bio_fusion/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "agents/engine/src/quantum_holography/__init__.py": {
+      "path": "agents/engine/src/quantum_holography/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/agents/engine/src/quantum_holography/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "agents/engine/src/quantum_singularity/__init__.py": {
+      "path": "agents/engine/src/quantum_singularity/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/agents/engine/src/quantum_singularity/__init__.py",
+      "size": {
+        "bytes": 571,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "agents/engine/src/reality_programming/__init__.py": {
+      "path": "agents/engine/src/reality_programming/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/agents/engine/src/reality_programming/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "agents/engine/src/temporal_dominance/__init__.py": {
+      "path": "agents/engine/src/temporal_dominance/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/agents/engine/src/temporal_dominance/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "agents/engine/src/topological_bio/__init__.py": {
+      "path": "agents/engine/src/topological_bio/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/agents/engine/src/topological_bio/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "agents/engine/tests/__init__.py": {
+      "path": "agents/engine/tests/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/agents/engine/tests/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "algorithms/__init__.py": {
+      "path": "algorithms/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/algorithms/__init__.py",
+      "size": {
+        "bytes": 69,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "algorithms/engine/__init__.py": {
+      "path": "algorithms/engine/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/algorithms/engine/__init__.py",
+      "size": {
+        "bytes": 322,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "analysis/__init__.py": {
+      "path": "analysis/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/analysis/__init__.py",
+      "size": {
+        "bytes": 1145,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "api/__init__.py": {
+      "path": "api/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/api/__init__.py",
+      "size": {
+        "bytes": 13,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "automation/__init__.py": {
+      "path": "automation/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/automation/__init__.py",
+      "size": {
+        "bytes": 57,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "backtest/__init__.py": {
+      "path": "backtest/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/backtest/__init__.py",
+      "size": {
+        "bytes": 682,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "backtesting/__init__.py": {
+      "path": "backtesting/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/backtesting/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "cli/__init__.py": {
+      "path": "cli/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/cli/__init__.py",
+      "size": {
+        "bytes": 234,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "config/__init__.py": {
+      "path": "config/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/config/__init__.py",
+      "size": {
+        "bytes": 5014,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "core/__init__.py": {
+      "path": "core/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/core/__init__.py",
+      "size": {
+        "bytes": 841,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "cosmic/__init__.py": {
+      "path": "cosmic/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/cosmic/__init__.py",
+      "size": {
+        "bytes": 61,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "dashboard/__init__.py": {
+      "path": "dashboard/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/dashboard/__init__.py",
+      "size": {
+        "bytes": 67,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "dashboard/dashboard/__init__.py": {
+      "path": "dashboard/dashboard/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/dashboard/dashboard/__init__.py",
+      "size": {
+        "bytes": 318,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "data/__init__.py": {
+      "path": "data/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/data/__init__.py",
+      "size": {
+        "bytes": 689,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "data/data/__init__.py": {
+      "path": "data/data/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/data/data/__init__.py",
+      "size": {
+        "bytes": 18597,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "data/data/agents/__init__.py": {
+      "path": "data/data/agents/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/data/data/agents/__init__.py",
+      "size": {
+        "bytes": 115,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "deep_connection_network/__init__.py": {
+      "path": "deep_connection_network/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/deep_connection_network/__init__.py",
+      "size": {
+        "bytes": 73,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "demo/__init__.py": {
+      "path": "demo/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/demo/__init__.py",
+      "size": {
+        "bytes": 61,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "docs/__init__.py": {
+      "path": "docs/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/docs/__init__.py",
+      "size": {
+        "bytes": 64,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "engine/__init__.py": {
+      "path": "engine/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/engine/__init__.py",
+      "size": {
+        "bytes": 857,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "engines/__init__.py": {
+      "path": "engines/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/engines/__init__.py",
+      "size": {
+        "bytes": 57,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "eon-marketbot/__init__.py": {
+      "path": "eon-marketbot/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/eon-marketbot/__init__.py",
+      "size": {
+        "bytes": 54,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "evolution/__init__.py": {
+      "path": "evolution/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/evolution/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "examples/__init__.py": {
+      "path": "examples/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/examples/__init__.py",
+      "size": {
+        "bytes": 64,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "exchanges/__init__.py": {
+      "path": "exchanges/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/exchanges/__init__.py",
+      "size": {
+        "bytes": 782,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "execution/__init__.py": {
+      "path": "execution/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/execution/__init__.py",
+      "size": {
+        "bytes": 19,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "exponential_synergy_network/__init__.py": {
+      "path": "exponential_synergy_network/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/exponential_synergy_network/__init__.py",
+      "size": {
+        "bytes": 73,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/__init__.py": {
+      "path": "external/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/__init__.py",
+      "size": {
+        "bytes": 74,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/dotnet/samples/Demos/QualityCheck/python-server/app/__init__.py": {
+      "path": "external/semantic-kernel/dotnet/samples/Demos/QualityCheck/python-server/app/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/dotnet/samples/Demos/QualityCheck/python-server/app/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/samples/__init__.py": {
+      "path": "external/semantic-kernel/python/samples/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/samples/__init__.py",
+      "size": {
+        "bytes": 190,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/samples/concepts/agents/openai_assistant/__init__.py": {
+      "path": "external/semantic-kernel/python/samples/concepts/agents/openai_assistant/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/samples/concepts/agents/openai_assistant/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/samples/concepts/memory/azure_ai_search_hotel_samples/__init__.py": {
+      "path": "external/semantic-kernel/python/samples/concepts/memory/azure_ai_search_hotel_samples/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/samples/concepts/memory/azure_ai_search_hotel_samples/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/samples/concepts/resources/__init__.py": {
+      "path": "external/semantic-kernel/python/samples/concepts/resources/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/samples/concepts/resources/__init__.py",
+      "size": {
+        "bytes": 123,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/samples/demos/booking_restaurant/bookings_plugin/__init__.py": {
+      "path": "external/semantic-kernel/python/samples/demos/booking_restaurant/bookings_plugin/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/samples/demos/booking_restaurant/bookings_plugin/__init__.py",
+      "size": {
+        "bytes": 76,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/samples/demos/guided_conversations/guided_conversation/__init__.py": {
+      "path": "external/semantic-kernel/python/samples/demos/guided_conversations/guided_conversation/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/samples/demos/guided_conversations/guided_conversation/__init__.py",
+      "size": {
+        "bytes": 48,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/samples/demos/guided_conversations/guided_conversation/functions/__init__.py": {
+      "path": "external/semantic-kernel/python/samples/demos/guided_conversations/guided_conversation/functions/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/samples/demos/guided_conversations/guided_conversation/functions/__init__.py",
+      "size": {
+        "bytes": 48,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/samples/demos/guided_conversations/guided_conversation/plugins/__init__.py": {
+      "path": "external/semantic-kernel/python/samples/demos/guided_conversations/guided_conversation/plugins/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/samples/demos/guided_conversations/guided_conversation/plugins/__init__.py",
+      "size": {
+        "bytes": 48,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/samples/demos/guided_conversations/guided_conversation/utils/__init__.py": {
+      "path": "external/semantic-kernel/python/samples/demos/guided_conversations/guided_conversation/utils/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/samples/demos/guided_conversations/guided_conversation/utils/__init__.py",
+      "size": {
+        "bytes": 48,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/samples/demos/mcp_with_oauth/agent/__init__.py": {
+      "path": "external/semantic-kernel/python/samples/demos/mcp_with_oauth/agent/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/samples/demos/mcp_with_oauth/agent/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/samples/demos/mcp_with_oauth/server/mcp_simple_auth/__init__.py": {
+      "path": "external/semantic-kernel/python/samples/demos/mcp_with_oauth/server/mcp_simple_auth/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/samples/demos/mcp_with_oauth/server/mcp_simple_auth/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/samples/demos/process_with_dapr/process/__init__.py": {
+      "path": "external/semantic-kernel/python/samples/demos/process_with_dapr/process/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/samples/demos/process_with_dapr/process/__init__.py",
+      "size": {
+        "bytes": 281,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/samples/getting_started_with_processes/step03/models/__init__.py": {
+      "path": "external/semantic-kernel/python/samples/getting_started_with_processes/step03/models/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/samples/getting_started_with_processes/step03/models/__init__.py",
+      "size": {
+        "bytes": 280,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/samples/getting_started_with_processes/step03/processes/__init__.py": {
+      "path": "external/semantic-kernel/python/samples/getting_started_with_processes/step03/processes/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/samples/getting_started_with_processes/step03/processes/__init__.py",
+      "size": {
+        "bytes": 452,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/samples/getting_started_with_processes/step03/steps/__init__.py": {
+      "path": "external/semantic-kernel/python/samples/getting_started_with_processes/step03/steps/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/samples/getting_started_with_processes/step03/steps/__init__.py",
+      "size": {
+        "bytes": 768,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/__init__.py",
+      "size": {
+        "bytes": 217,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/agents/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/agents/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/agents/__init__.py",
+      "size": {
+        "bytes": 2860,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/agents/autogen/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/agents/autogen/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/agents/autogen/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/agents/azure_ai/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/agents/azure_ai/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/agents/azure_ai/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/agents/bedrock/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/agents/bedrock/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/agents/bedrock/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/agents/bedrock/models/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/agents/bedrock/models/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/agents/bedrock/models/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/agents/channels/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/agents/channels/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/agents/channels/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/agents/chat_completion/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/agents/chat_completion/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/agents/chat_completion/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/agents/copilot_studio/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/agents/copilot_studio/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/agents/copilot_studio/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/agents/group_chat/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/agents/group_chat/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/agents/group_chat/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/agents/open_ai/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/agents/open_ai/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/agents/open_ai/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/agents/orchestration/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/agents/orchestration/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/agents/orchestration/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/agents/orchestration/prompts/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/agents/orchestration/prompts/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/agents/orchestration/prompts/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/agents/runtime/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/agents/runtime/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/agents/runtime/__init__.py",
+      "size": {
+        "bytes": 1360,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/agents/runtime/core/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/agents/runtime/core/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/agents/runtime/core/__init__.py",
+      "size": {
+        "bytes": 618,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/agents/runtime/core/telemetry/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/agents/runtime/core/telemetry/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/agents/runtime/core/telemetry/__init__.py",
+      "size": {
+        "bytes": 492,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/agents/runtime/in_process/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/agents/runtime/in_process/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/agents/runtime/in_process/__init__.py",
+      "size": {
+        "bytes": 48,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/agents/strategies/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/agents/strategies/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/agents/strategies/__init__.py",
+      "size": {
+        "bytes": 1112,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/agents/strategies/selection/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/agents/strategies/selection/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/agents/strategies/selection/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/agents/strategies/termination/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/agents/strategies/termination/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/agents/strategies/termination/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/connectors/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/connectors/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/connectors/__init__.py",
+      "size": {
+        "bytes": 48,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/connectors/ai/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/connectors/ai/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/connectors/ai/__init__.py",
+      "size": {
+        "bytes": 390,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/connectors/ai/anthropic/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/connectors/ai/anthropic/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/connectors/ai/anthropic/__init__.py",
+      "size": {
+        "bytes": 410,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/connectors/ai/anthropic/prompt_execution_settings/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/connectors/ai/anthropic/prompt_execution_settings/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/connectors/ai/anthropic/prompt_execution_settings/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/connectors/ai/anthropic/services/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/connectors/ai/anthropic/services/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/connectors/ai/anthropic/services/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/connectors/ai/anthropic/settings/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/connectors/ai/anthropic/settings/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/connectors/ai/anthropic/settings/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/connectors/ai/azure_ai_inference/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/connectors/ai/azure_ai_inference/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/connectors/ai/azure_ai_inference/__init__.py",
+      "size": {
+        "bytes": 985,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/connectors/ai/azure_ai_inference/services/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/connectors/ai/azure_ai_inference/services/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/connectors/ai/azure_ai_inference/services/__init__.py",
+      "size": {
+        "bytes": 48,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/connectors/ai/bedrock/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/connectors/ai/bedrock/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/connectors/ai/bedrock/__init__.py",
+      "size": {
+        "bytes": 987,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/connectors/ai/bedrock/services/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/connectors/ai/bedrock/services/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/connectors/ai/bedrock/services/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/connectors/ai/bedrock/services/model_provider/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/connectors/ai/bedrock/services/model_provider/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/connectors/ai/bedrock/services/model_provider/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/connectors/ai/embeddings/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/connectors/ai/embeddings/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/connectors/ai/embeddings/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/connectors/ai/google/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/connectors/ai/google/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/connectors/ai/google/__init__.py",
+      "size": {
+        "bytes": 939,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/connectors/ai/google/google_ai/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/connectors/ai/google/google_ai/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/connectors/ai/google/google_ai/__init__.py",
+      "size": {
+        "bytes": 939,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/connectors/ai/google/google_ai/services/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/connectors/ai/google/google_ai/services/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/connectors/ai/google/google_ai/services/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/connectors/ai/google/vertex_ai/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/connectors/ai/google/vertex_ai/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/connectors/ai/google/vertex_ai/__init__.py",
+      "size": {
+        "bytes": 1280,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/connectors/ai/google/vertex_ai/services/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/connectors/ai/google/vertex_ai/services/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/connectors/ai/google/vertex_ai/services/__init__.py",
+      "size": {
+        "bytes": 374,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/connectors/ai/hugging_face/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/connectors/ai/hugging_face/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/connectors/ai/hugging_face/__init__.py",
+      "size": {
+        "bytes": 533,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/connectors/ai/hugging_face/services/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/connectors/ai/hugging_face/services/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/connectors/ai/hugging_face/services/__init__.py",
+      "size": {
+        "bytes": 48,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/connectors/ai/mistral_ai/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/connectors/ai/mistral_ai/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/connectors/ai/mistral_ai/__init__.py",
+      "size": {
+        "bytes": 633,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/connectors/ai/mistral_ai/prompt_execution_settings/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/connectors/ai/mistral_ai/prompt_execution_settings/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/connectors/ai/mistral_ai/prompt_execution_settings/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/connectors/ai/mistral_ai/services/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/connectors/ai/mistral_ai/services/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/connectors/ai/mistral_ai/services/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/connectors/ai/mistral_ai/settings/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/connectors/ai/mistral_ai/settings/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/connectors/ai/mistral_ai/settings/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/connectors/ai/nvidia/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/connectors/ai/nvidia/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/connectors/ai/nvidia/__init__.py",
+      "size": {
+        "bytes": 786,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/connectors/ai/nvidia/prompt_execution_settings/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/connectors/ai/nvidia/prompt_execution_settings/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/connectors/ai/nvidia/prompt_execution_settings/__init__.py",
+      "size": {
+        "bytes": 48,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/connectors/ai/nvidia/services/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/connectors/ai/nvidia/services/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/connectors/ai/nvidia/services/__init__.py",
+      "size": {
+        "bytes": 48,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/connectors/ai/nvidia/settings/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/connectors/ai/nvidia/settings/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/connectors/ai/nvidia/settings/__init__.py",
+      "size": {
+        "bytes": 48,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/connectors/ai/ollama/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/connectors/ai/ollama/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/connectors/ai/ollama/__init__.py",
+      "size": {
+        "bytes": 859,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/connectors/ai/ollama/services/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/connectors/ai/ollama/services/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/connectors/ai/ollama/services/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/connectors/ai/onnx/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/connectors/ai/onnx/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/connectors/ai/onnx/__init__.py",
+      "size": {
+        "bytes": 567,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/connectors/ai/onnx/services/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/connectors/ai/onnx/services/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/connectors/ai/onnx/services/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/connectors/ai/open_ai/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/connectors/ai/open_ai/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/connectors/ai/open_ai/__init__.py",
+      "size": {
+        "bytes": 4584,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/connectors/ai/open_ai/exceptions/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/connectors/ai/open_ai/exceptions/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/connectors/ai/open_ai/exceptions/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/connectors/ai/open_ai/prompt_execution_settings/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/connectors/ai/open_ai/prompt_execution_settings/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/connectors/ai/open_ai/prompt_execution_settings/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/connectors/ai/open_ai/services/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/connectors/ai/open_ai/services/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/connectors/ai/open_ai/services/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/connectors/ai/open_ai/settings/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/connectors/ai/open_ai/settings/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/connectors/ai/open_ai/settings/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/connectors/memory_stores/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/connectors/memory_stores/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/connectors/memory_stores/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/connectors/memory_stores/astradb/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/connectors/memory_stores/astradb/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/connectors/memory_stores/astradb/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/connectors/memory_stores/azure_cognitive_search/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/connectors/memory_stores/azure_cognitive_search/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/connectors/memory_stores/azure_cognitive_search/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/connectors/memory_stores/azure_cosmosdb/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/connectors/memory_stores/azure_cosmosdb/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/connectors/memory_stores/azure_cosmosdb/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/connectors/memory_stores/azure_cosmosdb_no_sql/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/connectors/memory_stores/azure_cosmosdb_no_sql/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/connectors/memory_stores/azure_cosmosdb_no_sql/__init__.py",
+      "size": {
+        "bytes": 236,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/connectors/memory_stores/chroma/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/connectors/memory_stores/chroma/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/connectors/memory_stores/chroma/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/connectors/memory_stores/milvus/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/connectors/memory_stores/milvus/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/connectors/memory_stores/milvus/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/connectors/memory_stores/mongodb_atlas/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/connectors/memory_stores/mongodb_atlas/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/connectors/memory_stores/mongodb_atlas/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/connectors/memory_stores/pinecone/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/connectors/memory_stores/pinecone/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/connectors/memory_stores/pinecone/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/connectors/memory_stores/postgres/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/connectors/memory_stores/postgres/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/connectors/memory_stores/postgres/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/connectors/memory_stores/qdrant/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/connectors/memory_stores/qdrant/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/connectors/memory_stores/qdrant/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/connectors/memory_stores/redis/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/connectors/memory_stores/redis/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/connectors/memory_stores/redis/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/connectors/memory_stores/usearch/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/connectors/memory_stores/usearch/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/connectors/memory_stores/usearch/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/connectors/memory_stores/weaviate/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/connectors/memory_stores/weaviate/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/connectors/memory_stores/weaviate/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/connectors/openapi_plugin/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/connectors/openapi_plugin/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/connectors/openapi_plugin/__init__.py",
+      "size": {
+        "bytes": 509,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/connectors/openapi_plugin/models/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/connectors/openapi_plugin/models/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/connectors/openapi_plugin/models/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/connectors/utils/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/connectors/utils/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/connectors/utils/__init__.py",
+      "size": {
+        "bytes": 155,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/contents/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/contents/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/contents/__init__.py",
+      "size": {
+        "bytes": 2668,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/contents/history_reducer/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/contents/history_reducer/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/contents/history_reducer/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/contents/utils/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/contents/utils/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/contents/utils/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/core_plugins/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/core_plugins/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/core_plugins/__init__.py",
+      "size": {
+        "bytes": 886,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/core_plugins/crew_ai/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/core_plugins/crew_ai/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/core_plugins/crew_ai/__init__.py",
+      "size": {
+        "bytes": 392,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/core_plugins/sessions_python_tool/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/core_plugins/sessions_python_tool/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/core_plugins/sessions_python_tool/__init__.py",
+      "size": {
+        "bytes": 341,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/data/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/data/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/data/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/exceptions/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/exceptions/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/exceptions/__init__.py",
+      "size": {
+        "bytes": 881,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/filters/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/filters/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/filters/__init__.py",
+      "size": {
+        "bytes": 560,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/filters/auto_function_invocation/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/filters/auto_function_invocation/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/filters/auto_function_invocation/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/filters/functions/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/filters/functions/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/filters/functions/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/filters/prompts/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/filters/prompts/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/filters/prompts/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/functions/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/functions/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/functions/__init__.py",
+      "size": {
+        "bytes": 1009,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/memory/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/memory/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/memory/__init__.py",
+      "size": {
+        "bytes": 257,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/processes/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/processes/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/processes/__init__.py",
+      "size": {
+        "bytes": 228,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/processes/dapr_runtime/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/processes/dapr_runtime/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/processes/dapr_runtime/__init__.py",
+      "size": {
+        "bytes": 955,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/processes/dapr_runtime/actors/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/processes/dapr_runtime/actors/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/processes/dapr_runtime/actors/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/processes/dapr_runtime/interfaces/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/processes/dapr_runtime/interfaces/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/processes/dapr_runtime/interfaces/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/processes/kernel_process/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/processes/kernel_process/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/processes/kernel_process/__init__.py",
+      "size": {
+        "bytes": 1047,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/processes/local_runtime/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/processes/local_runtime/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/processes/local_runtime/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/prompt_template/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/prompt_template/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/prompt_template/__init__.py",
+      "size": {
+        "bytes": 634,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/prompt_template/utils/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/prompt_template/utils/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/prompt_template/utils/__init__.py",
+      "size": {
+        "bytes": 477,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/reliability/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/reliability/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/reliability/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/schema/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/schema/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/schema/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/services/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/services/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/services/__init__.py",
+      "size": {
+        "bytes": 157,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/template_engine/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/template_engine/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/template_engine/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/template_engine/blocks/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/template_engine/blocks/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/template_engine/blocks/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/template_engine/protocols/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/template_engine/protocols/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/template_engine/protocols/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/text/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/text/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/text/__init__.py",
+      "size": {
+        "bytes": 461,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/utils/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/utils/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/utils/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/utils/authentication/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/utils/authentication/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/utils/authentication/__init__.py",
+      "size": {
+        "bytes": 179,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/utils/telemetry/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/utils/telemetry/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/utils/telemetry/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/utils/telemetry/agent_diagnostics/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/utils/telemetry/agent_diagnostics/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/utils/telemetry/agent_diagnostics/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/semantic_kernel/utils/telemetry/model_diagnostics/__init__.py": {
+      "path": "external/semantic-kernel/python/semantic_kernel/utils/telemetry/model_diagnostics/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/semantic_kernel/utils/telemetry/model_diagnostics/__init__.py",
+      "size": {
+        "bytes": 405,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/tests/__init__.py": {
+      "path": "external/semantic-kernel/python/tests/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/tests/__init__.py",
+      "size": {
+        "bytes": 48,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/tests/integration/agents/__init__.py": {
+      "path": "external/semantic-kernel/python/tests/integration/agents/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/tests/integration/agents/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "features/__init__.py": {
+      "path": "features/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/features/__init__.py",
+      "size": {
+        "bytes": 18,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "immortal_perpetual_system/__init__.py": {
+      "path": "immortal_perpetual_system/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/immortal_perpetual_system/__init__.py",
+      "size": {
+        "bytes": 2219,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "integrations/__init__.py": {
+      "path": "integrations/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/integrations/__init__.py",
+      "size": {
+        "bytes": 1313,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "integrations/dashboard/__init__.py": {
+      "path": "integrations/dashboard/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/integrations/dashboard/__init__.py",
+      "size": {
+        "bytes": 781,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "integrations/strategy_adapters/__init__.py": {
+      "path": "integrations/strategy_adapters/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/integrations/strategy_adapters/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "intelligent_systems/__init__.py": {
+      "path": "intelligent_systems/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/intelligent_systems/__init__.py",
+      "size": {
+        "bytes": 74,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "internal/__init__.py": {
+      "path": "internal/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/internal/__init__.py",
+      "size": {
+        "bytes": 57,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "internal/pkg/__init__.py": {
+      "path": "internal/pkg/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/internal/pkg/__init__.py",
+      "size": {
+        "bytes": 217,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "lib/__init__.py": {
+      "path": "lib/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/lib/__init__.py",
+      "size": {
+        "bytes": 58,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "lib/math/__init__.py": {
+      "path": "lib/math/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/lib/math/__init__.py",
+      "size": {
+        "bytes": 210,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "llm/__init__.py": {
+      "path": "llm/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/llm/__init__.py",
+      "size": {
+        "bytes": 1542,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "logs/__init__.py": {
+      "path": "logs/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/logs/__init__.py",
+      "size": {
+        "bytes": 49,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "memory/__init__.py": {
+      "path": "memory/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/memory/__init__.py",
+      "size": {
+        "bytes": 62,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "models/__init__.py": {
+      "path": "models/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/models/__init__.py",
+      "size": {
+        "bytes": 290,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "monitoring/__init__.py": {
+      "path": "monitoring/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/monitoring/__init__.py",
+      "size": {
+        "bytes": 20,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "multiverse_integration/__init__.py": {
+      "path": "multiverse_integration/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/multiverse_integration/__init__.py",
+      "size": {
+        "bytes": 74,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "opencode/__init__.py": {
+      "path": "opencode/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/opencode/__init__.py",
+      "size": {
+        "bytes": 7509,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "optimizer/__init__.py": {
+      "path": "optimizer/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/optimizer/__init__.py",
+      "size": {
+        "bytes": 868,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "perception/__init__.py": {
+      "path": "perception/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/perception/__init__.py",
+      "size": {
+        "bytes": 59,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "phase2/__init__.py": {
+      "path": "phase2/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/phase2/__init__.py",
+      "size": {
+        "bytes": 1458,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "phase2/optimization/__init__.py": {
+      "path": "phase2/optimization/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/phase2/optimization/__init__.py",
+      "size": {
+        "bytes": 2534,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "phase5/__init__.py": {
+      "path": "phase5/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/phase5/__init__.py",
+      "size": {
+        "bytes": 266,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "plugins/__init__.py": {
+      "path": "plugins/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/plugins/__init__.py",
+      "size": {
+        "bytes": 764,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "plugins/opencode/multi_agent_trading/__init__.py": {
+      "path": "plugins/opencode/multi_agent_trading/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/plugins/opencode/multi_agent_trading/__init__.py",
+      "size": {
+        "bytes": 34358,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "quantum/__init__.py": {
+      "path": "quantum/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/quantum/__init__.py",
+      "size": {
+        "bytes": 1333,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "quantum_entanglement_system/__init__.py": {
+      "path": "quantum_entanglement_system/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/quantum_entanglement_system/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "quantum_field_theory_system/__init__.py": {
+      "path": "quantum_field_theory_system/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/quantum_field_theory_system/__init__.py",
+      "size": {
+        "bytes": 1705,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "ring/__init__.py": {
+      "path": "ring/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/ring/__init__.py",
+      "size": {
+        "bytes": 60,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "risk/__init__.py": {
+      "path": "risk/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/risk/__init__.py",
+      "size": {
+        "bytes": 14,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "scripts/__init__.py": {
+      "path": "scripts/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/scripts/__init__.py",
+      "size": {
+        "bytes": 56,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "server/__init__.py": {
+      "path": "server/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/server/__init__.py",
+      "size": {
+        "bytes": 55,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "strategies/__init__.py": {
+      "path": "strategies/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/strategies/__init__.py",
+      "size": {
+        "bytes": 1088,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "strategy/__init__.py": {
+      "path": "strategy/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/strategy/__init__.py",
+      "size": {
+        "bytes": 18,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "synergy_engines/__init__.py": {
+      "path": "synergy_engines/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/synergy_engines/__init__.py",
+      "size": {
+        "bytes": 68,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "system/__init__.py": {
+      "path": "system/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/system/__init__.py",
+      "size": {
+        "bytes": 66,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "system/dashboard/__init__.py": {
+      "path": "system/dashboard/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/system/dashboard/__init__.py",
+      "size": {
+        "bytes": 363,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "system/recovery/__init__.py": {
+      "path": "system/recovery/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/system/recovery/__init__.py",
+      "size": {
+        "bytes": 224,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "task/__init__.py": {
+      "path": "task/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/task/__init__.py",
+      "size": {
+        "bytes": 52,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "test_files/__init__.py": {
+      "path": "test_files/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/test_files/__init__.py",
+      "size": {
+        "bytes": 51,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "test_files/economic/__init__.py": {
+      "path": "test_files/economic/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/test_files/economic/__init__.py",
+      "size": {
+        "bytes": 111,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "tests/__init__.py": {
+      "path": "tests/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/tests/__init__.py",
+      "size": {
+        "bytes": 56,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "tests/tests/__init__.py": {
+      "path": "tests/tests/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/tests/tests/__init__.py",
+      "size": {
+        "bytes": 100,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "trading/__init__.py": {
+      "path": "trading/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/trading/__init__.py",
+      "size": {
+        "bytes": 58,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "unified/__init__.py": {
+      "path": "unified/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/unified/__init__.py",
+      "size": {
+        "bytes": 52,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "universal_quantum_generation/__init__.py": {
+      "path": "universal_quantum_generation/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/universal_quantum_generation/__init__.py",
+      "size": {
+        "bytes": 75,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "utils/__init__.py": {
+      "path": "utils/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/utils/__init__.py",
+      "size": {
+        "bytes": 1355,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "utils/logging/__init__.py": {
+      "path": "utils/logging/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/utils/logging/__init__.py",
+      "size": {
+        "bytes": 191,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "utils/notifications/__init__.py": {
+      "path": "utils/notifications/__init__.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/utils/notifications/__init__.py",
+      "size": {
+        "bytes": 213,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    }
+  },
+  "main_files": {
+    "agents/engine/main.py": {
+      "path": "agents/engine/main.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/agents/engine/main.py",
+      "size": {
+        "bytes": 1389,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "agents/main.py": {
+      "path": "agents/main.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/agents/main.py",
+      "size": {
+        "bytes": 5192,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "analysis/main.py": {
+      "path": "analysis/main.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/analysis/main.py",
+      "size": {
+        "bytes": 2227,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "core/main.py": {
+      "path": "core/main.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/core/main.py",
+      "size": {
+        "bytes": 3488,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "data/main.py": {
+      "path": "data/main.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/data/main.py",
+      "size": {
+        "bytes": 2223,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "engine/main.py": {
+      "path": "engine/main.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/engine/main.py",
+      "size": {
+        "bytes": 2736,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "engines/main.py": {
+      "path": "engines/main.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/engines/main.py",
+      "size": {
+        "bytes": 4160,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "evolution/main.py": {
+      "path": "evolution/main.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/evolution/main.py",
+      "size": {
+        "bytes": 3627,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "execution/main.py": {
+      "path": "execution/main.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/execution/main.py",
+      "size": {
+        "bytes": 5063,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/dotnet/samples/Demos/QualityCheck/python-server/app/main.py": {
+      "path": "external/semantic-kernel/dotnet/samples/Demos/QualityCheck/python-server/app/main.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/dotnet/samples/Demos/QualityCheck/python-server/app/main.py",
+      "size": {
+        "bytes": 1372,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/samples/demos/document_generator/main.py": {
+      "path": "external/semantic-kernel/python/samples/demos/document_generator/main.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/samples/demos/document_generator/main.py",
+      "size": {
+        "bytes": 5928,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/samples/demos/mcp_with_oauth/agent/main.py": {
+      "path": "external/semantic-kernel/python/samples/demos/mcp_with_oauth/agent/main.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/samples/demos/mcp_with_oauth/agent/main.py",
+      "size": {
+        "bytes": 8867,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "external/semantic-kernel/python/samples/demos/telemetry/main.py": {
+      "path": "external/semantic-kernel/python/samples/demos/telemetry/main.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/external/semantic-kernel/python/samples/demos/telemetry/main.py",
+      "size": {
+        "bytes": 7008,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "integrations/dashboard/main.py": {
+      "path": "integrations/dashboard/main.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/integrations/dashboard/main.py",
+      "size": {
+        "bytes": 8112,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "integrations/main.py": {
+      "path": "integrations/main.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/integrations/main.py",
+      "size": {
+        "bytes": 3640,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "main.py": {
+      "path": "main.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/main.py",
+      "size": {
+        "bytes": 9907,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "optimizer/main.py": {
+      "path": "optimizer/main.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/optimizer/main.py",
+      "size": {
+        "bytes": 5539,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "quantum/main.py": {
+      "path": "quantum/main.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/quantum/main.py",
+      "size": {
+        "bytes": 2415,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "risk/main.py": {
+      "path": "risk/main.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/risk/main.py",
+      "size": {
+        "bytes": 6318,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "strategies/main.py": {
+      "path": "strategies/main.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/strategies/main.py",
+      "size": {
+        "bytes": 5220,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    },
+    "utils/main.py": {
+      "path": "utils/main.py",
+      "absolute_path": "/workspaces/cosmic-ai.uk/src/utils/main.py",
+      "size": {
+        "bytes": 2068,
+        "is_empty": false,
+        "status": "ok"
+      },
+      "syntax": {
+        "valid": true,
+        "message": "OK"
+      }
+    }
+  },
+  "errors": []
+}
