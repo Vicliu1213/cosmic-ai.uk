@@ -2,7 +2,6 @@
 日志工具模块 - 增强版，支持彩色输出和 LLM 专用日志
 """
 import sys
-import json
 from pathlib import Path
 from loguru import logger
 from src.config import config

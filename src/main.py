@@ -1,67 +1,46 @@
-import asyncio
+#!/usr/bin/env python3
+"""Cosmic AI Main Entry Point"""
+import sys, asyncio
+from dataclasses import dataclass
+from typing import List, Optional, Dict, Any
+from datetime import datetime
 import logging
-from engine.bitget_client import BitgetClient
-from strategies.aegis_bitget.main import AegisStrategy
-from algorithms.engine.hyperexponential_plugin import HyperexponentialGrowthPlugin
-from algorithms.engine.iceberg_order import IcebergOrder
 
-# ---------------------------------------------------------
-# 🛠️ 插件註冊中心 (對齊圖片 2 的 Registry 模式)
-# ---------------------------------------------------------
-registry = {
-    "HyperexponentialGrowthPlugin": None,
-    "IcebergOrder": None,
-    "AegisStrategy": None
-}
+logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
+logger = logging.getLogger(__name__)
 
-async def run_system():
-    # 1. 初始化底層 Client
-    # 建議從加密 config 讀取：api_key, secret, passphrase
-    bitget = BitgetClient(api_key="YOUR_KEY", secret="YOUR_SECRET", passphrase="...")
+@dataclass
+class SystemConfig:
+    mode: str = "live"
+    symbols: List[str] = None
+    def __post_init__(self):
+        if self.symbols is None: self.symbols = ["BTCUSDT", "ETHUSDT"]
 
-    # 2. 實例化所有插件並存入 Registry
-    registry["HyperexponentialGrowthPlugin"] = HyperexponentialGrowthPlugin()
-    registry["IcebergOrder"] = IcebergOrder(client=bitget)
-    registry["AegisStrategy"] = AegisStrategy(client=bitget)
+class CosmicAITradingSystem:
+    def __init__(self, config: Optional[SystemConfig] = None):
+        self.config = config or SystemConfig()
+        logger.info("✅ CosmicAI系統初始化完成")
+    
+    async def run_trading_cycle(self) -> Dict[str, Any]:
+        logger.info(f"🚀 開始交易周期 (模式: {self.config.mode})")
+        return {"timestamp": datetime.now().isoformat(), "symbols": self.config.symbols}
+    
+    def get_status(self) -> Dict[str, Any]:
+        return {"mode": self.config.mode, "symbols": self.config.symbols}
 
-    print("⚔️ Aegis Elite v2.0 | 所有系統插件已就緒...")
-
-    # 3. 啟動背景併發任務 (WebSocket 監聽與隱形風控)
-    # 這確保了當主循環在執行 AI 分析時，風控依然在 0.5s 頻率運行
-    asyncio.create_task(bitget.subscribe_market_data(["BTCUSDT", "ETHUSDT", "SOLUSDT"]))
-    asyncio.create_task(registry["AegisStrategy"].position_risk_loop())
-
-    while True:
-        try:
-            # 💡 執行圖片 2 的核心邏輯：超指數增長掃描
-            context = {"symbol": "BTCUSDT", "client": bitget}
-            result = await registry["HyperexponentialGrowthPlugin"].run(context)
-
-            # 如果觸發「超增長」信號，執行高階冰山單
-            if result.get("signal") == "hyper_growth":
-                print("🚀 [警告] 偵測到超指數增長信號！啟動冰山委託執行...")
-                await registry["IcebergOrder"].run(
-                    symbol="BTCUSDT",
-                    side="buy",
-                    total_size=0.1 # 這裡可改為透過 RiskOfficer 計算出的動態倉位
-                )
-
-            # 💡 同時執行 Aegis 的 AI 斜率研調邏輯
-            # 我們讓它與 Hyper-Growth 進行交叉驗證
-            await registry["AegisStrategy"].on_tick()
-
-            # 正常循環間隔
-            await asyncio.sleep(10)
-
-        except Exception as e:
-            # 💡 整合圖片 1 的錯誤自癒邏輯
-            print(f"❌ Critical Error: {e}")
-            print("⏳ 系統將在 60 秒後嘗試重啟恢復...")
-            await asyncio.sleep(60)
+async def main(config: Optional[SystemConfig] = None):
+    system = CosmicAITradingSystem(config)
+    status = system.get_status()
+    print("\n" + "="*60)
+    print("🌌 Cosmic AI Trading System")
+    print("="*60)
+    print(f"Mode: {status[\"mode\"]}")
+    print(f"Symbols: {\", \".join(status[\"symbols\"])}")
+    print("="*60 + "\n")
+    await system.run_trading_cycle()
+    print("✅ 系統執行成功\n")
 
 if __name__ == "__main__":
-    # 對齊圖片 1 的啟動入口
-    try:
-        asyncio.run(run_system())
-    except KeyboardInterrupt:
-        print("\n🛑 系統安全關閉中...")
+    config = SystemConfig(mode="live", symbols=["BTCUSDT", "ETHUSDT"])
+    asyncio.run(main(config))
+
