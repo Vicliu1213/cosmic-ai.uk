@@ -6,7 +6,7 @@ Provides abstract base class for all agents with standardized interface.
 """
 
 from abc import ABC, abstractmethod
-from typing import Any, Dict, Generic, TypeVar, Optional
+from typing import Any, Dict, Generic, TypeVar, Optional, List
 from dataclasses import dataclass
 
 # Type variables for generic input/output
@@ -121,3 +121,124 @@ class BaseAgent(ABC, Generic[InputT, OutputT]):
     
     def __repr__(self) -> str:
         return f"<{self.__class__.__name__}(name={self.name}, optional={self.is_optional})>"
+
+
+class AgentRegistry:
+    """
+    代理註冊表 - 管理和列出所有可用的交易代理
+    Agent Registry - Manages and lists all available trading agents
+    """
+    
+    def __init__(self):
+        """初始化代理註冊表"""
+        self._agents: Dict[str, Any] = {}
+        self._register_default_agents()
+    
+    def _register_default_agents(self):
+        """註冊默認的交易代理"""
+        # 定義所有可用的代理類名
+        available_agents = [
+            'DataSyncAgent',
+            'QuantAnalystAgent',
+            'RiskAuditAgent',
+            'PositionAnalyzerAgent',
+            'TrendAgent',
+            'RegimeDetectorAgent',
+            'SymbolSelectorAgent',
+            'PredictAgent',
+            'TriggerDetectorAgent',
+            'ReflectionAgent'
+        ]
+        
+        # 為每個代理創建虛擬類
+        for agent_name in available_agents:
+            agent_class_name = agent_name
+            snake_case_name = ''.join(['_' + c.lower() if c.isupper() else c 
+                                      for c in agent_name]).lstrip('_')
+            
+            # 動態創建代理信息字典
+            self._agents[agent_class_name] = {
+                'name': snake_case_name,
+                'display_name': agent_name.replace('Agent', '').strip(),
+                'is_optional': True,
+                'status': 'available'
+            }
+    
+    def register_agent(self, agent_name: str, agent_info: Dict[str, Any]) -> bool:
+        """
+        註冊新的代理
+        
+        Args:
+            agent_name: 代理名稱
+            agent_info: 代理信息字典
+            
+        Returns:
+            註冊是否成功
+        """
+        try:
+            if agent_name in self._agents:
+                return False
+            
+            self._agents[agent_name] = agent_info
+            return True
+        except Exception as e:
+            print(f"❌ 代理註冊失敗: {str(e)}")
+            return False
+    
+    def get_agent_info(self, agent_name: str) -> Optional[Dict[str, Any]]:
+        """
+        獲取指定名稱的代理信息
+        
+        Args:
+            agent_name: 代理名稱
+            
+        Returns:
+            代理信息字典或 None
+        """
+        return self._agents.get(agent_name)
+    
+    def list_available_agents(self) -> Dict[str, Dict[str, Any]]:
+        """
+        列出所有可用的代理
+        
+        Returns:
+            可用代理字典
+        """
+        agents_dict = {}
+        for name, info in self._agents.items():
+            if isinstance(info, dict):
+                agents_dict[info.get('name', name.lower())] = info
+            else:
+                agents_dict[name.lower()] = {
+                    'name': name.lower(),
+                    'display_name': name,
+                    'status': 'available'
+                }
+        return agents_dict
+    
+    def get_agent_names(self) -> List[str]:
+        """
+        獲取所有代理名稱列表
+        
+        Returns:
+            代理名稱列表
+        """
+        result = []
+        for name, info in self._agents.items():
+            if isinstance(info, dict):
+                result.append(info.get('name', name.lower()))
+            else:
+                result.append(name.lower())
+        return result
+    
+    def is_agent_available(self, agent_name: str) -> bool:
+        """
+        檢查代理是否可用
+        
+        Args:
+            agent_name: 代理名稱
+            
+        Returns:
+            代理是否可用
+        """
+        return agent_name in self._agents or agent_name.lower() in self.get_agent_names()

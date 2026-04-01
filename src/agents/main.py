@@ -12,7 +12,7 @@
 import sys
 import logging
 from typing import Dict, Any, List, Optional
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 logger = logging.getLogger(__name__)
 
@@ -23,7 +23,7 @@ class AgentStatus:
     name: str
     status: str  # 'running', 'idle', 'error'
     last_update: str
-    metrics: Dict[str, Any] = None
+    metrics: Dict[str, Any] = field(default_factory=dict)
 
 
 class AgentsModuleManager:

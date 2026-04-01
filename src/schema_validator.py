@@ -8,10 +8,8 @@ enabling IDE autocomplete, validation, and documentation generation.
 """
 
 import json
-import sys
 from pathlib import Path
 from typing import Dict, Any, List, Optional, Tuple
-from dataclasses import dataclass
 import logging
 
 

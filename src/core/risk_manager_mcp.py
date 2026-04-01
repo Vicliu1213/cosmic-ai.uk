@@ -92,7 +92,7 @@ class RiskManager:
                 "symbols": symbols,
                 "var_results": var_results,
                 "portfolio_var": sum(r["var_amount"] for r in var_results.values()),
-                "portfolio_expected_shortfallpackage": sum(r["expected_shortfall"] for r in var_results.values()),
+                "portfolio_expected_shortfallpackage，": sum(r["expected_shortfall"] for r in var_results.values()),
                 "analysis_timestamp": datetime.now().isoformat()
             }
 

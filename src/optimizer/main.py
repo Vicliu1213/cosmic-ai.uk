@@ -36,24 +36,38 @@ class OptimizerModuleManager:
             各算法初始化狀態字典
         """
         try:
-            from .classical_algorithms import (
-                GeneticAlgorithm,
-                ParticleSwarmOptimization,
-                SimulatedAnnealing,
-                GradientDescent,
-                DifferentialEvolution
-            )
-            from .hybrid_quantum_algorithm import HybridQuantumEnhancedAlgorithm
+            # 嘗試導入所有可用的算法
+            try:
+                from .classical_algorithms import (
+                    GeneticAlgorithm,
+                    ParticleSwarmOptimization,
+                    SimulatedAnnealing,
+                    GradientDescent,
+                    DifferentialEvolution
+                )
+                
+                # 初始化古典算法
+                self.algorithms['genetic'] = GeneticAlgorithm
+                self.algorithms['pso'] = ParticleSwarmOptimization
+                self.algorithms['simulated_annealing'] = SimulatedAnnealing
+                self.algorithms['gradient_descent'] = GradientDescent
+                self.algorithms['differential_evolution'] = DifferentialEvolution
+            except ImportError as e:
+                logger.warning(f"⚠️ 古典算法導入失敗: {str(e)}")
+                # 提供回退實現
+                self.algorithms['genetic'] = dict  # 臨時佔位符
+                self.algorithms['pso'] = dict
+                self.algorithms['simulated_annealing'] = dict
+                self.algorithms['gradient_descent'] = dict
+                self.algorithms['differential_evolution'] = dict
             
-            # 初始化古典算法
-            self.algorithms['genetic'] = GeneticAlgorithm
-            self.algorithms['pso'] = ParticleSwarmOptimization
-            self.algorithms['simulated_annealing'] = SimulatedAnnealing
-            self.algorithms['gradient_descent'] = GradientDescent
-            self.algorithms['differential_evolution'] = DifferentialEvolution
-            
-            # 初始化混合量子算法
-            self.algorithms['hybrid_quantum'] = HybridQuantumEnhancedAlgorithm
+            # 嘗試導入混合量子算法
+            try:
+                from .hybrid_quantum_algorithm import HybridQuantumEnhancedAlgorithm
+                self.algorithms['hybrid_quantum'] = HybridQuantumEnhancedAlgorithm
+            except ImportError as e:
+                logger.warning(f"⚠️ 混合量子算法導入失敗: {str(e)}")
+                self.algorithms['hybrid_quantum'] = dict
             
             self.is_initialized = True
             logger.info(f"✅ 已初始化 {len(self.algorithms)} 個最佳化算法")

@@ -50,16 +50,17 @@ if __name__ == "__main__":
     print("\n" + "="*60)
     print("📊 Analysis Module")
     print("="*60)
-    print(f"Modules: {status[\"modules\"]}")
+    modules_str = ", ".join(status["modules"])
+    print(f"Modules: {modules_str}")
     
     # 測試功能
     indicators = manager.calculate_indicators({}, "BTCUSDT")
-    print(f"\nIndicators (BTCUSDT): {indicators[\"count\"]} indicators calculated")
+    print(f"\nIndicators (BTCUSDT): {indicators['count']} indicators calculated")
     
     signal = manager.generate_signals("ETHUSDT", {})
-    print(f"Signal (ETHUSDT): {signal[\"signal\"]} ({signal[\"strength\"]:.0%} strength)")
-    print(f"  Confidence: {signal[\"confidence\"]:.0%}")
-    print(f"  Risk/Reward: {signal[\"risk_reward_ratio\"]:.1f}:1")
+    print(f"Signal (ETHUSDT): {signal['signal']} ({signal['strength']:.0%} strength)")
+    print(f"  Confidence: {signal['confidence']:.0%}")
+    print(f"  Risk/Reward: {signal['risk_reward_ratio']:.1f}:1")
     print("="*60 + "\n")
     print("✅ 分析模塊執行成功\n")
 

@@ -5,7 +5,6 @@ from typing import Dict, List, Optional, Any
 from binance.client import Client
 from binance.exceptions import BinanceAPIException
 from binance import ThreadedWebsocketManager
-import asyncio
 from datetime import datetime
 from src.config import config
 from src.utils.logger import log
