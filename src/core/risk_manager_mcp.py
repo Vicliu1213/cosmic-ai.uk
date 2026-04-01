@@ -21,7 +21,7 @@ logger = logging.getLogger(__name__)
 
 class RiskManager:
     """风险管理器"""
-    
+
     async def check_position_limits(self, symbol: str, quantity: float) -> Dict[str, Any]:
         """检查头寸限制"""
         try:
@@ -31,21 +31,21 @@ class RiskManager:
                 "MSFT": {"max_position": 8000, "max_pct_portfolio": 0.12, "max_sector": 0.25},
                 "default": {"max_position": 5000, "max_pct_portfolio": 0.08, "max_sector": 0.25}
             }
-            
+
             limit_config = limits.get(symbol, limits["default"])
             current_position = 3000  # 模拟当前头寸
             portfolio_pct = 0.06  # 模拟投资组合百分比
             sector_concentration = 0.18  # 模拟行业集中度
-            
+
             proposed_position = current_position + quantity
             proposed_portfolio_pct = portfolio_pct + (quantity / 1000000)  # 简化计算
-            
+
             limit_checks = {
                 "position_limit": proposed_position > limit_config["max_position"],
                 "portfolio_pct_limit": proposed_portfolio_pct > limit_config["max_pct_portfolio"],
                 "sector_limit": sector_concentration > limit_config["max_sector"]
             }
-            
+
             check = {
                 "symbol": symbol,
                 "quantity": quantity,
@@ -60,7 +60,7 @@ class RiskManager:
                 "recommendation": "APPROVED" if not any(limit_checks.values()) else "REJECTED",
                 "check_timestamp": datetime.now().isoformat()
             }
-            
+
             return {
                 "success": True,
                 "data": check,
@@ -73,7 +73,7 @@ class RiskManager:
                 "error": str(e),
                 "message": "头寸限制检查失败"
             }
-    
+
     async def calculate_var(self, symbols: List[str], confidence: float = 0.95) -> Dict[str, Any]:
         """计算风险价值 (Value at Risk)"""
         try:
@@ -87,15 +87,15 @@ class RiskManager:
                     "expected_shortfall": 65000 if symbol == "AAPL" else 45000,
                     "es_pct": 0.065 if symbol == "AAPL" else 0.045
                 }
-            
+
             analysis = {
                 "symbols": symbols,
                 "var_results": var_results,
                 "portfolio_var": sum(r["var_amount"] for r in var_results.values()),
-                "portfolio_expected_shortfall": sum(r["expected_shortfall"] for r in var_results.values()),
+                "portfolio_expected_shortfallpackage": sum(r["expected_shortfall"] for r in var_results.values()),
                 "analysis_timestamp": datetime.now().isoformat()
             }
-            
+
             return {
                 "success": True,
                 "data": analysis,
@@ -108,7 +108,7 @@ class RiskManager:
                 "error": str(e),
                 "message": "VaR计算失败"
             }
-    
+
     async def stress_test(self, scenario: str) -> Dict[str, Any]:
         """压力测试"""
         try:
@@ -134,9 +134,9 @@ class RiskManager:
                     "volume_decrease": 0.50
                 }
             }
-            
+
             scenario_config = scenarios.get(scenario, scenarios["market_crash"])
-            
+
             results = {
                 "scenario": scenario,
                 "scenario_description": scenario_config.get("description"),
@@ -161,7 +161,7 @@ class RiskManager:
                 ],
                 "test_timestamp": datetime.now().isoformat()
             }
-            
+
             return {
                 "success": True,
                 "data": results,
@@ -174,7 +174,7 @@ class RiskManager:
                 "error": str(e),
                 "message": "压力测试失败"
             }
-    
+
     async def compliance_check(self, regulation: str = "all") -> Dict[str, Any]:
         """合规检查"""
         try:
@@ -208,7 +208,7 @@ class RiskManager:
                 "next_audit": "2026-03-01",
                 "check_timestamp": datetime.now().isoformat()
             }
-            
+
             return {
                 "success": True,
                 "data": compliance_status,
@@ -221,7 +221,7 @@ class RiskManager:
                 "error": str(e),
                 "message": "合规检查失败"
             }
-    
+
     async def get_risk_report(self) -> Dict[str, Any]:
         """获取风险报告"""
         try:
@@ -266,7 +266,7 @@ class RiskManager:
                 ],
                 "next_review": "2026-03-19"
             }
-            
+
             return {
                 "success": True,
                 "data": report,

@@ -1,0 +1,121 @@
+{
+  "system_version": "1.0.0",
+  "initialized_at": 1771613197.8875327,
+  "last_updated": 1775049680.5055435,
+  "total_operations": 336,
+  "cache_configuration": {
+    "l1_max_size_mb": 100,
+    "enable_compression": true,
+    "enable_deduplication": true
+  },
+  "optimization_config": {
+    "max_memory_percent": 80.0,
+    "auto_compression_threshold": 75.0
+  },
+  "statistics": {
+    "total_hits": 1,
+    "total_misses": 0,
+    "total_compressions": 0,
+    "total_evictions": 0,
+    "hit_rate_percent": 100.0
+  },
+  "history_snapshots": [
+    {
+      "timestamp": 1771613197.8898256,
+      "datetime_str": "2026-02-20T18:46:37.889826",
+      "entries_count": 2,
+      "compression_ratio": 1.0,
+      "cache_stats": {
+        "l1": {
+          "level": "L1_MEMORY",
+          "entries": 1,
+          "current_size_mb": 0.0,
+          "max_size_mb": 50.0,
+          "utilization_percent": 0.0
+        },
+        "l2": {
+          "level": "L2_DISK",
+          "entries": 0,
+          "total_size_mb": 0.0,
+          "cache_dir": ".cache/l2"
+        },
+        "l3": {
+          "level": "L3_COMPRESSED",
+          "entries": 1,
+          "total_size_mb": 0.18,
+          "compression_level": 9,
+          "cache_dir": ".cache/l3"
+        },
+        "overall": {
+          "total_hits": 1,
+          "total_misses": 0,
+          "total_evictions": 0,
+          "total_compressions": 0,
+          "current_memory_mb": 0.0,
+          "peak_memory_mb": 0.0,
+          "compression_ratio": 1.0,
+          "hit_rate_percent": 100.0
+        },
+        "system_memory": {
+          "system_total_mb": 7939.45,
+          "system_available_mb": 7084.53,
+          "system_used_mb": 854.92,
+          "system_percent": 10.8,
+          "process_rss_mb": 22.66,
+          "process_vms_mb": 110.4,
+          "memory_threshold_percent": 80.0
+        },
+        "optimization_suggestions": []
+      }
+    },
+    {
+      "timestamp": 1771613202.8921256,
+      "datetime_str": "2026-02-20T18:46:42.892128",
+      "entries_count": 2,
+      "compression_ratio": 1.0,
+      "cache_stats": {
+        "l1": {
+          "level": "L1_MEMORY",
+          "entries": 1,
+          "current_size_mb": 0.0,
+          "max_size_mb": 50.0,
+          "utilization_percent": 0.0
+        },
+        "l2": {
+          "level": "L2_DISK",
+          "entries": 0,
+          "total_size_mb": 0.0,
+          "cache_dir": ".cache/l2"
+        },
+        "l3": {
+          "level": "L3_COMPRESSED",
+          "entries": 1,
+          "total_size_mb": 0.18,
+          "compression_level": 9,
+          "cache_dir": ".cache/l3"
+        },
+        "overall": {
+          "total_hits": 1,
+          "total_misses": 0,
+          "total_evictions": 0,
+          "total_compressions": 0,
+          "current_memory_mb": 0.0,
+          "peak_memory_mb": 0.0,
+          "compression_ratio": 1.0,
+          "hit_rate_percent": 100.0
+        },
+        "system_memory": {
+          "system_total_mb": 7939.45,
+          "system_available_mb": 7098.02,
+          "system_used_mb": 841.43,
+          "system_percent": 10.6,
+          "process_rss_mb": 22.66,
+          "process_vms_mb": 110.4,
+          "memory_threshold_percent": 80.0
+        },
+        "optimization_suggestions": []
+      }
+    }
+  ],
+  "total_snapshots": 2
+}
