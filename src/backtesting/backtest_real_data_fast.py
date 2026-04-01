@@ -127,13 +127,52 @@ async def main():
     # Define strategies
     logger.info("[3/4] 運行7個策略回測...")
     strategies = [
-        ('1. Cosmic: Triangular Arbitrage', CosmicStrategyAdapter()),
-        ('2. Cosmic: Wormhole Arbitrage', CosmicStrategyAdapter()),
-        ('3. Hummingbot: Pure Market Making', HummingbotStrategyAdapter(HummingbotStrategyType.PURE_MARKET_MAKING)),
-        ('4. Hummingbot: Avellaneda-Stoikov', HummingbotStrategyAdapter(HummingbotStrategyType.AVELLANEDA_STOIKOV)),
-        ('5. LLM-TradeBot: Practical v2', LLMTradeBotAdapterV2()),
-        ('6. Hybrid: Cosmic + Hummingbot', CosmicStrategyAdapter()),
-        ('7. Optimal Combo: Cosmic + HB + LLM', CosmicStrategyAdapter()),
+        ('1. Cosmic: Triangular Arbitrage', CosmicStrategyAdapter(config={
+            'timeframe': '1h',
+            'lookback_periods': 20,
+            'volatility_threshold': 0.015,
+            'min_confidence': 0.65,
+            'max_position_size': 0.1,
+        })),
+        ('2. Cosmic: Wormhole Arbitrage', CosmicStrategyAdapter(config={
+            'timeframe': '4h',
+            'lookback_periods': 30,
+            'volatility_threshold': 0.02,
+            'min_confidence': 0.7,
+            'max_position_size': 0.15,
+        })),
+        ('3. Hummingbot: Pure Market Making', HummingbotStrategyAdapter(config={
+            'strategy_type': 'pure_market_making',
+            'bid_spread': 0.001,
+            'ask_spread': 0.001,
+            'order_amount': 5.0,
+        })),
+        ('4. Hummingbot: Avellaneda-Stoikov', HummingbotStrategyAdapter(config={
+            'strategy_type': 'avellaneda_stoikov',
+            'volatility_sensitivity': 0.8,
+            'inventory_target_base_pct': 0.5,
+            'max_order_size': 10.0,
+        })),
+        ('5. LLM-TradeBot: Practical v2', LLMTradeBotAdapterV2(config={
+            'num_agents': 3,
+            'debate_rounds': 2,
+            'consensus_threshold': 0.66,
+            'risk_level': 'moderate',
+        })),
+        ('6. Hybrid: Cosmic + Hummingbot', CosmicStrategyAdapter(config={
+            'timeframe': '2h',
+            'lookback_periods': 25,
+            'volatility_threshold': 0.018,
+            'min_confidence': 0.68,
+            'max_position_size': 0.12,
+        })),
+        ('7. Optimal Combo: Cosmic + HB + LLM', CosmicStrategyAdapter(config={
+            'timeframe': '1h',
+            'lookback_periods': 20,
+            'volatility_threshold': 0.015,
+            'min_confidence': 0.65,
+            'max_position_size': 0.1,
+        })),
     ]
     
     # Run backtests in parallel

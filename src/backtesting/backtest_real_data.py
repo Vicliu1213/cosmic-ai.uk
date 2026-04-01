@@ -27,7 +27,7 @@ from src.backtesting.performance_comparator import PerformanceComparator
 from src.backtesting.real_market_data_downloader import download_backtest_data
 from src.integrations.strategy_adapters.cosmic_adapter import CosmicStrategyAdapter
 from src.integrations.strategy_adapters.hummingbot_adapter import HummingbotStrategyAdapter
-from src.integrations.strategy_adapters.llm_adapter import LLMTradeBotAdapter
+from src.integrations.strategy_adapters.llm_adapter_v2 import LLMTradeBotAdapterV2
 
 # Setup logging
 logging.basicConfig(
@@ -210,7 +210,7 @@ async def run_all_strategies_backtest(
         },
         {
             'name': 'LLM-TradeBot: Debate Framework',
-            'adapter': LLMTradeBotAdapter,
+            'adapter': LLMTradeBotAdapterV2,
             'config': {
                 'num_agents': 3,
                 'debate_rounds': 2,

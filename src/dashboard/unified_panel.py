@@ -139,6 +139,7 @@ class UnifiedPanel:
         self.refresh_interval = refresh_interval
         self.is_running = False
         self.created_at = datetime.now()
+        self.status = PanelStatus.INITIALIZING  # 添加狀態屬性
         
         # 组件状态跟踪
         self.components: Dict[str, ComponentStatus] = {}
@@ -310,7 +311,7 @@ Sharpe 比率: {metrics.sharpe_ratio:.2f}
         uptime = datetime.now() - self.created_at
         
         status_text = f"""
-面板狀態: {PanelStatus.RUNNING.value}
+面板狀態: {self.status.value}
 運行時間: {uptime.total_seconds():.0f} 秒
 啟動時間: {self.created_at.strftime('%H:%M:%S')}
 
@@ -380,6 +381,7 @@ Sharpe 比率: {metrics.sharpe_ratio:.2f}
     async def start_live_display(self) -> None:
         """啟動實時顯示"""
         self.is_running = True
+        self.status = PanelStatus.RUNNING  # 更新狀態為運行中
         self.console.clear()
         self.console.print(
             Panel(

@@ -9,7 +9,6 @@ from datetime import datetime
 from ta.trend import SMAIndicator, EMAIndicator, MACD, ADXIndicator
 from ta.momentum import RSIIndicator, StochasticOscillator
 from ta.volatility import BollingerBands, AverageTrueRange
-from ta.volume import VolumeWeightedAveragePrice
 from src.utils.logger import log
 from src.utils.data_saver import DataSaver
 from src.data.kline_validator import KlineValidator
@@ -238,7 +237,6 @@ class MarketDataProcessor:
         
         # 🆕 KDJ Indicator (Specification requirement for 15m setup)
         # Parameters: N=9, M1=3, M2=3
-        from ta.momentum import StochasticOscillator
         stoch = StochasticOscillator(
             high=df['high'],
             low=df['low'],
@@ -488,7 +486,7 @@ class MarketDataProcessor:
         features['volume'] = df_checked['volume']
 
         # returns & log returns
-        features['return_pct'] = df_checked['close'].pct_change(fill_method=None) * 100
+        features['return_pct'] = df_checked['close'].pct_change() * 100
         # 替换由除以0产生的 inf
         features['return_pct'] = features['return_pct'].replace([np.inf, -np.inf], np.nan)
         # log on zeros will produce -inf; protect by replacing non-positive with NaN first
@@ -504,8 +502,8 @@ class MarketDataProcessor:
         features['rolling_median_price'] = df_checked['close'].rolling(window=L, min_periods=min_periods).median()
 
         # momentum
-        features['momentum_1'] = df_checked['close'].pct_change(periods=1, fill_method=None)
-        features['momentum_12'] = df_checked['close'].pct_change(periods=min(12, L), fill_method=None)
+        features['momentum_1'] = df_checked['close'].pct_change(periods=1)
+        features['momentum_12'] = df_checked['close'].pct_change(periods=min(12, L))
 
         # MACD/ATR/VWAP 等相对值（使用安全除法）
         # 修复说明（2025-12-18）: MACD现在保存为原始价差（USDT），在特征工程时归一化

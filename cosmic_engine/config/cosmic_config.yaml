@@ -98,7 +98,7 @@ genome:
 data_interface:
   type: "simulated"
   openbb:
-    api_key: "${OPENBB_API_KEY}"
+    api_key: "\${OPENBB_API_KEY}"
     base_url: "https://pro.openbb.co/api/v1"
     timeout_sec: 10
   market:
@@ -139,99 +139,3 @@ monitoring:
   ray_dashboard:
     enabled: true
     port: 8265
-
-# ----- 容錯拓撲系統 (Fault Tolerance Topology) -----
-fault_tolerance:
-  enabled: true
-  auto_repair_enabled: true
-  auto_repair_mode: "always_on"
-  detection_interval_ms: 500
-  isolation_strategy: "automatic"
-  failover_timeout_sec: 3
-  health_check_interval_sec: 1
-  max_concurrent_failures: 5
-  failure_threshold: 0.3
-  auto_restart_enabled: true
-  auto_restart_delay_sec: 2
-  auto_restart_max_attempts: 5
-  isolation_strategies:
-    - "circuit_breaker"
-    - "timeout_isolation"
-    - "automatic_restart"
-    - "auto_repair"
-  topology:
-    type: "mesh"
-    backup_replicas: 3
-    heartbeat_interval_ms: 250
-    failure_detection_threshold: 2
-  repair_config:
-    enabled: true
-    auto_heal: true
-    predictive_repair: true
-    repair_interval_sec: 1
-    aggressive_mode: true
-
-# ----- 量子糾錯編碼系統 (Quantum Error Correction) -----
-error_correction:
-  enabled: true
-  auto_correction_enabled: true
-  auto_correction_mode: "continuous"
-  code_type: "shor"  # Options: "repetition", "shor", "surface"
-  syndrome_check_interval_ms: 200
-  correction_enabled: true
-  aggressive_correction: true
-  encoding_efficiency: 0.95
-  error_threshold: 0.0005
-  auto_code_selection: true
-  codes:
-    repetition:
-      qubit_multiplier: 3
-      auto_apply: true
-    shor:
-      qubit_multiplier: 9
-      auto_apply: true
-    surface:
-      qubit_multiplier: 25
-      distance: 5
-      auto_apply: true
-  error_correction_config:
-    predictive_correction: true
-    batch_correction: true
-    parallel_correction: true
-    correction_retry_count: 3
-
-# ----- 自進化學習機制 (Self-Evolution Learning) -----
-self_evolution:
-  enabled: true
-  auto_optimization_enabled: true
-  auto_learning_mode: "continuous"
-  learning_algorithm: "hybrid"  # Options: "ppo", "cma_es", "hybrid"
-  exploration_rate: 0.5
-  learning_rate: 0.002
-  update_frequency_steps: 50
-  auto_algorithm_selection: true
-  aggressive_learning: true
-  ppo:
-    gamma: 0.995
-    gae_lambda: 0.98
-    entropy_coeff: 0.02
-    clip_ratio: 0.15
-    epochs: 8
-    auto_adjust: true
-  cma_es:
-    population_size: 50
-    mutation_rate: 0.2
-    selection_pressure: 3
-    auto_adapt: true
-  knowledge_distillation:
-    enabled: true
-    continuous_distillation: true
-    temperature: 2.0
-    alpha: 0.7
-    distillation_frequency_steps: 25
-  learning_config:
-    predictive_learning: true
-    multi_algorithm_ensemble: true
-    curriculum_progression: true
-    auto_difficulty_adjustment: true
-    meta_learning: true

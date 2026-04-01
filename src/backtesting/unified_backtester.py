@@ -230,7 +230,7 @@ class UnifiedBacktester:
         bar = snapshot.bars[signal.symbol]
         
         # Check if we have sufficient capital
-        position_cost = signal.entry_price * signal.quantity if signal.entry_price else bar.close_price * signal.quantity
+        position_cost = signal.entry_price * signal.quantity if signal.entry_price is not None else bar.close_price * signal.quantity
         
         if position_cost > self.cash:
             logger.warning(f"Insufficient capital for {signal.symbol}: "
@@ -389,8 +389,6 @@ class UnifiedBacktester:
         # Calculate total position value
         positions_value = sum(
             pos.current_price * pos.quantity
-            if pos.position_type == "long"
-            else pos.entry_price * pos.quantity  # For shorts, use entry to track unrealized
             for pos in self.positions.values()
         )
         
