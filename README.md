@@ -552,6 +552,182 @@ daily_updates:
       - network_status             # 網絡狀態 | Network status
 ```
 
+## 💾 短期/長期記憶系統 - Short/Long-Term Memory System
+
+### 概述 - Overview
+
+Cosmic AI 實現了分層記憶系統，實現智能數據管理和自動優化:
+
+```
+快速訪問層 → 短期記憶 (TTL) → 長期記憶 (持久化)
+Fast Access → Short-Term (Auto-Expire) → Long-Term (Persistent)
+```
+
+### 三層記憶架構 - Three-Tier Architecture
+
+| 層級 | 容量 | TTL | 特性 | 用途 |
+|------|------|-----|------|------|
+| **L1** | 100MB | ∞ | 最快訪問 | 緩存熱數據 |
+| **短期** | 1000條 | 300s | 自動過期 + LRU | 臨時數據 + 自動遷移 |
+| **長期** | 無限 | ∞ | 持久化 + 搜索 | 關鍵數據 + 參考 |
+
+### 快速開始 - Quick Start
+
+```bash
+# 查看短期記憶狀態
+python3 src/scripts/memory_cli.py short-term --action stats
+
+# 查看長期記憶統計
+python3 src/scripts/memory_cli.py long-term --action stats
+
+# 執行自動清理和遷移
+python3 src/scripts/memory_cli.py migrate
+
+# 查看完整記憶摘要
+python3 src/scripts/memory_cli.py summary
+```
+
+### 短期記憶 - Short-Term Memory
+
+**自動過期機制**:
+- TTL: 300秒 (可配置)
+- 容量: 1000條條目
+- 驅逐: LRU 策略
+- 清理: 每10次自動保存觸發一次
+
+```bash
+# 列出所有短期記憶
+python3 src/scripts/memory_cli.py short-term --action list
+
+# 查看統計 (條目數、TTL、利用率)
+python3 src/scripts/memory_cli.py short-term --action stats
+
+# 清空短期記憶
+python3 src/scripts/memory_cli.py short-term --action clear
+```
+
+**重要性評分** (0.0-1.0):
+- `0.8-0.9`: 關鍵數據 (API鑰匙、配置) → 不壓縮
+- `0.5-0.7`: 重要數據 (交易記錄) → 輕度壓縮
+- `0.2-0.5`: 中等數據 (臨時結果) → 標準壓縮
+- `0.0-0.3`: 低價值數據 (日誌) → 最大壓縮
+
+### 長期記憶 - Long-Term Memory
+
+**持久化存儲**:
+- 位置: `.memory/long_term/`
+- 格式: Pickle + JSON 元數據
+- 容量: 受磁盤限制
+- 搜索: 按標籤/重要性/內容
+
+```bash
+# 列出所有長期記憶
+python3 src/scripts/memory_cli.py long-term --action list
+
+# 按標籤篩選
+python3 src/scripts/memory_cli.py long-term --action list --tag "models"
+
+# 按重要性篩選 (>= 0.8)
+python3 src/scripts/memory_cli.py long-term --action list --min-importance 0.8
+
+# 搜索條目
+python3 src/scripts/memory_cli.py long-term --action search --query "config"
+
+# 查看統計 (分布、大小)
+python3 src/scripts/memory_cli.py long-term --action stats
+```
+
+### 自動清理和遷移 - Automatic Cleanup & Migration
+
+**清理流程**:
+1. 每10次自動保存觸發一次清理
+2. 掃描過期條目 (age > TTL)
+3. 計算重要性分數
+4. 重要性 > 0.6 → 遷移至長期
+5. 重要性 ≤ 0.6 → 刪除
+
+```bash
+# 手動執行清理和遷移
+python3 src/scripts/memory_cli.py migrate
+
+# 輸出示例:
+# 🔄 Running cleanup and migration from short-term to long-term...
+# ✅ Migration completed!
+#   Expired entries: 5
+#   Migrated to long-term: 3
+#   Deleted entries: 2
+```
+
+### 完整記憶摘要 - Memory Summary
+
+```bash
+python3 src/scripts/memory_cli.py summary
+
+# 輸出示例:
+# 📊 Memory System Summary
+# [SHORT-TERM MEMORY]
+#   Entries: 0/1000
+#   Utilization: 0.0%
+#   TTL: 300s
+#
+# [LONG-TERM MEMORY]
+#   Entries: 15
+#   Critical (>0.8): 3
+#   High (0.5-0.8): 7
+#
+# [CACHE PERFORMANCE]
+#   Hit Rate: 87.3%
+#   Compression Ratio: 2.15x
+#
+# [AI METRICS]
+#   Learning Enabled: True
+#   Adaptive L1 Size: 100 MB
+```
+
+### Python API - Python API
+
+```python
+from memory_manager import init_memory_manager
+
+# 初始化
+manager = init_memory_manager()
+
+# 短期存儲 (自動過期)
+manager.cache.short_term.put("temp_data", data)
+
+# 長期存儲 (持久化)
+manager.cache.long_term.put(
+    key="model_config",
+    value=config_data,
+    importance=0.95,  # 關鍵數據
+    tags=["config", "models"]
+)
+
+# 搜索
+results = manager.cache.long_term.search(
+    tags=["models"],
+    min_importance=0.8
+)
+
+# 統計
+stats = manager.memory_summary()
+```
+
+### 監控和報告 - Monitoring
+
+記憶系統自動收集統計信息:
+- 短期記憶: 過期次數、驅逐次數
+- 長期記憶: 條目數、重要性分布、訪問計數
+- 清理日誌: 遷移次數、刪除次數、釋放空間
+
+**查看詳細記錄**:
+```bash
+# 查看詳細的記憶系統記錄
+cat src/docs/memory.md
+```
+
+---
+
 ## 環境隔離
 
 每個插件都在獨立的虛擬空間中運行，避免互相影響：
