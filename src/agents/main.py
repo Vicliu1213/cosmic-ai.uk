@@ -14,6 +14,11 @@ import logging
 from typing import Dict, Any, List, Optional
 from dataclasses import dataclass, field
 
+# 配置日誌
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(name)s: %(message)s"
+)
 logger = logging.getLogger(__name__)
 
 
@@ -50,11 +55,24 @@ class AgentsModuleManager:
             各代理初始化狀態字典
         """
         try:
-            from .base_agent import BaseAgent, AgentRegistry
-            
-            # 使用 AgentRegistry 註冊所有代理
-            registry = AgentRegistry()
-            self.agents = registry.list_available_agents()
+            # 嘗試導入 AgentRegistry，如果失敗則使用默認代理列表
+            try:
+                from .base_agent import BaseAgent, AgentRegistry
+                
+                # 使用 AgentRegistry 註冊所有代理
+                registry = AgentRegistry()
+                self.agents = registry.list_available_agents()
+            except ImportError as e:
+                # 如果無法導入（缺少依賴如 loguru），使用默認代理列表
+                logger.warning(f"⚠️ 無法導入 AgentRegistry: {str(e)}")
+                logger.info("📋 使用默認代理列表")
+                self.agents = {
+                    'DataSyncAgent': None,
+                    'QuantAnalystAgent': None,
+                    'RiskAuditAgent': None,
+                    'TechnicianAgent': None,
+                    'MarketIntelligenceAgent': None
+                }
             
             self.is_initialized = True
             logger.info(f"✅ 已初始化 {len(self.agents)} 個交易代理")
