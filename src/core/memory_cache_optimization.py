@@ -157,53 +157,116 @@ class MemoryOptimizer:
 
 
 class CompressionEngine:
-    """Data compression and decompression engine"""
+    """Data compression and decompression engine with importance-based decisions"""
+
+    # Content importance levels
+    IMPORTANCE_CRITICAL = 1.0    # Never compress
+    IMPORTANCE_HIGH = 0.8        # Minimal compression
+    IMPORTANCE_MEDIUM = 0.5      # Balanced compression
+    IMPORTANCE_LOW = 0.2         # Aggressive compression
+    IMPORTANCE_TRIVIAL = 0.0     # Maximum compression
 
     @staticmethod
-    def compress(data: Any, compression_level: int = 6) -> Tuple[bytes, float]:
+    def calculate_content_importance(data: Any) -> float:
         """
-        Compress data using zlib
+        Calculate content importance score (0.0 - 1.0)
+        
+        Score factors:
+        - Critical keywords (ML models, configs) → HIGH
+        - Numeric/structured data → MEDIUM
+        - Duplicates, logs → LOW
+        """
+        try:
+            data_str = json.dumps(data, default=str)
+            
+            # Critical patterns that should NOT be compressed
+            critical_keywords = [
+                'model', 'weight', 'parameter', 'config', 'api_key', 
+                'token', 'secret', 'credential', 'algorithm', 'metric',
+                'accuracy', 'performance', 'optimization', 'strategy'
+            ]
+            
+            score = 0.0
+            data_lower = data_str.lower()
+            
+            # Check for critical content
+            for keyword in critical_keywords:
+                if keyword in data_lower:
+                    score = max(score, 0.9)  # HIGH importance
+                    break
+            
+            # Structured data (dict/list) is more important than plain text
+            if isinstance(data, (dict, list)) and len(data) > 10:
+                score = max(score, 0.7)
+            
+            # Check for duplicates (low importance)
+            if len(data_str) < 100 and data_str.count(data_str[:20]) > 2:
+                score = min(score, 0.2)  # LOW importance
+            
+            # Size heuristic: very large data might be logs (low importance)
+            if len(data_str) > 10000:
+                score = max(score, 0.5)  # At least MEDIUM
+            
+            return score
+        except:
+            return 0.5  # Default to MEDIUM if calculation fails
 
-        Args:
-            data: Data to compress
-            compression_level: Compression level (1-9, default: 6)
-
+    @staticmethod
+    def compress(data: Any, compression_level: int = 6, force_compress: bool = False) -> Tuple[bytes, float, bool]:
+        """
+        Compress data using zlib with importance-aware decisions
+        
         Returns:
-            Tuple of (compressed_data, compression_ratio)
+            Tuple of (compressed_data, compression_ratio, was_compressed)
         """
         original_data = pickle.dumps(data)
         original_size = len(original_data)
 
-        compressed_data = zlib.compress(original_data, compression_level)
+        # Calculate importance
+        importance = CompressionEngine.calculate_content_importance(data)
+        
+        # Decision: compress or not based on importance
+        # HIGH importance (>0.7): use minimal compression
+        # MEDIUM importance (0.3-0.7): use normal compression
+        # LOW importance (<0.3): use aggressive compression
+        
+        if importance > 0.8 and not force_compress:
+            # Critical content - don't compress
+            compression_ratio = 1.0
+            return original_data, compression_ratio, False
+        
+        # Adjust compression level based on importance
+        if importance > 0.7:
+            effective_level = min(compression_level, 3)  # Light compression
+        elif importance < 0.3:
+            effective_level = max(compression_level, 8)  # Aggressive compression
+        else:
+            effective_level = compression_level
+
+        compressed_data = zlib.compress(original_data, effective_level)
         compressed_size = len(compressed_data)
 
         compression_ratio = original_size / compressed_size if compressed_size > 0 else 1.0
 
-        return compressed_data, compression_ratio
+        return compressed_data, compression_ratio, True
 
     @staticmethod
     def decompress(compressed_data: bytes) -> Any:
-        """
-        Decompress data using zlib
-
-        Args:
-            compressed_data: Compressed data bytes
-
-        Returns:
-            Decompressed data
-        """
+        """Decompress data using zlib"""
         original_data = zlib.decompress(compressed_data)
         return pickle.loads(original_data)
 
     @staticmethod
-    def calculate_compression_benefit(original_size: int, compressed_size: int) -> Dict[str, Any]:
-        """Calculate compression benefit metrics"""
+    def calculate_compression_benefit(original_size: int, compressed_size: int, importance: float = 0.5) -> Dict[str, Any]:
+        """Calculate compression benefit metrics with importance weighting"""
         return {
             "original_size_bytes": original_size,
             "compressed_size_bytes": compressed_size,
             "savings_bytes": original_size - compressed_size,
             "savings_percent": round((1 - compressed_size / original_size) * 100, 2) if original_size > 0 else 0,
-            "compression_ratio": round(original_size / compressed_size, 2) if compressed_size > 0 else 0
+            "compression_ratio": round(original_size / compressed_size, 2) if compressed_size > 0 else 0,
+            "importance_score": round(importance, 2),
+            "compression_recommended": importance < 0.7
         }
 
 
@@ -437,23 +500,36 @@ class L3CompressedCache:
                     logger.error(f"Error reading L3 cache {key}: {e}")
         return None
 
-    def put(self, key: str, value: Any) -> Tuple[bool, float]:
+    def put(self, key: str, value: Any) -> Tuple[bool, float, float]:
         """
         Put value into L3 compressed cache
 
         Returns:
-            Tuple of (success, compression_ratio)
+            Tuple of (success, compression_ratio, importance_score)
         """
         with self.lock:
             try:
-                compressed_data, ratio = self.compressor.compress(value, self.compression_level)
+                # Calculate importance
+                importance = self.compressor.calculate_content_importance(value)
+                
+                # Compress with importance awareness
+                compressed_data, ratio, was_compressed = self.compressor.compress(
+                    value, 
+                    self.compression_level,
+                    force_compress=False
+                )
+                
+                if not was_compressed:
+                    # If not compressed (important data), still store in L3 but mark it
+                    logger.info(f"Storing important data in L3 (uncompressed): {key}")
+                
                 cache_file = self.cache_dir / f"{key}.zp"
                 with open(cache_file, 'wb') as f:
                     f.write(compressed_data)
-                return True, ratio
+                return True, ratio, importance
             except Exception as e:
                 logger.error(f"Error saving L3 cache {key}: {e}")
-                return False, 1.0
+                return False, 1.0, 0.5
 
     def delete(self, key: str):
         """Delete entry from L3 cache"""
@@ -512,6 +588,7 @@ class AdvancedMemoryCache:
         self.l2 = L2DiskCache(l2_cache_dir)
         self.l3 = L3CompressedCache(l3_cache_dir)
         self.optimizer = MemoryOptimizer()
+        self.compressor = CompressionEngine()  # Add compressor instance
         self.deduplicator = DeduplicationEngine() if enable_deduplication else None
         self.enable_compression = enable_compression
         self.enable_learning = enable_learning
@@ -579,7 +656,7 @@ class AdvancedMemoryCache:
 
     def put(self, key: str, value: Any, ttl_seconds: Optional[int] = None, compress: bool = False):
         """
-        Put value into cache (automatic tier selection)
+        Put value into cache with importance-aware compression
 
         Args:
             key: Cache key
@@ -594,18 +671,25 @@ class AdvancedMemoryCache:
                 if is_dup:
                     logger.info(f"Duplicate detected for key {key} (hash: {hash_val[:8]}...)")
 
-            # Determine storage tier
-            should_compress = compress or self.optimizer.should_optimize()
+            # Calculate content importance
+            importance_score = self.compressor.calculate_content_importance(value)
+            
+            # Determine storage tier based on importance and system state
+            should_compress = compress or (self.optimizer.should_optimize() and importance_score < 0.7)
 
             if should_compress and self.enable_compression:
-                # Use L3 compressed cache
-                success, ratio = self.l3.put(key, value)
-                if success:
+                # Use L3 compressed cache for low-importance data
+                result = self.l3.put(key, value)
+                if result[0]:  # success
+                    ratio = result[1]
+                    importance = result[2]
                     self.stats.total_compressions += 1
                     self.stats.compression_ratio = ratio
+                    logger.info(f"Compressed {key} (importance: {importance:.2f}, ratio: {ratio:.2f}x)")
             else:
-                # Try L1, fallback to L2
+                # Keep important data uncompressed in L1/L2
                 self.l1.put(key, value, ttl_seconds)
+                logger.info(f"Kept {key} uncompressed (importance: {importance_score:.2f})")
 
             # Update memory stats
             self._update_memory_stats()

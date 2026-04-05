@@ -16,6 +16,10 @@ from pathlib import Path
 from datetime import datetime
 from dataclasses import dataclass, asdict
 import yaml
+import sys
+
+# Fix import path
+sys.path.insert(0, str(Path(__file__).parent))
 
 from memory_cache_optimization import (
     AdvancedMemoryCache,
