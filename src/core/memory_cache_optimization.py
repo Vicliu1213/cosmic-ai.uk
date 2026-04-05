@@ -105,6 +105,209 @@ class CacheStats:
         }
 
 
+class ShortTermMemory:
+    """Short-term memory: Fast access, automatic expiration"""
+    
+    def __init__(self, ttl_seconds: int = 300, max_entries: int = 1000):
+        """
+        Initialize short-term memory
+        
+        Args:
+            ttl_seconds: Time to live before auto-expiration (default: 5 minutes)
+            max_entries: Maximum entries before eviction
+        """
+        self.ttl_seconds = ttl_seconds
+        self.max_entries = max_entries
+        self.entries: OrderedDict[str, Tuple[Any, float]] = OrderedDict()
+        self.access_count: Dict[str, int] = {}
+        self.lock = threading.RLock()
+
+    def put(self, key: str, value: Any) -> bool:
+        """Store value in short-term memory"""
+        with self.lock:
+            # Evict oldest if at max capacity
+            if len(self.entries) >= self.max_entries and key not in self.entries:
+                oldest_key = next(iter(self.entries))
+                del self.entries[oldest_key]
+                self.access_count.pop(oldest_key, None)
+
+            self.entries[key] = (value, time.time())
+            self.access_count[key] = self.access_count.get(key, 0) + 1
+            self.entries.move_to_end(key)
+            return True
+
+    def get(self, key: str) -> Optional[Any]:
+        """Retrieve value from short-term memory"""
+        with self.lock:
+            if key in self.entries:
+                value, created_at = self.entries[key]
+                
+                # Check expiration
+                if time.time() - created_at > self.ttl_seconds:
+                    del self.entries[key]
+                    self.access_count.pop(key, None)
+                    return None
+
+                # Update access
+                self.access_count[key] = self.access_count.get(key, 0) + 1
+                self.entries.move_to_end(key)
+                return value
+        return None
+
+    def get_expired(self) -> List[str]:
+        """Get list of expired keys"""
+        with self.lock:
+            expired = []
+            for key, (_, created_at) in self.entries.items():
+                if time.time() - created_at > self.ttl_seconds:
+                    expired.append(key)
+            return expired
+
+    def stats(self) -> Dict[str, Any]:
+        """Get short-term memory statistics"""
+        with self.lock:
+            return {
+                "entries": len(self.entries),
+                "max_entries": self.max_entries,
+                "ttl_seconds": self.ttl_seconds,
+                "utilization_percent": (len(self.entries) / self.max_entries * 100) if self.max_entries > 0 else 0
+            }
+
+    def clear(self):
+        """Clear all short-term memory"""
+        with self.lock:
+            self.entries.clear()
+            self.access_count.clear()
+
+
+class LongTermMemory:
+    """Long-term memory: Persistent storage for important information"""
+    
+    def __init__(self, storage_dir: str = ".memory/long_term"):
+        """
+        Initialize long-term memory
+        
+        Args:
+            storage_dir: Directory for persistent storage
+        """
+        self.storage_dir = Path(storage_dir)
+        self.storage_dir.mkdir(parents=True, exist_ok=True)
+        self.metadata_file = self.storage_dir / "metadata.json"
+        self.metadata: Dict[str, Any] = self._load_metadata()
+        self.lock = threading.RLock()
+
+    def put(self, key: str, value: Any, importance: float = 0.5, tags: Optional[List[str]] = None) -> bool:
+        """Store value in long-term memory"""
+        with self.lock:
+            try:
+                # Save data file
+                data_file = self.storage_dir / f"{key}.pkl"
+                with open(data_file, 'wb') as f:
+                    pickle.dump(value, f)
+
+                # Update metadata
+                self.metadata[key] = {
+                    "timestamp": time.time(),
+                    "datetime": datetime.now().isoformat(),
+                    "importance": importance,
+                    "tags": tags or [],
+                    "access_count": 0,
+                    "last_accessed": None,
+                    "size_bytes": data_file.stat().st_size
+                }
+                self._save_metadata()
+                return True
+            except Exception as e:
+                logger.error(f"Error saving to long-term memory: {e}")
+                return False
+
+    def get(self, key: str) -> Optional[Any]:
+        """Retrieve value from long-term memory"""
+        with self.lock:
+            try:
+                data_file = self.storage_dir / f"{key}.pkl"
+                if data_file.exists():
+                    with open(data_file, 'rb') as f:
+                        value = pickle.load(f)
+                    
+                    # Update access statistics
+                    if key in self.metadata:
+                        self.metadata[key]["access_count"] += 1
+                        self.metadata[key]["last_accessed"] = datetime.now().isoformat()
+                        self._save_metadata()
+                    
+                    return value
+            except Exception as e:
+                logger.error(f"Error retrieving from long-term memory: {e}")
+        return None
+
+    def search(self, tags: Optional[List[str]] = None, min_importance: float = 0.0) -> List[str]:
+        """Search long-term memory by tags and importance"""
+        with self.lock:
+            results = []
+            for key, meta in self.metadata.items():
+                # Check importance filter
+                if meta.get("importance", 0) < min_importance:
+                    continue
+                
+                # Check tags filter
+                if tags:
+                    meta_tags = meta.get("tags", [])
+                    if any(tag in meta_tags for tag in tags):
+                        results.append(key)
+                else:
+                    results.append(key)
+            
+            return results
+
+    def _load_metadata(self) -> Dict[str, Any]:
+        """Load metadata from file"""
+        if self.metadata_file.exists():
+            try:
+                with open(self.metadata_file, 'r') as f:
+                    return json.load(f)
+            except Exception as e:
+                logger.warning(f"Could not load long-term memory metadata: {e}")
+        return {}
+
+    def _save_metadata(self):
+        """Save metadata to file"""
+        try:
+            with open(self.metadata_file, 'w') as f:
+                json.dump(self.metadata, f, indent=2, default=str)
+        except Exception as e:
+            logger.error(f"Error saving metadata: {e}")
+
+    def stats(self) -> Dict[str, Any]:
+        """Get long-term memory statistics"""
+        with self.lock:
+            files = list(self.storage_dir.glob("*.pkl"))
+            total_size = sum(f.stat().st_size for f in files)
+            
+            # Calculate importance distribution
+            importance_dist = {
+                "critical": sum(1 for m in self.metadata.values() if m.get("importance", 0) > 0.8),
+                "high": sum(1 for m in self.metadata.values() if 0.5 <= m.get("importance", 0) <= 0.8),
+                "medium": sum(1 for m in self.metadata.values() if 0.2 <= m.get("importance", 0) < 0.5),
+                "low": sum(1 for m in self.metadata.values() if m.get("importance", 0) < 0.2)
+            }
+            
+            return {
+                "entries": len(self.metadata),
+                "total_size_mb": round(total_size / 1024 / 1024, 2),
+                "importance_distribution": importance_dist,
+                "storage_dir": str(self.storage_dir)
+            }
+
+    def clear(self):
+        """Clear all long-term memory"""
+        with self.lock:
+            for file in self.storage_dir.glob("*.pkl"):
+                file.unlink()
+            self.metadata.clear()
+            self._save_metadata()
+
+
 class MemoryOptimizer:
     """System memory optimization engine"""
 
@@ -581,19 +784,25 @@ class AdvancedMemoryCache:
         l3_cache_dir: str = ".cache/l3",
         enable_compression: bool = True,
         enable_deduplication: bool = True,
-        enable_learning: bool = True
+        enable_learning: bool = True,
+        short_term_ttl: int = 300,
+        short_term_max_entries: int = 1000
     ):
-        """Initialize advanced memory cache"""
+        """Initialize advanced memory cache with short and long-term memory"""
         self.l1 = L1MemoryCache(max_size_bytes=l1_max_size_mb * 1024 * 1024)
         self.l2 = L2DiskCache(l2_cache_dir)
         self.l3 = L3CompressedCache(l3_cache_dir)
         self.optimizer = MemoryOptimizer()
-        self.compressor = CompressionEngine()  # Add compressor instance
+        self.compressor = CompressionEngine()
         self.deduplicator = DeduplicationEngine() if enable_deduplication else None
         self.enable_compression = enable_compression
         self.enable_learning = enable_learning
         self.stats = CacheStats()
         self.lock = threading.RLock()
+        
+        # Short-term and long-term memory
+        self.short_term = ShortTermMemory(ttl_seconds=short_term_ttl, max_entries=short_term_max_entries)
+        self.long_term = LongTermMemory()
         
         # Learning metrics
         self.access_patterns: Dict[str, int] = {}

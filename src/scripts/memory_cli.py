@@ -15,6 +15,9 @@ from pathlib import Path
 from datetime import datetime
 from typing import Dict, Any
 
+# Add core directory to path
+sys.path.insert(0, str(Path(__file__).parent.parent / "core"))
+
 from memory_manager import init_memory_manager, MemoryManager
 from memory_cache_optimization import AdvancedMemoryCache
 
@@ -371,6 +374,259 @@ class MemorySystemCLI:
         except Exception as e:
             print(f"❌ Error in analysis: {e}")
             return 1
+
+    def short_term_command(self, args) -> int:
+        """Manage short-term memory"""
+        if not self.manager:
+            self.manager = init_memory_manager()
+
+        try:
+            if args.action == "list":
+                print("\n📋 Short-Term Memory Entries")
+                print("=" * 70)
+                
+                if hasattr(self.manager.cache, 'short_term'):
+                    st = self.manager.cache.short_term
+                    if st.entries:
+                        for key, (value, created_at) in st.entries.items():
+                            access_count = st.access_count.get(key, 0)
+                            age = time.time() - created_at
+                            ttl_remaining = max(0, st.ttl_seconds - age)
+                            print(f"  {key}")
+                            print(f"    - Age: {age:.1f}s")
+                            print(f"    - TTL Remaining: {ttl_remaining:.1f}s")
+                            print(f"    - Access Count: {access_count}")
+                    else:
+                        print("  (empty)")
+                else:
+                    print("❌ Short-term memory not available")
+                    return 1
+
+            elif args.action == "clear":
+                print("🗑️  Clearing short-term memory...")
+                if hasattr(self.manager.cache, 'short_term'):
+                    self.manager.cache.short_term.clear()
+                    print("✅ Short-term memory cleared!")
+                else:
+                    print("❌ Short-term memory not available")
+                    return 1
+
+            elif args.action == "stats":
+                print("\n📊 Short-Term Memory Statistics")
+                print("=" * 70)
+                if hasattr(self.manager.cache, 'short_term'):
+                    stats = self.manager.cache.short_term.stats()
+                    print(f"  Total Entries: {stats['entries']}")
+                    print(f"  Max Entries: {stats['max_entries']}")
+                    print(f"  TTL (seconds): {stats['ttl_seconds']}")
+                    print(f"  Utilization: {stats['utilization_percent']:.1f}%")
+                else:
+                    print("❌ Short-term memory not available")
+                    return 1
+
+            print("\n" + "=" * 70)
+            return 0
+
+        except Exception as e:
+            print(f"❌ Error in short-term memory command: {e}")
+            import traceback
+            traceback.print_exc()
+            return 1
+
+    def long_term_command(self, args) -> int:
+        """Manage long-term memory"""
+        if not self.manager:
+            self.manager = init_memory_manager()
+
+        try:
+            if args.action == "list":
+                print("\n📋 Long-Term Memory Entries")
+                print("=" * 70)
+                
+                if hasattr(self.manager.cache, 'long_term'):
+                    lt = self.manager.cache.long_term
+                    
+                    # Apply filters
+                    metadata = lt.metadata
+                    
+                    if args.tag or args.min_importance:
+                        filtered = {}
+                        for key, meta in metadata.items():
+                            # Check importance filter
+                            if args.min_importance and meta.get('importance', 0) < args.min_importance:
+                                continue
+                            # Check tag filter
+                            if args.tag and args.tag not in meta.get('tags', []):
+                                continue
+                            filtered[key] = meta
+                        metadata = filtered
+                        
+                        if args.tag:
+                            print(f"  Entries with tag '{args.tag}':")
+                        if args.min_importance:
+                            print(f"  Entries with importance >= {args.min_importance}:")
+                    
+                    if metadata:
+                        for key, meta in metadata.items():
+                            importance = meta.get('importance', 0.0)
+                            tags = meta.get('tags', [])
+                            access_count = meta.get('access_count', 0)
+                            size_bytes = meta.get('size_bytes', 0)
+                            print(f"  {key}")
+                            print(f"    - Importance: {importance:.2f}")
+                            print(f"    - Tags: {', '.join(tags) if tags else 'none'}")
+                            print(f"    - Access Count: {access_count}")
+                            print(f"    - Size: {size_bytes} bytes")
+                    else:
+                        print("  (no matching entries)")
+                else:
+                    print("❌ Long-term memory not available")
+                    return 1
+
+            elif args.action == "search":
+                if not args.query:
+                    print("❌ --query required for search action")
+                    return 1
+                
+                print(f"\n🔍 Searching long-term memory for: '{args.query}'")
+                print("=" * 70)
+                
+                if hasattr(self.manager.cache, 'long_term'):
+                    lt = self.manager.cache.long_term
+                    # Simple search by key substring
+                    results = {k: v for k, v in lt.metadata.items() if args.query.lower() in k.lower()}
+                    
+                    if results:
+                        for key, meta in results.items():
+                            importance = meta.get('importance', 0.0)
+                            print(f"  {key} (importance: {importance:.2f})")
+                    else:
+                        print("  (no results)")
+                else:
+                    print("❌ Long-term memory not available")
+                    return 1
+
+            elif args.action == "stats":
+                print("\n📊 Long-Term Memory Statistics")
+                print("=" * 70)
+                
+                if hasattr(self.manager.cache, 'long_term'):
+                    stats = self.manager.cache.long_term.stats()
+                    print(f"  Total Entries: {stats['entries']}")
+                    print(f"  Total Size: {stats['total_size_mb']:.2f} MB")
+                    
+                    importance_dist = stats.get('importance_distribution', {})
+                    if importance_dist:
+                        print(f"\n  Importance Distribution:")
+                        print(f"    - Critical (>0.8): {importance_dist.get('critical', 0)}")
+                        print(f"    - High (0.5-0.8): {importance_dist.get('high', 0)}")
+                        print(f"    - Medium (0.2-0.5): {importance_dist.get('medium', 0)}")
+                        print(f"    - Low (<0.2): {importance_dist.get('low', 0)}")
+                else:
+                    print("❌ Long-term memory not available")
+                    return 1
+
+            print("\n" + "=" * 70)
+            return 0
+
+        except Exception as e:
+            print(f"❌ Error in long-term memory command: {e}")
+            import traceback
+            traceback.print_exc()
+            return 1
+
+    def migrate_command(self, args) -> int:
+        """Migrate entries from short-term to long-term memory"""
+        if not self.manager:
+            self.manager = init_memory_manager()
+
+        try:
+            print("\n🔄 Running cleanup and migration from short-term to long-term...")
+            
+            if hasattr(self.manager, 'cleanup_short_term_memory'):
+                stats = self.manager.cleanup_short_term_memory()
+                print(f"✅ Migration completed!")
+                print(f"  Expired entries: {stats.get('expired_count', 0)}")
+                print(f"  Migrated to long-term: {stats.get('migrated_count', 0)}")
+                print(f"  Deleted entries: {stats.get('deleted_count', 0)}")
+            else:
+                print("❌ Cleanup method not available")
+                return 1
+
+            return 0
+
+        except Exception as e:
+            print(f"❌ Error in migration: {e}")
+            import traceback
+            traceback.print_exc()
+            return 1
+
+    def summary_command(self, args) -> int:
+        """Show comprehensive memory summary"""
+        if not self.manager:
+            self.manager = init_memory_manager()
+
+        try:
+            print("\n📊 Memory System Summary")
+            print("=" * 70)
+            
+            if hasattr(self.manager, 'memory_summary'):
+                summary = self.manager.memory_summary()
+                
+                # Format short-term memory
+                st = summary.get('short_term', {})
+                print("\n[SHORT-TERM MEMORY]")
+                print(f"  Entries: {st.get('entries', 0)}/{st.get('max_entries', 0)}")
+                print(f"  Utilization: {st.get('utilization_percent', 0):.1f}%")
+                print(f"  Expired: {st.get('expired_entries', 0)}")
+                print(f"  TTL: {st.get('ttl_seconds', 0)}s")
+                
+                # Format long-term memory
+                lt = summary.get('long_term', {})
+                print("\n[LONG-TERM MEMORY]")
+                print(f"  Entries: {lt.get('entries', 0)}")
+                print(f"  Total Size: {lt.get('total_size_mb', 0):.2f} MB")
+                importance_dist = lt.get('importance_distribution', {})
+                if importance_dist:
+                    print(f"  Importance Distribution:")
+                    print(f"    - Critical (>0.8): {importance_dist.get('critical', 0)}")
+                    print(f"    - High (0.5-0.8): {importance_dist.get('high', 0)}")
+                    print(f"    - Medium (0.2-0.5): {importance_dist.get('medium', 0)}")
+                    print(f"    - Low (<0.2): {importance_dist.get('low', 0)}")
+                
+                # Format cache statistics
+                cache = summary.get('cache', {})
+                overall = cache.get('overall', {})
+                print("\n[CACHE PERFORMANCE]")
+                print(f"  Total Hits: {overall.get('total_hits', 0)}")
+                print(f"  Total Misses: {overall.get('total_misses', 0)}")
+                print(f"  Hit Rate: {overall.get('hit_rate_percent', 0):.2f}%")
+                print(f"  Memory Used: {overall.get('current_memory_mb', 0):.2f} MB")
+                print(f"  Compression Ratio: {overall.get('compression_ratio', 1.0):.2f}x")
+                
+                # Format AI metrics
+                ai = summary.get('ai_metrics', {})
+                print("\n[AI METRICS]")
+                print(f"  Learning Enabled: {ai.get('learning_enabled', False)}")
+                print(f"  Adaptive L1 Size: {ai.get('adaptive_l1_size', 0)} MB")
+                print(f"  Compression Threshold: {ai.get('optimal_compression_threshold', 0):.1f}%")
+                print(f"  Hit Rate Target: {ai.get('cache_hit_target', 0):.2%}")
+                print(f"  Optimization Count: {ai.get('optimization_count', 0)}")
+                
+                print("\n" + "=" * 70)
+            else:
+                print("❌ Summary method not available")
+                return 1
+
+            return 0
+
+        except Exception as e:
+            print(f"❌ Error in summary: {e}")
+            import traceback
+            traceback.print_exc()
+            return 1
+
+    def run(self):
         """Run CLI"""
         parser = argparse.ArgumentParser(
             description="Comic AI Memory System Activation and Management",
@@ -425,6 +681,33 @@ Examples:
         activate_parser.add_argument("--l1-size", type=int, default=100, help="L1 cache size in MB")
         activate_parser.add_argument("--update-md", action="store_true", help="Update memory.md")
 
+        # Short-term memory command
+        short_term_parser = subparsers.add_parser("short-term", help="Manage short-term memory")
+        short_term_parser.add_argument(
+            "--action",
+            choices=["list", "clear", "stats"],
+            default="list",
+            help="Short-term memory action"
+        )
+
+        # Long-term memory command
+        long_term_parser = subparsers.add_parser("long-term", help="Manage long-term memory")
+        long_term_parser.add_argument(
+            "--action",
+            choices=["list", "search", "stats"],
+            default="list",
+            help="Long-term memory action"
+        )
+        long_term_parser.add_argument("--tag", help="Filter by tag")
+        long_term_parser.add_argument("--min-importance", type=float, help="Filter by minimum importance")
+        long_term_parser.add_argument("--query", help="Search query")
+
+        # Migrate command
+        migrate_parser = subparsers.add_parser("migrate", help="Migrate short-term to long-term memory")
+
+        # Summary command
+        summary_parser = subparsers.add_parser("summary", help="Show comprehensive memory summary")
+
         args = parser.parse_args()
 
         if not args.command:
@@ -446,6 +729,14 @@ Examples:
             return self.analyze_command(args)
         elif args.command == "activate":
             return self.activate_command(args)
+        elif args.command == "short-term":
+            return self.short_term_command(args)
+        elif args.command == "long-term":
+            return self.long_term_command(args)
+        elif args.command == "migrate":
+            return self.migrate_command(args)
+        elif args.command == "summary":
+            return self.summary_command(args)
 
         return 1
 

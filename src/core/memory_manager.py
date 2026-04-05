@@ -354,13 +354,26 @@ class MemoryManager:
             return "\n".join(report)
 
     def _auto_save_worker(self):
-        """Background worker for automatic saves"""
+        """Background worker for automatic saves and memory cleanup"""
+        cleanup_counter = 0
+        
         while self.is_running:
             try:
                 time.sleep(self.auto_save_interval)
+                
+                # Auto-save state
                 self._save_state()
                 self.take_snapshot()
                 logger.debug("Auto-save completed")
+                
+                # Every 10 intervals (default: 600 seconds = 10 mins), cleanup short-term memory
+                cleanup_counter += 1
+                if cleanup_counter >= 10:
+                    logger.info("Running scheduled short-term memory cleanup...")
+                    cleanup_stats = self.cleanup_short_term_memory()
+                    logger.info(f"Cleanup stats: {cleanup_stats}")
+                    cleanup_counter = 0
+                    
             except Exception as e:
                 logger.error(f"Error in auto-save worker: {e}")
 
@@ -465,6 +478,106 @@ class MemoryManager:
         print("\n" + "=" * 70)
         print(report)
         print("=" * 70 + "\n")
+
+    def migrate_short_to_long_term(self, key: str) -> bool:
+        """
+        Migrate important data from short-term to long-term memory
+        
+        Args:
+            key: Memory key to migrate
+            
+        Returns:
+            True if migration successful
+        """
+        try:
+            # Get value from short-term
+            value = self.cache.short_term.get(key)
+            if value is None:
+                logger.warning(f"Key {key} not found in short-term memory")
+                return False
+
+            # Calculate importance
+            importance = self.cache.compressor.calculate_content_importance(value)
+            
+            # Store in long-term with tags
+            tags = ["migrated", "important"] if importance > 0.5 else ["auto_migrated"]
+            success = self.cache.long_term.put(key, value, importance=importance, tags=tags)
+            
+            if success:
+                logger.info(f"Migrated {key} to long-term memory (importance: {importance:.2f})")
+            
+            return success
+        except Exception as e:
+            logger.error(f"Error migrating to long-term: {e}")
+            return False
+
+    def cleanup_short_term_memory(self) -> Dict[str, Any]:
+        """
+        Clean up expired short-term memory entries
+        Automatically migrates important items to long-term before deletion
+        
+        Returns:
+            Cleanup statistics
+        """
+        with self.lock:
+            try:
+                # Get expired entries
+                expired_keys = self.cache.short_term.get_expired()
+                
+                stats = {
+                    "expired_count": len(expired_keys),
+                    "migrated_count": 0,
+                    "deleted_count": 0,
+                    "timestamps": datetime.now().isoformat()
+                }
+                
+                for key in expired_keys:
+                    # Check importance before deleting
+                    value = self.cache.short_term.entries.get(key)
+                    if value:
+                        data, _ = value
+                        importance = self.cache.compressor.calculate_content_importance(data)
+                        
+                        # Migrate important data to long-term
+                        if importance > 0.6:
+                            if self.migrate_short_to_long_term(key):
+                                stats["migrated_count"] += 1
+                
+                # Clear expired entries
+                self.cache.short_term.entries.clear()
+                for key in expired_keys:
+                    self.cache.short_term.access_count.pop(key, None)
+                
+                stats["deleted_count"] = len(expired_keys) - stats["migrated_count"]
+                logger.info(f"Short-term memory cleanup: {stats}")
+                
+                return stats
+            except Exception as e:
+                logger.error(f"Error cleaning up short-term memory: {e}")
+                return {"error": str(e)}
+
+    def memory_summary(self) -> Dict[str, Any]:
+        """Get comprehensive memory system summary"""
+        with self.lock:
+            short_term_stats = self.cache.short_term.stats()
+            long_term_stats = self.cache.long_term.stats()
+            cache_stats = self.cache.get_all_stats()
+            
+            return {
+                "short_term": {
+                    **short_term_stats,
+                    "expired_entries": len(self.cache.short_term.get_expired())
+                },
+                "long_term": long_term_stats,
+                "cache": {
+                    "l1": cache_stats["l1"],
+                    "l2": cache_stats["l2"],
+                    "l3": cache_stats["l3"],
+                    "overall": cache_stats["overall"]
+                },
+                "ai_metrics": self.ai_metrics,
+                "timestamp": datetime.now().isoformat()
+            }
         """Print memory report to console"""
         report = self.generate_memory_report()
         print("\n" + "=" * 70)
