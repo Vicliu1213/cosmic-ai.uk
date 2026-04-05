@@ -313,7 +313,64 @@ class MemorySystemCLI:
 
         return "\n".join(report_lines)
 
-    def run(self):
+    def analyze_command(self, args) -> int:
+        """Analyze memory patterns and provide insights"""
+        print("\n🔍 Analyzing Memory System Patterns...")
+        print("=" * 70)
+
+        try:
+            if not self.manager:
+                self.manager = init_memory_manager()
+
+            # Get cache statistics
+            stats = self.manager.get_cache_stats()
+            
+            # Get learning stats if available
+            if hasattr(self.manager.cache, 'get_learning_stats'):
+                learning_stats = self.manager.cache.get_learning_stats()
+                
+                print("\n[ACCESS PATTERNS]")
+                print(f"  Total Unique Keys: {learning_stats['total_access_patterns']}")
+                print(f"  Hot Keys (Most Accessed): {learning_stats['hot_keys_count']}")
+                
+                if learning_stats['hot_keys']:
+                    print("\n  Top 10 Most Accessed Keys:")
+                    for i, (key, count) in enumerate(learning_stats['hot_keys'][:10], 1):
+                        print(f"    {i}. {key}: {count} accesses")
+
+            # Performance insights
+            print("\n[PERFORMANCE INSIGHTS]")
+            hit_rate = stats['overall']['hit_rate_percent']
+            print(f"  Cache Hit Rate: {hit_rate:.2f}%")
+            
+            if hit_rate > 90:
+                print("  ✅ Excellent cache performance")
+            elif hit_rate > 70:
+                print("  ⚠️  Good cache performance, room for improvement")
+            else:
+                print("  ⚠️  Poor cache hit rate, consider increasing L1 size")
+
+            # Compression insights
+            print("\n[COMPRESSION INSIGHTS]")
+            comp_ratio = stats['overall']['compression_ratio']
+            print(f"  Average Compression Ratio: {comp_ratio:.2f}x")
+            print(f"  Total Compressions: {stats['overall']['total_compressions']}")
+
+            # AI Optimization
+            print("\n[AI OPTIMIZATION]")
+            if hasattr(self.manager, 'ai_optimize'):
+                ai_result = self.manager.ai_optimize()
+                print(f"  Status: {ai_result.get('status', 'active')}")
+                if 'recommendations' in ai_result:
+                    for rec in ai_result['recommendations']:
+                        print(f"  💡 {rec['type']}: {rec['reason']}")
+
+            print("\n" + "=" * 70)
+            return 0
+
+        except Exception as e:
+            print(f"❌ Error in analysis: {e}")
+            return 1
         """Run CLI"""
         parser = argparse.ArgumentParser(
             description="Comic AI Memory System Activation and Management",
@@ -359,6 +416,9 @@ Examples:
         optimize_parser = subparsers.add_parser("optimize", help="Run memory optimization")
         optimize_parser.add_argument("--auto-fix", action="store_true", help="Automatically apply optimizations")
 
+        # Analyze command
+        analyze_parser = subparsers.add_parser("analyze", help="Analyze memory patterns and insights")
+
         # Activate command
         activate_parser = subparsers.add_parser("activate", help="Activate memory system")
         activate_parser.add_argument("--memory-file", default="memory.md", help="Memory file path")
@@ -382,6 +442,8 @@ Examples:
             return self.cache_command(args)
         elif args.command == "optimize":
             return self.optimize_command(args)
+        elif args.command == "analyze":
+            return self.analyze_command(args)
         elif args.command == "activate":
             return self.activate_command(args)
 
