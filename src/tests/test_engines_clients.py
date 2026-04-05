@@ -50,7 +50,10 @@ def _exec_module(relpath: str, name: str, extra_globals: dict = None):
 _base_mod = _exec_module("engines/base_client.py", "base_client")
 BaseClient = _base_mod.BaseClient
 
-# bitget imports from 'engine.base_client' (different alias) so register it
+# bitget_client.py uses `from engine.base_client import BaseClient` (note: "engine",
+# not "engines").  We register both a package stub and the submodule entry so
+# that Python's import machinery resolves `engine.base_client` to our already-loaded
+# _base_mod instead of attempting a real file-system lookup.
 _engine_pkg = types.ModuleType("engine")
 _engine_pkg.base_client = _base_mod
 sys.modules.setdefault("engine", _engine_pkg)

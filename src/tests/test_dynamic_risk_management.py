@@ -353,9 +353,9 @@ class TestLeverageController:
 
     def test_get_leverage_trend_decreasing(self):
         lc = LeverageController(max_leverage=20.0, min_leverage=0.01)
-        # Feed decreasing leverage values
-        for target in [5.0, 4.0, 3.0, 2.0, 1.5, 1.0, 0.8, 0.6, 0.5, 0.4,
-                       0.3, 0.2, 0.1]:
+        # Generate a geometrically decreasing sequence so the trend is clearly downward.
+        targets = [5.0 * (0.75 ** i) for i in range(15)]
+        for target in targets:
             lc.adjust_leverage(target, RiskLevel.CRITICAL, 0.5)
         _, trend = lc.get_leverage_trend()
         assert trend == "decreasing"
