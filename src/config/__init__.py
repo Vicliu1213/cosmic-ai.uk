@@ -1,21 +1,46 @@
 """
 AI Trader - 配置管理模块
-"""
-import os
-import yaml
-from pathlib import Path
-from typing import Dict, Any
-from dotenv import load_dotenv
+Configuration Management Module for Cosmic AI Trading System
 
-# 加载环境变量 (使用 override=True 确保 .env 中的设置能覆盖当前进程的环境变量)
-load_dotenv(override=True)
+Classes:
+  - Config: 主配置管理器 (Singleton Pattern)
+  
+Functions:
+  - get_config(): 获取全局配置实例
+  
+Submodules:
+  - loaders.config_loader: 配置加载器，处理YAML和环境变量
+  - api_keys: API密钥相关配置 (Binance, LLM等)
+  - trading: 交易相关配置 (交易参数、风险管理、回测)
+  - infrastructure: 基础设施配置 (Redis、日志)
+  - templates: 提示词模板
+  - schemas: 配置数据验证模式
+"""
+
+from pathlib import Path
+from typing import Dict, Any, Optional
+
+from .loaders.config_loader import ConfigLoader
+from .api_keys import APIKeysConfig, BinanceConfig, LLMConfig
+from .trading import TradingConfig, RiskConfig, BacktestConfig
+from .infrastructure import RedisConfig, LoggingConfig
 
 
 class Config:
-    """配置管理类"""
+    """配置管理类 - Singleton 模式"""
     
     _instance = None
-    _config: Dict[str, Any] = {}
+    _config_dict: Dict[str, Any] = {}
+    
+    # 配置组件
+    api_keys: APIKeysConfig = None
+    binance: BinanceConfig = None
+    llm: LLMConfig = None
+    trading: TradingConfig = None
+    risk: RiskConfig = None
+    backtest: BacktestConfig = None
+    redis: RedisConfig = None
+    logging: LoggingConfig = None
     
     def __new__(cls):
         if cls._instance is None:
@@ -24,81 +49,21 @@ class Config:
         return cls._instance
     
     def _load_config(self):
-        """加载配置文件"""
-        config_path = Path(__file__).parent.parent.parent / "config.yaml"
+        """加载配置文件并初始化所有配置组件"""
+        # 使用 ConfigLoader 加载配置
+        loader = ConfigLoader()
+        self._config_dict = loader.load_config()
+        self._config_dict = loader.override_from_env(self._config_dict)
         
-        if not config_path.exists():
-            # 如果没有config.yaml,使用example
-            example_path = Path(__file__).parent.parent.parent / "config.example.yaml"
-            if example_path.exists():
-                with open(example_path, 'r', encoding='utf-8') as f:
-                    self._config = yaml.safe_load(f)
-        else:
-            with open(config_path, 'r', encoding='utf-8') as f:
-                self._config = yaml.safe_load(f)
-        
-        # 从环境变量覆盖敏感信息
-        self._override_from_env()
-    
-    def _override_from_env(self):
-        """从环境变量覆盖配置"""
-        # Initialize sections if missing
-        for section in ['binance', 'deepseek', 'redis']:
-            if section not in self._config or self._config[section] is None:
-                self._config[section] = {}
-
-        # Binance
-        if os.getenv('BINANCE_API_KEY'):
-            self._config['binance']['api_key'] = os.getenv('BINANCE_API_KEY')
-        # Support both BINANCE_API_SECRET (legacy) and BINANCE_SECRET_KEY (current docs/UI)
-        binance_secret = os.getenv('BINANCE_API_SECRET') or os.getenv('BINANCE_SECRET_KEY')
-        if binance_secret:
-            self._config['binance']['api_secret'] = binance_secret
-        
-        # DeepSeek (向后兼容)
-        if os.getenv('DEEPSEEK_API_KEY'):
-            self._config['deepseek']['api_key'] = os.getenv('DEEPSEEK_API_KEY')
-        
-        # Redis
-        if os.getenv('REDIS_HOST'):
-            self._config['redis']['host'] = os.getenv('REDIS_HOST')
-        if os.getenv('REDIS_PORT'):
-            self._config['redis']['port'] = int(os.getenv('REDIS_PORT'))
-        
-        # LLM 多提供商支持
-        if 'llm' not in self._config:
-            self._config['llm'] = {}
-        
-        # API Keys for each provider
-        # 支持 ANTHROPIC_API_KEY 作为 CLAUDE_API_KEY 的别名（优先级更高）
-        claude_api_key = os.getenv('ANTHROPIC_API_KEY') or os.getenv('CLAUDE_API_KEY')
-        
-        llm_api_keys = {
-            'openai': os.getenv('OPENAI_API_KEY'),
-            'deepseek': os.getenv('DEEPSEEK_API_KEY'),
-            'claude': claude_api_key,
-            'qwen': os.getenv('QWEN_API_KEY'),
-            'gemini': os.getenv('GEMINI_API_KEY'),
-            'kimi': os.getenv('KIMI_API_KEY'),
-            'minimax': os.getenv('MINIMAX_API_KEY'),
-            'glm': os.getenv('GLM_API_KEY'),
-        }
-        self._config['llm']['api_keys'] = {k: v for k, v in llm_api_keys.items() if v}
-
-        # Provider/model override via environment
-        llm_provider = os.getenv('LLM_PROVIDER')
-        if llm_provider:
-            self._config['llm']['provider'] = llm_provider.lower()
-
-        llm_model = os.getenv('LLM_MODEL') or os.getenv('DEEPSEEK_MODEL')
-        if llm_model:
-            self._config['llm']['model'] = llm_model
-        
-        # Custom base URL (for proxies)
-        # 支持 ANTHROPIC_BASE_URL 作为 LLM_BASE_URL 的别名（优先级更高）
-        base_url = os.getenv('ANTHROPIC_BASE_URL') or os.getenv('LLM_BASE_URL')
-        if base_url:
-            self._config['llm']['base_url'] = base_url
+        # 初始化所有配置组件
+        self.api_keys = APIKeysConfig(self._config_dict)
+        self.binance = BinanceConfig(self._config_dict.get('binance', {}))
+        self.llm = LLMConfig(self._config_dict.get('llm', {}))
+        self.trading = TradingConfig(self._config_dict.get('trading', {}))
+        self.risk = RiskConfig(self._config_dict.get('risk', {}))
+        self.backtest = BacktestConfig(self._config_dict.get('backtest', {}))
+        self.redis = RedisConfig(self._config_dict.get('redis', {}))
+        self.logging = LoggingConfig(self._config_dict.get('logging', {}))
     
     def get(self, key_path: str, default=None):
         """
@@ -106,7 +71,7 @@ class Config:
         key_path: 使用点分隔的路径，如 'binance.api_key'
         """
         keys = key_path.split('.')
-        value = self._config
+        value = self._config_dict
         
         try:
             for key in keys:
@@ -115,38 +80,57 @@ class Config:
         except (KeyError, TypeError):
             return default
     
-    @property
-    def binance(self):
-        return self._config.get('binance', {})
+    def reload(self) -> bool:
+        """重新加载配置文件"""
+        try:
+            self._load_config()
+            return True
+        except Exception as e:
+            print(f"Error reloading config: {e}")
+            return False
     
-    @property
-    def deepseek(self):
-        return self._config.get('deepseek', {})
-    
-    @property
-    def trading(self):
-        return self._config.get('trading', {})
-    
-    @property
-    def risk(self):
-        return self._config.get('risk', {})
-    
-    @property
-    def redis(self):
-        return self._config.get('redis', {})
-    
-    @property
-    def logging(self):
-        return self._config.get('logging', {})
-    
-    @property
-    def backtest(self):
-        return self._config.get('backtest', {})
-    
-    @property
-    def llm(self):
-        return self._config.get('llm', {})
+    def to_dict(self) -> Dict[str, Any]:
+        """获取整个配置字典"""
+        return self._config_dict.copy()
 
 
 # 全局配置实例
 config = Config()
+
+
+# 导出配置相关的类和工具函数
+def get_config() -> Config:
+    """
+    获取全局配置实例
+    
+    Returns:
+        Config: 全局配置单例
+    """
+    return config
+
+
+def reload_config() -> bool:
+    """
+    重新加载配置文件
+    
+    Returns:
+        bool: 是否成功重新加载
+    """
+    return config.reload()
+
+
+# 导出清单
+__all__ = [
+    'Config',
+    'config',
+    'get_config',
+    'reload_config',
+    'APIKeysConfig',
+    'BinanceConfig',
+    'LLMConfig',
+    'TradingConfig',
+    'RiskConfig',
+    'BacktestConfig',
+    'RedisConfig',
+    'LoggingConfig',
+]

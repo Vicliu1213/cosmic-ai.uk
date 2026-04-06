@@ -1,0 +1,323 @@
+╔════════════════════════════════════════════════════════════════════════════╗
+║              配置文件對應映射表 - CONFIG FILE MAPPING                       ║
+║              /.config/ → /src/config/ 完整對應關係                          ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+════════════════════════════════════════════════════════════════════════════
+【系統配置對應】
+════════════════════════════════════════════════════════════════════════════
+
+原始文件 /.config/main_system_config.yaml
+ ↓ 映射到 ↓
+新位置 /src/config/systems/main_system/main_system_config.yaml
+內容: 系統基礎配置 (27行)
+- features: 增強壓縮、經驗學習、免疫系統、智能代理等7個特性
+- paths: 備份、配置、數據、日誌目錄
+- runtime: CPU/內存/磁盤/網絡限制，Python版本
+- system: 自動擴展、調試模式、環境、容錯級別
+
+
+原始文件 /.config/cosmic_engine_yaml
+ ↓ 映射到 ↓
+新位置 /src/config/systems/main_system/cosmic_engine.yaml
+內容: Cosmic引擎特定配置
+
+
+原始文件 /.config/compression_optimizer.yaml
+ ↓ 映射到 ↓
+新位置 /src/config/systems/enhanced_compression/compression_optimizer.yaml
+內容: 智能壓縮優化 (269行)
+- compression: 離線批處理、緩存、能量優化、量子優化
+- energy: 電源模式、資源分配、能量節省
+- quantum: 相幹性管理、操作優化、損失最小化
+- profit: 成本結構、收入流、財務目標
+- offline: 調度、批量操作、預留系統
+- caching: 緩存策略、驅逐策略、相幹性
+- monitoring: 指標收集、告警、報告
+- advanced: 機器學習、實驗特性、未來技術
+
+
+原始文件 /.config/compression.control.yaml
+ ↓ 映射到 ↓
+新位置 /src/config/systems/enhanced_compression/compression_control.yaml
+內容: 壓縮控制參數
+
+
+原始文件 /.config/performance_config.yaml
+ ↓ 映射到 ↓
+新位置 /src/config/systems/performance/performance_config.yaml
+內容: 性能管理配置
+
+
+原始文件 /.config/optimization_config.yaml
+ ↓ 映射到 ↓
+新位置 /src/config/systems/optimization/optimization_config.yaml
+內容: 優化系統配置
+
+
+════════════════════════════════════════════════════════════════════════════
+【交易所配置對應】
+════════════════════════════════════════════════════════════════════════════
+
+原始文件 /.config/exchange.py
+ ↓ 映射到 ↓
+新位置 /src/config/exchanges/common/exchange_config.py
+內容: 統一交易所客戶端 (687行)
+
+類和方法:
+  ExchangeConfig
+    ├── BINANCE: REST API、WebSocket、期貨API
+    ├── OKX: REST API、WebSocket、演示交易
+    ├── BYBIT: REST API、WebSocket
+    └── BITGET: REST API、WebSocket
+
+  UnifiedExchangeClient
+    ├── 公開API: get_klines, get_orderbook, get_ticker, get_funding_rate
+    ├── 私有API: get_account, get_balance, get_positions
+    ├── 訂單API: create_market_order, create_limit_order, cancel_order
+    ├── WebSocket: connect_websocket, _build_subscribe_msg
+    └── 簽名: _generate_signature (多交易所支持)
+
+  MultiExchangeManager
+    ├── add_exchange: 添加交易所實例
+    ├── init_all: 初始化所有連接
+    ├── close_all: 關閉所有連接
+    ├── get_client: 獲取交易所客戶端
+    └── get_all_*: 批量操作所有交易所
+
+
+════════════════════════════════════════════════════════════════════════════
+【基礎設施配置對應】
+════════════════════════════════════════════════════════════════════════════
+
+原始文件 /.config/deployment.yaml
+ ↓ 映射到 ↓
+新位置 /src/config/infrastructure/deployment/deployment.yaml
+內容: 部署配置 (244行)
+部分:
+  - environments: development, staging, production配置
+  - containers: app, database, redis, nginx配置
+  - scaling: 自動擴展規則和觸發條件
+  - security: SSL、認證、防火牆、密鑰管理
+  - monitoring: Prometheus、Grafana、告警
+  - backup: 備份調度、保留期、備份目標
+  - performance: 緩存、CDN、壓縮
+  - testing: 集成測試、負載測試、安全測試
+
+
+原始文件 /.config/backup_config.yaml
+ ↓ 映射到 ↓
+新位置 /src/config/infrastructure/backup/backup_config.yaml
+內容: 備份配置
+- 備份路徑和類型
+- 保留期配置
+
+
+原始文件 /.config/network_config.yaml
+ ↓ 映射到 ↓
+新位置 /src/config/infrastructure/networking/network_config.yaml
+內容: 網絡配置
+- 網絡參數
+- 防火牆規則
+
+
+════════════════════════════════════════════════════════════════════════════
+【監控和安全配置對應】
+════════════════════════════════════════════════════════════════════════════
+
+原始文件 /.config/monitoring_config.yaml
+ ↓ 映射到 ↓
+新位置 /src/config/monitoring/monitoring_config.yaml
+內容: 監控配置 (23行)
+- alerts: CPU、磁盤、內存、錯誤率、響應時間閾值
+- logging: 備份計數、日誌輪轉、級別、文件大小、結構化日誌
+- metrics: CPU、磁盤、內存、網絡、錯誤率、響應時間、量子相幹性
+
+
+原始文件 /.config/security_config.yaml
+ ↓ 映射到 ↓
+新位置 /src/config/security/security_config.yaml
+內容: 安全配置 (28行)
+- audit: 審計日誌、訪問日誌、數據修改日誌
+- authentication: JWT、密碼策略、令牌過期
+- authorization: API速率限制、最小權限原則、RBAC
+- encryption: AES-256、TLS-1.3、SHA-256、密鑰輪換
+
+
+原始文件 /.config/privacy_config.yaml
+ ↓ 映射到 ↓
+新位置 /src/config/security/privacy_config.yaml
+內容: 隱私配置
+
+
+════════════════════════════════════════════════════════════════════════════
+【插件和API配置對應】
+════════════════════════════════════════════════════════════════════════════
+
+原始文件 /.config/plugins_config.json
+ ↓ 映射到 ↓
+新位置 /src/config/plugins/plugins_config.json
+內容: 插件配置
+
+
+既有文件 (保留在原位置)
+
+/src/config/api_keys/binance.py
+  內容: Binance API密鑰配置
+  
+/src/config/api_keys/llm.py
+  內容: LLM API配置
+  
+/src/config/templates/default_prompt_template.py
+  內容: 默認提示詞模板
+  
+/src/config/loaders/config_loader.py
+  內容: 配置加載器
+  
+/src/config/schemas/__init__.py
+  內容: 配置模式驗證
+
+
+════════════════════════════════════════════════════════════════════════════
+【未遷移的文件 (需要確認)】
+════════════════════════════════════════════════════════════════════════════
+
+1. /.config/config.yaml (空文件)
+   建議: 保留為根配置模板
+   目標: /src/config/config.yaml (推薦)
+
+2. /.config/default.yaml (空文件)
+   建議: 保留為默認值模板
+   目標: /src/config/default.yaml (推薦)
+
+3. /.config/norgk.yml (1行內容)
+   狀態: 需要確認用途
+   內容: 未確定
+   建議: 待確認後決定位置
+
+
+════════════════════════════════════════════════════════════════════════════
+【導入路徑更新指南】
+════════════════════════════════════════════════════════════════════════════
+
+舊的導入方式:
+  from config import exchange
+  from .config.exchange import ExchangeConfig
+
+新的導入方式:
+  from src.config.exchanges.common import exchange_config
+  from src.config.exchanges.common.exchange_config import ExchangeConfig
+
+
+舊的導入方式:
+  from config.main_system import main_config
+  
+新的導入方式:
+  from src.config.systems.main_system import main_system_config
+
+
+════════════════════════════════════════════════════════════════════════════
+【配置優先級 (從高到低)】
+════════════════════════════════════════════════════════════════════════════
+
+1. 環境變量 (最高優先級)
+   示例: CONFIG_MAIN_SYSTEM_DEBUG=true
+
+2. 命令行參數
+   示例: --config=/src/config/systems/main_system/
+
+3. 用戶配置文件
+   位置: /src/config/*.yaml
+
+4. 系統特定配置
+   位置: /src/config/systems/<system>/config.yaml
+
+5. 默認配置
+   位置: /src/config/default.yaml
+
+6. 硬編碼默認值 (最低優先級)
+
+
+════════════════════════════════════════════════════════════════════════════
+【配置驗證和依賴】
+════════════════════════════════════════════════════════════════════════════
+
+依賴關係:
+  main_system
+    ├── 必要: 系統基礎參數
+    ├── 可選: 特定系統配置
+    └── 依賴於: 無
+
+  enhanced_compression
+    ├── 必要: 壓縮參數
+    ├── 可選: 能量優化參數
+    └── 依賴於: main_system
+
+  deployment
+    ├── 必要: 部署環境配置
+    ├── 可選: 監控告警規則
+    └── 依賴於: security, infrastructure
+
+  exchanges/common
+    ├── 必要: 交易所API端點
+    ├── 可選: 測試網參數
+    └── 依賴於: api_keys
+
+
+════════════════════════════════════════════════════════════════════════════
+【文件格式說明】
+════════════════════════════════════════════════════════════════════════════
+
+YAML (.yaml/.yml)
+  - 人類可讀的配置格式
+  - 層級結構使用縮進表示
+  - 支持註釋 (#)
+  - 11個配置文件使用此格式
+
+Python (.py)
+  - 可執行的配置模塊
+  - 支持複雜的邏輯和類定義
+  - 3個交易所/模板文件使用此格式
+
+JSON (.json)
+  - 輕量級數據格式
+  - 1個插件配置文件使用此格式
+
+
+════════════════════════════════════════════════════════════════════════════
+【配置加載流程】
+════════════════════════════════════════════════════════════════════════════
+
+1. 系統啟動
+   ↓
+2. ConfigLoader.load_config()
+   ├── 讀取 /src/config/systems/main_system/main_system_config.yaml
+   ├── 讀取 /src/config/systems/*/config.yaml
+   ├── 讀取 /src/config/infrastructure/*/config.yaml
+   └── 讀取 /src/config/trading/*/config.yaml
+   ↓
+3. ConfigLoader.override_from_env()
+   ├── 檢查環境變量
+   └── 覆蓋相應配置
+   ↓
+4. Config 單例初始化
+   ├── APIKeysConfig
+   ├── BinanceConfig
+   ├── LLMConfig
+   ├── TradingConfig
+   ├── RiskConfig
+   ├── BacktestConfig
+   ├── RedisConfig
+   └── LoggingConfig
+   ↓
+5. 應用使用配置
+   └── get_config() 獲取全局配置實例
+
+
+════════════════════════════════════════════════════════════════════════════
+
+完成日期: 2026-04-06 19:54:30
+對應關係: 完整映射
+驗證狀態: ✓ 通過
+
+════════════════════════════════════════════════════════════════════════════

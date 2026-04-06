@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  comic_ai_data:
+    image: alpine:latest
+    container_name: comic_ai_data_storage
+    volumes:
+      - ./data:/app/data
+      - ./config:/app/config
+      - ./logs:/app/logs
+      - ./uploads:/app/uploads
+    command: tail -f /dev/null
+    restart: unless-stopped
+    
+  redis_cache:
+    image: redis:alpine
+    container_name: comic_ai_redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    restart: unless-stopped
+
+volumes:
+  redis_data:

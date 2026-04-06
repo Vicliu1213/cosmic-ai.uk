@@ -1,0 +1,17 @@
+compliance:
+  audit_frequency: annual
+  ccpa: true
+  gdpr: true
+  hipaa: false
+data_privacy:
+  anonymization: true
+  data_minimization: true
+  pseudonymization: true
+  purpose_limitation: true
+  retention_period: 365
+  storage_limitation: true
+user_consent:
+  consent_version: '2.0'
+  data_portability: true
+  required: true
+  withdrawal_method: automated

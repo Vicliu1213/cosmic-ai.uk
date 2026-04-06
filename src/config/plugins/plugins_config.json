@@ -1,0 +1,50 @@
+{
+  "enabled": true,
+  "auto_load_on_startup": true,
+  "log_level": "INFO",
+  "plugins": {
+    "multi_agent_trading": {
+      "enabled": true,
+      "description": "Multi-Agent Trading System with Portfolio, Risk, and Signal Analysis",
+      "auto_start": true,
+      "agents": {
+        "portfolio_manager": {
+          "enabled": true,
+          "target_allocations": {
+            "AAPL": 0.3,
+            "MSFT": 0.3,
+            "GOOGL": 0.4
+          }
+        },
+        "risk_manager": {
+          "enabled": true,
+          "max_position_size": 0.1,
+          "max_portfolio_loss": 0.02
+        },
+        "signal_analyst": {
+          "enabled": true,
+          "sma_short": 20,
+          "sma_long": 50,
+          "rsi_threshold": 0.3
+        }
+      },
+      "coordinator": {
+        "enabled": true,
+        "voting_threshold": 0.5
+      }
+    }
+  },
+  "startup_behavior": {
+    "load_on_boot": true,
+    "auto_initialize": true,
+    "fail_safe": true,
+    "retry_on_failure": 2
+  },
+  "logging": {
+    "enable_file_logging": true,
+    "log_directory": "/root/comic_ai/logs/plugins",
+    "log_level": "INFO",
+    "max_log_size_mb": 100,
+    "backup_count": 5
+  }
+}

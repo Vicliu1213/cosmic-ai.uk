@@ -1,0 +1,18 @@
+{
+  "environment": "development",
+  "debug": true,
+  "log_level": "DEBUG",
+  "database": {
+    "type": "sqlite",
+    "path": "data/development.db"
+  },
+  "cache": {
+    "enabled": true,
+    "type": "in_memory"
+  },
+  "api": {
+    "host": "localhost",
+    "port": 8000,
+    "debug": true
+  }
+}
