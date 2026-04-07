@@ -31,12 +31,12 @@ if __name__ == "__main__":
     print("\n" + "="*60)
     print("🔧 Core System")
     print("="*60)
-    print(f"Status: {status[\"status\"]}")
-    print(f"Components: {status[\"components\"]}")
+    print(f"Status: {status['status']}")
+    print(f"Components: {status['components']}")
     
     # 測試功能
     regime = manager.detect_market_regime("BTCUSDT")
-    print(f"\nMarket Regime (BTCUSDT): {regime[\"regime\"]} ({regime[\"confidence\"]:.0%})")
+    print(f"\nMarket Regime (BTCUSDT): {regime['regime']} ({regime['confidence']:.0%})")
     print("="*60 + "\n")
     print("✅ 核心系統執行成功\n")
 

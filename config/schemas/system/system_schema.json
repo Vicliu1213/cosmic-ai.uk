@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "System Configuration Schema",
+  "type": "object",
+  "required": ["system", "performance"],
+  "properties": {
+    "system": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "version": { "type": "string" },
+        "environment": { "type": "string", "enum": ["development", "staging", "production"] }
+      }
+    },
+    "performance": {
+      "type": "object",
+      "properties": {
+        "max_concurrent": { "type": "integer" },
+        "timeout": { "type": "integer" },
+        "cache_ttl": { "type": "integer" }
+      }
+    },
+    "logging": {
+      "type": "object",
+      "properties": {
+        "level": { "type": "string", "enum": ["DEBUG", "INFO", "WARNING", "ERROR"] },
+        "format": { "type": "string" },
+        "output": { "type": "array", "items": { "type": "string" } }
+      }
+    }
+  }
+}

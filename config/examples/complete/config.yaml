@@ -1,0 +1,65 @@
+# Cosmic AI 完整配置示例
+
+system:
+  name: Cosmic AI Trading System
+  version: 1.0.0
+  environment: production
+
+engine:
+  name: HybridQuantumClassicalEngine
+  type: hybrid
+  enabled: true
+  quantum:
+    enabled: true
+    max_qubits: 1024
+  classical:
+    enabled: true
+    threads: 16
+
+database:
+  type: postgresql
+  host: localhost
+  port: 5432
+  name: cosmic_ai
+  user: admin
+  pool_size: 20
+
+cache:
+  type: redis
+  host: localhost
+  port: 6379
+  ttl: 3600
+
+api:
+  host: 0.0.0.0
+  port: 8000
+  version: v1
+  timeout: 30
+  rate_limit: 1000
+  authentication: jwt
+
+trading:
+  symbol: BTC/USDT
+  interval: 5m
+  position_size: 1.0
+  risk_management:
+    stop_loss: 2.0
+    take_profit: 5.0
+    max_drawdown: 10.0
+
+monitoring:
+  enabled: true
+  metrics: true
+  tracing: true
+  log_level: INFO
+
+integrations:
+  gemini:
+    enabled: true
+    api_key: ${GEMINI_API_KEY}
+  vertex_ai:
+    enabled: true
+    project_id: ${GCP_PROJECT_ID}
+  hummingbot:
+    enabled: true
+    exchange: binance

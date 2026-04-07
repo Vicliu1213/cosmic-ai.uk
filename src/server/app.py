@@ -667,7 +667,7 @@ def _build_default_agent_settings() -> Dict[str, Any]:
 
     # Decision core (LLM system prompt template + weight defaults)
     try:
-        from src.config.default_prompt_template import DEFAULT_SYSTEM_PROMPT
+        from src.config.templates import DEFAULT_SYSTEM_PROMPT
     except Exception:
         DEFAULT_SYSTEM_PROMPT = ""
 
@@ -917,7 +917,7 @@ async def update_prompt_text(data: dict = Body(...), authenticated: bool = Depen
 async def get_default_prompt(authenticated: bool = Depends(verify_auth)):
     """Get the system default prompt template"""
     try:
-        from src.config.default_prompt_template import DEFAULT_SYSTEM_PROMPT
+        from src.config.templates import DEFAULT_SYSTEM_PROMPT
         return {"content": DEFAULT_SYSTEM_PROMPT}
     except ImportError:
          raise HTTPException(status_code=500, detail="Default prompt template not found")

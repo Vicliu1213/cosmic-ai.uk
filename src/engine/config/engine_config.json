@@ -1,0 +1,64 @@
+{
+  "metadata": {
+    "version": "1.0.0",
+    "engine_type": "hybrid_quantum_classical",
+    "deployment_date": "2026-04-05",
+    "author": "Cosmic AI Team"
+  },
+  "engine": {
+    "name": "HybridQuantumClassicalEngine",
+    "type": "hybrid",
+    "enabled": true,
+    "mode": "production"
+  },
+  "quantum_engine": {
+    "enabled": true,
+    "type": "quantum_processor",
+    "optimization_level": "advanced",
+    "max_qubits": 1024
+  },
+  "classical_engine": {
+    "enabled": true,
+    "type": "classical_processor",
+    "optimization_level": "high",
+    "max_threads": 16
+  },
+  "data_layer": {
+    "cache": {
+      "type": "redis",
+      "enabled": true,
+      "ttl": 3600
+    },
+    "database": {
+      "type": "postgresql",
+      "enabled": true,
+      "pool_size": 10
+    }
+  },
+  "api_integrations": {
+    "gemini": {
+      "enabled": true,
+      "version": "latest"
+    },
+    "vertex_ai": {
+      "enabled": true,
+      "version": "latest"
+    },
+    "hummingbot": {
+      "enabled": true,
+      "version": "latest"
+    }
+  },
+  "algorithms": {
+    "optimization": {
+      "quantum": true,
+      "machine_learning": true,
+      "technical_analysis": true
+    }
+  },
+  "monitoring": {
+    "enabled": true,
+    "log_level": "INFO",
+    "metrics": true
+  }
+}

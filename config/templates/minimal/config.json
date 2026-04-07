@@ -1,0 +1,16 @@
+{
+  "system": {
+    "name": "Cosmic AI - Minimal",
+    "environment": "development"
+  },
+  "engine": {
+    "type": "classical",
+    "enabled": true
+  },
+  "database": {
+    "type": "sqlite"
+  },
+  "api": {
+    "port": 8000
+  }
+}

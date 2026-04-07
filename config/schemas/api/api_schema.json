@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "API Configuration Schema",
+  "type": "object",
+  "required": ["api"],
+  "properties": {
+    "api": {
+      "type": "object",
+      "properties": {
+        "host": { "type": "string" },
+        "port": { "type": "integer", "minimum": 1, "maximum": 65535 },
+        "version": { "type": "string" },
+        "timeout": { "type": "integer" },
+        "rate_limit": { "type": "integer" },
+        "authentication": { "type": "string", "enum": ["none", "api_key", "oauth2", "jwt"] }
+      }
+    }
+  }
+}

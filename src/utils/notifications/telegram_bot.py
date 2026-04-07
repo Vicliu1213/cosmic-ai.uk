@@ -1,4 +1,5 @@
 import aiohttp
+from src.models.schema import TradeSignal
 
 class TelegramNotifier:
     def __init__(self, token, chat_id):

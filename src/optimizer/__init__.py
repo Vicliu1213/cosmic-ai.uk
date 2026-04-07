@@ -17,7 +17,7 @@ try:
         GeneticAlgorithm,
         ParticleSwarmOptimization,
         SimulatedAnnealing,
-        GradientDescentOptimizer,
+        GradientDescent,
         DifferentialEvolution,
         OptimizationMethod,
         OptimizationResult
@@ -26,7 +26,7 @@ try:
         'GeneticAlgorithm',
         'ParticleSwarmOptimization',
         'SimulatedAnnealing',
-        'GradientDescentOptimizer',
+        'GradientDescent',
         'DifferentialEvolution',
         'OptimizationMethod',
         'OptimizationResult'

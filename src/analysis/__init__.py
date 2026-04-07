@@ -7,9 +7,14 @@ import logging
 
 # 導入技術指標函數
 try:
-    from .indicators import rsi, macd, atr, sma, obv, calculate_all_indicators
+    from .indicators import rsi, macd, atr, sma, obv
 except ImportError as e:
     logging.warning(f"⚠️  無法導入 indicators: {e}")
+    rsi = None
+    macd = None
+    atr = None
+    sma = None
+    obv = None
 
 # 導入信號生成器
 try:
@@ -37,7 +42,7 @@ except ImportError:
     SingularityDetector = None
 
 __all__ = [
-    'rsi', 'macd', 'atr', 'sma', 'obv', 'calculate_all_indicators',
+    'rsi', 'macd', 'atr', 'sma', 'obv',
     'SignalGenerator', 'TradingSignal', 'SignalStrength',
     'ForestAnalyzer', 'MultiframeAnalyzer', 'SingularityDetector',
 ]

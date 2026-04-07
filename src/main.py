@@ -106,11 +106,25 @@ class CosmicAITradingSystem:
         self.config = config or SystemConfig()
         self.registry = ModuleRegistry()
         self.start_time = datetime.now()
+        self.hybrid_engine = None  # 混合量子-經典引擎
         logger.info("✅ Cosmic AI 系統初始化完成")
     
     async def initialize_modules(self) -> Dict[str, bool]:
         """初始化所有系統模塊"""
         try:
+            # 初始化混合量子-經典引擎（優先級最高）
+            try:
+                from .engine import get_hybrid_engine
+                self.hybrid_engine = get_hybrid_engine()
+                success = self.hybrid_engine.initialize()
+                if success:
+                    logger.info("✅ 混合量子-經典引擎已初始化 (混合量子-經典交易引擎)")
+                    self.registry.initialized['hybrid_engine'] = True
+                else:
+                    logger.warning("⚠️ 混合量子-經典引擎初始化失敗")
+            except Exception as e:
+                logger.warning(f"⚠️ 混合量子-經典引擎初始化失敗: {str(e)}")
+            
             # 初始化數據模塊
             if True:  # 始終初始化
                 from .data.main import DataModuleManager
@@ -188,11 +202,22 @@ class CosmicAITradingSystem:
             'timestamp': datetime.now().isoformat(),
             'symbols': self.config.symbols,
             'mode': self.config.mode,
-            'uptime': str(datetime.now() - self.start_time)
+            'uptime': str(datetime.now() - self.start_time),
+            'hybrid_engine_status': self.get_hybrid_engine_status() if self.hybrid_engine else None
         }
         
         logger.info("✅ 交易周期執行完成")
         return result
+    
+    def get_hybrid_engine_status(self) -> Optional[Dict[str, Any]]:
+        """獲取混合引擎狀態"""
+        if not self.hybrid_engine:
+            return None
+        try:
+            return self.hybrid_engine.get_status()
+        except Exception as e:
+            logger.warning(f"⚠️ 無法獲取混合引擎狀態: {str(e)}")
+            return None
     
     def get_status(self) -> Dict[str, Any]:
         """獲取系統狀態"""

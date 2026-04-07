@@ -1,0 +1,23 @@
+{
+  "environment": "production",
+  "debug": false,
+  "log_level": "WARNING",
+  "database": {
+    "type": "postgresql",
+    "host": "prod-db.example.com",
+    "port": 5432,
+    "ssl": true
+  },
+  "cache": {
+    "enabled": true,
+    "type": "redis",
+    "host": "prod-redis.example.com",
+    "ssl": true
+  },
+  "api": {
+    "host": "api.cosmic-ai.com",
+    "port": 443,
+    "debug": false,
+    "rate_limit": 1000
+  }
+}

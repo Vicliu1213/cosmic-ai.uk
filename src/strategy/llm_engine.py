@@ -405,14 +405,14 @@ Focus ONLY on bearish factors. Ignore bullish signals."""
                         return content
             except Exception as e:
                 log.error(f"Failed to load custom prompt: {e}")
-        
-        # Load default from template
-        try:
-            from src.config.default_prompt_template import DEFAULT_SYSTEM_PROMPT
-            return DEFAULT_SYSTEM_PROMPT
-        except ImportError:
-            log.error("Failed to import DEFAULT_SYSTEM_PROMPT")
-            return "Error: Default prompt missing"
+         
+         # Load default from template
+         try:
+             from src.config.templates import DEFAULT_SYSTEM_PROMPT
+             return DEFAULT_SYSTEM_PROMPT
+         except ImportError:
+             log.error("Failed to import DEFAULT_SYSTEM_PROMPT")
+             return "Error: Default prompt missing"
     
     def _build_user_prompt(self, market_context: str, bull_perspective: Dict = None, bear_perspective: Dict = None, reflection: str = None) -> str:
         """Build User Prompt - DATA ONLY (No instructions, all rules are in system prompt)"""
