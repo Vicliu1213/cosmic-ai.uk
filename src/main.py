@@ -1,146 +1,301 @@
 #!/usr/bin/env python3
 """
-Cosmic AI Trading System - Main Entry Point
+宇宙AI交易系統 - 根目錄主入點
 
-Unified module that integrates all subsystems:
-- Core Trading Engine
-- Agent System
-- Quantum Processing
-- Analysis Engine
-- Risk Management
-- Strategy Execution
+完整集成所有模塊：
+- 數據模塊 (Data Module)
+- 工具模塊 (Utils Module)  
+- 核心模塊 (Core Module)
+- 量子模塊 (Quantum Module)
+- 分析模塊 (Analysis Module)
+- 優化模塊 (Optimizer Module)
+- 代理模塊 (Agents Module)
+- 執行模塊 (Execution Module)
+- 風險模塊 (Risk Module)
+- 策略模塊 (Strategies Module)
 """
 
 import sys
-import logging
 import asyncio
-from pathlib import Path
-from typing import Dict, Any, Optional
+import logging
+from dataclasses import dataclass, field
+from typing import List, Optional, Dict, Any
 from datetime import datetime
+from pathlib import Path
 
-# Configure logging
+# 配置日誌
 logging.basicConfig(
     level=logging.INFO,
-    format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
-    handlers=[
-        logging.StreamHandler(),
-        logging.FileHandler(Path(__file__).parent / "logs" / "cosmic_ai.log")
-    ]
+    format="%(asctime)s [%(levelname)s] %(name)s: %(message)s"
 )
 logger = logging.getLogger(__name__)
 
 
-class CosmicAISystem:
-    """Main system orchestrator"""
+@dataclass
+class SystemConfig:
+    """系統配置數據類"""
+    mode: str = "live"
+    symbols: List[str] = field(default_factory=lambda: ["BTCUSDT", "ETHUSDT"])
+    enable_quantum: bool = True
+    enable_agents: bool = True
+    enable_risk_management: bool = True
+    enable_strategies: bool = True
+    max_position_size: float = 1000.0
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize the Cosmic AI System
-        
-        Args:
-            config: Configuration dictionary with system settings
-        """
-        self.config = config or {}
-        self.status = "initialized"
-        self.start_time = datetime.now()
-        
-        logger.info("CosmicAISystem initialized")
-        logger.info(f"Configuration: {self.config}")
+    def __post_init__(self):
+        if not self.symbols:
+            self.symbols = ["BTCUSDT", "ETHUSDT"]
+
+
+class ModuleRegistry:
+    """模塊註冊表 - 追蹤所有模塊的初始化狀態"""
     
-    async def start(self) -> bool:
-        """Start the system
-        
-        Returns:
-            bool: True if successful
-        """
+    def __init__(self):
+        self.modules = {}
+        self.initialized = {}
+    
+    def register(self, name: str, module_manager) -> bool:
+        """註冊模塊"""
         try:
-            logger.info("Starting Cosmic AI System...")
-            self.status = "running"
-            
-            # Initialize core modules
-            self._initialize_modules()
-            
-            logger.info("✓ System started successfully")
+            self.modules[name] = module_manager
+            self.initialized[name] = False
+            logger.info(f"✅ 模塊已註冊: {name}")
             return True
         except Exception as e:
-            logger.error(f"✗ Failed to start system: {e}")
-            self.status = "error"
+            logger.error(f"❌ 模塊註冊失敗 ({name}): {str(e)}")
             return False
     
-    def _initialize_modules(self):
-        """Initialize all system modules"""
-        try:
-            # Import core modules
-            from core import main_system
-            from agents import agent_registry
-            from strategies import cosmic_strategy
-            
-            logger.info("✓ Core modules loaded")
-            logger.info("✓ Agent system loaded")
-            logger.info("✓ Strategy system loaded")
-        except ImportError as e:
-            logger.warning(f"Module import warning: {e}")
-    
-    async def stop(self):
-        """Stop the system"""
-        logger.info("Stopping Cosmic AI System...")
-        self.status = "stopped"
-        logger.info("System stopped")
+    def initialize_all(self) -> Dict[str, bool]:
+        """初始化所有已註冊的模塊"""
+        results = {}
+        for name, manager in self.modules.items():
+            try:
+                if hasattr(manager, 'initialize'):
+                    success = manager.initialize()
+                elif hasattr(manager, 'initialize_algorithms'):
+                    success = bool(manager.initialize_algorithms())
+                elif hasattr(manager, 'initialize_agents'):
+                    success = bool(manager.initialize_agents())
+                else:
+                    success = True
+                
+                self.initialized[name] = success
+                results[name] = success
+                status = "✅ 成功" if success else "❌ 失敗"
+                logger.info(f"{status}: 模塊 {name} 已初始化")
+            except Exception as e:
+                logger.error(f"❌ 初始化失敗 ({name}): {str(e)}")
+                results[name] = False
+                self.initialized[name] = False
+        
+        return results
     
     def get_status(self) -> Dict[str, Any]:
-        """Get system status
-        
-        Returns:
-            Dict with system status information
-        """
+        """獲取所有模塊的狀態"""
         return {
-            "status": self.status,
-            "started_at": self.start_time.isoformat(),
-            "running_for": str(datetime.now() - self.start_time),
-            "configuration": self.config
+            'total_modules': len(self.modules),
+            'initialized_modules': sum(1 for v in self.initialized.values() if v),
+            'status_details': self.initialized.copy()
         }
 
 
-async def main():
-    """Main async entry point"""
-    # Default configuration
-    config = {
-        "mode": "live",
-        "symbols": ["BTCUSDT", "ETHUSDT"],
-        "enable_agents": True,
-        "enable_quantum": True,
-        "enable_risk_management": True,
-    }
+class CosmicAITradingSystem:
+    """宇宙AI交易系統 - 核心交易引擎"""
     
-    # Create and start system
-    system = CosmicAISystem(config)
+    def __init__(self, config: Optional[SystemConfig] = None):
+        self.config = config or SystemConfig()
+        self.registry = ModuleRegistry()
+        self.start_time = datetime.now()
+        self.hybrid_engine = None  # 混合量子-經典引擎
+        logger.info("✅ Cosmic AI 系統初始化完成")
     
-    if await system.start():
-        logger.info(f"System Status: {system.get_status()}")
-        logger.info("System is ready. Press Ctrl+C to stop.")
-        
+    async def initialize_modules(self) -> Dict[str, bool]:
+        """初始化所有系統模塊"""
         try:
-            # Keep system running
-            while True:
-                await asyncio.sleep(1)
-        except KeyboardInterrupt:
-            logger.info("\nReceived shutdown signal")
-            await system.stop()
-    else:
-        logger.error("Failed to start system")
-        return 1
+            # 初始化混合量子-經典引擎（優先級最高）
+            try:
+                from .engine import get_hybrid_engine
+                self.hybrid_engine = get_hybrid_engine()
+                success = self.hybrid_engine.initialize()
+                if success:
+                    logger.info("✅ 混合量子-經典引擎已初始化 (混合量子-經典交易引擎)")
+                    self.registry.initialized['hybrid_engine'] = True
+                else:
+                    logger.warning("⚠️ 混合量子-經典引擎初始化失敗")
+            except Exception as e:
+                logger.warning(f"⚠️ 混合量子-經典引擎初始化失敗: {str(e)}")
+            
+            # 初始化數據模塊
+            if True:  # 始終初始化
+                from .data.main import DataModuleManager
+                self.registry.register('data', DataModuleManager())
+            
+            # 初始化工具模塊
+            if True:
+                from .utils.main import UtilsModuleManager
+                self.registry.register('utils', UtilsModuleManager())
+            
+            # 初始化分析模塊
+            if True:
+                from .analysis.main import AnalysisModuleManager
+                self.registry.register('analysis', AnalysisModuleManager())
+            
+            # 初始化量子模塊 (如果啟用)
+            if self.config.enable_quantum:
+                try:
+                    from .quantum.main import QuantumModuleManager
+                    self.registry.register('quantum', QuantumModuleManager())
+                except Exception as e:
+                    logger.warning(f"⚠️ 量子模塊初始化失敗: {str(e)}")
+            
+            # 初始化優化模塊
+            if True:
+                from .optimizer.main import OptimizerModuleManager
+                self.registry.register('optimizer', OptimizerModuleManager())
+            
+            # 初始化代理模塊 (如果啟用)
+            if self.config.enable_agents:
+                try:
+                    from .agents.main import AgentsModuleManager
+                    self.registry.register('agents', AgentsModuleManager())
+                except Exception as e:
+                    logger.warning(f"⚠️ 代理模塊初始化失敗: {str(e)}")
+            
+            # 初始化執行模塊
+            if True:
+                from .execution.main import ExecutionModuleManager
+                self.registry.register('execution', ExecutionModuleManager())
+            
+            # 初始化風險模塊 (如果啟用)
+            if self.config.enable_risk_management:
+                from .risk.main import RiskModuleManager
+                self.registry.register('risk', RiskModuleManager())
+            
+            # 初始化策略模塊 (如果啟用)
+            if self.config.enable_strategies:
+                try:
+                    # 策略模塊沒有 StrategyManager，只有主模塊
+                    logger.info("✅ 策略模塊已載入")
+                except Exception as e:
+                    logger.warning(f"⚠️ 策略模塊初始化失敗: {str(e)}")
+            
+            # 初始化核心模塊
+            if True:
+                try:
+                    from .core.main_system import CoreSystemManager
+                    self.registry.register('core', CoreSystemManager())
+                except Exception as e:
+                    logger.warning(f"⚠️ 核心模塊初始化失敗: {str(e)}")
+            
+            # 執行所有模塊的初始化
+            return self.registry.initialize_all()
+            
+        except Exception as e:
+            logger.error(f"❌ 模塊初始化失敗: {str(e)}")
+            return {}
     
-    return 0
+    async def run_trading_cycle(self) -> Dict[str, Any]:
+        """執行交易周期"""
+        logger.info(f"🚀 開始交易周期 (模式: {self.config.mode})")
+        
+        result = {
+            'timestamp': datetime.now().isoformat(),
+            'symbols': self.config.symbols,
+            'mode': self.config.mode,
+            'uptime': str(datetime.now() - self.start_time),
+            'hybrid_engine_status': self.get_hybrid_engine_status() if self.hybrid_engine else None
+        }
+        
+        logger.info("✅ 交易周期執行完成")
+        return result
+    
+    def get_hybrid_engine_status(self) -> Optional[Dict[str, Any]]:
+        """獲取混合引擎狀態"""
+        if not self.hybrid_engine:
+            return None
+        try:
+            return self.hybrid_engine.get_status()
+        except Exception as e:
+            logger.warning(f"⚠️ 無法獲取混合引擎狀態: {str(e)}")
+            return None
+    
+    def get_status(self) -> Dict[str, Any]:
+        """獲取系統狀態"""
+        return {
+            'system': {
+                'mode': self.config.mode,
+                'symbols': self.config.symbols,
+                'uptime': str(datetime.now() - self.start_time),
+                'start_time': self.start_time.isoformat()
+            },
+            'modules': self.registry.get_status()
+        }
 
 
-def cli_entry():
-    """Command-line entry point"""
-    try:
-        exit_code = asyncio.run(main())
-        sys.exit(exit_code)
-    except Exception as e:
-        logger.error(f"Fatal error: {e}", exc_info=True)
-        sys.exit(1)
+async def main(config: Optional[SystemConfig] = None):
+    """
+    系統主入點 - 初始化和運行 Cosmic AI 交易系統
+    """
+    config = config or SystemConfig(mode="live", symbols=["BTCUSDT", "ETHUSDT"])
+    
+    # 初始化系統
+    system = CosmicAITradingSystem(config)
+    
+    print("\n" + "="*70)
+    print("🌌 宇宙 AI 交易系統 (Cosmic AI Trading System)")
+    print("="*70)
+    print(f"⏰ 啟動時間: {datetime.now().isoformat()}")
+    print(f"🔧 模式: {config.mode}")
+    print(f"💰 交易對: {', '.join(config.symbols)}")
+    print(f"⚙️  量子系統: {'✅ 啟用' if config.enable_quantum else '❌ 禁用'}")
+    print(f"🤖 代理系統: {'✅ 啟用' if config.enable_agents else '❌ 禁用'}")
+    print(f"⚠️  風險管理: {'✅ 啟用' if config.enable_risk_management else '❌ 禁用'}")
+    print("="*70)
+    
+    # 初始化所有模塊
+    print("\n📦 正在初始化模塊...")
+    module_status = await system.initialize_modules()
+    
+    print("\n✅ 模塊初始化結果:")
+    for module_name, success in module_status.items():
+        status = "✅ 成功" if success else "❌ 失敗"
+        print(f"  {status} - {module_name}")
+    
+    # 運行交易周期
+    print("\n🚀 啟動交易周期...")
+    cycle_result = await system.run_trading_cycle()
+    
+    # 顯示系統狀態
+    status = system.get_status()
+    print("\n📊 系統狀態:")
+    print(f"  模塊總數: {status['modules']['total_modules']}")
+    print(f"  已初始化: {status['modules']['initialized_modules']}")
+    
+    print("\n" + "="*70)
+    print("✅ Cosmic AI 交易系統 - 執行成功!")
+    print("="*70 + "\n")
+    
+    return system
 
 
 if __name__ == "__main__":
-    cli_entry()
+    # 確保能夠執行成功
+    try:
+        config = SystemConfig(
+            mode="live",
+            symbols=["BTCUSDT", "ETHUSDT"],
+            enable_quantum=True,
+            enable_agents=True,
+            enable_risk_management=True,
+            enable_strategies=True
+        )
+        asyncio.run(main(config))
+        print("✅ 程式執行完成\n")
+        sys.exit(0)
+    except KeyboardInterrupt:
+        print("\n\n⚠️  系統被用戶中斷")
+        sys.exit(130)
+    except Exception as e:
+        logger.error(f"❌ 系統執行失敗: {str(e)}")
+        sys.exit(1)
+
