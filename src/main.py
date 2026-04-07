@@ -26,9 +26,21 @@ from pathlib import Path
 # 配置日誌
 logging.basicConfig(
     level=logging.INFO,
-    format="%(asctime)s [%(levelname)s] %(name)s: %(message)s"
+    format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
+    handlers=[
+        logging.StreamHandler(),
+        logging.FileHandler(Path(__file__).parent / "logs" / "cosmic_ai.log")
+    ]
 )
 logger = logging.getLogger(__name__)
+
+# 匯入重連管理器
+try:
+    from core.reconnect_manager import AutoReconnect, SystemGuard, ReconnectConfig
+    RECONNECT_ENABLED = True
+except ImportError:
+    RECONNECT_ENABLED = False
+    logger.warning("⚠️  重連管理器未可用")
 
 
 @dataclass
@@ -232,9 +244,13 @@ class CosmicAITradingSystem:
         }
 
 
-async def main(config: Optional[SystemConfig] = None):
+async def main(config: Optional[SystemConfig] = None, enable_auto_reconnect: bool = True):
     """
     系統主入點 - 初始化和運行 Cosmic AI 交易系統
+    
+    Args:
+        config: 系統配置
+        enable_auto_reconnect: 是否啟用自動重連
     """
     config = config or SystemConfig(mode="live", symbols=["BTCUSDT", "ETHUSDT"])
     
@@ -250,26 +266,79 @@ async def main(config: Optional[SystemConfig] = None):
     print(f"⚙️  量子系統: {'✅ 啟用' if config.enable_quantum else '❌ 禁用'}")
     print(f"🤖 代理系統: {'✅ 啟用' if config.enable_agents else '❌ 禁用'}")
     print(f"⚠️  風險管理: {'✅ 啟用' if config.enable_risk_management else '❌ 禁用'}")
+    print(f"🔄 自動重連: {'✅ 啟用' if (enable_auto_reconnect and RECONNECT_ENABLED) else '❌ 禁用'}")
     print("="*70)
     
-    # 初始化所有模塊
-    print("\n📦 正在初始化模塊...")
-    module_status = await system.initialize_modules()
+    # 如果啟用自動重連，使用 SystemGuard
+    if enable_auto_reconnect and RECONNECT_ENABLED:
+        reconnect_config = ReconnectConfig(
+            max_retries=5,
+            initial_delay=1.0,
+            max_delay=30.0,
+            backoff_factor=2.0,
+            jitter=True
+        )
+        
+        guard = SystemGuard(system, reconnect_config)
+        print("\n🛡️  系統守護者已啟用 - 閃退自動重連")
+        
+        # 初始化模塊
+        print("\n📦 正在初始化模塊...")
+        try:
+            module_status = await guard.reconnect.execute_with_retry(
+                lambda: system.initialize_modules(),
+                "模塊初始化"
+            )
+            
+            print("\n✅ 模塊初始化結果:")
+            for module_name, success in module_status.items():
+                status = "✅ 成功" if success else "❌ 失敗"
+                print(f"  {status} - {module_name}")
+        except Exception as e:
+            logger.error(f"❌ 模塊初始化失敗: {e}")
+            return system
+        
+        # 運行交易周期
+        print("\n🚀 啟動交易周期...")
+        try:
+            cycle_result = await guard.reconnect.execute_with_retry(
+                lambda: system.run_trading_cycle(),
+                "交易周期執行"
+            )
+        except Exception as e:
+            logger.error(f"❌ 交易周期執行失敗: {e}")
+        
+        # 顯示系統狀態
+        status = system.get_status()
+        print("\n📊 系統狀態:")
+        print(f"  模塊總數: {status['modules']['total_modules']}")
+        print(f"  已初始化: {status['modules']['initialized_modules']}")
+        
+        # 顯示守護者狀態
+        guard_status = guard.get_status()
+        print(f"\n🛡️  守護者狀態:")
+        print(f"  崩潰次數: {guard_status['crash_count']}")
+        print(f"  運行時間: {guard_status['uptime']}")
     
-    print("\n✅ 模塊初始化結果:")
-    for module_name, success in module_status.items():
-        status = "✅ 成功" if success else "❌ 失敗"
-        print(f"  {status} - {module_name}")
-    
-    # 運行交易周期
-    print("\n🚀 啟動交易周期...")
-    cycle_result = await system.run_trading_cycle()
-    
-    # 顯示系統狀態
-    status = system.get_status()
-    print("\n📊 系統狀態:")
-    print(f"  模塊總數: {status['modules']['total_modules']}")
-    print(f"  已初始化: {status['modules']['initialized_modules']}")
+    else:
+        # 不使用重連，直接初始化
+        print("\n📦 正在初始化模塊...")
+        module_status = await system.initialize_modules()
+        
+        print("\n✅ 模塊初始化結果:")
+        for module_name, success in module_status.items():
+            status = "✅ 成功" if success else "❌ 失敗"
+            print(f"  {status} - {module_name}")
+        
+        # 運行交易周期
+        print("\n🚀 啟動交易周期...")
+        cycle_result = await system.run_trading_cycle()
+        
+        # 顯示系統狀態
+        status = system.get_status()
+        print("\n📊 系統狀態:")
+        print(f"  模塊總數: {status['modules']['total_modules']}")
+        print(f"  已初始化: {status['modules']['initialized_modules']}")
     
     print("\n" + "="*70)
     print("✅ Cosmic AI 交易系統 - 執行成功!")
@@ -279,7 +348,7 @@ async def main(config: Optional[SystemConfig] = None):
 
 
 if __name__ == "__main__":
-    # 確保能夠執行成功
+    # 確保能夠執行成功，並支持自動重連
     try:
         config = SystemConfig(
             mode="live",
@@ -289,7 +358,9 @@ if __name__ == "__main__":
             enable_risk_management=True,
             enable_strategies=True
         )
-        asyncio.run(main(config))
+        
+        # 啟用自動重連
+        asyncio.run(main(config, enable_auto_reconnect=True))
         print("✅ 程式執行完成\n")
         sys.exit(0)
     except KeyboardInterrupt:
@@ -297,5 +368,18 @@ if __name__ == "__main__":
         sys.exit(130)
     except Exception as e:
         logger.error(f"❌ 系統執行失敗: {str(e)}")
-        sys.exit(1)
+        # 嘗試重連
+        if RECONNECT_ENABLED:
+            logger.info("🔄 嘗試自動重連...")
+            try:
+                reconnect = AutoReconnect()
+                asyncio.run(reconnect.execute_with_retry(
+                    lambda: main(config, enable_auto_reconnect=True),
+                    "系統啟動"
+                ))
+            except Exception as retry_error:
+                logger.error(f"❌ 重連失敗: {retry_error}")
+                sys.exit(1)
+        else:
+            sys.exit(1)
 
