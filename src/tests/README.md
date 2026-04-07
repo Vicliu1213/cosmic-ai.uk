@@ -2,9 +2,25 @@
 
 ## Overview
 
-Comprehensive unit tests for the Comic AI trading system covering utilities, API endpoints, optimization algorithms, and trading components.
+Comprehensive test suite for the Cosmic AI trading system. Tests are organized into logical categories for better maintainability and clarity.
 
-Comic AI 交易系統的綜合單位測試，涵蓋工具程序、API 端點、優化算法和交易組件。
+宇宙AI交易系統的綜合測試套件。測試按邏輯分類組織，便於維護和理解。
+
+## 📁 新的目錄結構 (2026-04-07)
+
+```
+src/tests/
+├── unit/              # 3 個單元測試 - 基本功能測試
+├── integration/       # 9 個集成測試 - 模組互動測試  
+├── e2e/              # 2 個端到端測試 - 完整流程測試
+├── phase_tests/      # 5 個階段驗證 - 開發階段測試
+├── specialized/      # 9 個專門領域測試 - 深度功能測試
+├── backtesting/      # 6 個回測測試 - 策略回測
+├── demos/            # 2 個演示代碼 - 示例程序
+├── legacy/           # 5 個遺留測試 - 需要維護的舊測試
+├── fixtures/         # 共用測試數據
+└── README.md         # 本文檔
+```
 
 ## Test Suite Structure
 
@@ -47,19 +63,29 @@ Tests for trading components and multi-agent system.
 - Multi-agent coordinator
 - Decision history
 
-## Running Tests
+## 🚀 快速執行命令
 
-### Run All Tests
+### Run All Tests (運行所有測試)
 ```bash
 pytest src/tests/ -v
 ```
 
-### Run Specific Test File
+### Run by Category (按分類運行)
 ```bash
-pytest src/tests/test_utils.py -v
-pytest src/tests/test_api.py -v
-pytest src/tests/test_optimizers.py -v
-pytest src/tests/test_trading.py -v
+pytest src/tests/unit/              # 運行所有單元測試
+pytest src/tests/integration/       # 運行所有集成測試
+pytest src/tests/e2e/              # 運行所有 E2E 測試
+pytest src/tests/phase_tests/      # 運行所有階段測試
+pytest src/tests/specialized/      # 運行所有專門測試
+pytest src/tests/backtesting/      # 運行所有回測測試
+```
+
+### Run Specific Test File (運行特定檔案)
+```bash
+pytest src/tests/unit/test_utils.py -v
+pytest src/tests/unit/test_api.py -v
+pytest src/tests/specialized/test_optimizers.py -v
+pytest src/tests/specialized/test_trading.py -v
 ```
 
 ### Run Specific Test Class
