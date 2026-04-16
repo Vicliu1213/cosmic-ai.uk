@@ -1,5 +1,5 @@
 networks:
-  trading-net:
+  cosmic-net:
     driver: bridge
     ipam:
       config:
@@ -15,7 +15,7 @@ services:
     volumes:
       - redis-data:/data
     networks:
-      - trading-net
+      - cosmic-net
     restart: unless-stopped
 
   prometheus:
@@ -32,7 +32,7 @@ services:
       - '--storage.tsdb.path=/prometheus'
       - '--storage.tsdb.retention.time=30d'
     networks:
-      - trading-net
+      - cosmic-net
     restart: unless-stopped
 
   grafana:
@@ -48,7 +48,7 @@ services:
       - ./grafana/dashboards:/etc/grafana/provisioning/dashboards
       - ./grafana/datasources:/etc/grafana/provisioning/datasources
     networks:
-      - trading-net
+      - cosmic-net
     restart: unless-stopped
 
 volumes:
