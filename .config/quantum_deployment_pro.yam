@@ -1,0 +1,98 @@
+# 面向金融高频交易的终极部署配置
+global:
+  # 超低延迟网络：RDMA + DPDK + 内核旁路
+  network:
+    enable_rdma: true
+    enable_dpdk: true
+    zero_copy: true
+    sockopt:
+      tcp_nodelay: 1
+      so_priority: 6          # QoS 队列优先级
+
+  # 资源池：裸金属 + GPU + FPGA
+  node_selector:
+    feature: "ultra-low-latency"
+    accelerator: "nvidia-a100|intel-fpga"
+
+services:
+  # 市场数据解码器（FPGA 加速）
+  market_decoder:
+    image: "registry.quantum.io/fpga/market-decoder:4.2.1"
+    replicas: 4
+    resources:
+      limits:
+        cpu: "4000m"
+        memory: "8Gi"
+        nvidia.com/gpu: 1        # 使用 GPU 辅助解析
+        fpga.intel.com/arria10: 1
+    affinity:
+      podAntiAffinity: required   # 打散到不同物理机
+    ports:
+      - containerPort: 8080
+        hostPort: 8080            # 直接宿主机端口，跳过 service proxy
+    env:
+      - name: "RDMA_DEVICE"
+        value: "mlx5_0"
+
+  # 量子启发式预测引擎（集成 TensorRT + Triton）
+  quantum_predictor:
+    image: "registry.quantum.io/ai/quantum-transformer:latest"
+    replicas: 6
+    hpa:
+      enabled: true
+      minReplicas: 4
+      maxReplicas: 32
+      metrics:
+        - type: "custom"
+          metric: "gpu_utilization"
+          targetAverageValue: 65
+        - type: "cron"
+          schedule: "09:30-16:00_EST"
+          targetReplicas: 20       # 交易时段强制扩容
+    resources:
+      limits:
+        cpu: "8000m"
+        memory: "32Gi"
+        nvidia.com/gpu: 2
+    volumeMounts:
+      - name: "model-store"
+        mountPath: "/models"
+      - name: "hugepages"
+        mountPath: "/dev/hugepages"
+
+  # 订单执行网关（零拷贝 + 内核旁路）
+  order_executor:
+    image: "registry.quantum.io/executor/af_xdp:latest"
+    replicas: 8
+    securityContext:
+      privileged: true          # 允许 XDP 程序加载
+    resources:
+      limits:
+        cpu: "2000m"
+        memory: "4Gi"
+    lifecycle:
+      preStop:
+        exec:
+          command: ["/bin/sh", "-c", "sleep 5 && ./drain_connections"]
+
+# 可观测性 – eBPF 深度监控
+observability:
+  ebpf_probes:
+    - "tcp_latency"
+    - "kernel_skb_drop"
+    - "xdp_drop"
+  exporters:
+    - type: "prometheus"
+      port: 9090
+    - type: "jaeger"
+      endpoint: "http://jaeger-collector:14268"
+
+# 混沌工程 – 主动故障注入
+chaos:
+  enabled: true
+  experiments:
+    - name: "network_delay"
+      duration: "10s"
+      delay: "5ms"
+    - name: "pod_kill"
+      probability: 0.01           # 1% 概率随机杀 Pod

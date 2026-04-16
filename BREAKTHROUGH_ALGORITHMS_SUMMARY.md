@@ -46,7 +46,6 @@
 - **3種修正算法**：遞歸修正、量子精度增強、自適應修正
 - **超指數增長公式**：`enhanced_accuracy = base × e^(n-1) × log2(n+1)`
 - **級聯增強**：`cascading_boost = 2^iterations`
-
 #### 核心類：
 
 ```python
@@ -305,11 +304,11 @@ class EnhancedClassicalOptimizer:
         # 使用隨機相位模擬疊加
         # 振幅組合：Σ(amp × x × exp(1j × phase))
         # 相干性增強：× coherence_factor
-        
+
     def simulate_entanglement_correlation(self, x1, x2):
         # 互信息模擬糾纏
         # 增強關聯性：correlation × (1 + entanglement_strength)
-        
+
     def quantum_tunneling_escape(self, x, barriers):
         # 勢壘高度計算
         # 隧道概率：exp(-barrier_height / tunneling_prob)

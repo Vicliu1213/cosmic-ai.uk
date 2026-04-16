@@ -1,0 +1,59 @@
+services:
+  # 原有量子服务保留
+  quantum_compressor:
+    image: quantum-compressor:latest
+    replicas: 2
+    resources:
+      cpu: '1000m'
+      memory: '2Gi'
+
+  # ===== 新增金融组件 =====
+  aeron_driver:
+    image: aeron/aeron:1.42.0
+    replicas: 1
+    resources:
+      cpu: '500m'
+      memory: '512Mi'
+    network_mode: host
+    cap_add: ['NET_ADMIN', 'SYS_ADMIN']
+    command: java -cp /usr/local/lib/aeron-all.jar io.aeron.driver.MediaDriver
+
+  market_publisher:
+    image: openjdk:17-slim
+    replicas: 1
+    resources:
+      cpu: '1000m'
+      memory: '1Gi'
+    volumes:
+      - ./aeron-publisher:/app
+    command: java -cp .:aeron-all.jar MarketDataPublisher
+
+  flink_jobmanager:
+    image: flink:1.18-scala_2.12
+    replicas: 1
+    resources:
+      cpu: '2000m'
+      memory: '2Gi'
+    ports:
+      - "8081:8081"
+    environment:
+      - JOB_MANAGER_RPC_ADDRESS=flink_jobmanager
+
+  clickhouse:
+    image: clickhouse/clickhouse-server:23.12
+    replicas: 2
+    resources:
+      cpu: '2000m'
+      memory: '4Gi'
+    ports:
+      - "8123:8123"
+    volumes:
+      - clickhouse-data:/var/lib/clickhouse
+
+  redis:
+    image: redis:7.2-alpine
+    replicas: 1
+    command: redis-server --appendonly yes --requirepass trading2024
+    resources:
+      cpu: '500m'
+      memory: '1Gi'

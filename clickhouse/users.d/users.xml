@@ -1,0 +1,17 @@
+<clickhouse>
+    <profiles>
+        <default>
+            <load_balancing>random</load_balancing>
+            <readonly>0</readonly>
+        </default>
+    </profiles>
+    <users>
+        <default>
+            <password></password>
+            <networks>
+                <ip>::/0</ip>
+            </networks>
+            <profile>default</profile>
+        </default>
+    </users>
+</clickhouse>

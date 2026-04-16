@@ -1,0 +1,12 @@
+{
+  "dashboard": {
+    "title": "纯软件交易系统性能",
+    "panels": [
+      {"title": "Aeron 消息延迟 (P99)", "targets": [{"expr": "histogram_quantile(0.99, rate(aeron_sent_latency_bucket[1m]))"}], "type": "graph"},
+      {"title": "Flink 吞吐量 (records/s)", "targets": [{"expr": "rate(flink_taskmanager_job_task_numRecordsOutPerSecond[1m])"}], "type": "graph"},
+      {"title": "ClickHouse QPS", "targets": [{"expr": "rate(clickhouse_query_duration_seconds_count[1m])"}], "type": "graph"},
+      {"title": "Redis 命中率", "targets": [{"expr": "redis_keyspace_hits_total / (redis_keyspace_hits_total + redis_keyspace_misses_total)"}], "type": "singlestat"},
+      {"title": "CPU 使用率", "targets": [{"expr": "sum(rate(container_cpu_usage_seconds_total[1m]))"}], "type": "graph"}
+    ]
+  }
+}

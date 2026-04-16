@@ -1,25 +1,57 @@
-version: '3.8'
+networks:
+  trading-net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
 
 services:
-  comic_ai_data:
-    image: alpine:latest
-    container_name: comic_ai_data_storage
-    volumes:
-      - ./data:/app/data
-      - ./config:/app/config
-      - ./logs:/app/logs
-      - ./uploads:/app/uploads
-    command: tail -f /dev/null
-    restart: unless-stopped
-    
-  redis_cache:
-    image: redis:alpine
-    container_name: comic_ai_redis
+  redis:
+    image: redis:7.2-alpine
+    container_name: redis
+    command: redis-server --appendonly yes --requirepass trading2024 --io-threads 4 --save 900 1
     ports:
       - "6379:6379"
     volumes:
-      - redis_data:/data
+      - redis-data:/data
+    networks:
+      - trading-net
+    restart: unless-stopped
+
+  prometheus:
+    image: prom/prometheus:main-distroless
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus-data:/prometheus
+    user: "0"
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--storage.tsdb.retention.time=30d'
+    networks:
+      - trading-net
+    restart: unless-stopped
+
+  grafana:
+    image: grafana/grafana:10.4.0
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_INSTALL_PLUGINS=grafana-piechart-panel
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./grafana/dashboards:/etc/grafana/provisioning/dashboards
+      - ./grafana/datasources:/etc/grafana/provisioning/datasources
+    networks:
+      - trading-net
     restart: unless-stopped
 
 volumes:
-  redis_data:
+  redis-data:
+  prometheus-data:
+  grafana-data:
