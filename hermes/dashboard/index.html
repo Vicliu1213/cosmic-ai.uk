@@ -7,18 +7,110 @@
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
-    <main class="shell">
-      <header class="hero">
-        <div>
-          <p class="eyebrow">Hermes Control Plane</p>
-          <h1>Engine Modules</h1>
+    <main class="dashboard-shell">
+      <aside class="sidebar">
+        <div class="sidebar-block">
+          <p class="eyebrow">活動列</p>
+          <h2>面板入口</h2>
+          <p class="summary">快速進入總入口、即時驗證與混合推薦。</p>
         </div>
-        <p class="summary">按模組分類顯示核心、子元件與能力面板。</p>
-      </header>
+        <nav class="sidebar-nav">
+          <a class="sidebar-link" href="./pages/agent_panel.html">Agent Panel</a>
+          <a class="sidebar-link" href="./pages/algorithms.html">Algorithms Overview</a>
+          <a class="sidebar-link" href="./pages/trading_orchestrator.html">Trading Orchestrator</a>
+          <a class="sidebar-link" href="./pages/energy_compression.html">Energy Compression</a>
+          <a class="sidebar-link" href="./pages/omega_system.html">Omega System</a>
+          <a class="sidebar-link" href="./pages/control_center.html">Control Center</a>
 
-      <section id="module-grid" class="grid"></section>
+          <a class="sidebar-link" href="./pages/enhanced_classic.html">Enhanced Classic</a>
+        </nav>
+        <div class="sidebar-block compact">
+          <h3>快捷卡片</h3>
+          <div class="sidebar-cards">
+            <a class="sidebar-card" href="./pages/algorithms.html">總入口</a>
+            <a class="sidebar-card" href="./pages/hest_verification.html">Hest</a>
+            <a class="sidebar-card" href="./pages/enhanced_hybrid.html">Hybrid</a>
+          </div>
+        </div>
+      </aside>
+
+      <section class="content-area">
+        <header class="hero">
+          <div>
+            <p class="eyebrow">Hermes Control Plane</p>
+            <h1>Engine Modules</h1>
+            <p class="summary">以金融大鰐視角做頂級控制面板：市場脈衝、KPI、風控、流動性與策略可視化同步呈現。</p>
+          </div>
+          <div class="hero-actions">
+          <a class="hero-button primary" href="./pages/algorithms.html">Algorithms Overview</a>
+          <a class="hero-button" href="./pages/agent_panel.html">Agent Panel</a>
+          <a class="hero-button" href="./pages/trading_orchestrator.html">Trading Orchestrator</a>
+          <a class="hero-button" href="./pages/energy_compression.html">Energy Compression</a>
+</div>
+        </header>
+
+        <section class="market-ribbon card">
+          <div class="market-ribbon-top">
+            <div>
+              <p class="eyebrow">Live Market Ribbon</p>
+              <h2>宏觀資金節奏</h2>
+            </div>
+            <div class="market-badge">Alpha / Beta / Gamma</div>
+          </div>
+          <div class="market-wave">
+            <span></span><span></span><span></span><span></span><span></span><span></span>
+          </div>
+          <div class="market-ribbon-foot">liquidity heatmap · risk contour · execution pulse · sharpe growth</div>
+        </section>
+
+        <section class="kpi-grid">
+          <article class="card kpi-card">
+            <div class="kpi-label">AUM</div>
+            <div class="kpi-value">$128.4B</div>
+            <div class="kpi-delta up">+4.8%</div>
+          </article>
+          <article class="card kpi-card">
+            <div class="kpi-label">Net Flow</div>
+            <div class="kpi-value">$3.7B</div>
+            <div class="kpi-delta up">+1.9%</div>
+          </article>
+          <article class="card kpi-card">
+            <div class="kpi-label">Sharpe</div>
+            <div class="kpi-value">2.84</div>
+            <div class="kpi-delta up">stable growth</div>
+          </article>
+          <article class="card kpi-card">
+            <div class="kpi-label">Risk</div>
+            <div class="kpi-value">LOW</div>
+            <div class="kpi-delta down">-12bps</div>
+          </article>
+        </section>
+
+        <section class="featured-grid">
+          <article class="card featured-card">
+            <h2>總入口</h2>
+            <div class="meta">Algorithms Overview</div>
+            <div class="sparkline-chart" aria-label="sparkline chart"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+            <div class="links"><a href="./pages/algorithms.html">Open Overview</a></div>
+          </article>
+          <article class="card featured-card">
+            <h2>即時驗證</h2>
+            <div class="meta">Hest Verification</div>
+            <div class="sparkline-chart" aria-label="sparkline chart"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+            <div class="links"><a href="./pages/hest_verification.html">Open Hest</a></div>
+          </article>
+          <article class="card featured-card">
+            <h2>混合推薦</h2>
+            <div class="meta">Enhanced Hybrid</div>
+            <div class="liquidity-heatmap" aria-label="liquidity heatmap"></div>
+            <div class="links"><a href="./pages/enhanced_hybrid.html">Open Hybrid</a></div>
+          </article>
+        </section>
+
+        <section id="module-grid" class="grid"></section>
+      </section>
     </main>
 
     <script src="./app.js"></script>
   </body>
-  </html>
+</html>

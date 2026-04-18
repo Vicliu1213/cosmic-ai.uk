@@ -26,3 +26,18 @@ checks:
     threshold: 1.0
     realtime: true
     enabled: true
+  - name: sharpe_growth
+    target: sharpe
+    threshold: 1.05
+    realtime: true
+    enabled: true
+  - name: growth_stack
+    target: growth_stack
+    threshold: 1.0
+    realtime: true
+    enabled: true
+  - name: strategy_winrate
+    target: strategy
+    threshold: 1.0
+    realtime: true
+    enabled: true

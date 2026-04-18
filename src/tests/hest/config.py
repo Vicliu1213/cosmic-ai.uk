@@ -25,5 +25,8 @@ class HestVerificationConfig:
         HestCheck(name='enhanced_classic', target='enhanced_classic', threshold=1.0, tags=['recommendation', 'indexing']),
         HestCheck(name='catalog', target='module_catalog', threshold=1.0, tags=['ui', 'module']),
         HestCheck(name='dashboard', target='dashboard', threshold=1.0, tags=['ui', 'real-time']),
+        HestCheck(name='sharpe_growth', target='sharpe', threshold=1.05, tags=['risk-adjusted', 'growth']),
+        HestCheck(name='growth_stack', target='growth_stack', threshold=1.0, tags=['nonlinear', 'stacked']),
+        HestCheck(name='strategy_winrate', target='strategy', threshold=1.0, tags=['live', 'backtest', 'win-rate']),
     ])
     metadata: Dict[str, str] = field(default_factory=dict)

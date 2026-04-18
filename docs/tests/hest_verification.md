@@ -5,6 +5,9 @@
 - `src/algorithms/enhanced_classic/`
 - `hermes/dashboard/module_catalog.json`
 - Dashboard UI
+- Sharpe growth trend (risk-adjusted uplift)
+- Growth stack state (nonlinear stacking)
+- Strategy win rate vs backtest quality
 
 ## 核心能力
 - 即時驗證

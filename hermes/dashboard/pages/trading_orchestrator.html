@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Hermes Trading Orchestrator</title>
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body>
+    <main class="control-shell">
+      <aside class="control-sidebar">
+        <div class="control-brand">
+          <p class="eyebrow">Hermes Trading Orchestrator</p>
+          <h1>Execution Core</h1>
+          <p class="summary">把 MarketBot 的分析層與 OpenAlice / UTA-LB 的執行層收斂到同一個交易中樞。</p>
+        </div>
+        <nav class="control-nav">
+          <a href="./agent_panel.html" class="control-nav-item">Agent Panel</a>
+          <a href="./control_center.html" class="control-nav-item">Control Center</a>
+          <a href="./algorithms.html" class="control-nav-item">Algorithms Overview</a>
+        </nav>
+        <section class="control-stack">
+          <article class="card control-card">
+            <h2>分析來源</h2>
+            <div class="pill-row">
+              <span class="pill">MarketBot</span>
+              <span class="pill">market-report</span>
+              <span class="pill">market-discovery</span>
+              <span class="pill">risk-checklist</span>
+            </div>
+          </article>
+          <article class="card control-card">
+            <h2>執行來源</h2>
+            <div class="pill-row">
+              <span class="pill">OpenAlice</span>
+              <span class="pill">UTA-LB</span>
+              <span class="pill">Longbridge</span>
+            </div>
+          </article>
+        </section>
+      </aside>
+
+      <section class="control-main">
+        <header class="hero control-hero">
+          <div>
+            <p class="eyebrow">Analysis → verify → execute</p>
+            <h1>Trading Orchestrator</h1>
+            <p class="summary">先分析、再驗證、再執行，並保留回滾與風控門檻。</p>
+          </div>
+          <div class="hero-actions">
+          <a class="hero-button primary" href="./agent_panel.html">Agent Panel</a>
+          <a class="hero-button" href="./trading_orchestrator.html">Trading Orchestrator</a>
+          <a class="hero-button" href="./energy_compression.html">Energy Compression</a>
+          <a class="hero-button" href="./omega_system.html">Omega System</a>
+          <a class="hero-button" href="./hest_verification.html#omega-grid">Omega Hest Gate</a>
+        </div>
+
+
+        <section class="kpi-grid">
+          <article class="card kpi-card"><div class="kpi-label">Market intelligence</div><div class="kpi-value">ON</div><div class="kpi-delta up">MarketBot</div></article>
+          <article class="card kpi-card"><div class="kpi-label">Execution bridge</div><div class="kpi-value">ON</div><div class="kpi-delta up">OpenAlice</div></article>
+          <article class="card kpi-card"><div class="kpi-label">Broker adapter</div><div class="kpi-value">Longbridge</div><div class="kpi-delta up">UTA-LB</div></article>
+          <article class="card kpi-card"><div class="kpi-label">Safety</div><div class="kpi-value">Hest</div><div class="kpi-delta up">verify first</div></article>
+        </section>
+
+        <section class="featured-grid">
+          <article class="card featured-card">
+            <h2>Analysis stack</h2>
+            <div class="meta">market-report · market-monitor · thesis-tracker</div>
+            <div class="links"><a href="../../vendor/github-inspect/MarketBot/README.md">MarketBot Notes</a></div>
+          </article>
+          <article class="card featured-card">
+            <h2>Execution stack</h2>
+            <div class="meta">registry · broker · order routing</div>
+            <div class="links"><a href="../../vendor/github-inspect/OpenAlice/README.md">OpenAlice Notes</a></div>
+          </article>
+          <article class="card featured-card">
+            <h2>Broker patch</h2>
+            <div class="meta">Longbridge integration</div>
+            <div class="links"><a href="../../vendor/github-inspect/openalice-longbridge-broker/README.md">Longbridge Patch</a></div>
+          </article>
+        </section>
+
+        <section class="grid">
+          <article class="card">
+            <h2>Operational policy</h2>
+            <div class="pill-row">
+              <span class="pill">dry-run first</span>
+              <span class="pill">risk-checklist</span>
+              <span class="pill">thesis-tracker</span>
+              <span class="pill">rollback ready</span>
+            </div>
+          </article>
+          <article class="card">
+            <h2>Gateway view</h2>
+            <div class="meta">common runtime for analysis and channels</div>
+            <div class="liquidity-heatmap"></div>
+          </article>
+        </section>
+      </section>
+
+      <aside class="control-rightbar">
+        <article class="card status-card">
+          <h2>Risk gate</h2>
+          <div class="meta">Block trades without verification</div>
+        </article>
+        <article class="card status-card">
+          <h2>Freshness</h2>
+          <div class="meta">market-live / news-live</div>
+        </article>
+        <article class="card status-card">
+          <h2>Integration target</h2>
+          <div class="meta">Hermes trading panel</div>
+        </article>
+      </aside>
+    </main>
+  </body>
+</html>

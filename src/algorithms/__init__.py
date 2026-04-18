@@ -12,7 +12,6 @@ __all__ = [
     'build_default_registry',
 ]
 
-
 from .enhanced_hybrid import (
     EnhancedHybridProfile,
     EnhancedHybridScore,
