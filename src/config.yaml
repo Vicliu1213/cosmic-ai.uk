@@ -1,4 +1,0 @@
-hyperexponential_growth:
-  window: 120
-  threshold: 0.75
-  recursive_depth: 3

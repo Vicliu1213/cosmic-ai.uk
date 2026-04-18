@@ -1,3 +1,0 @@
-"""
-Claude AI outputs subpackage
-"""

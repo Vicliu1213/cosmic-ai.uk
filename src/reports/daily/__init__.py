@@ -1,3 +1,0 @@
-"""
-Daily reports subpackage
-"""

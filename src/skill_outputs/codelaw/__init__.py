@@ -1,3 +1,0 @@
-"""
-CodeLaw outputs subpackage
-"""

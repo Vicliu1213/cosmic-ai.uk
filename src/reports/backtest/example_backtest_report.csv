@@ -1,4 +1,0 @@
-strategy_name,symbol,total_return,annual_return,sharpe_ratio,max_drawdown,win_rate,total_trades,profit_factor
-MA_Crossover,BTC/USDT,45.50,45.50,1.85,-12.30,0.62,156,3.20
-RSI_Divergence,ETH/USDT,32.10,32.10,1.45,-18.50,0.55,203,2.10
-Bollinger_Bands,BTC/USDT,28.70,28.70,1.22,-15.60,0.58,142,2.45

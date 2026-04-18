@@ -1,3 +1,0 @@
-"""
-OpenCode outputs subpackage
-"""

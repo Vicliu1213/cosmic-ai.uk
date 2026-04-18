@@ -1,3 +1,0 @@
-"""
-Benchmarking reports subpackage
-"""

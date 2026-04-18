@@ -1,7 +1,0 @@
-排名,策略名称,年化收益(%),Sharpe比率,最大回撤(%),风险调整分数
-1,4. Hummingbot: Avellaneda-Stoikov,216.97,1.41,40.45,5.14
-2,3. Hummingbot: Pure Market Making,106.81,1.26,28.57,2.97
-3,1. Cosmic: Triangular Arbitrage,22.67,0.56,13.43,0.81
-4,2. Cosmic: Wormhole Arbitrage,22.39,0.55,14.26,0.78
-5,6. Hybrid: Cosmic + Hummingbot,19.27,0.48,12.86,0.67
-6,5. LLM-TradeBot: Practical v2,-18.79,1.66,79.14,0.10

@@ -1,3 +1,0 @@
-"""
-Cursor IDE outputs subpackage
-"""
