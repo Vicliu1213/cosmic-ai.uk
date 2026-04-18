@@ -98,7 +98,7 @@ genome:
 data_interface:
   type: "simulated"
   openbb:
-    api_key: "\${OPENBB_API_KEY}"
+    api_key: '${OPENBB_API_KEY}'
     base_url: "https://pro.openbb.co/api/v1"
     timeout_sec: 10
   market:

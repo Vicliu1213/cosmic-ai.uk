@@ -14,6 +14,10 @@ fetch('./module_catalog.json')
         <div class="links">
           <a href="${module.entry}">Core</a>
           <a href="./pages/module.html?name=${module.name}">Module Page</a>
+          <a href="./pages/enhanced_classic.html">Enhanced Classic UI</a>
+          <a href="./pages/hest_verification.html">Hest Verification UI</a>
+          <a href="./pages/enhanced_hybrid.html">Enhanced Hybrid UI</a>
+          <a href="./pages/algorithms.html">Algorithms Overview</a>
         </div>
       </article>
     `).join('');

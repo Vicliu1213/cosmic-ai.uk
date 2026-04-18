@@ -1,0 +1,11 @@
+name: enhanced_hybrid_verification
+realtime_interval_sec: 0.0
+watch_cycles: 2
+max_failures: 3
+metadata:
+  purpose: real-time hybrid verification
+modules:
+  - enhanced_classic
+  - layers
+  - module_catalog
+  - dashboard

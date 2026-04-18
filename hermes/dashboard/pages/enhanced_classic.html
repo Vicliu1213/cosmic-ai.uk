@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Enhanced Classic Algorithms</title>
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <header class="hero">
+        <div>
+          <p class="eyebrow">Enhanced Classic Algorithms</p>
+          <h1>四層映射與模組推薦</h1>
+        </div>
+        <p class="summary">從 module_catalog 載入模組，呈現能源 / 壓縮 / 精度 / 計算四層推薦。</p>
+      </header>
+
+      <section class="grid" id="recommendation-grid"></section>
+    </main>
+
+    <script>
+      fetch('../module_catalog.json')
+        .then((response) => response.json())
+        .then((data) => {
+          const grid = document.getElementById('recommendation-grid');
+          const keywords = {
+            energy: ['resource', 'energy', 'scheduling', 'balancing', 'monitoring', 'planning', 'simulation'],
+            compression: ['compression', 'entropy', 'recursion', 'projection', 'reconstruction', 'encoding'],
+            precision: ['validation', 'stabilization', 'audit', 'coherence', 'checks', 'sensing', 'quality'],
+            compute: ['execution', 'training', 'routing', 'locality', 'simulation', 'scheduler', 'balancing'],
+          };
+          const textOf = (m) => `${m.name} ${m.title} ${m.category} ${(m.components || []).join(' ')} ${(m.capabilities || []).join(' ')}`.toLowerCase();
+          const row = (label, items) => `
+            <article class="card">
+              <h2>${label}</h2>
+              <div class="pill-row">${items.map((item) => `<span class="pill">${item.title}</span>`).join('')}</div>
+            </article>
+          `;
+          const by = Object.fromEntries(
+            Object.entries(keywords).map(([layer, keys]) => [
+              layer,
+              data.modules.filter((m) => keys.some((k) => textOf(m).includes(k))).slice(0, 6),
+            ])
+          );
+          grid.innerHTML = Object.entries(by).map(([label, items]) => row(label, items)).join('');
+        });
+    </script>
+  </body>
+</html>

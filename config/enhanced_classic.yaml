@@ -1,0 +1,30 @@
+system:
+  name: enhanced_classic
+  version: 1.0.0
+  mode: hybrid-recommendation
+  catalog_path: hermes/dashboard/module_catalog.json
+
+layers:
+  energy:
+    enabled: true
+    keywords: [resource, energy, scheduling, balancing, monitoring, planning, simulation]
+    top_k: 5
+  compression:
+    enabled: true
+    keywords: [compression, entropy, recursion, projection, reconstruction, encoding]
+    top_k: 5
+  precision:
+    enabled: true
+    keywords: [validation, stabilization, audit, coherence, checks, sensing, quality]
+    top_k: 5
+  compute:
+    enabled: true
+    keywords: [execution, training, routing, locality, simulation, scheduler, balancing]
+    top_k: 5
+
+ui:
+  title: Enhanced Classic Algorithms
+  default_page: index
+  theme: dark
+  show_catalog: true
+  show_recommendations: true

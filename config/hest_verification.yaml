@@ -1,0 +1,28 @@
+name: hest_verification
+realtime_interval_sec: 0.0
+max_failures: 3
+watch_cycles: 3
+metadata:
+  purpose: real-time system verification
+  mode: financial-whale-grade
+checks:
+  - name: layers
+    target: layers
+    threshold: 1.0
+    realtime: true
+    enabled: true
+  - name: enhanced_classic
+    target: enhanced_classic
+    threshold: 1.0
+    realtime: true
+    enabled: true
+  - name: module_catalog
+    target: module_catalog
+    threshold: 1.0
+    realtime: true
+    enabled: true
+  - name: dashboard
+    target: dashboard
+    threshold: 1.0
+    realtime: true
+    enabled: true

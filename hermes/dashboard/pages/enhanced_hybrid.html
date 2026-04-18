@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Enhanced Hybrid Algorithms</title>
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <header class="hero">
+        <div>
+          <p class="eyebrow">Enhanced Hybrid Algorithms</p>
+          <h1>混合推薦與 Hest 聯動</h1>
+        </div>
+        <p class="summary">整合 enhanced_classic 與 Hest 即時驗證，提供四層混合結果。</p>
+      </header>
+
+      <section class="grid" id="hybrid-grid"></section>
+    </main>
+
+    <script>
+      fetch('../module_catalog.json')
+        .then((r) => r.json())
+        .then((data) => {
+          const grid = document.getElementById('hybrid-grid');
+          const keywords = {
+            energy: ['resource', 'energy', 'scheduling', 'monitoring', 'balance', 'load', 'efficiency'],
+            compression: ['compression', 'entropy', 'recursion', 'projection', 'encoding', 'summary', 'compact'],
+            precision: ['validation', 'audit', 'coherence', 'quality', 'checks', 'stability', 'confidence'],
+            compute: ['execution', 'training', 'routing', 'locality', 'distributed', 'scheduler', 'parallel'],
+          };
+          const textOf = (m) => `${m.name} ${m.title} ${m.category} ${(m.components || []).join(' ')} ${(m.capabilities || []).join(' ')}`.toLowerCase();
+          const row = (label, items) => `
+            <article class="card">
+              <h2>${label}</h2>
+              <div class="pill-row">${items.map((item) => `<span class="pill">${item.title}</span>`).join('')}</div>
+            </article>
+          `;
+          const by = Object.fromEntries(
+            Object.entries(keywords).map(([layer, keys]) => [
+              layer,
+              data.modules.filter((m) => keys.some((k) => textOf(m).includes(k))).slice(0, 6),
+            ])
+          );
+          grid.innerHTML = Object.entries(by).map(([label, items]) => row(label, items)).join('');
+        });
+    </script>
+  </body>
+</html>

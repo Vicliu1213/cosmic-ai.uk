@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Algorithms Overview</title>
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <header class="hero">
+        <div>
+          <p class="eyebrow">Algorithms Overview</p>
+          <h1>總入口整合</h1>
+        </div>
+        <p class="summary">整合 enhanced_classic、enhanced_hybrid、Hest 與 layers。</p>
+      </header>
+
+      <section class="grid" id="overview-grid"></section>
+    </main>
+
+    <script>
+      fetch('../module_catalog.json')
+        .then((r) => r.json())
+        .then((data) => {
+          const grid = document.getElementById('overview-grid');
+          const pick = (names) => data.modules.filter((m) => names.includes(m.name));
+          const groups = {
+            'Core Layers': pick(['reality_programming', 'platform_heterogeneous', 'cosmic_intelligence', 'quantum_holography', 'temporal_dominance']),
+            'Enhanced Classic': pick(['enhanced_classic']),
+            'Enhanced Hybrid': pick(['enhanced_hybrid']),
+            'Real-time Verification': pick(['hest_verification']),
+          };
+          grid.innerHTML = Object.entries(groups).map(([label, items]) => `
+            <article class="card">
+              <h2>${label}</h2>
+              <div class="pill-row">${items.map((item) => `<span class="pill">${item.title}</span>`).join('')}</div>
+            </article>
+          `).join('');
+        });
+    </script>
+  </body>
+</html>

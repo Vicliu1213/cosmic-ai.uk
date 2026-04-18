@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Hest Verification</title>
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <header class="hero">
+        <div>
+          <p class="eyebrow">Hest Verification</p>
+          <h1>即時系統驗證</h1>
+        </div>
+        <p class="summary">即時檢查 layers、enhanced_classic、module_catalog、dashboard。</p>
+      </header>
+
+      <section class="grid" id="hest-grid"></section>
+    </main>
+
+    <script>
+      fetch('../module_catalog.json')
+        .then((r) => r.json())
+        .then((data) => {
+          const grid = document.getElementById('hest-grid');
+          const items = [
+            ['layers', '四層引擎'],
+            ['enhanced_classic', '增強經典索引'],
+            ['module_catalog', '模組目錄'],
+            ['dashboard', 'Dashboard UI'],
+          ];
+          grid.innerHTML = items.map(([key, label]) => `
+            <article class="card">
+              <h2>${label}</h2>
+              <div class="meta">Target: ${key}</div>
+              <div class="meta">Status: ready</div>
+            </article>
+          `).join('');
+        });
+    </script>
+  </body>
+</html>

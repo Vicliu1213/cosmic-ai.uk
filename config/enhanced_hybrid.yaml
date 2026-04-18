@@ -1,0 +1,24 @@
+system:
+  name: enhanced_hybrid
+  version: 1.0.0
+  mode: hybrid-recommendation-plus
+  catalog_path: hermes/dashboard/module_catalog.json
+
+layers:
+  energy:
+    enabled: true
+    top_k: 5
+  compression:
+    enabled: true
+    top_k: 5
+  precision:
+    enabled: true
+    top_k: 5
+  compute:
+    enabled: true
+    top_k: 5
+
+ui:
+  title: Enhanced Hybrid Algorithms
+  theme: dark
+  show_hest_status: true
