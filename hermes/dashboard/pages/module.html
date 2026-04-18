@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Module Page</title>
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <header class="hero">
+        <div>
+          <p class="eyebrow">Module Page</p>
+          <h1 id="module-title">Loading...</h1>
+        </div>
+        <p class="summary" id="module-summary"></p>
+      </header>
+
+      <section class="grid">
+        <article class="card">
+          <h2>Core Entry</h2>
+          <div class="meta" id="module-entry"></div>
+        </article>
+        <article class="card">
+          <h2>Components</h2>
+          <div class="pill-row" id="module-components"></div>
+        </article>
+        <article class="card">
+          <h2>Capabilities</h2>
+          <div class="pill-row" id="module-capabilities"></div>
+        </article>
+      </section>
+    </main>
+
+    <script>
+      fetch('../module_catalog.json')
+        .then((response) => response.json())
+        .then((data) => {
+          const name = new URLSearchParams(location.search).get('name') || data.modules[0].name;
+          const module = data.modules.find((item) => item.name === name) || data.modules[0];
+
+          document.title = module.title;
+          document.getElementById('module-title').textContent = module.title;
+          document.getElementById('module-summary').textContent = `${module.name} · ${module.category}`;
+          document.getElementById('module-entry').textContent = module.entry;
+          document.getElementById('module-components').innerHTML = module.components.map((item) => `<span class="pill">${item}</span>`).join('');
+          document.getElementById('module-capabilities').innerHTML = module.capabilities.map((item) => `<span class="pill">${item}</span>`).join('');
+        });
+    </script>
+  </body>
+  </html>
