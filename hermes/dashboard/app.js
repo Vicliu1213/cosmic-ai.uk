@@ -10,6 +10,7 @@ fetch('./module_catalog.json')
         <div class="pill-row">
           ${module.capabilities.map((item) => `<span class="pill">${item}</span>`).join('')}
         </div>
+        <div class="meta">Quality: ${module.quality || 'hybrid-ready'}</div>
         <div class="links">
           <a href="${module.entry}">Core</a>
           <a href="./pages/module.html?name=${module.name}">Module Page</a>

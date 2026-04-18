@@ -1,0 +1,13 @@
+module: quantum_holography
+quality: production
+components:
+  - holographic_projection
+  - boundary_reconstruction
+  - bulk_recovery
+  - hologram_encoder
+  - entropy_calc
+capabilities:
+  - projection
+  - reconstruction
+  - bulk_recovery
+  - entropy_analysis

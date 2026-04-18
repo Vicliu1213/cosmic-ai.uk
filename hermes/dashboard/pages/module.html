@@ -22,12 +22,24 @@
           <div class="meta" id="module-entry"></div>
         </article>
         <article class="card">
+          <h2>Docs</h2>
+          <div class="meta" id="module-docs"></div>
+        </article>
+        <article class="card">
+          <h2>Config</h2>
+          <div class="meta" id="module-config"></div>
+        </article>
+        <article class="card">
           <h2>Components</h2>
           <div class="pill-row" id="module-components"></div>
         </article>
         <article class="card">
           <h2>Capabilities</h2>
           <div class="pill-row" id="module-capabilities"></div>
+        </article>
+        <article class="card">
+          <h2>Quality</h2>
+          <div class="meta" id="module-quality"></div>
         </article>
       </section>
     </main>
@@ -43,8 +55,11 @@
           document.getElementById('module-title').textContent = module.title;
           document.getElementById('module-summary').textContent = `${module.name} · ${module.category}`;
           document.getElementById('module-entry').textContent = module.entry;
+          document.getElementById('module-docs').textContent = module.docs || 'pending';
+          document.getElementById('module-config').textContent = module.config || 'pending';
           document.getElementById('module-components').innerHTML = module.components.map((item) => `<span class="pill">${item}</span>`).join('');
           document.getElementById('module-capabilities').innerHTML = module.capabilities.map((item) => `<span class="pill">${item}</span>`).join('');
+          document.getElementById('module-quality').textContent = module.quality || 'hybrid-ready';
         });
     </script>
   </body>

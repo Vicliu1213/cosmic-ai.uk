@@ -1,0 +1,13 @@
+module: consciousness_field
+quality: elite
+components:
+  - field_modulator
+  - consciousness_interface
+  - resonance_tuner
+  - field_sensor
+  - global_awareness
+capabilities:
+  - field_tuning
+  - awareness
+  - resonance
+  - sensing

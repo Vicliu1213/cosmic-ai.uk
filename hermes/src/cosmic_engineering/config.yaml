@@ -1,0 +1,13 @@
+module: cosmic_engineering
+quality: production
+components:
+  - stellar_engine
+  - energy_harvest
+  - gravity_controller
+  - megastructure_sim
+  - cosmic_planner
+capabilities:
+  - planning
+  - energy_flow
+  - gravity_control
+  - simulation
