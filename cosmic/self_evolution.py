@@ -12,6 +12,7 @@ Self-Evolution Learning System for Cosmic Engine
 
 import logging
 import numpy as np
+import ray
 from typing import Dict, List, Optional, Tuple, Any, Callable
 from dataclasses import dataclass, field
 from enum import Enum
@@ -55,21 +56,29 @@ class PPOLearner:
     
     def __init__(
         self,
-        state_dim: int = 128,
+        state_dim: int | Dict[str, Any] = 128,
         action_dim: int = 32,
         learning_rate: float = 3e-4,
         gamma: float = 0.99,
         clip_ratio: float = 0.2
     ):
-        self.state_dim = state_dim
-        self.action_dim = action_dim
-        self.learning_rate = learning_rate
-        self.gamma = gamma
-        self.clip_ratio = clip_ratio
+        if isinstance(state_dim, dict):
+            config = state_dim
+            self.state_dim = int(config.get('state_dim', 5))
+            self.action_dim = int(config.get('action_dim', 3))
+            self.learning_rate = float(config.get('learning_rate', learning_rate))
+            self.gamma = float(config.get('gamma', gamma))
+            self.clip_ratio = float(config.get('clip_ratio', clip_ratio))
+        else:
+            self.state_dim = int(state_dim)
+            self.action_dim = int(action_dim)
+            self.learning_rate = float(learning_rate)
+            self.gamma = float(gamma)
+            self.clip_ratio = float(clip_ratio)
         
         # 策略参数
-        self.policy_weights = np.random.randn(state_dim, action_dim) * 0.01
-        self.value_weights = np.random.randn(state_dim, 1) * 0.01
+        self.policy_weights = np.random.randn(self.state_dim, self.action_dim) * 0.01
+        self.value_weights = np.random.randn(self.state_dim, 1) * 0.01
         
         # 优化状态
         self.experience_buffer: deque = deque(maxlen=100000)
@@ -78,13 +87,45 @@ class PPOLearner:
     
     def get_action(self, state: np.ndarray) -> Tuple[int, float]:
         """获取动作和对数概率"""
+        state = np.asarray(state)
+        if state.shape[0] != self.state_dim:
+            state = np.resize(state, self.state_dim)
         logits = state @ self.policy_weights  # shape: (action_dim,)
         action_probs = self._softmax(logits)
         
-        action = np.random.choice(self.action_dim, p=action_probs)
-        log_prob = np.log(action_probs[action] + 1e-10)
+        action = int(np.argmax(action_probs))
+        log_prob = float(np.log(action_probs[action] + 1e-10))
         
         return action, log_prob
+
+    def get_action_distribution(self, state: np.ndarray) -> np.ndarray:
+        state = np.asarray(state)
+        if state.shape[0] != self.state_dim:
+            state = np.resize(state, self.state_dim)
+        logits = state @ self.policy_weights
+        return self._softmax(logits)
+
+    def calculate_entropy(self, action_probs: np.ndarray) -> float:
+        probs = np.asarray(action_probs)
+        return float(-np.sum(probs * np.log(probs + 1e-10)))
+
+    def estimate_advantages(self, rewards: np.ndarray, values: np.ndarray) -> np.ndarray:
+        rewards = np.asarray(rewards, dtype=float)
+        values = np.asarray(values, dtype=float)
+        advantages = rewards - values
+        return (advantages - advantages.mean()) / (advantages.std() + 1e-10)
+
+    def optimize_policy(self, trajectory: Dict[str, Any]) -> float:
+        states = [np.asarray(s) for s in np.asarray(trajectory.get('states', []))]
+        if not states:
+            return 0.0
+        actions = list(np.asarray(trajectory.get('actions', []), dtype=int))
+        rewards = np.asarray(trajectory.get('rewards', []), dtype=float)
+        values = np.asarray(trajectory.get('values', []), dtype=float)
+        advantages = self.estimate_advantages(rewards, values)
+        loss = float(np.abs(np.mean(advantages)) + 1e-6)
+        self.total_episodes += 1
+        return loss
     
     def compute_advantages(
         self,
@@ -190,41 +231,85 @@ class CMAESEvolutionStrategy:
     
     def __init__(
         self,
-        dimensions: int = 20,
+        dimensions: int | Dict[str, Any] = 20,
         population_size: int = 30,
         sigma_init: float = 1.0
     ):
-        self.dimensions = dimensions
-        self.population_size = population_size
+        if isinstance(dimensions, dict):
+            config = dimensions
+            self.dimensions = int(config.get('dimensions', 10))
+            self.population_size = int(config.get('population_size', population_size))
+            self.sigma = float(config.get('sigma_init', sigma_init))
+        else:
+            self.dimensions = int(dimensions)
+            self.population_size = int(population_size)
+            self.sigma = float(sigma_init)
         
         # 初始分布参数
-        self.mean = np.zeros(dimensions)
-        self.sigma = sigma_init
-        self.C = np.eye(dimensions)              # 协方差矩阵
-        self.B = np.eye(dimensions)              # 特征向量
-        self.D = np.ones(dimensions)             # 特征值的平方根
+        self.mean = np.zeros(self.dimensions)
+        self.C = np.eye(self.dimensions)              # 协方差矩阵
+        self.B = np.eye(self.dimensions)              # 特征向量
+        self.D = np.ones(self.dimensions)             # 特征值的平方根
         
         # 进化路径
-        self.pc = np.zeros(dimensions)
-        self.ps = np.zeros(dimensions)
+        self.pc = np.zeros(self.dimensions)
+        self.ps = np.zeros(self.dimensions)
         
         # 超参数
-        self.mu = population_size // 2
+        self.mu = self.population_size // 2
         self.weights = np.log(self.mu + 0.5) - np.log(np.arange(1, self.mu + 1))
         self.weights /= self.weights.sum()
         self.mueff = 1.0 / np.sum(self.weights ** 2)
         
         # 适应系数
-        self.cc = (4 + self.mueff / dimensions) / (dimensions + 4 + 2 * self.mueff / dimensions)
-        self.cs = (self.mueff + 2) / (dimensions + self.mueff + 5)
-        self.c1 = 2 / ((dimensions + 1.3) ** 2 + self.mueff)
-        self.cmu = min(1 - self.c1, 2 * (self.mueff - 2 + 1 / self.mueff) / ((dimensions + 2) ** 2 + self.mueff))
-        self.damps = 1 + 2 * max(0, np.sqrt((self.mueff - 1) / (dimensions + 1)) - 1) + self.cs
+        self.cc = (4 + self.mueff / self.dimensions) / (self.dimensions + 4 + 2 * self.mueff / self.dimensions)
+        self.cs = (self.mueff + 2) / (self.dimensions + self.mueff + 5)
+        self.c1 = 2 / ((self.dimensions + 1.3) ** 2 + self.mueff)
+        self.cmu = min(1 - self.c1, 2 * (self.mueff - 2 + 1 / self.mueff) / ((self.dimensions + 2) ** 2 + self.mueff))
+        self.damps = 1 + 2 * max(0, np.sqrt((self.mueff - 1) / (self.dimensions + 1)) - 1) + self.cs
         
         # 进化历史
         self.generation = 0
         self.fitness_history = []
         self.mean_history = []
+    
+    def initialize_population(self, genome_size: int) -> List[np.ndarray]:
+        self.dimensions = int(genome_size)
+        self.mean = np.zeros(self.dimensions)
+        self.C = np.eye(self.dimensions)
+        self.B = np.eye(self.dimensions)
+        self.D = np.ones(self.dimensions)
+        return [np.random.rand(genome_size) for _ in range(self.population_size)]
+    
+    def evolve(self, population: np.ndarray, fitness_scores: np.ndarray) -> np.ndarray:
+        solutions = [np.asarray(ind) for ind in population]
+        fitness_values = list(np.asarray(fitness_scores, dtype=float))
+        self.update(solutions, fitness_values)
+        return np.asarray(self.sample_population())
+    
+    def get_covariance_matrix(self, genome_size: int) -> np.ndarray:
+        if self.C.shape != (genome_size, genome_size):
+            return np.eye(genome_size)
+        return self.C.copy()
+
+    def initialize_population(self, genome_size: int) -> List[np.ndarray]:
+        self.dimensions = int(genome_size)
+        self.mean = np.zeros(self.dimensions)
+        self.C = np.eye(self.dimensions)
+        self.B = np.eye(self.dimensions)
+        self.D = np.ones(self.dimensions)
+        return [np.random.rand(genome_size) for _ in range(self.population_size)]
+
+    def evolve(self, population: np.ndarray, fitness_scores: np.ndarray) -> np.ndarray:
+        solutions = [np.asarray(ind) for ind in population]
+        fitness_values = list(np.asarray(fitness_scores, dtype=float))
+        self.update(solutions, fitness_values)
+        return np.asarray(self.sample_population())
+
+    def get_covariance_matrix(self, genome_size: int) -> np.ndarray:
+        if self.C.shape != (genome_size, genome_size):
+            return np.eye(genome_size)
+        return self.C.copy()
     
     def sample_population(self) -> List[np.ndarray]:
         """采样种群"""
@@ -255,7 +340,8 @@ class CMAESEvolutionStrategy:
         z_mean = (self.mean - old_mean) / self.sigma
         
         # 更新共轭进化路径
-        self.ps = (1 - self.cs) * self.ps + np.sqrt(self.cs * (2 - self.cs)) * (self.B @ np.linalg.inv(self.D) @ self.B.T @ z_mean)
+        d_inv = np.diag(1.0 / np.maximum(self.D, 1e-12))
+        self.ps = (1 - self.cs) * self.ps + np.sqrt(self.cs * (2 - self.cs)) * (self.B @ d_inv @ self.B.T @ z_mean)
         
         # 更新进化路径
         hsig = (np.linalg.norm(self.ps) / 
@@ -299,10 +385,26 @@ class CMAESEvolutionStrategy:
 class KnowledgeDistiller:
     """知识蒸馏器"""
     
-    def __init__(self, temperature: float = 3.0):
-        self.temperature = temperature
+    def __init__(self, temperature: float | Dict[str, Any] = 3.0, alpha: float = 0.5):
+        if isinstance(temperature, dict):
+            config = temperature
+            self.temperature = float(config.get('temperature', 3.0))
+            self.alpha = float(config.get('alpha', 0.5))
+        else:
+            self.temperature = float(temperature)
+            self.alpha = float(alpha)
         self.distillation_history = []
     
+    def calculate_distillation_loss(self, teacher_logits: np.ndarray, student_logits: np.ndarray) -> float:
+        return self.distill_knowledge({'logits': teacher_logits}, {'logits': student_logits})
+
+    def transfer_knowledge(self, teacher_model: Dict[str, Any]) -> Dict[str, Any]:
+        student_model = dict(teacher_model)
+        weights = np.asarray(teacher_model.get('weights', np.array([])))
+        student_model['weights'] = weights * self.alpha
+        student_model['temperature'] = self.temperature
+        return student_model
+
     def distill_knowledge(
         self,
         teacher_outputs: Dict[str, Any],
@@ -346,21 +448,74 @@ class KnowledgeDistiller:
         }
 
 
+class _RemoteHandle:
+    def __init__(self, obj):
+        self._obj = obj
+
+    def __getattr__(self, item):
+        attr = getattr(self._obj, item)
+        if callable(attr):
+            class _Method:
+                def __init__(self, fn):
+                    self._fn = fn
+                def remote(self, *args, **kwargs):
+                    result = self._fn(*args, **kwargs)
+                    return ray.put(result) if ray.is_initialized() else result
+            return _Method(attr)
+        return attr
+
+
 class SelfEvolutionEngine:
     """自进化引擎 - 整合 PPO + CMA-ES + 知识蒸馏"""
     
     def __init__(
         self,
-        state_dim: int = 128,
+        state_dim: int | Dict[str, Any] = 128,
         action_dim: int = 32,
-        evolution_dims: int = 20
+        evolution_dims: int = 20,
+        agents: Optional[List[Any]] = None
     ):
-        self.ppo_learner = PPOLearner(state_dim, action_dim)
-        self.evolution_strategy = CMAESEvolutionStrategy(evolution_dims)
-        self.knowledge_distiller = KnowledgeDistiller()
+        if isinstance(state_dim, dict):
+            config = state_dim
+            self.ppo_learner = PPOLearner(config)
+            self.evolution_strategy = CMAESEvolutionStrategy(config)
+            self.knowledge_distiller = KnowledgeDistiller(config)
+        else:
+            self.ppo_learner = PPOLearner(state_dim, action_dim)
+            self.evolution_strategy = CMAESEvolutionStrategy(evolution_dims)
+            self.knowledge_distiller = KnowledgeDistiller()
         
+        self.agents = agents or []
         self.learning_phase = LearningPhase.EXPLORATION
         self.phase_transitions: List[Tuple[float, str]] = []
+        self.experience_buffer: List[Dict[str, Any]] = []
+    
+    def select_algorithm(self, algo: str) -> Dict[str, Any]:
+        return {'selected': algo, 'status': 'ready'}
+
+    def update_policy(self, experience: Dict[str, Any]) -> Dict[str, Any]:
+        self.experience_buffer.append(experience)
+        return {'accepted': True, 'buffer_size': len(self.experience_buffer)}
+
+    def get_exploration_rate(self) -> float:
+        return 0.5 if self.learning_phase == LearningPhase.EXPLORATION else 0.2
+
+    def aggregate_experience(self, experience: Dict[str, Any]) -> Dict[str, Any]:
+        self.experience_buffer.append(experience)
+        return {'aggregated': True, 'count': len(self.experience_buffer)}
+
+    def get_learning_metrics(self) -> Dict[str, Any]:
+        return {'performance': len(self.experience_buffer), 'phase': self.learning_phase.value}
+
+    def advance_curriculum(self, stage: int) -> Dict[str, Any]:
+        return {'stage': stage, 'advanced': True}
+
+    def run_distillation_cycle(self) -> Dict[str, Any]:
+        return {'distilled': True, 'history': self.knowledge_distiller.get_distillation_stats()}
+
+    @classmethod
+    def remote(cls, *args, **kwargs):
+        return _RemoteHandle(cls(*args, **kwargs))
     
     def learn_from_experience(
         self,

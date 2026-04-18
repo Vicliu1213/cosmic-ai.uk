@@ -12,6 +12,7 @@ Quantum Error Correction System for Cosmic Engine
 
 import logging
 import numpy as np
+import ray
 from typing import Dict, List, Optional, Tuple, Any
 from dataclasses import dataclass, field
 from enum import Enum
@@ -385,37 +386,93 @@ class SurfaceCode(ErrorCorrectionCodec):
         return np.array([np.mean(state), 1.0 - np.mean(state)])
 
 
+@ray.remote
 class QuantumErrorCorrectionEngine:
     """量子纠错引擎"""
     
-    def __init__(self, code_type: CodeType = CodeType.REPETITION):
-        if code_type == CodeType.REPETITION:
+    def __init__(self, config: Optional[Dict[str, Any]] = None):
+        config = config or {}
+        code_name = str(config.get('code_type', 'repetition')).lower()
+        if code_name in {'repetition', 'repetition_3'}:
             self.codec = RepetitionCode()
-        elif code_type == CodeType.SHOR:
+        elif code_name == 'shor':
             self.codec = ShorCode()
-        elif code_type == CodeType.SURFACE:
+        elif code_name == 'surface':
             self.codec = SurfaceCode()
         else:
             self.codec = RepetitionCode()
         
+        self.config = config
         self.encoded_states: Dict[str, QuantumState] = {}
         self.correction_history = []
+        self._state_counter = 0
     
-    def encode_state(self, state_id: str, logical_bit: int) -> QuantumState:
+    def select_code(self, code_type: str) -> Dict[str, Any]:
+        code_type = str(code_type).lower()
+        if code_type in {'repetition', 'repetition_3'}:
+            self.codec = RepetitionCode()
+        elif code_type == 'shor':
+            self.codec = ShorCode()
+        elif code_type == 'surface':
+            self.codec = SurfaceCode()
+        return {'code_type': self.codec.code_type.value, 'num_qubits': self.codec.num_qubits}
+
+    def encode_state(self, code_type: str, logical_qubit: Any) -> np.ndarray:
         """编码量子态"""
+        self.select_code(code_type)
+        if isinstance(logical_qubit, (list, tuple, np.ndarray)):
+            logical_bit = int(np.asarray(logical_qubit)[0] > 0)
+        else:
+            logical_bit = int(logical_qubit)
         physical_qubits = self.codec.encode(logical_bit)
-        
+        state_id = f"{self.codec.code_type.value}-{self._state_counter}"
+        self._state_counter += 1
         quantum_state = QuantumState(
             qubits=physical_qubits,
             logical_state=logical_bit,
             encoding_type=self.codec.code_type
         )
-        
         self.encoded_states[state_id] = quantum_state
         logger.info(f"✅ 编码状态 - ID: {state_id}, 逻辑位: {logical_bit}")
-        
-        return quantum_state
+        return physical_qubits
     
+    def detect_errors(self, code_type: str, physical_state: Any) -> List[int]:
+        self.select_code(code_type)
+        syndrome = self.codec.extract_syndrome(np.asarray(physical_state))
+        return syndrome.syndrome_bits
+
+    def correct_errors(self, code_type: str, physical_state: Any) -> np.ndarray:
+        self.select_code(code_type)
+        arr = np.asarray(physical_state)
+        syndrome = self.codec.extract_syndrome(arr)
+        return self.codec.correct(arr, syndrome)
+
+    def decode_state(self, code_type: str, physical_state: Any) -> int:
+        self.select_code(code_type)
+        return self.codec.decode(np.asarray(physical_state))
+
+    def monitor_errors(self) -> Dict[str, Any]:
+        return {
+            'active_code': self.codec.code_type.value,
+            'tracked_states': len(self.encoded_states),
+            'recent': self.correction_history[-5:],
+        }
+
+    def get_error_rate(self) -> float:
+        total = self.codec.performance_stats['corrections_attempted']
+        failed = total - self.codec.performance_stats['corrections_successful']
+        return failed / total if total > 0 else 0.0
+
+    def get_metrics(self, code_type: str) -> Dict[str, Any]:
+        self.select_code(code_type)
+        return {
+            'code_type': self.codec.code_type.value,
+            'num_qubits': self.codec.num_qubits,
+            'corrections_attempted': self.codec.performance_stats['corrections_attempted'],
+            'corrections_successful': self.codec.performance_stats['corrections_successful'],
+            'success_rate': self.codec.performance_stats['corrections_successful'] / self.codec.performance_stats['corrections_attempted'] if self.codec.performance_stats['corrections_attempted'] > 0 else 0.0,
+        }
+
     def detect_and_correct(self, state_id: str) -> Tuple[bool, int]:
         """检测并纠正错误"""
         
