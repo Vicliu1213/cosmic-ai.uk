@@ -3,9 +3,7 @@ quantum_singularity:
   vacuum:                        # 真空能耦合器設定
     casimir_plates: 1000         # 卡西米爾板數量
     plate_area_um2: 1.0          # 板面積（平方微米）
-    ...
   grid:                          # 時空計算網格設定
     dimensions: 11               # 維度數（M理論）
     planck_units: true           # 是否使用普朗克單位
     resolution_m: 1.0e-35        # 網格解析度（米）
-  ...

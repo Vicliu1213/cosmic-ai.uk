@@ -1,23 +1,8 @@
 # Memory Policy
 
-## Purpose
-Define what belongs in persistent memory.
+This file defines the memory policy for omega recursion.
 
-## Save to memory
-- Stable user preferences
-- Stable environment facts
-- Repeated workflow quirks
-- Useful repository conventions
-- Hard-won process knowledge
-
-## Do not save to memory
-- Temporary task progress
-- One-off notes
-- Session-specific TODO state
-- Transient debugging output
-- Anything better kept in docs or skills
-
-## Style
-- Keep memory short and durable.
-- Prefer facts that will still matter later.
-- If the rule is important for the project, write it into a file too.
+## Memory Policy
+- Retain verified patterns.
+- Forget failed or unsafe loops.
+- Keep operator usefulness in the memory policy.

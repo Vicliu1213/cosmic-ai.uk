@@ -64,7 +64,7 @@ fetchWithRetry('./module_catalog.json', {}, 3, 300)
         <div class="meta">Quality: ${module.quality || 'hybrid-ready'}</div>
         <div class="links">
           <a href="${module.entry}">Core</a>
-          <a href="./pages/module.html?name=${module.name}">Module Page</a>
+          <a href="./pages/module.html?name=${encodeURIComponent(module.name)}">Module Page</a>
           <a href="./pages/enhanced_classic.html">Enhanced Classic UI</a>
           <a href="./pages/hest_verification.html">Hest Verification UI</a>
           <a href="./pages/enhanced_hybrid.html">Enhanced Hybrid UI</a>
