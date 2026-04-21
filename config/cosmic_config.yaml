@@ -30,6 +30,25 @@ agents:
   initial_count: 3
   naming_prefix: "Agent"
 
+# ----- 平台工具與 MCP 註冊 -----
+platform_toolsets:
+  cli:
+    - terminal
+    - file
+    - web
+    - browser
+    - memory
+    - todo
+    - skills
+    - session_search
+    - mcp_hermes_webui
+
+tools:
+  mcp_servers:
+    hermes_webui:
+      type: "streamableHttp"
+      url: "http://127.0.0.1:8787/mcp"
+
 # ----- 共識機制 -----
 consensus:
   enabled: true
