@@ -70,6 +70,7 @@ fetchWithRetry('./module_catalog.json', {}, 3, 300)
           <a href="./pages/enhanced_hybrid.html">Enhanced Hybrid UI</a>
           <a href="./pages/algorithms.html">Algorithms Overview</a>
           <a href="./pages/control_center.html">Control Center</a>
+          <a href="./pages/webui_hub.html">WebUI Hub</a>
         </div>
       </article>
     `).join('')

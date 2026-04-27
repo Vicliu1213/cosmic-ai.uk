@@ -3,6 +3,7 @@ import yaml
 from cosmic.agent import Agent
 from cosmic.consensus import ConsensusManager
 from cosmic.knowledge_base import KnowledgeBase
+from src.core import build_default_registry
 
 # 載入設定
 with open("config/cosmic_config.yaml", "r") as f:
@@ -14,6 +15,10 @@ ray.init(namespace=config["system"]["namespace"])
 # 初始化知識庫
 kb = KnowledgeBase(docs_path="docs/")
 kb_ref = ray.put(kb)
+
+# 建立全局技能註冊表
+skill_registry = build_default_registry()
+print("全局技能模塊:", list(skill_registry.entries.keys()))
 
 # 建立 Agents
 agents = []

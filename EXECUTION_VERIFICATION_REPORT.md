@@ -529,3 +529,9 @@ GPU: 0.0 (N/A)
 **驗證者 / Verified by**: Cosmic Intelligence Cluster v3.0 Verification System  
 **驗證時間 / Verification Time**: 2026-03-01 16:39:38 UTC  
 **系統狀態 / System Status**: ✅ **完全就緒 / Fully Ready**
+
+## Protected Content Rule
+- Future delete/cleanup/reorg actions must ignore this protected content by default.
+- Reading this protected content is allowed.
+- Any modification, overwrite, move, truncation, or deletion of this protected content requires explicit user confirmation first.
+- When uncertain whether this content is protected, treat it as protected until the user confirms otherwise.

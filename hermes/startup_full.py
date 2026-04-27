@@ -180,6 +180,17 @@ def generate_system_report(config, kb):
         logger.error(f"❌ 系統報告生成失敗：{e}")
         return False
 
+def build_global_skill_registry():
+    """建立全局技能註冊表"""
+    try:
+        from src.core import build_default_registry
+        registry = build_default_registry()
+        logger.info(f"✅ 全局技能註冊完成：{len(registry.entries)} 個模塊")
+        return registry
+    except Exception as e:
+        logger.error(f"❌ 全局技能註冊失敗：{e}")
+        return None
+
 def main():
     """主程序"""
     logger.info("\n" + "=" * 70)
@@ -214,7 +225,13 @@ def main():
     agents = create_agents(ray, config, kb)
     if not agents:
         logger.warning("⚠️  未能創建智能體")
-    
+
+    # 4.1 全局技能註冊
+    logger.info("\n🧩 步驟 4.1：建立全局技能")
+    skill_registry = build_global_skill_registry()
+    if skill_registry:
+        logger.info(f"📦 技能清單：{', '.join(skill_registry.entries.keys())}")
+
     # 5. 測試量子任務
     logger.info("\n🔬 步驟 5：測試量子任務")
     test_quantum_tasks(config)

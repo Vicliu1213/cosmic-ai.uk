@@ -1,0 +1,9 @@
+beautifulsoup4==4.12.3
+countryflag==0.1.2b3
+discord.py==2.3.2
+Pillow==10.4.0
+pytz==2024.1
+redis==5.0.8
+Requests==2.32.3
+requests_html==0.10.0
+urllib3==1.26.19

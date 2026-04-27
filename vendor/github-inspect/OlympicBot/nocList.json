@@ -1,0 +1,1856 @@
+[
+    {
+        "longName": "Afghanistan",
+        "nameOrder": 10,
+        "longNameOrder": 10,
+        "continent": "ASI",
+        "id": "AFG",
+        "name": "Afghanistan",
+        "forgeSlug": "noc-af"
+    },
+    {
+        "longName": "Albania",
+        "nameOrder": 20,
+        "longNameOrder": 20,
+        "continent": "EUR",
+        "id": "ALB",
+        "name": "Albania",
+        "forgeSlug": "noc-al"
+    },
+    {
+        "longName": "Algeria",
+        "nameOrder": 30,
+        "longNameOrder": 30,
+        "continent": "AFR",
+        "id": "ALG",
+        "name": "Algeria",
+        "forgeSlug": "noc-dz"
+    },
+    {
+        "longName": "American Samoa",
+        "nameOrder": 40,
+        "longNameOrder": 40,
+        "continent": "OCE",
+        "id": "ASA",
+        "name": "American Samoa",
+        "forgeSlug": "noc-as"
+    },
+    {
+        "longName": "Andorra",
+        "nameOrder": 50,
+        "longNameOrder": 50,
+        "continent": "EUR",
+        "id": "AND",
+        "name": "Andorra",
+        "forgeSlug": "noc-ad"
+    },
+    {
+        "longName": "Angola",
+        "nameOrder": 60,
+        "longNameOrder": 60,
+        "continent": "AFR",
+        "id": "ANG",
+        "name": "Angola",
+        "forgeSlug": "noc-ao"
+    },
+    {
+        "longName": "Antigua and Barbuda",
+        "nameOrder": 70,
+        "longNameOrder": 70,
+        "continent": "AME",
+        "id": "ANT",
+        "name": "Antigua and Barbuda",
+        "forgeSlug": "noc-ag"
+    },
+    {
+        "longName": "Argentina",
+        "nameOrder": 80,
+        "longNameOrder": 80,
+        "continent": "AME",
+        "id": "ARG",
+        "name": "Argentina",
+        "forgeSlug": "noc-ar"
+    },
+    {
+        "longName": "Armenia",
+        "nameOrder": 90,
+        "longNameOrder": 90,
+        "continent": "EUR",
+        "id": "ARM",
+        "name": "Armenia",
+        "forgeSlug": "noc-am"
+    },
+    {
+        "longName": "Aruba",
+        "nameOrder": 100,
+        "longNameOrder": 100,
+        "continent": "AME",
+        "id": "ARU",
+        "name": "Aruba",
+        "forgeSlug": "noc-aw"
+    },
+    {
+        "longName": "Australia",
+        "nameOrder": 120,
+        "longNameOrder": 120,
+        "continent": "OCE",
+        "id": "AUS",
+        "name": "Australia",
+        "forgeSlug": "noc-au"
+    },
+    {
+        "longName": "Austria",
+        "nameOrder": 130,
+        "longNameOrder": 130,
+        "continent": "EUR",
+        "id": "AUT",
+        "name": "Austria",
+        "forgeSlug": "noc-at"
+    },
+    {
+        "longName": "Azerbaijan",
+        "nameOrder": 140,
+        "longNameOrder": 140,
+        "continent": "EUR",
+        "id": "AZE",
+        "name": "Azerbaijan",
+        "forgeSlug": "noc-az"
+    },
+    {
+        "longName": "Bahamas",
+        "nameOrder": 150,
+        "longNameOrder": 150,
+        "continent": "AME",
+        "id": "BAH",
+        "name": "Bahamas",
+        "forgeSlug": "noc-bs"
+    },
+    {
+        "longName": "Bahrain",
+        "nameOrder": 160,
+        "longNameOrder": 160,
+        "continent": "ASI",
+        "id": "BRN",
+        "name": "Bahrain",
+        "forgeSlug": "noc-bh"
+    },
+    {
+        "longName": "Bangladesh",
+        "nameOrder": 170,
+        "longNameOrder": 170,
+        "continent": "ASI",
+        "id": "BAN",
+        "name": "Bangladesh",
+        "forgeSlug": "noc-bd"
+    },
+    {
+        "longName": "Barbados",
+        "nameOrder": 180,
+        "longNameOrder": 180,
+        "continent": "AME",
+        "id": "BAR",
+        "name": "Barbados",
+        "forgeSlug": "noc-bb"
+    },
+    {
+        "longName": "Belgium",
+        "nameOrder": 200,
+        "longNameOrder": 200,
+        "continent": "EUR",
+        "id": "BEL",
+        "name": "Belgium",
+        "forgeSlug": "noc-be"
+    },
+    {
+        "longName": "Belize",
+        "nameOrder": 210,
+        "longNameOrder": 210,
+        "continent": "AME",
+        "id": "BIZ",
+        "name": "Belize",
+        "forgeSlug": "noc-bz"
+    },
+    {
+        "longName": "Benin",
+        "nameOrder": 220,
+        "longNameOrder": 220,
+        "continent": "AFR",
+        "id": "BEN",
+        "name": "Benin",
+        "forgeSlug": "noc-bj"
+    },
+    {
+        "longName": "Bermuda",
+        "nameOrder": 230,
+        "longNameOrder": 230,
+        "continent": "AME",
+        "id": "BER",
+        "name": "Bermuda",
+        "forgeSlug": "noc-bm"
+    },
+    {
+        "longName": "Bhutan",
+        "nameOrder": 240,
+        "longNameOrder": 240,
+        "continent": "ASI",
+        "id": "BHU",
+        "name": "Bhutan",
+        "forgeSlug": "noc-bt"
+    },
+    {
+        "longName": "Bolivia",
+        "nameOrder": 270,
+        "longNameOrder": 270,
+        "continent": "AME",
+        "id": "BOL",
+        "name": "Bolivia",
+        "forgeSlug": "noc-bo"
+    },
+    {
+        "longName": "Bosnia and Herzegovina",
+        "nameOrder": 280,
+        "longNameOrder": 280,
+        "continent": "EUR",
+        "id": "BIH",
+        "name": "Bosnia & Herzegovina",
+        "forgeSlug": "noc-ba"
+    },
+    {
+        "longName": "Botswana",
+        "nameOrder": 290,
+        "longNameOrder": 290,
+        "continent": "AFR",
+        "id": "BOT",
+        "name": "Botswana",
+        "forgeSlug": "noc-bw"
+    },
+    {
+        "longName": "Brazil",
+        "nameOrder": 300,
+        "longNameOrder": 300,
+        "continent": "AME",
+        "id": "BRA",
+        "name": "Brazil",
+        "forgeSlug": "noc-br"
+    },
+    {
+        "longName": "Brunei Darussalam",
+        "nameOrder": 310,
+        "longNameOrder": 310,
+        "continent": "ASI",
+        "id": "BRU",
+        "name": "Brunei Darussalam",
+        "forgeSlug": "noc-brunei"
+    },
+    {
+        "longName": "Bulgaria",
+        "nameOrder": 320,
+        "longNameOrder": 320,
+        "continent": "EUR",
+        "id": "BUL",
+        "name": "Bulgaria",
+        "forgeSlug": "noc-bg"
+    },
+    {
+        "longName": "Burkina Faso",
+        "nameOrder": 330,
+        "longNameOrder": 330,
+        "continent": "AFR",
+        "id": "BUR",
+        "name": "Burkina Faso",
+        "forgeSlug": "noc-bf"
+    },
+    {
+        "longName": "Burundi",
+        "nameOrder": 340,
+        "longNameOrder": 340,
+        "continent": "AFR",
+        "id": "BDI",
+        "name": "Burundi",
+        "forgeSlug": "noc-bi"
+    },
+    {
+        "longName": "Cabo Verde",
+        "nameOrder": 350,
+        "longNameOrder": 350,
+        "continent": "AFR",
+        "id": "CPV",
+        "name": "Cabo Verde",
+        "forgeSlug": "noc-cv"
+    },
+    {
+        "longName": "Cambodia",
+        "nameOrder": 360,
+        "longNameOrder": 360,
+        "continent": "ASI",
+        "id": "CAM",
+        "name": "Cambodia",
+        "forgeSlug": "noc-kh"
+    },
+    {
+        "longName": "Cameroon",
+        "nameOrder": 370,
+        "longNameOrder": 370,
+        "continent": "AFR",
+        "id": "CMR",
+        "name": "Cameroon",
+        "forgeSlug": "noc-cm"
+    },
+    {
+        "longName": "Canada",
+        "nameOrder": 380,
+        "longNameOrder": 380,
+        "continent": "AME",
+        "id": "CAN",
+        "name": "Canada",
+        "forgeSlug": "noc-ca"
+    },
+    {
+        "longName": "Cayman Islands",
+        "nameOrder": 390,
+        "longNameOrder": 390,
+        "continent": "AME",
+        "id": "CAY",
+        "name": "Cayman Islands",
+        "forgeSlug": "noc-ky"
+    },
+    {
+        "longName": "Central African Republic",
+        "nameOrder": 400,
+        "longNameOrder": 400,
+        "continent": "AFR",
+        "id": "CAF",
+        "name": "Centr Afric Rep",
+        "forgeSlug": "noc-cf"
+    },
+    {
+        "longName": "Chad",
+        "nameOrder": 410,
+        "longNameOrder": 410,
+        "continent": "AFR",
+        "id": "CHA",
+        "name": "Chad",
+        "forgeSlug": "noc-td"
+    },
+    {
+        "longName": "Chile",
+        "nameOrder": 420,
+        "longNameOrder": 420,
+        "continent": "AME",
+        "id": "CHI",
+        "name": "Chile",
+        "forgeSlug": "noc-cl"
+    },
+    {
+        "longName": "Colombia",
+        "nameOrder": 450,
+        "longNameOrder": 430,
+        "continent": "AME",
+        "id": "COL",
+        "name": "Colombia",
+        "forgeSlug": "noc-co"
+    },
+    {
+        "longName": "Comoros",
+        "nameOrder": 460,
+        "longNameOrder": 450,
+        "continent": "AFR",
+        "id": "COM",
+        "name": "Comoros",
+        "forgeSlug": "noc-km"
+    },
+    {
+        "longName": "Congo",
+        "nameOrder": 470,
+        "longNameOrder": 460,
+        "continent": "AFR",
+        "id": "CGO",
+        "name": "Congo",
+        "forgeSlug": "noc-cg"
+    },
+    {
+        "longName": "Cook Islands",
+        "nameOrder": 480,
+        "longNameOrder": 470,
+        "continent": "OCE",
+        "id": "COK",
+        "name": "Cook Islands",
+        "forgeSlug": "noc-ck"
+    },
+    {
+        "longName": "Costa Rica",
+        "nameOrder": 490,
+        "longNameOrder": 480,
+        "continent": "AME",
+        "id": "CRC",
+        "name": "Costa Rica",
+        "forgeSlug": "noc-cr"
+    },
+    {
+        "longName": "C\u00f4te d'Ivoire",
+        "nameOrder": 500,
+        "longNameOrder": 490,
+        "continent": "AFR",
+        "id": "CIV",
+        "name": "C\u00f4te d'Ivoire",
+        "forgeSlug": "noc-ci"
+    },
+    {
+        "longName": "Croatia",
+        "nameOrder": 510,
+        "longNameOrder": 500,
+        "continent": "EUR",
+        "id": "CRO",
+        "name": "Croatia",
+        "forgeSlug": "noc-hr"
+    },
+    {
+        "longName": "Cuba",
+        "nameOrder": 520,
+        "longNameOrder": 510,
+        "continent": "AME",
+        "id": "CUB",
+        "name": "Cuba",
+        "forgeSlug": "noc-cu"
+    },
+    {
+        "longName": "Cyprus",
+        "nameOrder": 530,
+        "longNameOrder": 520,
+        "continent": "EUR",
+        "id": "CYP",
+        "name": "Cyprus",
+        "forgeSlug": "noc-cy"
+    },
+    {
+        "longName": "Czechia",
+        "nameOrder": 540,
+        "longNameOrder": 530,
+        "continent": "EUR",
+        "id": "CZE",
+        "name": "Czechia",
+        "forgeSlug": "noc-cz"
+    },
+    {
+        "longName": "Democratic People's Republic of Korea",
+        "nameOrder": 600,
+        "longNameOrder": 550,
+        "continent": "ASI",
+        "id": "PRK",
+        "name": "DPR Korea",
+        "forgeSlug": "noc-kp"
+    },
+    {
+        "longName": "Democratic Republic of the Congo",
+        "nameOrder": 610,
+        "longNameOrder": 560,
+        "continent": "AFR",
+        "id": "COD",
+        "name": "DR Congo",
+        "forgeSlug": "noc-zrcd"
+    },
+    {
+        "longName": "Democratic Republic of Timor-Leste",
+        "nameOrder": 2050,
+        "longNameOrder": 570,
+        "continent": "ASI",
+        "id": "TLS",
+        "name": "Timor-Leste",
+        "forgeSlug": "noc-tl"
+    },
+    {
+        "longName": "Denmark",
+        "nameOrder": 560,
+        "longNameOrder": 580,
+        "continent": "EUR",
+        "id": "DEN",
+        "name": "Denmark",
+        "forgeSlug": "noc-dk"
+    },
+    {
+        "longName": "Djibouti",
+        "nameOrder": 570,
+        "longNameOrder": 590,
+        "continent": "AFR",
+        "id": "DJI",
+        "name": "Djibouti",
+        "forgeSlug": "noc-dj"
+    },
+    {
+        "longName": "Dominica",
+        "nameOrder": 580,
+        "longNameOrder": 600,
+        "continent": "AME",
+        "id": "DMA",
+        "name": "Dominica",
+        "forgeSlug": "noc-dm"
+    },
+    {
+        "longName": "Dominican Republic",
+        "nameOrder": 590,
+        "longNameOrder": 610,
+        "continent": "AME",
+        "id": "DOM",
+        "name": "Dominican Republic",
+        "forgeSlug": "noc-do"
+    },
+    {
+        "longName": "Ecuador",
+        "nameOrder": 620,
+        "longNameOrder": 620,
+        "continent": "AME",
+        "id": "ECU",
+        "name": "Ecuador",
+        "forgeSlug": "noc-ec"
+    },
+    {
+        "longName": "Egypt",
+        "nameOrder": 630,
+        "longNameOrder": 630,
+        "continent": "AFR",
+        "id": "EGY",
+        "name": "Egypt",
+        "forgeSlug": "noc-eg"
+    },
+    {
+        "longName": "El Salvador",
+        "nameOrder": 640,
+        "longNameOrder": 640,
+        "continent": "AME",
+        "id": "ESA",
+        "name": "El Salvador",
+        "forgeSlug": "noc-sv"
+    },
+    {
+        "longName": "Equatorial Guinea",
+        "nameOrder": 660,
+        "longNameOrder": 650,
+        "continent": "AFR",
+        "id": "GEQ",
+        "name": "Equatorial Guinea",
+        "forgeSlug": "noc-gq"
+    },
+    {
+        "longName": "Eritrea",
+        "nameOrder": 670,
+        "longNameOrder": 660,
+        "continent": "AFR",
+        "id": "ERI",
+        "name": "Eritrea",
+        "forgeSlug": "noc-er"
+    },
+    {
+        "longName": "Estonia",
+        "nameOrder": 680,
+        "longNameOrder": 670,
+        "continent": "EUR",
+        "id": "EST",
+        "name": "Estonia",
+        "forgeSlug": "noc-ee"
+    },
+    {
+        "longName": "Eswatini",
+        "nameOrder": 690,
+        "longNameOrder": 680,
+        "continent": "AFR",
+        "id": "SWZ",
+        "name": "Eswatini",
+        "forgeSlug": "noc-sz"
+    },
+    {
+        "longName": "Ethiopia",
+        "nameOrder": 700,
+        "longNameOrder": 690,
+        "continent": "AFR",
+        "id": "ETH",
+        "name": "Ethiopia",
+        "forgeSlug": "noc-et"
+    },
+    {
+        "longName": "Federated States of Micronesia",
+        "nameOrder": 1340,
+        "longNameOrder": 710,
+        "continent": "OCE",
+        "id": "FSM",
+        "name": "Micronesia",
+        "forgeSlug": "noc-fm"
+    },
+    {
+        "longName": "Fiji",
+        "nameOrder": 710,
+        "longNameOrder": 720,
+        "continent": "OCE",
+        "id": "FIJ",
+        "name": "Fiji",
+        "forgeSlug": "noc-fj"
+    },
+    {
+        "longName": "Finland",
+        "nameOrder": 720,
+        "longNameOrder": 730,
+        "continent": "EUR",
+        "id": "FIN",
+        "name": "Finland",
+        "forgeSlug": "noc-fi"
+    },
+    {
+        "longName": "France",
+        "nameOrder": 730,
+        "longNameOrder": 740,
+        "continent": "EUR",
+        "id": "FRA",
+        "name": "France",
+        "forgeSlug": "noc-fr"
+    },
+    {
+        "longName": "Gabon",
+        "nameOrder": 750,
+        "longNameOrder": 750,
+        "continent": "AFR",
+        "id": "GAB",
+        "name": "Gabon",
+        "forgeSlug": "noc-ga"
+    },
+    {
+        "longName": "Gambia",
+        "nameOrder": 760,
+        "longNameOrder": 760,
+        "continent": "AFR",
+        "id": "GAM",
+        "name": "Gambia",
+        "forgeSlug": "noc-gm"
+    },
+    {
+        "longName": "Georgia",
+        "nameOrder": 770,
+        "longNameOrder": 770,
+        "continent": "EUR",
+        "id": "GEO",
+        "name": "Georgia",
+        "forgeSlug": "noc-ge"
+    },
+    {
+        "longName": "Germany",
+        "nameOrder": 790,
+        "longNameOrder": 790,
+        "continent": "EUR",
+        "id": "GER",
+        "name": "Germany",
+        "forgeSlug": "noc-de"
+    },
+    {
+        "longName": "Ghana",
+        "nameOrder": 800,
+        "longNameOrder": 800,
+        "continent": "AFR",
+        "id": "GHA",
+        "name": "Ghana",
+        "forgeSlug": "noc-gh"
+    },
+    {
+        "longName": "Great Britain",
+        "nameOrder": 810,
+        "longNameOrder": 810,
+        "continent": "EUR",
+        "id": "GBR",
+        "name": "Great Britain",
+        "forgeSlug": "noc-gb"
+    },
+    {
+        "longName": "Greece",
+        "nameOrder": 820,
+        "longNameOrder": 820,
+        "continent": "EUR",
+        "id": "GRE",
+        "name": "Greece",
+        "forgeSlug": "noc-gr"
+    },
+    {
+        "longName": "Grenada",
+        "nameOrder": 830,
+        "longNameOrder": 830,
+        "continent": "AME",
+        "id": "GRN",
+        "name": "Grenada",
+        "forgeSlug": "noc-gd"
+    },
+    {
+        "longName": "Guam",
+        "nameOrder": 840,
+        "longNameOrder": 840,
+        "continent": "OCE",
+        "id": "GUM",
+        "name": "Guam",
+        "forgeSlug": "noc-gu"
+    },
+    {
+        "longName": "Guatemala",
+        "nameOrder": 850,
+        "longNameOrder": 850,
+        "continent": "AME",
+        "id": "GUA",
+        "name": "Guatemala",
+        "forgeSlug": "noc-gt"
+    },
+    {
+        "longName": "Guinea",
+        "nameOrder": 860,
+        "longNameOrder": 860,
+        "continent": "AFR",
+        "id": "GUI",
+        "name": "Guinea",
+        "forgeSlug": "noc-gn"
+    },
+    {
+        "longName": "Guinea-Bissau",
+        "nameOrder": 870,
+        "longNameOrder": 870,
+        "continent": "AFR",
+        "id": "GBS",
+        "name": "Guinea-Bissau",
+        "forgeSlug": "noc-gw"
+    },
+    {
+        "longName": "Guyana",
+        "nameOrder": 880,
+        "longNameOrder": 880,
+        "continent": "AME",
+        "id": "GUY",
+        "name": "Guyana",
+        "forgeSlug": "noc-gy"
+    },
+    {
+        "longName": "Haiti",
+        "nameOrder": 890,
+        "longNameOrder": 890,
+        "continent": "AME",
+        "id": "HAI",
+        "name": "Haiti",
+        "forgeSlug": "noc-ht"
+    },
+    {
+        "longName": "Honduras",
+        "nameOrder": 900,
+        "longNameOrder": 900,
+        "continent": "AME",
+        "id": "HON",
+        "name": "Honduras",
+        "forgeSlug": "noc-hn"
+    },
+    {
+        "longName": "Hong Kong, China",
+        "nameOrder": 910,
+        "longNameOrder": 910,
+        "continent": "ASI",
+        "id": "HKG",
+        "name": "Hong Kong, China",
+        "forgeSlug": "noc-hk"
+    },
+    {
+        "longName": "Hungary",
+        "nameOrder": 920,
+        "longNameOrder": 920,
+        "continent": "EUR",
+        "id": "HUN",
+        "name": "Hungary",
+        "forgeSlug": "noc-hu"
+    },
+    {
+        "longName": "Iceland",
+        "nameOrder": 930,
+        "longNameOrder": 930,
+        "continent": "EUR",
+        "id": "ISL",
+        "name": "Iceland",
+        "forgeSlug": "noc-is"
+    },
+    {
+        "longName": "India",
+        "nameOrder": 940,
+        "longNameOrder": 960,
+        "continent": "ASI",
+        "id": "IND",
+        "name": "India",
+        "forgeSlug": "noc-in"
+    },
+    {
+        "longName": "Indonesia",
+        "nameOrder": 950,
+        "longNameOrder": 970,
+        "continent": "ASI",
+        "id": "INA",
+        "name": "Indonesia",
+        "forgeSlug": "noc-id"
+    },
+    {
+        "longName": "Iraq",
+        "nameOrder": 990,
+        "longNameOrder": 980,
+        "continent": "ASI",
+        "id": "IRQ",
+        "name": "Iraq",
+        "forgeSlug": "noc-iq"
+    },
+    {
+        "longName": "Ireland",
+        "nameOrder": 1000,
+        "longNameOrder": 990,
+        "continent": "EUR",
+        "id": "IRL",
+        "name": "Ireland",
+        "forgeSlug": "noc-ie"
+    },
+    {
+        "longName": "Islamic Republic of Iran",
+        "nameOrder": 980,
+        "longNameOrder": 1000,
+        "continent": "ASI",
+        "id": "IRI",
+        "name": "IR Iran",
+        "forgeSlug": "noc-ir"
+    },
+    {
+        "longName": "Israel",
+        "nameOrder": 1010,
+        "longNameOrder": 1010,
+        "continent": "EUR",
+        "id": "ISR",
+        "name": "Israel",
+        "forgeSlug": "noc-il"
+    },
+    {
+        "longName": "Italy",
+        "nameOrder": 1020,
+        "longNameOrder": 1020,
+        "continent": "EUR",
+        "id": "ITA",
+        "name": "Italy",
+        "forgeSlug": "noc-it"
+    },
+    {
+        "longName": "Jamaica",
+        "nameOrder": 1030,
+        "longNameOrder": 1030,
+        "continent": "AME",
+        "id": "JAM",
+        "name": "Jamaica",
+        "forgeSlug": "noc-jm"
+    },
+    {
+        "longName": "Japan",
+        "nameOrder": 1040,
+        "longNameOrder": 1040,
+        "continent": "ASI",
+        "id": "JPN",
+        "name": "Japan",
+        "forgeSlug": "noc-jp"
+    },
+    {
+        "longName": "Jordan",
+        "nameOrder": 1050,
+        "longNameOrder": 1050,
+        "continent": "ASI",
+        "id": "JOR",
+        "name": "Jordan",
+        "forgeSlug": "noc-jo"
+    },
+    {
+        "longName": "Kazakhstan",
+        "nameOrder": 1060,
+        "longNameOrder": 1060,
+        "continent": "ASI",
+        "id": "KAZ",
+        "name": "Kazakhstan",
+        "forgeSlug": "noc-kz"
+    },
+    {
+        "longName": "Kenya",
+        "nameOrder": 1070,
+        "longNameOrder": 1070,
+        "continent": "AFR",
+        "id": "KEN",
+        "name": "Kenya",
+        "forgeSlug": "noc-ke"
+    },
+    {
+        "longName": "Kiribati",
+        "nameOrder": 1080,
+        "longNameOrder": 1080,
+        "continent": "OCE",
+        "id": "KIR",
+        "name": "Kiribati",
+        "forgeSlug": "noc-ki"
+    },
+    {
+        "longName": "Kosovo",
+        "nameOrder": 1110,
+        "longNameOrder": 1100,
+        "continent": "EUR",
+        "id": "KOS",
+        "name": "Kosovo",
+        "forgeSlug": "noc-kosovo-olympic-committee"
+    },
+    {
+        "longName": "Kuwait",
+        "nameOrder": 1120,
+        "longNameOrder": 1110,
+        "continent": "ASI",
+        "id": "KUW",
+        "name": "Kuwait",
+        "forgeSlug": "noc-kw"
+    },
+    {
+        "longName": "Kyrgyzstan",
+        "nameOrder": 1130,
+        "longNameOrder": 1120,
+        "continent": "ASI",
+        "id": "KGZ",
+        "name": "Kyrgyzstan",
+        "forgeSlug": "noc-kg"
+    },
+    {
+        "longName": "Lao People's Democratic Republic",
+        "nameOrder": 1140,
+        "longNameOrder": 1130,
+        "continent": "ASI",
+        "id": "LAO",
+        "name": "Lao PDR",
+        "forgeSlug": "noc-la"
+    },
+    {
+        "longName": "Latvia",
+        "nameOrder": 1150,
+        "longNameOrder": 1140,
+        "continent": "EUR",
+        "id": "LAT",
+        "name": "Latvia",
+        "forgeSlug": "noc-lv"
+    },
+    {
+        "longName": "Lebanon",
+        "nameOrder": 1160,
+        "longNameOrder": 1150,
+        "continent": "ASI",
+        "id": "LBN",
+        "name": "Lebanon",
+        "forgeSlug": "noc-lb"
+    },
+    {
+        "longName": "Lesotho",
+        "nameOrder": 1170,
+        "longNameOrder": 1160,
+        "continent": "AFR",
+        "id": "LES",
+        "name": "Lesotho",
+        "forgeSlug": "noc-ls"
+    },
+    {
+        "longName": "Liberia",
+        "nameOrder": 1180,
+        "longNameOrder": 1170,
+        "continent": "AFR",
+        "id": "LBR",
+        "name": "Liberia",
+        "forgeSlug": "noc-lr"
+    },
+    {
+        "longName": "Libya",
+        "nameOrder": 1190,
+        "longNameOrder": 1180,
+        "continent": "AFR",
+        "id": "LBA",
+        "name": "Libya",
+        "forgeSlug": "noc-ly"
+    },
+    {
+        "longName": "Liechtenstein",
+        "nameOrder": 1200,
+        "longNameOrder": 1190,
+        "continent": "EUR",
+        "id": "LIE",
+        "name": "Liechtenstein",
+        "forgeSlug": "noc-li"
+    },
+    {
+        "longName": "Lithuania",
+        "nameOrder": 1210,
+        "longNameOrder": 1200,
+        "continent": "EUR",
+        "id": "LTU",
+        "name": "Lithuania",
+        "forgeSlug": "noc-lt"
+    },
+    {
+        "longName": "Luxembourg",
+        "nameOrder": 1220,
+        "longNameOrder": 1210,
+        "continent": "EUR",
+        "id": "LUX",
+        "name": "Luxembourg",
+        "forgeSlug": "noc-lu"
+    },
+    {
+        "longName": "Madagascar",
+        "nameOrder": 1230,
+        "longNameOrder": 1220,
+        "continent": "AFR",
+        "id": "MAD",
+        "name": "Madagascar",
+        "forgeSlug": "noc-mg"
+    },
+    {
+        "longName": "Malawi",
+        "nameOrder": 1240,
+        "longNameOrder": 1230,
+        "continent": "AFR",
+        "id": "MAW",
+        "name": "Malawi",
+        "forgeSlug": "noc-mw"
+    },
+    {
+        "longName": "Malaysia",
+        "nameOrder": 1260,
+        "longNameOrder": 1250,
+        "continent": "ASI",
+        "id": "MAS",
+        "name": "Malaysia",
+        "forgeSlug": "noc-my"
+    },
+    {
+        "longName": "Maldives",
+        "nameOrder": 1270,
+        "longNameOrder": 1260,
+        "continent": "ASI",
+        "id": "MDV",
+        "name": "Maldives",
+        "forgeSlug": "noc-mv"
+    },
+    {
+        "longName": "Mali",
+        "nameOrder": 1280,
+        "longNameOrder": 1270,
+        "continent": "AFR",
+        "id": "MLI",
+        "name": "Mali",
+        "forgeSlug": "noc-ml"
+    },
+    {
+        "longName": "Malta",
+        "nameOrder": 1290,
+        "longNameOrder": 1280,
+        "continent": "EUR",
+        "id": "MLT",
+        "name": "Malta",
+        "forgeSlug": "noc-mt"
+    },
+    {
+        "longName": "Marshall Islands",
+        "nameOrder": 1300,
+        "longNameOrder": 1290,
+        "continent": "OCE",
+        "id": "MHL",
+        "name": "Marshall Islands",
+        "forgeSlug": "noc-mh"
+    },
+    {
+        "longName": "Mauritania",
+        "nameOrder": 1310,
+        "longNameOrder": 1300,
+        "continent": "AFR",
+        "id": "MTN",
+        "name": "Mauritania",
+        "forgeSlug": "noc-mr"
+    },
+    {
+        "longName": "Mauritius",
+        "nameOrder": 1320,
+        "longNameOrder": 1310,
+        "continent": "AFR",
+        "id": "MRI",
+        "name": "Mauritius",
+        "forgeSlug": "noc-mu"
+    },
+    {
+        "longName": "Mexico",
+        "nameOrder": 1330,
+        "longNameOrder": 1320,
+        "continent": "AME",
+        "id": "MEX",
+        "name": "Mexico",
+        "forgeSlug": "noc-mx"
+    },
+    {
+        "longName": "Monaco",
+        "nameOrder": 1360,
+        "longNameOrder": 1340,
+        "continent": "EUR",
+        "id": "MON",
+        "name": "Monaco",
+        "forgeSlug": "noc-mc"
+    },
+    {
+        "longName": "Mongolia",
+        "nameOrder": 1370,
+        "longNameOrder": 1350,
+        "continent": "ASI",
+        "id": "MGL",
+        "name": "Mongolia",
+        "forgeSlug": "noc-mn"
+    },
+    {
+        "longName": "Montenegro",
+        "nameOrder": 1380,
+        "longNameOrder": 1360,
+        "continent": "EUR",
+        "id": "MNE",
+        "name": "Montenegro",
+        "forgeSlug": "noc-me"
+    },
+    {
+        "longName": "Morocco",
+        "nameOrder": 1390,
+        "longNameOrder": 1370,
+        "continent": "AFR",
+        "id": "MAR",
+        "name": "Morocco",
+        "forgeSlug": "noc-ma"
+    },
+    {
+        "longName": "Mozambique",
+        "nameOrder": 1400,
+        "longNameOrder": 1380,
+        "continent": "AFR",
+        "id": "MOZ",
+        "name": "Mozambique",
+        "forgeSlug": "noc-mz"
+    },
+    {
+        "longName": "Myanmar",
+        "nameOrder": 1410,
+        "longNameOrder": 1390,
+        "continent": "ASI",
+        "id": "MYA",
+        "name": "Myanmar",
+        "forgeSlug": "noc-mm"
+    },
+    {
+        "longName": "Namibia",
+        "nameOrder": 1420,
+        "longNameOrder": 1400,
+        "continent": "AFR",
+        "id": "NAM",
+        "name": "Namibia",
+        "forgeSlug": "noc-na"
+    },
+    {
+        "longName": "Nauru",
+        "nameOrder": 1430,
+        "longNameOrder": 1410,
+        "continent": "OCE",
+        "id": "NRU",
+        "name": "Nauru",
+        "forgeSlug": "noc-nr"
+    },
+    {
+        "longName": "Nepal",
+        "nameOrder": 1440,
+        "longNameOrder": 1420,
+        "continent": "ASI",
+        "id": "NEP",
+        "name": "Nepal",
+        "forgeSlug": "noc-np"
+    },
+    {
+        "longName": "Netherlands",
+        "nameOrder": 1450,
+        "longNameOrder": 1430,
+        "continent": "EUR",
+        "id": "NED",
+        "name": "Netherlands",
+        "forgeSlug": "noc-nl"
+    },
+    {
+        "longName": "New Zealand",
+        "nameOrder": 1470,
+        "longNameOrder": 1450,
+        "continent": "OCE",
+        "id": "NZL",
+        "name": "New Zealand",
+        "forgeSlug": "noc-nz"
+    },
+    {
+        "longName": "Nicaragua",
+        "nameOrder": 1480,
+        "longNameOrder": 1460,
+        "continent": "AME",
+        "id": "NCA",
+        "name": "Nicaragua",
+        "forgeSlug": "noc-ni"
+    },
+    {
+        "longName": "Niger",
+        "nameOrder": 1490,
+        "longNameOrder": 1470,
+        "continent": "AFR",
+        "id": "NIG",
+        "name": "Niger",
+        "forgeSlug": "noc-ne"
+    },
+    {
+        "longName": "Nigeria",
+        "nameOrder": 1500,
+        "longNameOrder": 1480,
+        "continent": "AFR",
+        "id": "NGR",
+        "name": "Nigeria",
+        "forgeSlug": "noc-ng"
+    },
+    {
+        "longName": "North Macedonia",
+        "nameOrder": 1520,
+        "longNameOrder": 1500,
+        "continent": "EUR",
+        "id": "MKD",
+        "name": "North Macedonia",
+        "forgeSlug": "noc-mk"
+    },
+    {
+        "longName": "Norway",
+        "nameOrder": 1530,
+        "longNameOrder": 1510,
+        "continent": "EUR",
+        "id": "NOR",
+        "name": "Norway",
+        "forgeSlug": "noc-no"
+    },
+    {
+        "longName": "Oman",
+        "nameOrder": 1550,
+        "longNameOrder": 1530,
+        "continent": "ASI",
+        "id": "OMA",
+        "name": "Oman",
+        "forgeSlug": "noc-om"
+    },
+    {
+        "longName": "Pakistan",
+        "nameOrder": 1560,
+        "longNameOrder": 1540,
+        "continent": "ASI",
+        "id": "PAK",
+        "name": "Pakistan",
+        "forgeSlug": "noc-pk"
+    },
+    {
+        "longName": "Palau",
+        "nameOrder": 1570,
+        "longNameOrder": 1550,
+        "continent": "OCE",
+        "id": "PLW",
+        "name": "Palau",
+        "forgeSlug": "noc-pw"
+    },
+    {
+        "longName": "Palestine",
+        "nameOrder": 1580,
+        "longNameOrder": 1560,
+        "continent": "ASI",
+        "id": "PLE",
+        "name": "Palestine",
+        "forgeSlug": "noc-ps"
+    },
+    {
+        "longName": "Panama",
+        "nameOrder": 1590,
+        "longNameOrder": 1570,
+        "continent": "AME",
+        "id": "PAN",
+        "name": "Panama",
+        "forgeSlug": "noc-pa"
+    },
+    {
+        "longName": "Papua New Guinea",
+        "nameOrder": 1600,
+        "longNameOrder": 1580,
+        "continent": "OCE",
+        "id": "PNG",
+        "name": "Papua New Guinea",
+        "forgeSlug": "noc-pg"
+    },
+    {
+        "longName": "Paraguay",
+        "nameOrder": 1610,
+        "longNameOrder": 1590,
+        "continent": "AME",
+        "id": "PAR",
+        "name": "Paraguay",
+        "forgeSlug": "noc-py"
+    },
+    {
+        "longName": "People's Republic of China",
+        "nameOrder": 430,
+        "longNameOrder": 1600,
+        "continent": "ASI",
+        "id": "CHN",
+        "name": "China",
+        "forgeSlug": "noc-cn"
+    },
+    {
+        "longName": "Peru",
+        "nameOrder": 1620,
+        "longNameOrder": 1610,
+        "continent": "AME",
+        "id": "PER",
+        "name": "Peru",
+        "forgeSlug": "noc-pe"
+    },
+    {
+        "longName": "Philippines",
+        "nameOrder": 1630,
+        "longNameOrder": 1620,
+        "continent": "ASI",
+        "id": "PHI",
+        "name": "Philippines",
+        "forgeSlug": "noc-ph"
+    },
+    {
+        "longName": "Poland",
+        "nameOrder": 1640,
+        "longNameOrder": 1630,
+        "continent": "EUR",
+        "id": "POL",
+        "name": "Poland",
+        "forgeSlug": "noc-pl"
+    },
+    {
+        "longName": "Portugal",
+        "nameOrder": 1650,
+        "longNameOrder": 1640,
+        "continent": "EUR",
+        "id": "POR",
+        "name": "Portugal",
+        "forgeSlug": "noc-pt"
+    },
+    {
+        "longName": "Puerto Rico",
+        "nameOrder": 1660,
+        "longNameOrder": 1650,
+        "continent": "AME",
+        "id": "PUR",
+        "name": "Puerto Rico",
+        "forgeSlug": "noc-pr"
+    },
+    {
+        "longName": "Qatar",
+        "nameOrder": 1670,
+        "longNameOrder": 1660,
+        "continent": "ASI",
+        "id": "QAT",
+        "name": "Qatar",
+        "forgeSlug": "noc-qa"
+    },
+    {
+        "longName": "Refugee Olympic Team",
+        "nameOrder": 650,
+        "longNameOrder": 1670,
+        "continent": "",
+        "id": "EOR",
+        "name": "EOR",
+        "forgeSlug": "noc-refugee-olympic-team"
+    },
+    {
+        "longName": "Republic of Korea",
+        "nameOrder": 1100,
+        "longNameOrder": 1690,
+        "continent": "ASI",
+        "id": "KOR",
+        "name": "Korea",
+        "forgeSlug": "noc-kr"
+    },
+    {
+        "longName": "Republic of Moldova",
+        "nameOrder": 1680,
+        "longNameOrder": 1700,
+        "continent": "EUR",
+        "id": "MDA",
+        "name": "Republic of Moldova",
+        "forgeSlug": "noc-md"
+    },
+    {
+        "longName": "Romania",
+        "nameOrder": 1710,
+        "longNameOrder": 1730,
+        "continent": "EUR",
+        "id": "ROU",
+        "name": "Romania",
+        "forgeSlug": "noc-ro"
+    },
+    {
+        "longName": "Rwanda",
+        "nameOrder": 1740,
+        "longNameOrder": 1750,
+        "continent": "AFR",
+        "id": "RWA",
+        "name": "Rwanda",
+        "forgeSlug": "noc-rw"
+    },
+    {
+        "longName": "Saint Kitts and Nevis",
+        "nameOrder": 1950,
+        "longNameOrder": 1770,
+        "continent": "AME",
+        "id": "SKN",
+        "name": "St Kitts and Nevis",
+        "forgeSlug": "noc-kn"
+    },
+    {
+        "longName": "Saint Lucia",
+        "nameOrder": 1760,
+        "longNameOrder": 1780,
+        "continent": "AME",
+        "id": "LCA",
+        "name": "Saint Lucia",
+        "forgeSlug": "noc-lc"
+    },
+    {
+        "longName": "Samoa",
+        "nameOrder": 1770,
+        "longNameOrder": 1790,
+        "continent": "OCE",
+        "id": "SAM",
+        "name": "Samoa",
+        "forgeSlug": "noc-ws"
+    },
+    {
+        "longName": "San Marino",
+        "nameOrder": 1780,
+        "longNameOrder": 1800,
+        "continent": "EUR",
+        "id": "SMR",
+        "name": "San Marino",
+        "forgeSlug": "noc-sm"
+    },
+    {
+        "longName": "Sao Tome and Principe",
+        "nameOrder": 1790,
+        "longNameOrder": 1810,
+        "continent": "AFR",
+        "id": "STP",
+        "name": "Sao Tome & Principe",
+        "forgeSlug": "noc-st"
+    },
+    {
+        "longName": "Saudi Arabia",
+        "nameOrder": 1800,
+        "longNameOrder": 1820,
+        "continent": "ASI",
+        "id": "KSA",
+        "name": "Saudi Arabia",
+        "forgeSlug": "noc-sa"
+    },
+    {
+        "longName": "Senegal",
+        "nameOrder": 1810,
+        "longNameOrder": 1830,
+        "continent": "AFR",
+        "id": "SEN",
+        "name": "Senegal",
+        "forgeSlug": "noc-sn"
+    },
+    {
+        "longName": "Serbia",
+        "nameOrder": 1820,
+        "longNameOrder": 1840,
+        "continent": "EUR",
+        "id": "SRB",
+        "name": "Serbia",
+        "forgeSlug": "noc-rs"
+    },
+    {
+        "longName": "Seychelles",
+        "nameOrder": 1840,
+        "longNameOrder": 1860,
+        "continent": "AFR",
+        "id": "SEY",
+        "name": "Seychelles",
+        "forgeSlug": "noc-sc"
+    },
+    {
+        "longName": "Sierra Leone",
+        "nameOrder": 1850,
+        "longNameOrder": 1870,
+        "continent": "AFR",
+        "id": "SLE",
+        "name": "Sierra Leone",
+        "forgeSlug": "noc-sl"
+    },
+    {
+        "longName": "Singapore",
+        "nameOrder": 1860,
+        "longNameOrder": 1880,
+        "continent": "ASI",
+        "id": "SGP",
+        "name": "Singapore",
+        "forgeSlug": "noc-sg"
+    },
+    {
+        "longName": "Slovakia",
+        "nameOrder": 1870,
+        "longNameOrder": 1890,
+        "continent": "EUR",
+        "id": "SVK",
+        "name": "Slovakia",
+        "forgeSlug": "noc-sk"
+    },
+    {
+        "longName": "Slovenia",
+        "nameOrder": 1880,
+        "longNameOrder": 1900,
+        "continent": "EUR",
+        "id": "SLO",
+        "name": "Slovenia",
+        "forgeSlug": "noc-si"
+    },
+    {
+        "longName": "Solomon Islands",
+        "nameOrder": 1890,
+        "longNameOrder": 1910,
+        "continent": "OCE",
+        "id": "SOL",
+        "name": "Solomon Islands",
+        "forgeSlug": "noc-sb"
+    },
+    {
+        "longName": "Somalia",
+        "nameOrder": 1900,
+        "longNameOrder": 1920,
+        "continent": "AFR",
+        "id": "SOM",
+        "name": "Somalia",
+        "forgeSlug": "noc-so"
+    },
+    {
+        "longName": "South Africa",
+        "nameOrder": 1910,
+        "longNameOrder": 1930,
+        "continent": "AFR",
+        "id": "RSA",
+        "name": "South Africa",
+        "forgeSlug": "noc-za"
+    },
+    {
+        "longName": "South Sudan",
+        "nameOrder": 1920,
+        "longNameOrder": 1940,
+        "continent": "AFR",
+        "id": "SSD",
+        "name": "South Sudan",
+        "forgeSlug": "noc-south-sudan"
+    },
+    {
+        "longName": "Spain",
+        "nameOrder": 1930,
+        "longNameOrder": 1950,
+        "continent": "EUR",
+        "id": "ESP",
+        "name": "Spain",
+        "forgeSlug": "noc-es"
+    },
+    {
+        "longName": "Sri Lanka",
+        "nameOrder": 1940,
+        "longNameOrder": 1960,
+        "continent": "ASI",
+        "id": "SRI",
+        "name": "Sri Lanka",
+        "forgeSlug": "noc-lk"
+    },
+    {
+        "longName": "St Vincent and the Grenadines",
+        "nameOrder": 1960,
+        "longNameOrder": 1970,
+        "continent": "AME",
+        "id": "VIN",
+        "name": "StVincent&Grenadines",
+        "forgeSlug": "noc-vc"
+    },
+    {
+        "longName": "Sudan",
+        "nameOrder": 1970,
+        "longNameOrder": 1980,
+        "continent": "AFR",
+        "id": "SUD",
+        "name": "Sudan",
+        "forgeSlug": "noc-sd"
+    },
+    {
+        "longName": "Suriname",
+        "nameOrder": 1980,
+        "longNameOrder": 1990,
+        "continent": "AME",
+        "id": "SUR",
+        "name": "Suriname",
+        "forgeSlug": "noc-sr"
+    },
+    {
+        "longName": "Sweden",
+        "nameOrder": 1990,
+        "longNameOrder": 2000,
+        "continent": "EUR",
+        "id": "SWE",
+        "name": "Sweden",
+        "forgeSlug": "noc-se"
+    },
+    {
+        "longName": "Switzerland",
+        "nameOrder": 2000,
+        "longNameOrder": 2010,
+        "continent": "EUR",
+        "id": "SUI",
+        "name": "Switzerland",
+        "forgeSlug": "noc-ch"
+    },
+    {
+        "longName": "Syrian Arab Republic",
+        "nameOrder": 2010,
+        "longNameOrder": 2020,
+        "continent": "ASI",
+        "id": "SYR",
+        "name": "Syria",
+        "forgeSlug": "noc-sy"
+    },
+    {
+        "longName": "Tajikistan",
+        "nameOrder": 2020,
+        "longNameOrder": 2030,
+        "continent": "ASI",
+        "id": "TJK",
+        "name": "Tajikistan",
+        "forgeSlug": "noc-tj"
+    },
+    {
+        "longName": "Thailand",
+        "nameOrder": 2040,
+        "longNameOrder": 2040,
+        "continent": "ASI",
+        "id": "THA",
+        "name": "Thailand",
+        "forgeSlug": "noc-th"
+    },
+    {
+        "longName": "Togo",
+        "nameOrder": 2060,
+        "longNameOrder": 2060,
+        "continent": "AFR",
+        "id": "TOG",
+        "name": "Togo",
+        "forgeSlug": "noc-tg"
+    },
+    {
+        "longName": "Tonga",
+        "nameOrder": 2070,
+        "longNameOrder": 2070,
+        "continent": "OCE",
+        "id": "TGA",
+        "name": "Tonga",
+        "forgeSlug": "noc-to"
+    },
+    {
+        "longName": "Chinese Taipei",
+        "nameOrder": 2080,
+        "longNameOrder": 2080,
+        "continent": "ASI",
+        "id": "TPE",
+        "name": "Chinese Taipei",
+        "forgeSlug": "noc-tw"
+    },
+    {
+        "longName": "Trinidad and Tobago",
+        "nameOrder": 2090,
+        "longNameOrder": 2090,
+        "continent": "AME",
+        "id": "TTO",
+        "name": "Trinidad and Tobago",
+        "forgeSlug": "noc-tt"
+    },
+    {
+        "longName": "Tunisia",
+        "nameOrder": 2100,
+        "longNameOrder": 2100,
+        "continent": "AFR",
+        "id": "TUN",
+        "name": "Tunisia",
+        "forgeSlug": "noc-tn"
+    },
+    {
+        "longName": "T\u00fcrkiye",
+        "nameOrder": 2110,
+        "longNameOrder": 2110,
+        "continent": "EUR",
+        "id": "TUR",
+        "name": "T\u00fcrkiye",
+        "forgeSlug": "noc-tr"
+    },
+    {
+        "longName": "Turkmenistan",
+        "nameOrder": 2120,
+        "longNameOrder": 2120,
+        "continent": "ASI",
+        "id": "TKM",
+        "name": "Turkmenistan",
+        "forgeSlug": "noc-tm"
+    },
+    {
+        "longName": "Tuvalu",
+        "nameOrder": 2130,
+        "longNameOrder": 2130,
+        "continent": "OCE",
+        "id": "TUV",
+        "name": "Tuvalu",
+        "forgeSlug": "noc-tv"
+    },
+    {
+        "longName": "Uganda",
+        "nameOrder": 2150,
+        "longNameOrder": 2140,
+        "continent": "AFR",
+        "id": "UGA",
+        "name": "Uganda",
+        "forgeSlug": "noc-ug"
+    },
+    {
+        "longName": "Ukraine",
+        "nameOrder": 2160,
+        "longNameOrder": 2150,
+        "continent": "EUR",
+        "id": "UKR",
+        "name": "Ukraine",
+        "forgeSlug": "noc-ua"
+    },
+    {
+        "longName": "United Arab Emirates",
+        "nameOrder": 2140,
+        "longNameOrder": 2170,
+        "continent": "ASI",
+        "id": "UAE",
+        "name": "UA Emirates",
+        "forgeSlug": "noc-ae"
+    },
+    {
+        "longName": "United Republic of Tanzania",
+        "nameOrder": 2030,
+        "longNameOrder": 2190,
+        "continent": "AFR",
+        "id": "TAN",
+        "name": "Tanzania",
+        "forgeSlug": "noc-tz"
+    },
+    {
+        "longName": "United States of America",
+        "nameOrder": 2190,
+        "longNameOrder": 2200,
+        "continent": "AME",
+        "id": "USA",
+        "name": "United States",
+        "forgeSlug": "noc-us"
+    },
+    {
+        "longName": "Uruguay",
+        "nameOrder": 2200,
+        "longNameOrder": 2210,
+        "continent": "AME",
+        "id": "URU",
+        "name": "Uruguay",
+        "forgeSlug": "noc-uy"
+    },
+    {
+        "longName": "Uzbekistan",
+        "nameOrder": 2220,
+        "longNameOrder": 2230,
+        "continent": "ASI",
+        "id": "UZB",
+        "name": "Uzbekistan",
+        "forgeSlug": "noc-uz"
+    },
+    {
+        "longName": "Vanuatu",
+        "nameOrder": 2230,
+        "longNameOrder": 2240,
+        "continent": "OCE",
+        "id": "VAN",
+        "name": "Vanuatu",
+        "forgeSlug": "noc-vu"
+    },
+    {
+        "longName": "Venezuela",
+        "nameOrder": 2240,
+        "longNameOrder": 2250,
+        "continent": "AME",
+        "id": "VEN",
+        "name": "Venezuela",
+        "forgeSlug": "noc-ve"
+    },
+    {
+        "longName": "Vietnam",
+        "nameOrder": 2250,
+        "longNameOrder": 2260,
+        "continent": "ASI",
+        "id": "VIE",
+        "name": "Vietnam",
+        "forgeSlug": "noc-vn"
+    },
+    {
+        "longName": "Virgin Islands, British",
+        "nameOrder": 2270,
+        "longNameOrder": 2280,
+        "continent": "AME",
+        "id": "IVB",
+        "name": "Virgin Islands, B",
+        "forgeSlug": "noc-vg"
+    },
+    {
+        "longName": "Virgin Islands, US",
+        "nameOrder": 2280,
+        "longNameOrder": 2290,
+        "continent": "AME",
+        "id": "ISV",
+        "name": "Virgin Islands, US",
+        "forgeSlug": "noc-vi"
+    },
+    {
+        "longName": "Yemen",
+        "nameOrder": 2300,
+        "longNameOrder": 2310,
+        "continent": "ASI",
+        "id": "YEM",
+        "name": "Yemen",
+        "forgeSlug": "noc-ye"
+    },
+    {
+        "longName": "Zambia",
+        "nameOrder": 2340,
+        "longNameOrder": 2340,
+        "continent": "AFR",
+        "id": "ZAM",
+        "name": "Zambia",
+        "forgeSlug": "noc-zm"
+    },
+    {
+        "longName": "Zimbabwe",
+        "nameOrder": 2350,
+        "longNameOrder": 2350,
+        "continent": "AFR",
+        "id": "ZIM",
+        "name": "Zimbabwe",
+        "forgeSlug": "noc-zw"
+    },
+    {
+        "longName": "AIN",
+        "nameOrder": 2360,
+        "longNameOrder": 2360,
+        "continent": "",
+        "id": "AIN",
+        "name": "AIN",
+        "forgeSlug": ""
+    }
+]

@@ -14,3 +14,9 @@ from src.algorithms.enhanced_classic import build_default_registry
 registry = build_default_registry()
 print(registry.recommend())
 ```
+
+## Protected Content Rule
+- Future delete/cleanup/reorg actions must ignore this protected content by default.
+- Reading this protected content is allowed.
+- Any modification, overwrite, move, truncation, or deletion of this protected content requires explicit user confirmation first.
+- When uncertain whether this content is protected, treat it as protected until the user confirms otherwise.

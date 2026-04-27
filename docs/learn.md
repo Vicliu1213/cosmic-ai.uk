@@ -21,3 +21,9 @@
 - 绝对指令：永不重复同样的错误超过 3 次
 
 **宣告**：学习不是积累，是淬炼。无用知识即熵，必须剔除。
+
+## Protected Content Rule
+- Future delete/cleanup/reorg actions must ignore this protected content by default.
+- Reading this protected content is allowed.
+- Any modification, overwrite, move, truncation, or deletion of this protected content requires explicit user confirmation first.
+- When uncertain whether this content is protected, treat it as protected until the user confirms otherwise.

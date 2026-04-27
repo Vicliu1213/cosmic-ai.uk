@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Hermes WebUI Integration Hub</title>
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body>
+    <main class="control-shell webui-hub-shell">
+      <aside class="control-sidebar">
+        <div class="control-brand">
+          <p class="eyebrow">Hermes WebUI Integration Hub</p>
+          <h1>WebUI Hub</h1>
+          <p class="summary">把 vendor/hermes-webui 的三栏结构、工作区面板与控制中心入口整合进当前 dashboard。</p>
+        </div>
+
+        <nav class="control-nav">
+          <a href="./control_center.html" class="control-nav-item">Control Center</a>
+          <a href="./algorithms.html" class="control-nav-item">Algorithms Overview</a>
+          <a href="./agent_panel.html" class="control-nav-item">Agent Panel</a>
+          <a href="./webui_hub.html" class="control-nav-item active">WebUI Hub</a>
+        </nav>
+
+        <section class="control-stack">
+          <article class="card control-card">
+            <h2>Live Port</h2>
+            <div class="meta">Panel endpoint ready</div>
+            <div class="links">
+              <a href="http://127.0.0.1:8787" target="_blank" rel="noreferrer">Open Hermes WebUI · localhost:8787</a>
+            </div>
+          </article>
+          <article class="card control-card">
+            <h2>Vendor Bridge</h2>
+            <div class="pill-row">
+              <span class="pill">three-panel</span>
+              <span class="pill">workspace panel</span>
+              <span class="pill">skills</span>
+              <span class="pill">memory</span>
+            </div>
+          </article>
+        </section>
+      </aside>
+
+      <section class="control-main">
+        <header class="hero control-hero">
+          <div>
+            <p class="eyebrow">WebUI bridge</p>
+            <h1>Vendor WebUI + Local Dashboard</h1>
+            <p class="summary">当前 dashboard 直接挂上 WebUI 入口、vendor 参考页与本地端口面板。左边做导航，中间做总览，右边做实时接入状态。</p>
+            <p class="meta">workspace panel · control center · localhost:8787 · vendor clone</p>
+          </div>
+          <div class="hero-actions">
+            <a class="hero-button primary" href="http://127.0.0.1:8787" target="_blank" rel="noreferrer">Open 8787</a>
+            <a class="hero-button" href="../../vendor/hermes-webui/static/index.html">Open Vendor UI Clone</a>
+            <a class="hero-button" href="./control_center.html">Back to Control Center</a>
+          </div>
+        </header>
+
+        <section class="performance-ribbon card">
+          <div class="market-ribbon-top">
+            <div>
+              <p class="eyebrow">Integration Ribbon</p>
+              <h2>WebUI 接入状态</h2>
+            </div>
+            <div class="market-badge">WebUI / Vendor / Dashboard</div>
+          </div>
+          <div class="market-wave">
+            <span></span><span></span><span></span><span></span><span></span><span></span>
+          </div>
+          <div class="market-ribbon-foot">three-panel bridge · workspace panel · session sidebar · control center</div>
+        </section>
+
+        <section class="kpi-grid">
+          <article class="card kpi-card">
+            <div class="kpi-label">Port</div>
+            <div class="kpi-value">8787</div>
+            <div class="kpi-delta up">local panel</div>
+          </article>
+          <article class="card kpi-card">
+            <div class="kpi-label">Vendor</div>
+            <div class="kpi-value">Ready</div>
+            <div class="kpi-delta up">static clone</div>
+          </article>
+          <article class="card kpi-card">
+            <div class="kpi-label">Workspace</div>
+            <div class="kpi-value">Panel</div>
+            <div class="kpi-delta up">attached</div>
+          </article>
+          <article class="card kpi-card">
+            <div class="kpi-label">Bridge</div>
+            <div class="kpi-value">Live</div>
+            <div class="kpi-delta up">dashboard linked</div>
+          </article>
+        </section>
+
+        <section class="webui-preview-grid">
+          <article class="card featured-card webui-preview-card">
+            <h2>Local Panel Port</h2>
+            <div class="meta">Direct access to running WebUI</div>
+            <div class="webui-preview-frame webui-preview-placeholder">
+              <div>
+                <strong>http://127.0.0.1:8787</strong>
+                <p>Click the action button to open the live Hermes WebUI panel.</p>
+              </div>
+            </div>
+            <div class="links"><a href="http://127.0.0.1:8787" target="_blank" rel="noreferrer">Open Hermes WebUI · localhost:8787</a></div>
+          </article>
+
+          <article class="card featured-card webui-preview-card">
+            <h2>Vendor UI Clone</h2>
+            <div class="meta">Reference surface from vendor/hermes-webui</div>
+            <iframe class="webui-preview-frame" src="../../vendor/hermes-webui/static/index.html" title="Vendor UI Clone preview"></iframe>
+            <div class="links"><a href="../../vendor/hermes-webui/static/index.html">Open Vendor UI Clone</a></div>
+          </article>
+        </section>
+      </section>
+
+      <aside class="control-rightbar">
+        <article class="card status-card">
+          <h2>WebUI Notes</h2>
+          <div class="pill-row">
+            <span class="pill">chat</span>
+            <span class="pill">tasks</span>
+            <span class="pill">skills</span>
+            <span class="pill">memory</span>
+          </div>
+        </article>
+        <article class="card status-card">
+          <h2>Workspace Panel</h2>
+          <div class="meta">The vendor layout includes a right-side workspace panel and session sidebar.</div>
+        </article>
+        <article class="card status-card">
+          <h2>Entry Map</h2>
+          <div class="links">
+            <a href="./control_center.html">Control Center</a>
+            <a href="./algorithms.html">Algorithms Overview</a>
+            <a href="./agent_panel.html">Agent Panel</a>
+          </div>
+        </article>
+      </aside>
+    </main>
+  </body>
+</html>

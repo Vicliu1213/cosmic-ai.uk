@@ -1,0 +1,18 @@
+# src/core/websocket/binance_client.py
+import asyncio
+from .reconnection import ReconnectionManager
+
+class BinanceWebSocketClient:
+    async def connect(self):
+        # 实际的连接逻辑
+        pass
+
+async def main():
+    client = BinanceWebSocketClient()
+    mgr = ReconnectionManager(
+        connect_func=client.connect,
+        max_retries=0,      # 无限重连
+        base_delay=2.0,
+        max_delay=60.0
+    )
+    await mgr.run_with_reconnect()

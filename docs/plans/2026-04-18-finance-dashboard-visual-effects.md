@@ -107,3 +107,8 @@ Add styles for:
 Run: `pytest tests/test_dashboard_overview.py tests/test_control_center.py tests/test_dashboard_sidebar.py tests/test_dashboard_finance_visuals.py tests/test_control_center_finance_visuals.py -q`
 Expected: all pass
 
+## Protected Content Rule
+- Future delete/cleanup/reorg actions must ignore this protected content by default.
+- Reading this protected content is allowed.
+- Any modification, overwrite, move, truncation, or deletion of this protected content requires explicit user confirmation first.
+- When uncertain whether this content is protected, treat it as protected until the user confirms otherwise.

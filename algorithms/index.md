@@ -51,3 +51,9 @@
 4. `reality_programming`：sandbox / checks / simulation，最適合精度與計算層
 5. `temporal_dominance`：temporal_compressor / causal_inference，最適合壓縮與計算層
 6. `perfect_fortress`：audit / firewall / crypto，最適合精度層
+
+## Protected Content Rule
+- Future delete/cleanup/reorg actions must ignore this protected content by default.
+- Reading this protected content is allowed.
+- Any modification, overwrite, move, truncation, or deletion of this protected content requires explicit user confirmation first.
+- When uncertain whether this content is protected, treat it as protected until the user confirms otherwise.

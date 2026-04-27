@@ -1,0 +1,10 @@
+@        IN  A     205.198.84.36
+www      IN  A     205.198.84.36
+mail     IN  A     205.198.84.36
+@        IN  MX    10 mail
+
+## Protected Content Rule
+- Future delete/cleanup/reorg actions must ignore this protected content by default.
+- Reading this protected content is allowed.
+- Any modification, overwrite, move, truncation, or deletion of this protected content requires explicit user confirmation first.
+- When uncertain whether this content is protected, treat it as protected until the user confirms otherwise.

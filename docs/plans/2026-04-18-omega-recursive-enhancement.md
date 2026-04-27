@@ -119,3 +119,9 @@ Expected: PASS
 `pytest tests/test_omega_docs.py tests/test_omega_panel.py tests/test_omega_metrics.py tests/test_omega_integration.py tests/test_omega_guards.py -q`
 
 **Expected:** all pass
+
+## Protected Content Rule
+- Future delete/cleanup/reorg actions must ignore this protected content by default.
+- Reading this protected content is allowed.
+- Any modification, overwrite, move, truncation, or deletion of this protected content requires explicit user confirmation first.
+- When uncertain whether this content is protected, treat it as protected until the user confirms otherwise.

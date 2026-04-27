@@ -30,3 +30,9 @@ def recall(situation_vector):
     # 神性加权：越近的时间权重越高（指数衰减 λ=0.99）
     best = max(candidates, key=lambda x: x.confidence * (0.99 ** x.age_seconds))
     return best.action
+
+## Protected Content Rule
+- Future delete/cleanup/reorg actions must ignore this protected content by default.
+- Reading this protected content is allowed.
+- Any modification, overwrite, move, truncation, or deletion of this protected content requires explicit user confirmation first.
+- When uncertain whether this content is protected, treat it as protected until the user confirms otherwise.
