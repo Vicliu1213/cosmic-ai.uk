@@ -129,6 +129,21 @@ a { color: inherit; }
   justify-content: flex-start;
   padding: 12px 14px;
 }
+.sidebar-icon {
+  width: 22px;
+  height: 22px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: rgba(125,211,252,.08);
+  color: var(--accent);
+  flex: 0 0 22px;
+}
+.sidebar-icon svg {
+  width: 14px;
+  height: 14px;
+}
 .sidebar-card {
   flex: 1 1 0;
   padding: 10px 12px;
@@ -481,11 +496,27 @@ a { color: inherit; }
   display: inline-flex;
   align-items: center;
   justify-content: flex-start;
+  gap: 10px;
   padding: 12px 14px;
   border-radius: 14px;
   border: 1px solid rgba(125,211,252,.16);
   background: rgba(255,255,255,.03);
   color: var(--text);
+}
+.nav-icon {
+  width: 20px;
+  height: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: rgba(125,211,252,.08);
+  color: var(--accent);
+  flex: 0 0 24px;
+}
+.nav-icon svg {
+  width: 14px;
+  height: 14px;
 }
 .control-nav-item.active {
   border-color: rgba(125,211,252,.35);

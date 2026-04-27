@@ -16,6 +16,10 @@
 - `.hermes/checklist.md`：驗證清單
 - `.hermes/glossary.md`：術語對齊字典
 
+## 全局共享層
+- `skills/hermes/`：`.hermes` 的共享鏡像入口，可供其他 agent / 工具直接讀取
+- `skills/README.md`：共享層索引
+
 ## 目錄結構
 - `config/`：系統設定檔
 - `cosmic/`：核心 Python 模組

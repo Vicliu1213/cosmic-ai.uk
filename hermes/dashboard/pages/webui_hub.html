@@ -16,10 +16,10 @@
         </div>
 
         <nav class="control-nav">
-          <a href="./control_center.html" class="control-nav-item">Control Center</a>
-          <a href="./algorithms.html" class="control-nav-item">Algorithms Overview</a>
-          <a href="./agent_panel.html" class="control-nav-item">Agent Panel</a>
-          <a href="./webui_hub.html" class="control-nav-item active">WebUI Hub</a>
+          <a href="./control_center.html" class="control-nav-item"><span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5 10.5V20h14v-9.5"/><path d="M9 20v-6h6v6"/></svg></span><span>Control Center</span></a>
+          <a href="./algorithms.html" class="control-nav-item"><span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="6" height="6" rx="1.5"/><rect x="14" y="4" width="6" height="6" rx="1.5"/><rect x="4" y="14" width="6" height="6" rx="1.5"/><rect x="14" y="14" width="6" height="6" rx="1.5"/></svg></span><span>Algorithms Overview</span></a>
+          <a href="./agent_panel.html" class="control-nav-item"><span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 5v8l-8 5-8-5V8z"/><path d="M12 12 4 8"/><path d="M12 12l8-4"/><path d="M12 12v9"/></svg></span><span>Agent Panel</span></a>
+          <a href="./webui_hub.html" class="control-nav-item active"><span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v14H4z"/><path d="M4 9h16"/><path d="M8 9v10"/><path d="M16 9v10"/></svg></span><span>WebUI Hub</span></a>
         </nav>
 
         <section class="control-stack">
@@ -31,12 +31,29 @@
             </div>
           </article>
           <article class="card control-card">
+            <h2>Launcher Icons</h2>
+            <div class="pill-row">
+              <span class="pill">⌘ chat</span>
+              <span class="pill">☰ tasks</span>
+              <span class="pill">◆ skills</span>
+              <span class="pill">◉ memory</span>
+            </div>
+          </article>
+          <article class="card control-card">
             <h2>Vendor Bridge</h2>
             <div class="pill-row">
               <span class="pill">three-panel</span>
               <span class="pill">workspace panel</span>
               <span class="pill">skills</span>
               <span class="pill">memory</span>
+            </div>
+          </article>
+          <article class="card control-card">
+            <h2>Direct Actions</h2>
+            <div class="links">
+              <a href="../../vendor/hermes-webui/static/index.html">Open embedded WebUI</a>
+              <a href="./control_center.html">Open control center</a>
+              <a href="./agent_panel.html">Open agent panel</a>
             </div>
           </article>
         </section>
@@ -96,22 +113,30 @@
 
         <section class="webui-preview-grid">
           <article class="card featured-card webui-preview-card">
-            <h2>Local Panel Port</h2>
-            <div class="meta">Direct access to running WebUI</div>
-            <div class="webui-preview-frame webui-preview-placeholder">
-              <div>
-                <strong>http://127.0.0.1:8787</strong>
-                <p>Click the action button to open the live Hermes WebUI panel.</p>
-              </div>
+            <h2>Integrated WebUI Surface</h2>
+            <div class="meta">Chat · Tasks · Skills · Memory in one panel</div>
+            <iframe class="webui-preview-frame" src="../../vendor/hermes-webui/static/index.html" title="Hermes WebUI embedded surface"></iframe>
+            <div class="links">
+              <a href="http://127.0.0.1:8787" target="_blank" rel="noreferrer">Open live Hermes WebUI · localhost:8787</a>
+              <a href="../../vendor/hermes-webui/static/index.html">Open embedded clone</a>
             </div>
-            <div class="links"><a href="http://127.0.0.1:8787" target="_blank" rel="noreferrer">Open Hermes WebUI · localhost:8787</a></div>
           </article>
 
           <article class="card featured-card webui-preview-card">
-            <h2>Vendor UI Clone</h2>
-            <div class="meta">Reference surface from vendor/hermes-webui</div>
-            <iframe class="webui-preview-frame" src="../../vendor/hermes-webui/static/index.html" title="Vendor UI Clone preview"></iframe>
-            <div class="links"><a href="../../vendor/hermes-webui/static/index.html">Open Vendor UI Clone</a></div>
+            <h2>Functional Zones</h2>
+            <div class="meta">Primary panels exposed by the embedded WebUI</div>
+            <div class="pill-row">
+              <span class="pill">chat</span>
+              <span class="pill">tasks</span>
+              <span class="pill">skills</span>
+              <span class="pill">memory</span>
+              <span class="pill">workspaces</span>
+              <span class="pill">profiles</span>
+            </div>
+            <div class="links">
+              <a href="../../vendor/hermes-webui/static/index.html#panelChat">Jump to chat</a>
+              <a href="../../vendor/hermes-webui/static/index.html#panelSkills">Jump to skills</a>
+            </div>
           </article>
         </section>
       </section>
@@ -125,6 +150,7 @@
             <span class="pill">skills</span>
             <span class="pill">memory</span>
           </div>
+          <div class="meta">The embedded surface is now the primary working view, not just a link-out.</div>
         </article>
         <article class="card status-card">
           <h2>Workspace Panel</h2>

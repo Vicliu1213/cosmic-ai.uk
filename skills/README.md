@@ -1,0 +1,18 @@
+# Shared Hermes Surface
+
+This directory mirrors the Hermes governance stack as a global shared entry.
+
+- `skills/hermes/SOUL.md`
+- `skills/hermes/omega.md`
+- `skills/hermes/personality.md`
+- `skills/hermes/task.md`
+- `skills/hermes/prompt.md`
+- `skills/hermes/skills.md`
+- `skills/hermes/screen.md`
+- `skills/hermes/memory.md`
+- `skills/hermes/learn.md`
+- `skills/hermes/protocol.md`
+- `skills/hermes/checklist.md`
+- `skills/hermes/glossary.md`
+
+The `.hermes/` files remain the canonical source.

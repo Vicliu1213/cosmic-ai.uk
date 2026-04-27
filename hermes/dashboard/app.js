@@ -71,6 +71,7 @@ fetchWithRetry('./module_catalog.json', {}, 3, 300)
           <a href="./pages/algorithms.html">Algorithms Overview</a>
           <a href="./pages/control_center.html">Control Center</a>
           <a href="./pages/webui_hub.html">WebUI Hub</a>
+          <a href="./pages/webui_hub.html">Integrated WebUI</a>
         </div>
       </article>
     `).join('')
