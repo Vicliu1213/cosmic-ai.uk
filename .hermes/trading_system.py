@@ -138,6 +138,18 @@ class TradingSignal:
         }
 
 
+@dataclass
+class MutationProposal:
+    """異變重構提案
+
+    這個結構把回測觀察轉成可執行的參數修正，避免只給抽象建議。
+    """
+    issue: str
+    evidence: Dict[str, Any]
+    recommendation: str
+    updated_parameters: Dict[str, Any]
+
+
 # ============================================================================
 # 第三部分：森林增強分析器 (ForestEnhancedAnalyzer)
 # 增研：雙森林架構 — 隨機森林預測方向，孤立森林檢測異常，
@@ -501,6 +513,94 @@ class AdvancedRiskManager:
         return min(size / max_size, 1.0) * confidence
 
 
+class MutationReconstructionSystem:
+    """根據真實回測結果產生異變重構提案。
+
+    目標不是自動亂改參數，而是把問題壓縮成可驗證的修正案：
+    - 降低過度交易
+    - 提升信號門檻
+    - 收斂風險暴露
+    - 在低品質市場暫停交易
+    """
+
+    def __init__(self):
+        self.last_report: Dict[str, Any] = {}
+
+    def reconstruct(self, backtest_report: Dict[str, Any], base_parameters: Dict[str, Any]) -> Dict[str, Any]:
+        metrics = backtest_report.get('metrics', {})
+        trade_count = int(metrics.get('trade_count', 0))
+        win_rate = float(metrics.get('win_rate', 0.0))
+        total_return = float(metrics.get('total_return_pct', 0.0))
+        profit_factor = float(metrics.get('profit_factor', 0.0))
+        max_drawdown = float(metrics.get('max_drawdown_pct', 0.0))
+
+        proposals: List[MutationProposal] = []
+        updated = dict(base_parameters)
+
+        if trade_count > 50 and total_return <= 0:
+            updated['buy_confidence_threshold'] = min(0.8, float(updated.get('buy_confidence_threshold', 0.6)) + 0.05)
+            updated['sell_confidence_threshold'] = max(0.2, float(updated.get('sell_confidence_threshold', 0.4)) - 0.05)
+            proposals.append(MutationProposal(
+                issue='過度交易且總報酬為負',
+                evidence={'trade_count': trade_count, 'total_return_pct': total_return},
+                recommendation='提高進場門檻，減少低品質訊號。',
+                updated_parameters={
+                    'buy_confidence_threshold': updated['buy_confidence_threshold'],
+                    'sell_confidence_threshold': updated['sell_confidence_threshold'],
+                }
+            ))
+
+        if win_rate < 0.5 or profit_factor < 1.0:
+            updated['risk_per_trade_pct'] = max(0.005, float(updated.get('risk_per_trade_pct', 0.02)) * 0.75)
+            updated['singularity_threshold'] = min(0.85, float(updated.get('singularity_threshold', 0.7)) + 0.05)
+            proposals.append(MutationProposal(
+                issue='勝率或盈虧比不足',
+                evidence={'win_rate': win_rate, 'profit_factor': profit_factor},
+                recommendation='降低單筆風險並提高奇點保護門檻。',
+                updated_parameters={
+                    'risk_per_trade_pct': updated['risk_per_trade_pct'],
+                    'singularity_threshold': updated['singularity_threshold'],
+                }
+            ))
+
+        if max_drawdown < -1.0:
+            updated['position_decay_on_singularity'] = min(0.7, float(updated.get('position_decay_on_singularity', 1.0)) * 0.85)
+            proposals.append(MutationProposal(
+                issue='回撤擴大',
+                evidence={'max_drawdown_pct': max_drawdown},
+                recommendation='在高風險區域更早縮減倉位。',
+                updated_parameters={
+                    'position_decay_on_singularity': updated['position_decay_on_singularity'],
+                }
+            ))
+
+        if not proposals:
+            proposals.append(MutationProposal(
+                issue='當前樣本未出現強烈失真',
+                evidence=metrics,
+                recommendation='保持參數並持續擴大樣本驗證。',
+                updated_parameters={}
+            ))
+
+        report = {
+            'status': 'reconstructed',
+            'metrics': metrics,
+            'base_parameters': base_parameters,
+            'updated_parameters': updated,
+            'proposals': [
+                {
+                    'issue': item.issue,
+                    'evidence': item.evidence,
+                    'recommendation': item.recommendation,
+                    'updated_parameters': item.updated_parameters,
+                }
+                for item in proposals
+            ],
+        }
+        self.last_report = report
+        return report
+
+
 # ============================================================================
 # 第六部分：高階交易系統 (AdvancedTradingSystem)
 # 增研：整合所有組件，包含森林訓練、市場分析、信號生成。
@@ -520,10 +620,27 @@ class AdvancedTradingSystem:
         self.forest_analyzer = ForestEnhancedAnalyzer()
         self.singularity_detector = SingularityDetector()
         self.risk_manager = AdvancedRiskManager(initial_capital)
+        self.mutation_reconstructor = MutationReconstructionSystem()
         self.portfolio = {}
         self.trade_history = []
         self.signals = []
         self.is_forest_trained = False
+        self.buy_confidence_threshold = 0.6
+        self.sell_confidence_threshold = 0.4
+        self.risk_per_trade_pct = 0.02
+        self.position_decay_on_singularity = 1.0
+        self.high_win_rate_mode = False
+        self.high_win_confidence_threshold = 0.9
+        self.high_win_forest_threshold = 0.6
+        self.high_win_max_singularity = 0.45
+
+    def enable_high_win_rate_mode(self):
+        """切換成高勝率模式。"""
+        self.high_win_rate_mode = True
+        self.buy_confidence_threshold = max(self.buy_confidence_threshold, self.high_win_confidence_threshold)
+        self.sell_confidence_threshold = min(self.sell_confidence_threshold, 0.1)
+        self.risk_per_trade_pct = min(self.risk_per_trade_pct, 0.01)
+        self.position_decay_on_singularity = min(self.position_decay_on_singularity, 0.5)
 
     def train_forest_model(self, historical_data: pd.DataFrame):
         """訓練森林模型，完成後啟用森林分析"""
@@ -592,8 +709,25 @@ class AdvancedTradingSystem:
         tech_confidence = (tech_score + 1) / 2
         combined_confidence = tech_confidence * 0.6 + forest_conf * 0.4 if forest_analysis else tech_confidence
 
+        if self.high_win_rate_mode:
+            trend_strength = technical_analysis['timeframe_analysis']['1h']['trend']['strength']
+            if singularity_prob > self.high_win_max_singularity:
+                return signals
+            if forest_conf < self.high_win_forest_threshold:
+                return signals
+            if combined_confidence < self.high_win_confidence_threshold:
+                return signals
+            if market_regime != MarketRegime.BULL_TREND or trend_strength <= 0:
+                return signals
+            signal = self._create_signal(
+                symbol, latest_price, technical_analysis, forest_analysis,
+                singularity_prob, market_regime, "BUY", combined_confidence
+            )
+            signals.append(signal)
+            return signals
+
         # 買入信號邏輯
-        if combined_confidence > 0.6 and market_regime in [MarketRegime.BULL_TREND, MarketRegime.RALLY, MarketRegime.BREAKOUT]:
+        if combined_confidence > self.buy_confidence_threshold and market_regime in [MarketRegime.BULL_TREND, MarketRegime.RALLY, MarketRegime.BREAKOUT]:
             signal = self._create_signal(
                 symbol, latest_price, technical_analysis, forest_analysis,
                 singularity_prob, market_regime, "BUY", combined_confidence
@@ -601,7 +735,7 @@ class AdvancedTradingSystem:
             signals.append(signal)
 
         # 賣出信號邏輯 (使用負信心表示看跌強度)
-        if combined_confidence < 0.4 and market_regime in [MarketRegime.BEAR_TREND, MarketRegime.CRASH, MarketRegime.REVERSAL]:
+        if combined_confidence < self.sell_confidence_threshold and market_regime in [MarketRegime.BEAR_TREND, MarketRegime.CRASH, MarketRegime.REVERSAL]:
             sell_confidence = 1 - combined_confidence  # 轉為看跌信心
             signal = self._create_signal(
                 symbol, latest_price, technical_analysis, forest_analysis,
@@ -633,7 +767,7 @@ class AdvancedTradingSystem:
 
         # 奇點衰減
         if singularity_prob > 0.7:
-            position_size *= (1 - singularity_prob)
+            position_size *= (1 - singularity_prob) * self.position_decay_on_singularity
 
         # 訊號強度
         if confidence > 0.9:
@@ -664,6 +798,94 @@ class AdvancedTradingSystem:
             singularity_probability=singularity_prob,
             forest_confidence=forest_analysis.get('confidence', 0) if forest_analysis else 0
         )
+
+    def walk_forward_backtest(self, market_data: pd.DataFrame, symbol: str, train_ratio: float = 0.6) -> Dict[str, Any]:
+        """對真實 OHLCV 做簡化 walk-forward 回測。"""
+        if len(market_data) < 100:
+            raise ValueError('樣本太少，無法回測')
+
+        train_end = max(60, int(len(market_data) * train_ratio))
+        train_df = market_data.iloc[:train_end].copy()
+        test_df = market_data.iloc[train_end:].copy()
+
+        self.train_forest_model(train_df)
+
+        capital = self.capital
+        trades: List[Dict[str, Any]] = []
+        equity = [capital]
+        equity_index = [train_df.index[-1]]
+
+        for i in range(train_end, len(market_data) - 1):
+            window = market_data.iloc[: i + 1]
+            analysis = self.analyze_market({'1h': window}, symbol)
+            next_open = float(market_data['open'].iloc[i + 1])
+            next_close = float(market_data['close'].iloc[i + 1])
+
+            for sig in analysis['signals']:
+                direction = 1 if sig.signal_type == 'BUY' else -1
+                gross_return = direction * ((next_close - next_open) / next_open)
+                pnl = capital * sig.recommended_position * gross_return
+                capital += pnl
+                trades.append({
+                    'timestamp': market_data.index[i + 1],
+                    'signal': sig.signal_type,
+                    'position': sig.recommended_position,
+                    'gross_return': gross_return,
+                    'pnl': pnl,
+                    'equity': capital,
+                })
+            equity.append(capital)
+            equity_index.append(market_data.index[i + 1])
+
+        trade_df = pd.DataFrame(trades)
+        equity_series = pd.Series(equity, index=equity_index)
+        if not trade_df.empty:
+            gross_profit = trade_df.loc[trade_df['pnl'] > 0, 'pnl'].sum()
+            gross_loss = -trade_df.loc[trade_df['pnl'] < 0, 'pnl'].sum()
+            profit_factor = gross_profit / gross_loss if gross_loss > 0 else float('inf')
+            win_rate = float((trade_df['pnl'] > 0).mean())
+            total_return_pct = float((capital / self.capital - 1) * 100)
+            max_drawdown_pct = float((((equity_series / equity_series.cummax()) - 1).min()) * 100)
+        else:
+            profit_factor = 0.0
+            win_rate = 0.0
+            total_return_pct = 0.0
+            max_drawdown_pct = 0.0
+
+        metrics = {
+            'trade_count': int(len(trade_df)),
+            'win_rate': win_rate,
+            'total_return_pct': total_return_pct,
+            'profit_factor': profit_factor,
+            'max_drawdown_pct': max_drawdown_pct,
+            'train_rows': int(len(train_df)),
+            'test_rows': int(len(test_df)),
+        }
+        return {
+            'symbol': symbol,
+            'metrics': metrics,
+            'trades': trade_df,
+            'equity_curve': equity_series,
+        }
+
+    def rebuild_from_real_backtest(self, market_data: pd.DataFrame, symbol: str) -> Dict[str, Any]:
+        """把真實回測結果轉成異變重構提案。"""
+        backtest = self.walk_forward_backtest(market_data, symbol)
+        base_parameters = {
+            'buy_confidence_threshold': self.buy_confidence_threshold,
+            'sell_confidence_threshold': self.sell_confidence_threshold,
+            'risk_per_trade_pct': self.risk_per_trade_pct,
+            'singularity_threshold': self.singularity_detector.singularity_threshold,
+            'position_decay_on_singularity': self.position_decay_on_singularity,
+        }
+        report = self.mutation_reconstructor.reconstruct(backtest, base_parameters)
+        return {
+            'backtest': {
+                'symbol': backtest['symbol'],
+                'metrics': backtest['metrics'],
+            },
+            'mutation_report': report,
+        }
 
 
 # ============================================================================
