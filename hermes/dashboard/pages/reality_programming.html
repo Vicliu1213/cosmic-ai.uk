@@ -1,15 +1,43 @@
 <!doctype html>
 <html lang="zh-Hant">
-  <head><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><title>Reality Programming</title></head>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Reality Programming</title>
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
   <body>
-    <h1>Reality Programming</h1>
-    <p>Core: `src/reality_programming/core.py`</p>
-    <ul>
-      <li>MetaCompiler</li>
-      <li>LawModifier</li>
-      <li>Sandbox</li>
-      <li>RealityCheck</li>
-      <li>SimulationEngine</li>
-    </ul>
+    <main class="control-shell">
+      <aside class="control-sidebar">
+        <div class="control-brand">
+          <p class="eyebrow">Reality Programming</p>
+          <h1>Precision Engine</h1>
+          <p class="summary">這是 precision layer 的核心模組：改寫規則前先做 sandbox、reality check、simulation。</p>
+        </div>
+        <nav class="control-nav">
+          <a href="./algorithms.html" class="control-nav-item">Algorithms Overview</a>
+          <a href="./module.html?name=reality_programming" class="control-nav-item">Module Detail</a>
+          <a href="./hest_verification.html" class="control-nav-item">Hest Verification</a>
+        </nav>
+      </aside>
+      <section class="control-main">
+        <header class="hero control-hero">
+          <div>
+            <p class="eyebrow">precision / sandbox / law control</p>
+            <h1>Reality Programming Core</h1>
+            <p class="summary">MetaCompiler、LawModifier、Sandbox、RealityCheck、SimulationEngine 組成可回滾的現實編程層。</p>
+          </div>
+        </header>
+        <section class="grid">
+          <article class="card"><h2>Core Entry</h2><div class="links"><a href="../../src/reality_programming/core.py">core.py</a></div></article>
+          <article class="card"><h2>Config</h2><div class="links"><a href="../../src/reality_programming/config.yaml">config.yaml</a></div></article>
+          <article class="card"><h2>Components</h2><div class="pill-row"><span class="pill">MetaCompiler</span><span class="pill">LawModifier</span><span class="pill">Sandbox</span><span class="pill">RealityCheck</span><span class="pill">SimulationEngine</span></div></article>
+          <article class="card"><h2>Runtime</h2><div class="pill-row"><span class="pill">mode: <strong data-runtime-mode>hybrid</strong></span><span class="pill">objective: <strong data-runtime-objective>hermes</strong></span></div></article>
+        </section>
+        <section id="screen-surface" class="grid" aria-label="screen surface"></section>
+      </section>
+      <aside class="control-rightbar"><article class="card status-card"><h2>Gate</h2><div class="meta">change only through verify → simulate → promote</div></article></aside>
+    </main>
+    <script src="../app.js"></script>
   </body>
-  </html>
+</html>

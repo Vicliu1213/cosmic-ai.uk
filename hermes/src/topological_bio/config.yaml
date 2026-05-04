@@ -1,0 +1,12 @@
+system:
+  name: topological_bio
+  title: "Topological Bio"
+  mode: module-standard
+  dashboard_catalog: hermes/dashboard/module_catalog.json
+  canonical_config: config/topological_bio.yaml
+
+module:
+  quality: production
+  components: ["code_distance", "topological_charge", "anyon_braiding", "braiding", "anyon_sim"]
+  capabilities: ["topology", "braiding", "codes", "anyon_simulation"]
+  category: engine

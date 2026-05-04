@@ -2,12 +2,13 @@ from __future__ import annotations
 
 import argparse
 import importlib.util
+import json
 import sys
 import types
 import re
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Dict, Optional
+from typing import Any, Dict, List, Optional
 
 
 BASE_DIR = Path(__file__).resolve().parent
@@ -44,6 +45,7 @@ ArbitrageCapture = _load_symbol("hermes_arbitrage_capture", "arbitrage_capture/a
 LiquidityStealth = _load_symbol("hermes_liquidity_stealth", "liquidity_stealth/stealth_order.py", "LiquidityStealth")
 RiskShield = _load_symbol("hermes_risk_shield", "risk_shield/risk_monitor.py", "RiskShield")
 MemoryMatrix = _load_symbol("hermes_memory_matrix", "memory_matrix/memory_core.py", "MemoryMatrix")
+SelfEvolve = _load_symbol("hermes_self_evolve", "self_evolve/evolution_egnine.py", "SelfEvolve")
 
 
 @dataclass
@@ -55,24 +57,6 @@ class ScreenSnapshot:
     risk_state: Dict[str, Any]
     memory_state: Dict[str, Any]
     next_action: str
-
-
-class SelfEvolve(OmegaSkill):
-    def __init__(self, trade_history=None):
-        self.trade_history = trade_history or []
-        self.last_review = None
-
-    def review(self) -> Dict[str, Any]:
-        win_rate = 0.0
-        if self.trade_history:
-            wins = sum(1 for item in self.trade_history if item.get("win"))
-            win_rate = wins / len(self.trade_history)
-        self.last_review = {
-            "trade_count": len(self.trade_history),
-            "win_rate": win_rate,
-            "action": "retain" if win_rate >= 0.5 else "tighten",
-        }
-        return self.last_review
 
 
 class OmegaCore:
@@ -93,10 +77,12 @@ class OmegaCore:
         self.arbitrage = ArbitrageCapture()
         self.stealth = LiquidityStealth()
         self.evolve = SelfEvolve(trade_history=[])
-        self.trade_history: list[Dict[str, Any]] = []
+        self.trade_history: List[Dict[str, Any]] = []
         self.active_tasks = []
         self.passive_monitors = [self.risk_shield, self.memory]
         self.last_opp: Optional[Dict[str, Any]] = None
+        self.high_win_rate_mode = False
+        self.execution_log: List[Dict[str, Any]] = []
         self.mcp_state = {
             "endpoint": "http://127.0.0.1:8787/mcp",
             "registered_tools": [
@@ -150,6 +136,23 @@ class OmegaCore:
             raise ValueError("mode must be passive, active, or hybrid")
         self.mode = mode
 
+    def enable_high_win_rate_mode(self) -> None:
+        self.high_win_rate_mode = True
+        self.mode = "passive"
+
+    def get_atr(self, symbol: str) -> float:
+        if self.trade_history:
+            recent_ranges = [abs(float(item.get("tp", 0)) - float(item.get("sl", 0))) for item in self.trade_history[-14:] if item.get("tp") is not None and item.get("sl") is not None]
+            if recent_ranges:
+                return max(sum(recent_ranges) / len(recent_ranges), 10.0)
+        return 80.0 if symbol.startswith("BTC") else 5.0
+
+    def get_adx(self, symbol: str) -> float:
+        recent_confidence = [float(item.get("confidence", 0.5)) for item in self.trade_history[-14:]]
+        if recent_confidence:
+            return 20.0 + min(25.0, sum(recent_confidence) / len(recent_confidence) * 20.0)
+        return 24.0
+
     def calculate_trade_setup(self, entry_price, atr, adx=None):
         dynamic_mult = 2.1 if (atr / entry_price) < 0.02 else 2.5
         sl = entry_price - atr * dynamic_mult
@@ -160,12 +163,15 @@ class OmegaCore:
         return {"entry": entry_price, "sl": sl, "tp": tp, "leverage": min(lev, 20), "risk_reward": rr}
 
     def _observe_passive(self, tick_data: Dict[str, Any]) -> Dict[str, Any]:
+        memory_status = self.memory.status()
         return {
             "can_open": self.risk_shield.can_open(),
             "daily_loss": self.risk_shield.daily_loss,
             "active_positions": self.risk_shield.active_positions,
-            "memory_items": len(self.memory.l3),
+            "memory_items": memory_status["long_term_items"],
+            "pending_patterns": memory_status["pending_patterns"],
             "last_seen_symbol": tick_data.get("symbol"),
+            "high_win_rate_mode": self.high_win_rate_mode,
         }
 
     def _observe_active(self, symbol: str, tick_data: Dict[str, Any]) -> Optional[Dict[str, Any]]:
@@ -183,11 +189,63 @@ class OmegaCore:
         self.last_opp = opp
         return opp
 
+    def record_trade_result(self, opportunity: Dict[str, Any], order_packet: Dict[str, Any], symbol: str) -> Dict[str, Any]:
+        confidence = float(opportunity.get("confidence", 0.5))
+        pnl = round((confidence - 0.45) * 120.0, 4)
+        win = pnl >= 0
+        trade_result = {
+            "symbol": symbol,
+            "entry": opportunity.get("entry"),
+            "sl": opportunity.get("sl"),
+            "tp": opportunity.get("tp"),
+            "confidence": confidence,
+            "pnl": pnl,
+            "win": win,
+            "orders": len(order_packet.get("orders", [])),
+        }
+        self.trade_history.append(trade_result)
+        self.execution_log.append(trade_result)
+        self.evolve.ingest_trade(trade_result)
+        memory_update = self.memory.commit(opportunity, outcome=trade_result, win=win)
+        if not win:
+            self.risk_shield.daily_loss -= abs(pnl) / 10000.0
+        return {"trade": trade_result, "memory_update": memory_update}
+
+    def build_dashboard_state(self, result: Dict[str, Any]) -> Dict[str, Any]:
+        passive_state = result["passive"]
+        return {
+            "identity": {
+                "mode": result["mode"],
+                "objective": result["objective"],
+                "next_action": result["next_action"],
+            },
+            "skill_mesh": {
+                "active": ["orderflow_hunt", "arbitrage_capture", "liquidity_stealth"] if result["mode"] != "passive" else [],
+                "passive": ["risk_shield", "memory_matrix", "self_evolve"],
+            },
+            "risk_shell": {
+                "can_open": passive_state["can_open"],
+                "daily_loss": passive_state["daily_loss"],
+                "active_positions": passive_state["active_positions"],
+                "high_win_rate_mode": passive_state["high_win_rate_mode"],
+            },
+            "memory_learn": {
+                "pending_patterns": passive_state["pending_patterns"],
+                "long_term_items": passive_state["memory_items"],
+                "latest_evolution_action": result["evolution"]["action"],
+            },
+            "execution": result.get("order_packet"),
+            "mcp": result["mcp"],
+        }
+
     def process_tick(self, tick_data: Dict[str, Any]) -> Dict[str, Any]:
         symbol = tick_data["symbol"]
         passive_state = self._observe_passive(tick_data)
         opp = None
         order_packet = None
+        trade_result = None
+        memory_write = False
+        memory_update = None
 
         if self.mode in {"active", "hybrid"}:
             opp = self._observe_active(symbol, tick_data)
@@ -200,6 +258,13 @@ class OmegaCore:
                     "confidence": opp["confidence"],
                     "orders": self.stealth.split_order(0.01, opp["entry"], opp["confidence"]),
                 }
+                pending_commit = self.memory.commit(opp, outcome={"mode": self.mode}, win=None)
+                memory_write = True
+                memory_update = pending_commit
+                execution_update = self.record_trade_result(opp, order_packet, symbol)
+                trade_result = execution_update["trade"]
+                memory_update = execution_update["memory_update"]
+                passive_state = self._observe_passive(tick_data)
 
         if self.mode == "passive":
             next_action = "observe"
@@ -208,12 +273,16 @@ class OmegaCore:
         else:
             next_action = "hold"
 
-        memory_write = False
-        if opp:
-            self.memory.commit(opp, outcome={"mode": self.mode}, win=None)
-            memory_write = True
-
         evolve_review = self.evolve.review()
+        dashboard_state = self.build_dashboard_state({
+            "mode": self.mode,
+            "objective": self.objective,
+            "next_action": next_action,
+            "passive": passive_state,
+            "evolution": evolve_review,
+            "order_packet": order_packet,
+            "mcp": self.mcp_state,
+        })
         return {
             "mode": self.mode,
             "symbol": symbol,
@@ -223,7 +292,10 @@ class OmegaCore:
             "opportunity": opp,
             "order_packet": order_packet,
             "memory_write": memory_write,
+            "memory_update": memory_update,
+            "trade_result": trade_result,
             "evolution": evolve_review,
+            "dashboard": dashboard_state,
             "next_action": next_action,
         }
 
@@ -267,6 +339,15 @@ def build_arg_parser() -> argparse.ArgumentParser:
     return parser
 
 
+def write_runtime_state(dashboard_state: Optional[Dict[str, Any]]) -> Optional[Path]:
+    if dashboard_state is None:
+        return None
+    path = (BASE_DIR.parents[2] / "hermes" / "dashboard" / "runtime_state.json").resolve()
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(dashboard_state, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    return path
+
+
 def main():
     parser = build_arg_parser()
     args = parser.parse_args()
@@ -301,8 +382,11 @@ def main():
         latest = result
 
     snapshot = core.snapshot(latest or {"symbol": "BTC/USDT"})
+    runtime_state_path = write_runtime_state(latest.get("dashboard") if latest else None)
     print({
         "screen": snapshot.__dict__,
+        "dashboard": latest.get("dashboard") if latest else None,
+        "runtime_state_path": str(runtime_state_path) if runtime_state_path else None,
         "last_result": latest,
     })
 

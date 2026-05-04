@@ -1,0 +1,1 @@
+../../../.hermes/personality.md

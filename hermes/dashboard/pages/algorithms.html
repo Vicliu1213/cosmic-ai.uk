@@ -7,37 +7,96 @@
     <link rel="stylesheet" href="../styles.css" />
   </head>
   <body>
-    <main class="shell">
-      <header class="hero">
-        <div>
+    <main class="control-shell">
+      <aside class="control-sidebar">
+        <div class="control-brand">
           <p class="eyebrow">Algorithms Overview</p>
-          <h1>總入口整合</h1>
+          <h1>混合標準總入口</h1>
+          <p class="summary">用 enhanced classic + hybrid orchestration 重新審視 Hermes 全部模組、頁面與驗證面。</p>
         </div>
-        <p class="summary">整合 enhanced_classic、enhanced_hybrid、Hest 與 layers。</p>
-      </header>
+        <nav class="control-nav">
+          <a href="./control_center.html" class="control-nav-item">Control Center</a>
+          <a href="./enhanced_classic.html" class="control-nav-item">Enhanced Classic</a>
+          <a href="./enhanced_hybrid.html" class="control-nav-item">Enhanced Hybrid</a>
+          <a href="./hest_verification.html" class="control-nav-item">Hest Verification</a>
+        </nav>
+        <section class="control-stack">
+          <article class="card control-card">
+            <h2>Hybrid baseline</h2>
+            <div class="pill-row">
+              <span class="pill">signal</span>
+              <span class="pill">decision</span>
+              <span class="pill">execution</span>
+              <span class="pill">verification</span>
+            </div>
+          </article>
+        </section>
+      </aside>
 
-      <section class="grid" id="overview-grid"></section>
+      <section class="control-main">
+        <header class="hero control-hero">
+          <div>
+            <p class="eyebrow">catalog driven orchestration</p>
+            <h1>總入口整合</h1>
+            <p class="summary">不合格頁面用混合視角重做；模組依四層映射與質量權重重新排序。</p>
+          </div>
+          <div class="hero-actions">
+            <a class="hero-button primary" href="./enhanced_hybrid.html">Open Hybrid</a>
+            <a class="hero-button" href="./enhanced_classic.html">Open Classic</a>
+            <a class="hero-button" href="./hest_verification.html">Open Hest</a>
+          </div>
+        </header>
+
+        <section class="kpi-grid">
+          <article class="card kpi-card"><div class="kpi-label">Runtime mode</div><div class="kpi-value" data-runtime-mode>hybrid</div><div class="kpi-delta up">highest standard</div></article>
+          <article class="card kpi-card"><div class="kpi-label">Objective</div><div class="kpi-value" data-runtime-objective>hermes</div><div class="kpi-delta up">catalog-led</div></article>
+          <article class="card kpi-card"><div class="kpi-label">Next</div><div class="kpi-value" data-runtime-next-action>observe</div><div class="kpi-delta up">repair lane</div></article>
+          <article class="card kpi-card"><div class="kpi-label">MCP</div><div class="kpi-value" data-runtime-mcp-endpoint>offline</div><div class="kpi-delta up">bridge</div></article>
+        </section>
+
+        <section class="featured-grid">
+          <article class="card featured-card">
+            <h2>Classic recommendation</h2>
+            <div class="meta">rule-based four-layer mapping</div>
+            <div class="sparkline-chart"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+            <div class="links"><a href="./enhanced_classic.html">Inspect classic lane</a></div>
+          </article>
+          <article class="card featured-card">
+            <h2>Hybrid reconstruction</h2>
+            <div class="meta">quality-weighted orchestration</div>
+            <div class="risk-contour"></div>
+            <div class="links"><a href="./enhanced_hybrid.html">Inspect hybrid lane</a></div>
+          </article>
+          <article class="card featured-card">
+            <h2>Verification gate</h2>
+            <div class="meta">promote only after Hest passes</div>
+            <div class="liquidity-heatmap"></div>
+            <div class="links"><a href="./hest_verification.html">Inspect Hest</a></div>
+          </article>
+        </section>
+
+        <section class="grid" id="overview-grid"></section>
+        <section id="screen-surface" class="grid" aria-label="screen surface"></section>
+      </section>
+
+      <aside class="control-rightbar">
+        <article class="card status-card">
+          <h2>Memory lane</h2>
+          <div class="pill-row">
+            <span class="pill">long-term: <strong data-runtime-memory-items>0</strong></span>
+            <span class="pill">pending: <strong data-runtime-pending-patterns>0</strong></span>
+            <span class="pill">evolve: <strong data-runtime-evolution-action>tighten</strong></span>
+          </div>
+        </article>
+        <article class="card status-card">
+          <h2>Control links</h2>
+          <div class="links">
+            <a href="./module.html?name=enhanced_classic">Classic detail</a>
+            <a href="./module.html?name=enhanced_hybrid">Hybrid detail</a>
+          </div>
+        </article>
+      </aside>
     </main>
-
-    <script>
-      fetch('../module_catalog.json')
-        .then((r) => r.json())
-        .then((data) => {
-          const grid = document.getElementById('overview-grid');
-          const pick = (names) => data.modules.filter((m) => names.includes(m.name));
-          const groups = {
-            'Core Layers': pick(['reality_programming', 'platform_heterogeneous', 'cosmic_intelligence', 'quantum_holography', 'temporal_dominance']),
-            'Enhanced Classic': pick(['enhanced_classic']),
-            'Enhanced Hybrid': pick(['enhanced_hybrid']),
-            'Real-time Verification': pick(['hest_verification']),
-          };
-          grid.innerHTML = Object.entries(groups).map(([label, items]) => `
-            <article class="card">
-              <h2>${label}</h2>
-              <div class="pill-row">${items.map((item) => `<span class="pill">${item.title}</span>`).join('')}</div>
-            </article>
-          `).join('');
-        });
-    </script>
+    <script src="../app.js"></script>
   </body>
 </html>

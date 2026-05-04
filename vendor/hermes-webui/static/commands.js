@@ -14,6 +14,7 @@ const COMMANDS=[
   {name:'theme',     desc:t('cmd_theme'), fn:cmdTheme, arg:'name'},
   {name:'personality', desc:t('cmd_personality'), fn:cmdPersonality, arg:'name'},
   {name:'skills', desc:t('cmd_skills'), fn:cmdSkills, arg:'query'},
+  {name:'hermes', desc:'Send a Hermes control instruction', fn:cmdHermes, arg:'instruction'},
 ];
 
 function parseCommand(text){
@@ -30,6 +31,23 @@ function executeCommand(text){
   const cmd=COMMANDS.find(c=>c.name===parsed.name);
   if(!cmd)return false;
   cmd.fn(parsed.args);
+  return true;
+}
+
+function looksLikeHermesInstruction(text){
+  const s=String(text||'').trim().toLowerCase();
+  if(!s) return false;
+  return /切到|高勝率|被動|主動|webui|mcp|儀表板|dashboard|passive|active|hybrid/.test(s);
+}
+
+function executeHermesInstruction(text){
+  const input=$('msg');
+  const instruction=String(text||'').trim();
+  if(!input||!instruction) return false;
+  if(!looksLikeHermesInstruction(instruction)) return false;
+  input.value=instruction.startsWith('/hermes ')?instruction.slice(8).trim():instruction;
+  if(typeof autoResize==='function') autoResize();
+  if(typeof showToast==='function') showToast(`Hermes instruction ready: ${input.value.slice(0,40)}${input.value.length>40?'…':''}`);
   return true;
 }
 
@@ -114,6 +132,19 @@ async function cmdNew(){
   await renderSessionList();
   $('msg').focus();
   showToast(t('new_session'));
+}
+
+function cmdHermes(args){
+  const input=$('msg');
+  if(!input) return;
+  const instruction=String(args||'').trim();
+  if(!instruction){
+    showToast('Usage: /hermes <instruction>');
+    return;
+  }
+  input.value=instruction;
+  if(typeof autoResize==='function') autoResize();
+  showToast(`Hermes instruction ready: ${instruction.slice(0,40)}${instruction.length>40?'…':''}`);
 }
 
 async function _runManualCompression(focusTopic){

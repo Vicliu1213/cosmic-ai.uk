@@ -1,0 +1,7 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+.hermes/output/
+hermes/dashboard/runtime_state.json
+.hermes/hermes/dashboard/runtime_state.json

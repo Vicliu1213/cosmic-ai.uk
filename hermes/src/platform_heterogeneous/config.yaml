@@ -1,0 +1,12 @@
+system:
+  name: platform_heterogeneous
+  title: "Platform Heterogeneous"
+  mode: module-standard
+  dashboard_catalog: hermes/dashboard/module_catalog.json
+  canonical_config: config/platform_heterogeneous.yaml
+
+module:
+  quality: production
+  components: ["scheduler", "resource_monitor", "benchmark", "platform_selector", "load_balancer"]
+  capabilities: ["scheduling", "balancing", "monitoring", "benchmarking"]
+  category: engine

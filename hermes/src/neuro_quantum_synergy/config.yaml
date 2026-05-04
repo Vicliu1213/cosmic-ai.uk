@@ -1,0 +1,12 @@
+system:
+  name: neuro_quantum_synergy
+  title: "Neuro Quantum Synergy"
+  mode: module-standard
+  dashboard_catalog: hermes/dashboard/module_catalog.json
+  canonical_config: config/neuro_quantum_synergy.yaml
+
+module:
+  quality: production
+  components: ["hybrid_layer", "spike_encoder", "qnn", "entanglement", "trainer"]
+  capabilities: ["encoding", "training", "hybrid_layers", "entanglement"]
+  category: engine

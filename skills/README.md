@@ -16,3 +16,6 @@ This directory mirrors the Hermes governance stack as a global shared entry.
 - `skills/hermes/glossary.md`
 
 The `.hermes/` files remain the canonical source.
+
+## Additional local skills
+- `skills/self-improving-agent/SKILL.md`: structured self-improvement loop for errors, corrections, promotion candidates, and durable workflow upgrades.

@@ -12,48 +12,36 @@
         <div class="control-brand">
           <p class="eyebrow">Hermes Natural Language Console</p>
           <h1>語意控制台</h1>
-          <p class="summary">用一句話切換 Hermes 的主動、被動、高勝率與 WebUI 觀測面。</p>
+          <p class="summary">一句話切模式、切面板、切市場行為，直接橋接 Hermes 控制命令。</p>
         </div>
         <nav class="control-nav">
           <a href="./control_center.html" class="control-nav-item">Control Center</a>
           <a href="./webui_hub.html" class="control-nav-item">WebUI Hub</a>
           <a href="./agent_panel.html" class="control-nav-item">Agent Panel</a>
         </nav>
-        <section class="control-stack">
-          <article class="card control-card">
-            <h2>可用指令</h2>
-            <div class="pill-row">
-              <span class="pill">切到被動模式</span>
-              <span class="pill">切到主動模式</span>
-              <span class="pill">0G/USDT 高勝率模式</span>
-              <span class="pill">開啟 WebUI</span>
-            </div>
-          </article>
-        </section>
       </aside>
-
       <section class="control-main">
         <header class="hero control-hero">
           <div>
-            <p class="eyebrow">Natural language control</p>
+            <p class="eyebrow">natural language control</p>
             <h1>一句話操作 Hermes</h1>
-            <p class="summary">把 dashboard、WebUI、技能、風控、記憶與學習路徑收斂到同一個語意入口。</p>
+            <p class="summary">把 dashboard、WebUI、skills、memory、MCP 入口收斂到同一個語意控制界面。</p>
           </div>
           <div class="hero-actions">
             <a class="hero-button primary" href="./webui_hub.html">Open WebUI Hub</a>
             <a class="hero-button" href="./control_center.html">Open Control Center</a>
           </div>
         </header>
-
+        <section class="kpi-grid">
+          <article class="card kpi-card"><div class="kpi-label">Mode</div><div class="kpi-value" data-runtime-mode>hybrid</div><div class="kpi-delta up">language-routed</div></article>
+          <article class="card kpi-card"><div class="kpi-label">Objective</div><div class="kpi-value" data-runtime-objective>hermes</div><div class="kpi-delta up">operator input</div></article>
+          <article class="card kpi-card"><div class="kpi-label">Next</div><div class="kpi-value" data-runtime-next-action>observe</div><div class="kpi-delta up">command preview</div></article>
+          <article class="card kpi-card"><div class="kpi-label">MCP</div><div class="kpi-value" data-runtime-mcp-endpoint>offline</div><div class="kpi-delta up">bridge</div></article>
+        </section>
         <section class="card featured-card">
           <h2>自然語言範例</h2>
-          <div class="pill-row">
-            <span class="pill">切到被動模式並觀察風控</span>
-            <span class="pill">啟動主動模式處理市場</span>
-            <span class="pill">對 0G/USDT 開高勝率模式</span>
-            <span class="pill">開 WebUI 面板</span>
-          </div>
-          <div class="meta">這些句子會被 Hermes 解析成 mode / surface / symbol / toggle 動作。</div>
+          <div class="pill-row"><span class="pill">切到被動模式並觀察風控</span><span class="pill">啟動主動模式處理市場</span><span class="pill">對 0G/USDT 開高勝率模式</span><span class="pill">開 WebUI 面板</span></div>
+          <div class="meta">Hermes 會把句子解析為 mode / surface / symbol / toggle action packet。</div>
           <div class="command-box" style="display:grid;gap:10px">
             <textarea id="nlCommandInput" rows="4" placeholder="例如：對 0G/USDT 開高勝率模式並切到被動觀察" style="width:100%;background:rgba(255,255,255,.05);border:1px solid var(--border2,#27405f);border-radius:12px;color:var(--text);padding:12px;font-size:14px;outline:none;resize:vertical;font-family:inherit"></textarea>
             <div style="display:flex;gap:10px;flex-wrap:wrap">
@@ -64,54 +52,16 @@
             <pre id="nlCommandPreview" style="margin:0;padding:12px;border-radius:12px;background:rgba(5,10,18,.7);border:1px solid rgba(125,211,252,.14);white-space:pre-wrap;min-height:88px">Hermes CLI preview will appear here.</pre>
           </div>
         </section>
-
         <section class="grid">
-          <article class="card">
-            <h2>控制橋接</h2>
-            <div class="meta">CLI: `python .hermes/hermes.py hermes --say "切到被動模式"`</div>
-          </article>
-          <article class="card">
-            <h2>WebUI 連結</h2>
-            <div class="links">
-              <a href="http://127.0.0.1:8787" target="_blank" rel="noreferrer">Live WebUI</a>
-              <a href="../../vendor/hermes-webui/static/index.html">Vendor Clone</a>
-            </div>
-          </article>
+          <article class="card"><h2>控制橋接</h2><div class="meta">CLI: `python .hermes/hermes.py hermes --say "切到被動模式"`</div></article>
+          <article class="card"><h2>WebUI 連結</h2><div class="links"><a href="http://127.0.0.1:8787" target="_blank" rel="noreferrer">Live WebUI</a><a href="../../../vendor/hermes-webui/static/index.html">Vendor Clone</a></div></article>
         </section>
-        <script>
-          function fillExample(text) {
-            document.getElementById('nlCommandInput').value = text;
-            previewCommand();
-          }
-          function previewCommand() {
-            const text = document.getElementById('nlCommandInput').value.trim();
-            const out = document.getElementById('nlCommandPreview');
-            if (!text) {
-              out.textContent = 'Enter a command to preview the Hermes bridge output.';
-              return;
-            }
-            out.textContent = `python .hermes/hermes.py hermes --say ${JSON.stringify(text)}`;
-          }
-          fillExample('切到被動模式並打開 webui 儀表板');
-        </script>
+        <section id="screen-surface" class="grid" aria-label="screen surface"></section>
       </section>
-
       <aside class="control-rightbar">
-        <article class="card status-card">
-          <h2>Orchestration</h2>
-          <div class="pill-row">
-            <span class="pill">signal</span>
-            <span class="pill">risk</span>
-            <span class="pill">execution</span>
-            <span class="pill">memory</span>
-            <span class="pill">learn</span>
-          </div>
-        </article>
-        <article class="card status-card">
-          <h2>Surface</h2>
-          <div class="meta">dashboard + webui + cli language bridge</div>
-        </article>
+        <article class="card status-card"><h2>Orchestration</h2><div class="pill-row"><span class="pill">signal</span><span class="pill">risk</span><span class="pill">execution</span><span class="pill">memory</span><span class="pill">learn</span></div></article>
       </aside>
     </main>
+    <script src="../app.js"></script>
   </body>
 </html>

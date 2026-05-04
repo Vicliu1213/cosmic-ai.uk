@@ -1,0 +1,12 @@
+system:
+  name: bio_photonics
+  title: "Bio Photonics"
+  mode: module-standard
+  dashboard_catalog: hermes/dashboard/module_catalog.json
+  canonical_config: config/bio_photonics.yaml
+
+module:
+  quality: elevated
+  components: ["photon_source", "biophoton_comm", "coherence_tracker", "spectrum_analyzer", "bio_coupling"]
+  capabilities: ["signal_capture", "coherence", "spectrum", "communication"]
+  category: engine

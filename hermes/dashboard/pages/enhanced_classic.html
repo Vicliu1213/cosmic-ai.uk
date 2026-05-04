@@ -7,44 +7,47 @@
     <link rel="stylesheet" href="../styles.css" />
   </head>
   <body>
-    <main class="shell">
-      <header class="hero">
-        <div>
+    <main class="control-shell">
+      <aside class="control-sidebar">
+        <div class="control-brand">
           <p class="eyebrow">Enhanced Classic Algorithms</p>
-          <h1>四層映射與模組推薦</h1>
+          <h1>四層映射重構</h1>
+          <p class="summary">把不合格結構拉回經典可驗證骨架：energy / compression / precision / compute。</p>
         </div>
-        <p class="summary">從 module_catalog 載入模組，呈現能源 / 壓縮 / 精度 / 計算四層推薦。</p>
-      </header>
-
-      <section class="grid" id="recommendation-grid"></section>
+        <nav class="control-nav">
+          <a href="./algorithms.html" class="control-nav-item">Algorithms Overview</a>
+          <a href="./enhanced_hybrid.html" class="control-nav-item">Enhanced Hybrid</a>
+          <a href="./hest_verification.html" class="control-nav-item">Hest</a>
+        </nav>
+      </aside>
+      <section class="control-main">
+        <header class="hero control-hero">
+          <div>
+            <p class="eyebrow">rule-driven baseline</p>
+            <h1>四層映射與模組推薦</h1>
+            <p class="summary">先用經典算法做骨架，再由 hybrid lane 做升級；不合格頁面先回到可量測、可對齊、可驗證。</p>
+          </div>
+          <div class="hero-actions">
+            <a class="hero-button primary" href="./enhanced_hybrid.html">Upgrade to Hybrid</a>
+            <a class="hero-button" href="./module.html?name=enhanced_classic">Module Detail</a>
+          </div>
+        </header>
+        <section class="kpi-grid">
+          <article class="card kpi-card"><div class="kpi-label">Mode</div><div class="kpi-value" data-runtime-mode>hybrid</div><div class="kpi-delta up">baseline ready</div></article>
+          <article class="card kpi-card"><div class="kpi-label">Objective</div><div class="kpi-value" data-runtime-objective>hermes</div><div class="kpi-delta up">catalog scoring</div></article>
+          <article class="card kpi-card"><div class="kpi-label">Memory</div><div class="kpi-value" data-runtime-memory-items>0</div><div class="kpi-delta up">retained</div></article>
+          <article class="card kpi-card"><div class="kpi-label">Evolution</div><div class="kpi-value" data-runtime-evolution-action>tighten</div><div class="kpi-delta up">guarded</div></article>
+        </section>
+        <section class="grid" id="recommendation-grid"></section>
+        <section id="screen-surface" class="grid" aria-label="screen surface"></section>
+      </section>
+      <aside class="control-rightbar">
+        <article class="card status-card">
+          <h2>Decision rule</h2>
+          <div class="meta">先經典後混合，拒絕跳過骨架直接堆視覺。</div>
+        </article>
+      </aside>
     </main>
-
-    <script>
-      fetch('../module_catalog.json')
-        .then((response) => response.json())
-        .then((data) => {
-          const grid = document.getElementById('recommendation-grid');
-          const keywords = {
-            energy: ['resource', 'energy', 'scheduling', 'balancing', 'monitoring', 'planning', 'simulation'],
-            compression: ['compression', 'entropy', 'recursion', 'projection', 'reconstruction', 'encoding'],
-            precision: ['validation', 'stabilization', 'audit', 'coherence', 'checks', 'sensing', 'quality'],
-            compute: ['execution', 'training', 'routing', 'locality', 'simulation', 'scheduler', 'balancing'],
-          };
-          const textOf = (m) => `${m.name} ${m.title} ${m.category} ${(m.components || []).join(' ')} ${(m.capabilities || []).join(' ')}`.toLowerCase();
-          const row = (label, items) => `
-            <article class="card">
-              <h2>${label}</h2>
-              <div class="pill-row">${items.map((item) => `<span class="pill">${item.title}</span>`).join('')}</div>
-            </article>
-          `;
-          const by = Object.fromEntries(
-            Object.entries(keywords).map(([layer, keys]) => [
-              layer,
-              data.modules.filter((m) => keys.some((k) => textOf(m).includes(k))).slice(0, 6),
-            ])
-          );
-          grid.innerHTML = Object.entries(by).map(([label, items]) => row(label, items)).join('');
-        });
-    </script>
+    <script src="../app.js"></script>
   </body>
 </html>

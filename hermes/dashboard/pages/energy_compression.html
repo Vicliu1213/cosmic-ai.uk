@@ -12,7 +12,7 @@
         <div class="control-brand">
           <p class="eyebrow">Hermes Energy Compression</p>
           <h1>Dispatch Core</h1>
-          <p class="summary">能源調度、token 節省、淨盈利壓縮與動態排程統一視圖。</p>
+          <p class="summary">能源調度、token 節省、風險壓縮與產出效率統一視圖。</p>
         </div>
         <nav class="control-nav">
           <a href="./agent_panel.html" class="control-nav-item">Agent Panel</a>
@@ -20,85 +20,35 @@
           <a href="./control_center.html" class="control-nav-item">Control Center</a>
         </nav>
       </aside>
-
       <section class="control-main">
         <header class="hero control-hero">
           <div>
-            <p class="eyebrow">energy dispatch · token savings · vacuum volatility</p>
+            <p class="eyebrow">energy dispatch · token savings · profit discipline</p>
             <h1>Dynamic Compression</h1>
-            <p class="summary">以最少 token 與最優調度完成最大輸出，壓縮噪音、保留盈利與可驗證性。dynamic compression loop</p>
+            <p class="summary">以最少 token 與最優調度完成最大輸出，壓縮噪音，但不犧牲 edge、驗證與風險邊界。</p>
           </div>
           <div class="hero-actions">
             <a class="hero-button primary" href="./agent_panel.html">Agent Panel</a>
             <a class="hero-button" href="./trading_orchestrator.html">Trading Orchestrator</a>
           </div>
         </header>
-
-        <section class="market-ribbon card">
-          <div class="market-ribbon-top">
-            <div>
-              <p class="eyebrow">Energy dispatch</p>
-              <h2>能源 / token / volatility / profit</h2>
-            </div>
-            <div class="market-badge">adaptive scheduling</div>
-          </div>
-          <div class="kpi-grid" style="margin:0">
-            <article class="card kpi-card"><div class="kpi-label">Token savings</div><div class="kpi-value">72%</div><div class="kpi-delta up">compressed</div></article>
-            <article class="card kpi-card"><div class="kpi-label">Vacuum volatility</div><div class="kpi-value">LOW</div><div class="kpi-delta neutral">stable</div></article>
-            <article class="card kpi-card"><div class="kpi-label">net profit compression</div><div class="kpi-value">UP</div><div class="kpi-delta up">dynamic</div></article>
-            <article class="card kpi-card"><div class="kpi-label">Dispatch</div><div class="kpi-value">ON</div><div class="kpi-delta up">active</div></article>
-          </div>
+        <section class="kpi-grid">
+          <article class="card kpi-card"><div class="kpi-label">Mode</div><div class="kpi-value" data-runtime-mode>hybrid</div><div class="kpi-delta up">dispatch ready</div></article>
+          <article class="card kpi-card"><div class="kpi-label">Token savings</div><div class="kpi-value">72%</div><div class="kpi-delta up">compressed</div></article>
+          <article class="card kpi-card"><div class="kpi-label">Next</div><div class="kpi-value" data-runtime-next-action>observe</div><div class="kpi-delta up">queue aligned</div></article>
+          <article class="card kpi-card"><div class="kpi-label">Evolution</div><div class="kpi-value" data-runtime-evolution-action>tighten</div><div class="kpi-delta up">profit guard</div></article>
         </section>
-
         <section class="featured-grid">
-          <article class="card featured-card">
-            <h2>Energy dispatch</h2>
-            <div class="meta">prioritize higher ROI tasks first</div>
-            <div class="liquidity-heatmap"></div>
-          </article>
-          <article class="card featured-card">
-            <h2>Token savings</h2>
-            <div class="meta">reduce repetition and compress context</div>
-            <div class="sparkline-chart"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-          </article>
-          <article class="card featured-card">
-            <h2>Net profit compression</h2>
-            <div class="meta">preserve signal, cut waste</div>
-            <div class="risk-contour"></div>
-          </article>
+          <article class="card featured-card"><h2>Energy dispatch</h2><div class="meta">prioritize higher ROI tasks first</div><div class="liquidity-heatmap"></div></article>
+          <article class="card featured-card"><h2>Token savings</h2><div class="meta">reduce repetition and compress context</div><div class="sparkline-chart"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></article>
+          <article class="card featured-card"><h2>Net profit compression</h2><div class="meta">preserve signal, cut waste</div><div class="risk-contour"></div></article>
         </section>
-
-        <section class="grid">
-          <article class="card">
-            <h2>Dynamic compression loop</h2>
-            <div class="pill-row">
-              <span class="pill">schedule</span>
-              <span class="pill">compress</span>
-              <span class="pill">verify</span>
-              <span class="pill">promote</span>
-            </div>
-          </article>
-          <article class="card">
-            <h2>Adaptive scheduling</h2>
-            <div class="meta">move expensive tasks to calmer slots</div>
-          </article>
-        </section>
+        <section id="screen-surface" class="grid" aria-label="screen surface"></section>
       </section>
-
       <aside class="control-rightbar">
-        <article class="card status-card">
-          <h2>Compression health</h2>
-          <div class="meta">context trim / model selection / cache reuse</div>
-        </article>
-        <article class="card status-card">
-          <h2>Profit guard</h2>
-          <div class="meta">no compression if it hurts expected value</div>
-        </article>
-        <article class="card status-card">
-          <h2>Integration target</h2>
-          <div class="meta">all panels can consume this dispatcher</div>
-        </article>
+        <article class="card status-card"><h2>Profit guard</h2><div class="meta">no compression if it hurts expected value</div></article>
       </aside>
     </main>
+    <script src="../app.js"></script>
   </body>
 </html>

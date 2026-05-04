@@ -1,0 +1,12 @@
+system:
+  name: quantum_singularity
+  title: "Quantum Singularity"
+  mode: module-standard
+  dashboard_catalog: hermes/dashboard/module_catalog.json
+  canonical_config: config/quantum_singularity.yaml
+
+module:
+  quality: elevated
+  components: ["detector", "grid", "qnn", "stabilizer", "vacuum"]
+  capabilities: ["detection", "stabilization", "singularity_control", "vacuum"]
+  category: engine

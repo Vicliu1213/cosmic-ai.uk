@@ -20,6 +20,10 @@ async function send(){
   if(text.startsWith('/')&&!S.pendingFiles.length&&executeCommand(text)){
     $('msg').value='';autoResize();hideCmdDropdown();return;
   }
+  // Natural language Hermes bridge -- local instruction routing before agent round-trip
+  if(text&&!S.pendingFiles.length&&typeof executeHermesInstruction==='function'&&executeHermesInstruction(text)){
+    $('msg').value='';autoResize();hideCmdDropdown();return;
+  }
   if(!S.session){await newSession();await renderSessionList();}
 
   const activeSid=S.session.session_id;

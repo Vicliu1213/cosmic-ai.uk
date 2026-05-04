@@ -7,74 +7,49 @@
     <link rel="stylesheet" href="../styles.css" />
   </head>
   <body>
-    <main class="shell">
-      <header class="hero">
-        <div>
+    <main class="control-shell">
+      <aside class="control-sidebar">
+        <div class="control-brand">
           <p class="eyebrow">Hest Verification</p>
-          <h1>即時系統驗證</h1>
+          <h1>升級前驗證門</h1>
+          <p class="summary">所有重構先進 Hest，再決定能不能升到 hybrid highest standard。</p>
         </div>
-        <p class="summary">即時檢查 layers、enhanced_classic、module_catalog、dashboard，並保證金融大鰐 × 神性混合人格下的 omega 迭代仍可驗證；同時覆蓋 hybrid-absolute 的人格治理基線，以及策略即時勝率 / 回測質量。</p>
-      </header>
-
-      <section class="featured-grid" id="omega-grid">
-        <article class="card featured-card">
-          <h2>Omega loop</h2>
-          <div class="meta">bounded recursive enhancement</div>
-          <div class="links"><a href="./omega_system.html">Open Omega System</a></div>
-        </article>
-        <article class="card featured-card">
-          <h2>Rollback lane</h2>
-          <div class="meta">revert · retest · recover</div>
-          <div class="links"><a href="./control_center.html">Control Center</a></div>
-        </article>
-        <article class="card featured-card">
-          <h2>Safety stance</h2>
-          <div class="meta">verify before promote</div>
-          <div class="links"><a href="./agent_panel.html">Agent Panel</a></div>
-        </article>
-        <article class="card featured-card">
-          <h2>Sharpe growth</h2>
-          <div class="meta">nonlinear risk-adjusted uplift</div>
-          <div class="links"><a href="#hest-grid">Inspect metric lattice</a></div>
-        </article>
-        <article class="card featured-card">
-          <h2>Growth stack</h2>
-          <div class="meta">nonlinear growth · stacked state</div>
-          <div class="links"><a href="#hest-grid">Inspect stacking state</a></div>
-        </article>
-        <article class="card featured-card">
-          <h2>Strategy win rate</h2>
-          <div class="meta">live trading vs backtest</div>
-          <div class="links"><a href="#hest-grid">Inspect trade quality</a></div>
-        </article>
+        <nav class="control-nav">
+          <a href="./algorithms.html" class="control-nav-item">Algorithms Overview</a>
+          <a href="./enhanced_classic.html" class="control-nav-item">Enhanced Classic</a>
+          <a href="./enhanced_hybrid.html" class="control-nav-item">Enhanced Hybrid</a>
+        </nav>
+      </aside>
+      <section class="control-main">
+        <header class="hero control-hero">
+          <div>
+            <p class="eyebrow">verify before promote</p>
+            <h1>即時系統驗證</h1>
+            <p class="summary">Hest 檢查 layers、catalog、dashboard、omega loop、sharpe lane 與 strategy quality，確保重構不是假升級。</p>
+          </div>
+          <div class="hero-actions">
+            <a class="hero-button primary" href="./omega_system.html">Omega System</a>
+            <a class="hero-button" href="./control_center.html">Control Center</a>
+          </div>
+        </header>
+        <section class="kpi-grid">
+          <article class="card kpi-card"><div class="kpi-label">Mode</div><div class="kpi-value" data-runtime-mode>hybrid</div><div class="kpi-delta up">gate-linked</div></article>
+          <article class="card kpi-card"><div class="kpi-label">Objective</div><div class="kpi-value" data-runtime-objective>hermes</div><div class="kpi-delta up">audited</div></article>
+          <article class="card kpi-card"><div class="kpi-label">Pending</div><div class="kpi-value" data-runtime-pending-patterns>0</div><div class="kpi-delta up">watch list</div></article>
+          <article class="card kpi-card"><div class="kpi-label">Evolution</div><div class="kpi-value" data-runtime-evolution-action>tighten</div><div class="kpi-delta up">bounded</div></article>
+        </section>
+        <section class="featured-grid" id="omega-grid">
+          <article class="card featured-card"><h2>Omega loop</h2><div class="meta">bounded recursive enhancement</div><div class="links"><a href="./omega_system.html">Open Omega System</a></div></article>
+          <article class="card featured-card"><h2>Rollback lane</h2><div class="meta">retest · recover · revert</div><div class="links"><a href="./control_center.html">Control Center</a></div></article>
+          <article class="card featured-card"><h2>Safety stance</h2><div class="meta">verify before promote</div><div class="links"><a href="./agent_panel.html">Agent Panel</a></div></article>
+        </section>
+        <section class="grid" id="hest-grid"></section>
+        <section id="screen-surface" class="grid" aria-label="screen surface"></section>
       </section>
-
-      <section class="grid" id="hest-grid"></section>
+      <aside class="control-rightbar">
+        <article class="card status-card"><h2>MCP</h2><div class="meta" data-runtime-mcp-endpoint>offline</div></article>
+      </aside>
     </main>
-
-    <script>
-      fetch('../module_catalog.json')
-        .then((r) => r.json())
-        .then((data) => {
-          const grid = document.getElementById('hest-grid');
-          const items = [
-            ['layers', '四層引擎'],
-            ['enhanced_classic', '增強經典索引'],
-            ['module_catalog', '模組目錄'],
-            ['dashboard', 'Dashboard UI'],
-            ['omega', 'Omega recursive enhancement'],
-            ['sharpe', 'Sharpe growth'],
-            ['growth_stack', 'Growth stack'],
-            ['strategy', 'Strategy win rate / backtest'],
-          ];
-          grid.innerHTML = items.map(([key, label]) => `
-            <article class="card">
-              <h2>${label}</h2>
-              <div class="meta">Target: ${key}</div>
-              <div class="meta">Status: ready</div>
-            </article>
-          `).join('');
-        });
-    </script>
+    <script src="../app.js"></script>
   </body>
 </html>

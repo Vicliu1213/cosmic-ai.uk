@@ -7,60 +7,41 @@
     <link rel="stylesheet" href="../styles.css" />
   </head>
   <body>
-    <main class="shell">
-      <header class="hero">
-        <div>
-          <p class="eyebrow">Module Page</p>
+    <main class="control-shell">
+      <aside class="control-sidebar">
+        <div class="control-brand">
+          <p class="eyebrow">Module Detail</p>
           <h1 id="module-title">Loading...</h1>
+          <p class="summary" id="module-summary">catalog-linked module detail</p>
         </div>
-        <p class="summary" id="module-summary"></p>
-      </header>
-
-      <section class="grid">
-        <article class="card">
-          <h2>Core Entry</h2>
-          <div class="meta" id="module-entry"></div>
-        </article>
-        <article class="card">
-          <h2>Docs</h2>
-          <div class="meta" id="module-docs"></div>
-        </article>
-        <article class="card">
-          <h2>Config</h2>
-          <div class="meta" id="module-config"></div>
-        </article>
-        <article class="card">
-          <h2>Components</h2>
-          <div class="pill-row" id="module-components"></div>
-        </article>
-        <article class="card">
-          <h2>Capabilities</h2>
-          <div class="pill-row" id="module-capabilities"></div>
-        </article>
-        <article class="card">
-          <h2>Quality</h2>
-          <div class="meta" id="module-quality"></div>
-        </article>
+        <nav class="control-nav">
+          <a href="./algorithms.html" class="control-nav-item">Algorithms Overview</a>
+          <a href="./enhanced_classic.html" class="control-nav-item">Enhanced Classic</a>
+          <a href="./enhanced_hybrid.html" class="control-nav-item">Enhanced Hybrid</a>
+        </nav>
+      </aside>
+      <section class="control-main">
+        <header class="hero control-hero">
+          <div>
+            <p class="eyebrow">catalog-backed detail page</p>
+            <h1>Module intelligence</h1>
+            <p class="summary">依 module_catalog 直接拉出核心入口、文件、配置、能力與質量。</p>
+          </div>
+        </header>
+        <section class="grid">
+          <article class="card"><h2>Core Entry</h2><div class="meta" id="module-entry"></div></article>
+          <article class="card"><h2>Docs</h2><div class="meta" id="module-docs"></div></article>
+          <article class="card"><h2>Config</h2><div class="meta" id="module-config"></div></article>
+          <article class="card"><h2>Components</h2><div class="pill-row" id="module-components"></div></article>
+          <article class="card"><h2>Capabilities</h2><div class="pill-row" id="module-capabilities"></div></article>
+          <article class="card"><h2>Quality</h2><div class="meta" id="module-quality"></div></article>
+        </section>
+        <section id="screen-surface" class="grid" aria-label="screen surface"></section>
       </section>
+      <aside class="control-rightbar">
+        <article class="card status-card"><h2>Runtime</h2><div class="pill-row"><span class="pill">mode: <strong data-runtime-mode>hybrid</strong></span><span class="pill">next: <strong data-runtime-next-action>observe</strong></span></div></article>
+      </aside>
     </main>
-
-    <script>
-      fetch('../module_catalog.json')
-        .then((response) => response.json())
-        .then((data) => {
-          const name = new URLSearchParams(location.search).get('name') || data.modules[0].name;
-          const module = data.modules.find((item) => item.name === name) || data.modules[0];
-
-          document.title = module.title;
-          document.getElementById('module-title').textContent = module.title;
-          document.getElementById('module-summary').textContent = `${module.name} · ${module.category}`;
-          document.getElementById('module-entry').textContent = module.entry;
-          document.getElementById('module-docs').textContent = module.docs || 'pending';
-          document.getElementById('module-config').textContent = module.config || 'pending';
-          document.getElementById('module-components').innerHTML = module.components.map((item) => `<span class="pill">${item}</span>`).join('');
-          document.getElementById('module-capabilities').innerHTML = module.capabilities.map((item) => `<span class="pill">${item}</span>`).join('');
-          document.getElementById('module-quality').textContent = module.quality || 'hybrid-ready';
-        });
-    </script>
+    <script src="../app.js"></script>
   </body>
-  </html>
+</html>

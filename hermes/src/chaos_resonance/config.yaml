@@ -1,0 +1,12 @@
+system:
+  name: chaos_resonance
+  title: "Chaos Resonance"
+  mode: module-standard
+  dashboard_catalog: hermes/dashboard/module_catalog.json
+  canonical_config: config/chaos_resonance.yaml
+
+module:
+  quality: production
+  components: ["attractor", "bifurcation", "lyapunov", "noise_generator", "synchronizer"]
+  capabilities: ["dynamics", "stability", "noise", "synchronization"]
+  category: engine

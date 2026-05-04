@@ -1,0 +1,12 @@
+system:
+  name: temporal_dominance
+  title: "Temporal Dominance"
+  mode: module-standard
+  dashboard_catalog: hermes/dashboard/module_catalog.json
+  canonical_config: config/temporal_dominance.yaml
+
+module:
+  quality: production
+  components: ["temporal_compressor", "paradox_resolver", "ctc_simulator", "time_series", "causal_inference"]
+  capabilities: ["compression", "causality", "simulation", "paradox_resolution"]
+  category: engine

@@ -1,0 +1,12 @@
+system:
+  name: fractal_recursion
+  title: "Fractal Recursion"
+  mode: module-standard
+  dashboard_catalog: hermes/dashboard/module_catalog.json
+  canonical_config: config/fractal_recursion.yaml
+
+module:
+  quality: elevated
+  components: ["fractal_dim", "recursive_engine", "iterated_function", "scale_analyzer", "self_similarity"]
+  capabilities: ["recursion", "scaling", "similarity", "analysis"]
+  category: engine

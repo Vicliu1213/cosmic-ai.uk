@@ -1,0 +1,12 @@
+system:
+  name: perfect_fortress
+  title: "Perfect Fortress"
+  mode: module-standard
+  dashboard_catalog: hermes/dashboard/module_catalog.json
+  canonical_config: config/perfect_fortress.yaml
+
+module:
+  quality: elite
+  components: ["access_control", "ids", "firewall", "audit", "crypto"]
+  capabilities: ["security", "auth", "audit", "encryption"]
+  category: engine

@@ -1,0 +1,266 @@
+/* Premium tech Web UI skin for Dash trading dashboard */
+
+:root {
+  --bg: #07111f;
+  --bg-2: #0c1728;
+  --panel: rgba(10, 20, 35, 0.78);
+  --panel-strong: rgba(13, 25, 44, 0.92);
+  --line: rgba(121, 198, 255, 0.16);
+  --line-strong: rgba(121, 198, 255, 0.28);
+  --text: #e9f4ff;
+  --muted: #8fa6c1;
+  --accent: #51b7ff;
+  --accent-2: #7c5cff;
+  --success: #35d39b;
+  --shadow: 0 18px 60px rgba(0, 0, 0, 0.45);
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  background:
+    radial-gradient(circle at top, rgba(81, 183, 255, 0.18), transparent 32%),
+    radial-gradient(circle at 80% 20%, rgba(124, 92, 255, 0.15), transparent 24%),
+    linear-gradient(160deg, var(--bg), var(--bg-2));
+  color: var(--text);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 48px 48px;
+  opacity: 0.35;
+}
+
+.dash-container {
+  max-width: 1600px;
+  padding: 28px 22px 40px;
+}
+
+.dashboard-shell {
+  backdrop-filter: blur(18px);
+}
+
+.hero-panel {
+  background: linear-gradient(135deg, rgba(17, 31, 54, 0.96), rgba(11, 18, 32, 0.78));
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.hero-title {
+  font-size: 2.15rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  margin: 0;
+}
+
+.hero-subtitle {
+  margin: 8px 0 0;
+  color: var(--muted);
+}
+
+.status-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(81, 183, 255, 0.08);
+  color: #cae9ff;
+  border: 1px solid rgba(81, 183, 255, 0.18);
+  font-size: 0.84rem;
+}
+
+.metric-card,
+.chart-card,
+.signal-card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.metric-card:hover,
+.chart-card:hover,
+.signal-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--line-strong);
+  box-shadow: 0 22px 70px rgba(0, 0, 0, 0.52);
+}
+
+.skill-card {
+  position: relative;
+  isolation: isolate;
+}
+
+.skill-accent {
+  height: 4px;
+  width: 100%;
+  background: linear-gradient(90deg, rgba(81,183,255,0.95), rgba(124,92,255,0.95));
+}
+
+.skill-perception { box-shadow: inset 0 1px 0 rgba(81,183,255,0.42); }
+.skill-decision { background: linear-gradient(90deg, rgba(53,211,155,0.95), rgba(81,183,255,0.75)); }
+.skill-execution { background: linear-gradient(90deg, rgba(124,92,255,0.95), rgba(81,183,255,0.75)); }
+.skill-memory { background: linear-gradient(90deg, rgba(255,184,77,0.95), rgba(124,92,255,0.75)); }
+.skill-evolution { background: linear-gradient(90deg, rgba(255,107,107,0.95), rgba(53,211,155,0.75)); }
+.skill-mesh { background: linear-gradient(90deg, rgba(81,183,255,0.95), rgba(53,211,155,0.75)); }
+.skill-mcp { background: linear-gradient(90deg, rgba(124,92,255,0.95), rgba(255,184,77,0.75)); }
+
+.skill-card-title {
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+.skill-chip {
+  margin-left: auto;
+  padding: 3px 9px;
+  border-radius: 999px;
+  border: 1px solid rgba(81,183,255,0.22);
+  background: rgba(81,183,255,0.1);
+  color: #d3eeff;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+}
+
+.skill-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.05);
+}
+
+.mini-label {
+  color: var(--muted);
+  font-size: 0.76rem;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+}
+
+.mini-value {
+  color: var(--text);
+  font-weight: 800;
+}
+
+.skill-list {
+  color: #cfe5fa;
+  line-height: 1.6;
+}
+
+.skill-list li {
+  margin-bottom: 6px;
+}
+
+.metric-card, .signal-card, .chart-card {
+  position: relative;
+}
+
+.metric-card::after,
+.signal-card::after,
+.chart-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(135deg, rgba(81,183,255,0.08), transparent 30%, transparent 70%, rgba(124,92,255,0.08));
+  opacity: 0.55;
+}
+
+.dash-container .row:last-child {
+  margin-bottom: 0;
+}
+
+.card-header {
+  background: linear-gradient(90deg, rgba(81, 183, 255, 0.12), rgba(124, 92, 255, 0.08));
+  color: var(--text);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.card-body {
+  color: var(--text);
+}
+
+.card-title {
+  color: #f7fbff;
+  font-weight: 800;
+}
+
+.card-text,
+.small-muted,
+.Select-control,
+.Select-menu-outer {
+  color: var(--muted);
+}
+
+.dashboard-shell .Select-control,
+.dashboard-shell .Select-menu-outer,
+.dashboard-shell .Select-value-label,
+.dashboard-shell .Select-placeholder,
+.dashboard-shell .Select-input > input {
+  background-color: rgba(11, 20, 36, 0.96) !important;
+  color: var(--text) !important;
+  border-color: rgba(121, 198, 255, 0.16) !important;
+}
+
+.dashboard-shell .form-control,
+.dashboard-shell .dash-dropdown,
+.dashboard-shell .Select--single > .Select-control {
+  min-height: 46px;
+}
+
+.dashboard-shell .btn-success {
+  background: linear-gradient(135deg, var(--success), #11a97a);
+  border: none;
+  box-shadow: 0 10px 24px rgba(53, 211, 155, 0.22);
+}
+
+.dashboard-shell .btn-success:hover {
+  filter: brightness(1.06);
+}
+
+.plotly-graph-div {
+  border-radius: 14px;
+}
+
+.js-plotly-plot .plotly .modebar {
+  background: transparent !important;
+}
+
+.row {
+  margin-bottom: 18px;
+}
+
+.metric-stack {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.glow-line {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(81,183,255,0.8), transparent);
+  margin: 18px 0 0;
+}
+
+@media (max-width: 992px) {
+  .hero-title { font-size: 1.6rem; }
+  .metric-stack { grid-template-columns: 1fr; }
+  .dash-container { padding: 16px 12px 30px; }
+}
