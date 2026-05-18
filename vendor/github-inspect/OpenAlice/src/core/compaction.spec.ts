@@ -276,6 +276,31 @@ describe('microcompact', () => {
     // 'tiny' is < 500 chars threshold, no truncation
     expect(savedTokens).toBe(0)
   })
+
+  it('should prefer lower-importance entries when truncating', () => {
+    const important = toolResultEntry('Decision: keep this exact value 12345 and next step follows.', 'important')
+    const lessImportant = toolResultEntry('x'.repeat(2000), 'bulk')
+    const recent = toolResultEntry('recent stable value', 'recent')
+    const { entries: result } = microcompact([important, lessImportant, recent], {
+      ...config,
+      microcompactKeepRecent: 1,
+      maxContextTokens: 40,
+      maxOutputTokens: 5,
+      autoCompactBuffer: 5,
+    })
+
+    const importantContent = (result[0].message.content as ContentBlock[])[0]
+    const bulkContent = (result[1].message.content as ContentBlock[])[0]
+
+    expect(importantContent.type).toBe('tool_result')
+    if (importantContent.type === 'tool_result') {
+      expect(importantContent.content).toContain('Decision: keep this exact value 12345')
+    }
+    expect(bulkContent.type).toBe('tool_result')
+    if (bulkContent.type === 'tool_result') {
+      expect(bulkContent.content).toContain('truncated')
+    }
+  })
 })
 
 // ==================== buildSummarizationPrompt ====================

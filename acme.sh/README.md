@@ -34,7 +34,6 @@
   <a href="https://hub.docker.com/r/neilpang/acme.sh" title="Click to view the image on Docker Hub"><img src="https://img.shields.io/docker/pulls/neilpang/acme.sh.svg" alt="Docker pulls"></a>
 </p>
 
-
 ---
 
 ## ✨ Features
@@ -67,6 +66,7 @@
 ---
 
 ## 🏆 Who Uses acme.sh?
+
 - [FreeBSD.org](https://blog.crashed.org/letsencrypt-in-freebsd-org/)
 - [ruby-china.org](https://ruby-china.org/topics/31983)
 - [Proxmox](https://pve.proxmox.com/wiki/Certificate_Management)
@@ -84,33 +84,32 @@
 
 ## 🖥️ Tested OS
 
-| NO | Status| Platform|
-|----|-------|---------|
-|1|[![MacOS](https://github.com/acmesh-official/acme.sh/actions/workflows/MacOS.yml/badge.svg)](https://github.com/acmesh-official/acme.sh/actions/workflows/MacOS.yml)|Mac OSX
-|2|[![Windows](https://github.com/acmesh-official/acme.sh/actions/workflows/Windows.yml/badge.svg)](https://github.com/acmesh-official/acme.sh/actions/workflows/Windows.yml)|Windows (cygwin with curl, openssl and crontab included)
-|3|[![FreeBSD](https://github.com/acmesh-official/acme.sh/actions/workflows/FreeBSD.yml/badge.svg)](https://github.com/acmesh-official/acme.sh/actions/workflows/FreeBSD.yml)|FreeBSD
-|4|[![Solaris](https://github.com/acmesh-official/acme.sh/actions/workflows/Solaris.yml/badge.svg)](https://github.com/acmesh-official/acme.sh/actions/workflows/Solaris.yml)|Solaris
-|5|[![Ubuntu](https://github.com/acmesh-official/acme.sh/actions/workflows/Ubuntu.yml/badge.svg)](https://github.com/acmesh-official/acme.sh/actions/workflows/Ubuntu.yml)| Ubuntu
-|6|NA|pfsense
-|7|[![OpenBSD](https://github.com/acmesh-official/acme.sh/actions/workflows/OpenBSD.yml/badge.svg)](https://github.com/acmesh-official/acme.sh/actions/workflows/OpenBSD.yml)|OpenBSD
-|8|[![NetBSD](https://github.com/acmesh-official/acme.sh/actions/workflows/NetBSD.yml/badge.svg)](https://github.com/acmesh-official/acme.sh/actions/workflows/NetBSD.yml)|NetBSD
-|9|[![DragonFlyBSD](https://github.com/acmesh-official/acme.sh/actions/workflows/DragonFlyBSD.yml/badge.svg)](https://github.com/acmesh-official/acme.sh/actions/workflows/DragonFlyBSD.yml)|DragonFlyBSD
-|10|[![Omnios](https://github.com/acmesh-official/acme.sh/actions/workflows/Omnios.yml/badge.svg)](https://github.com/acmesh-official/acme.sh/actions/workflows/Omnios.yml)|Omnios
-|11|[![OpenIndiana](https://github.com/acmesh-official/acme.sh/actions/workflows/OpenIndiana.yml/badge.svg)](https://github.com/acmesh-official/acme.sh/actions/workflows/OpenIndiana.yml)|OpenIndiana
-|12|[![Linux](https://github.com/acmesh-official/acme.sh/actions/workflows/Linux.yml/badge.svg)](https://github.com/acmesh-official/acme.sh/actions/workflows/Linux.yml)| Debian
-|13|[![Linux](https://github.com/acmesh-official/acme.sh/actions/workflows/Linux.yml/badge.svg)](https://github.com/acmesh-official/acme.sh/actions/workflows/Linux.yml)|openSUSE
-|14|[![Linux](https://github.com/acmesh-official/acme.sh/actions/workflows/Linux.yml/badge.svg)](https://github.com/acmesh-official/acme.sh/actions/workflows/Linux.yml)|Alpine Linux (with curl)
-|15|[![Linux](https://github.com/acmesh-official/acme.sh/actions/workflows/Linux.yml/badge.svg)](https://github.com/acmesh-official/acme.sh/actions/workflows/Linux.yml)|Archlinux
-|16|[![Linux](https://github.com/acmesh-official/acme.sh/actions/workflows/Linux.yml/badge.svg)](https://github.com/acmesh-official/acme.sh/actions/workflows/Linux.yml)|fedora
-|17|[![Linux](https://github.com/acmesh-official/acme.sh/actions/workflows/Linux.yml/badge.svg)](https://github.com/acmesh-official/acme.sh/actions/workflows/Linux.yml)|Kali Linux
-|18|[![Linux](https://github.com/acmesh-official/acme.sh/actions/workflows/Linux.yml/badge.svg)](https://github.com/acmesh-official/acme.sh/actions/workflows/Linux.yml)|Oracle Linux
-|19|[![Linux](https://github.com/acmesh-official/acme.sh/actions/workflows/Linux.yml/badge.svg)](https://github.com/acmesh-official/acme.sh/actions/workflows/Linux.yml)|Mageia
-|20|[![Linux](https://github.com/acmesh-official/acme.sh/actions/workflows/Linux.yml/badge.svg)](https://github.com/acmesh-official/acme.sh/actions/workflows/Linux.yml)|Gentoo Linux
-|21|-----| Cloud Linux  https://github.com/acmesh-official/acme.sh/issues/111
-|22|-----| OpenWRT: Tested and working. See [wiki page](https://github.com/acmesh-official/acme.sh/wiki/How-to-run-on-OpenWRT)
-|23|[![](https://acmesh-official.github.io/acmetest/status/proxmox.svg)](https://github.com/acmesh-official/letest#here-are-the-latest-status)| Proxmox: See Proxmox VE Wiki. Version [4.x, 5.0, 5.1](https://pve.proxmox.com/wiki/HTTPS_Certificate_Configuration_(Version_4.x,_5.0_and_5.1)#Let.27s_Encrypt_using_acme.sh), version [5.2 and up](https://pve.proxmox.com/wiki/Certificate_Management)
-|24|[![Haiku](https://github.com/acmesh-official/acme.sh/actions/workflows/Haiku.yml/badge.svg)](https://github.com/acmesh-official/acme.sh/actions/workflows/Haiku.yml)|Haiku OS
-
+| NO  | Status                                                                                                                                                                                    | Platform                                                                                                                                                                                                                                                  |
+| --- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1   | [![MacOS](https://github.com/acmesh-official/acme.sh/actions/workflows/MacOS.yml/badge.svg)](https://github.com/acmesh-official/acme.sh/actions/workflows/MacOS.yml)                      | Mac OSX                                                                                                                                                                                                                                                   |
+| 2   | [![Windows](https://github.com/acmesh-official/acme.sh/actions/workflows/Windows.yml/badge.svg)](https://github.com/acmesh-official/acme.sh/actions/workflows/Windows.yml)                | Windows (cygwin with curl, openssl and crontab included)                                                                                                                                                                                                  |
+| 3   | [![FreeBSD](https://github.com/acmesh-official/acme.sh/actions/workflows/FreeBSD.yml/badge.svg)](https://github.com/acmesh-official/acme.sh/actions/workflows/FreeBSD.yml)                | FreeBSD                                                                                                                                                                                                                                                   |
+| 4   | [![Solaris](https://github.com/acmesh-official/acme.sh/actions/workflows/Solaris.yml/badge.svg)](https://github.com/acmesh-official/acme.sh/actions/workflows/Solaris.yml)                | Solaris                                                                                                                                                                                                                                                   |
+| 5   | [![Ubuntu](https://github.com/acmesh-official/acme.sh/actions/workflows/Ubuntu.yml/badge.svg)](https://github.com/acmesh-official/acme.sh/actions/workflows/Ubuntu.yml)                   | Ubuntu                                                                                                                                                                                                                                                    |
+| 6   | NA                                                                                                                                                                                        | pfsense                                                                                                                                                                                                                                                   |
+| 7   | [![OpenBSD](https://github.com/acmesh-official/acme.sh/actions/workflows/OpenBSD.yml/badge.svg)](https://github.com/acmesh-official/acme.sh/actions/workflows/OpenBSD.yml)                | OpenBSD                                                                                                                                                                                                                                                   |
+| 8   | [![NetBSD](https://github.com/acmesh-official/acme.sh/actions/workflows/NetBSD.yml/badge.svg)](https://github.com/acmesh-official/acme.sh/actions/workflows/NetBSD.yml)                   | NetBSD                                                                                                                                                                                                                                                    |
+| 9   | [![DragonFlyBSD](https://github.com/acmesh-official/acme.sh/actions/workflows/DragonFlyBSD.yml/badge.svg)](https://github.com/acmesh-official/acme.sh/actions/workflows/DragonFlyBSD.yml) | DragonFlyBSD                                                                                                                                                                                                                                              |
+| 10  | [![Omnios](https://github.com/acmesh-official/acme.sh/actions/workflows/Omnios.yml/badge.svg)](https://github.com/acmesh-official/acme.sh/actions/workflows/Omnios.yml)                   | Omnios                                                                                                                                                                                                                                                    |
+| 11  | [![OpenIndiana](https://github.com/acmesh-official/acme.sh/actions/workflows/OpenIndiana.yml/badge.svg)](https://github.com/acmesh-official/acme.sh/actions/workflows/OpenIndiana.yml)    | OpenIndiana                                                                                                                                                                                                                                               |
+| 12  | [![Linux](https://github.com/acmesh-official/acme.sh/actions/workflows/Linux.yml/badge.svg)](https://github.com/acmesh-official/acme.sh/actions/workflows/Linux.yml)                      | Debian                                                                                                                                                                                                                                                    |
+| 13  | [![Linux](https://github.com/acmesh-official/acme.sh/actions/workflows/Linux.yml/badge.svg)](https://github.com/acmesh-official/acme.sh/actions/workflows/Linux.yml)                      | openSUSE                                                                                                                                                                                                                                                  |
+| 14  | [![Linux](https://github.com/acmesh-official/acme.sh/actions/workflows/Linux.yml/badge.svg)](https://github.com/acmesh-official/acme.sh/actions/workflows/Linux.yml)                      | Alpine Linux (with curl)                                                                                                                                                                                                                                  |
+| 15  | [![Linux](https://github.com/acmesh-official/acme.sh/actions/workflows/Linux.yml/badge.svg)](https://github.com/acmesh-official/acme.sh/actions/workflows/Linux.yml)                      | Archlinux                                                                                                                                                                                                                                                 |
+| 16  | [![Linux](https://github.com/acmesh-official/acme.sh/actions/workflows/Linux.yml/badge.svg)](https://github.com/acmesh-official/acme.sh/actions/workflows/Linux.yml)                      | fedora                                                                                                                                                                                                                                                    |
+| 17  | [![Linux](https://github.com/acmesh-official/acme.sh/actions/workflows/Linux.yml/badge.svg)](https://github.com/acmesh-official/acme.sh/actions/workflows/Linux.yml)                      | Kali Linux                                                                                                                                                                                                                                                |
+| 18  | [![Linux](https://github.com/acmesh-official/acme.sh/actions/workflows/Linux.yml/badge.svg)](https://github.com/acmesh-official/acme.sh/actions/workflows/Linux.yml)                      | Oracle Linux                                                                                                                                                                                                                                              |
+| 19  | [![Linux](https://github.com/acmesh-official/acme.sh/actions/workflows/Linux.yml/badge.svg)](https://github.com/acmesh-official/acme.sh/actions/workflows/Linux.yml)                      | Mageia                                                                                                                                                                                                                                                    |
+| 20  | [![Linux](https://github.com/acmesh-official/acme.sh/actions/workflows/Linux.yml/badge.svg)](https://github.com/acmesh-official/acme.sh/actions/workflows/Linux.yml)                      | Gentoo Linux                                                                                                                                                                                                                                              |
+| 21  | -----                                                                                                                                                                                     | Cloud Linux <https://github.com/acmesh-official/acme.sh/issues/111>                                                                                                                                                                                       |
+| 22  | -----                                                                                                                                                                                     | OpenWRT: Tested and working. See [wiki page](https://github.com/acmesh-official/acme.sh/wiki/How-to-run-on-OpenWRT)                                                                                                                                       |
+| 23  | [![](https://acmesh-official.github.io/acmetest/status/proxmox.svg)](https://github.com/acmesh-official/letest#here-are-the-latest-status)                                                | Proxmox: See Proxmox VE Wiki. Version [4.x, 5.0, 5.1](<https://pve.proxmox.com/wiki/HTTPS_Certificate_Configuration_(Version_4.x,_5.0_and_5.1)#Let.27s_Encrypt_using_acme.sh>), version [5.2 and up](https://pve.proxmox.com/wiki/Certificate_Management) |
+| 24  | [![Haiku](https://github.com/acmesh-official/acme.sh/actions/workflows/Haiku.yml/badge.svg)](https://github.com/acmesh-official/acme.sh/actions/workflows/Haiku.yml)                      | Haiku OS                                                                                                                                                                                                                                                  |
 
 > 🧪 Check our [testing project](https://github.com/acmesh-official/acmetest)
 >
@@ -120,30 +119,30 @@
 
 ## 🏛️ Supported CA
 
-| CA | Status |
-|---|---|
-| [ZeroSSL.com CA](https://github.com/acmesh-official/acme.sh/wiki/ZeroSSL.com-CA) | ⭐ **Default** |
-| Letsencrypt.org CA | ✅ Supported |
-| [SSL.com CA](https://github.com/acmesh-official/acme.sh/wiki/SSL.com-CA) | ✅ Supported |
-| [Google.com Public CA](https://github.com/acmesh-official/acme.sh/wiki/Google-Public-CA) | ✅ Supported |
-| [Actalis.com CA](https://github.com/acmesh-official/acme.sh/wiki/Actalis.com-CA) | ✅ Supported |
-| [Pebble strict Mode](https://github.com/letsencrypt/pebble) | ✅ Supported |
-| Any [RFC8555](https://tools.ietf.org/html/rfc8555)-compliant CA | ✅ Supported |
+| CA                                                                                       | Status         |
+| ---------------------------------------------------------------------------------------- | -------------- |
+| [ZeroSSL.com CA](https://github.com/acmesh-official/acme.sh/wiki/ZeroSSL.com-CA)         | ⭐ **Default** |
+| Letsencrypt.org CA                                                                       | ✅ Supported   |
+| [SSL.com CA](https://github.com/acmesh-official/acme.sh/wiki/SSL.com-CA)                 | ✅ Supported   |
+| [Google.com Public CA](https://github.com/acmesh-official/acme.sh/wiki/Google-Public-CA) | ✅ Supported   |
+| [Actalis.com CA](https://github.com/acmesh-official/acme.sh/wiki/Actalis.com-CA)         | ✅ Supported   |
+| [Pebble strict Mode](https://github.com/letsencrypt/pebble)                              | ✅ Supported   |
+| Any [RFC8555](https://tools.ietf.org/html/rfc8555)-compliant CA                          | ✅ Supported   |
 
 ---
 
 ## ⚙️ Supported Modes
 
-| Mode | Description |
-|------|-------------|
-| 📁 Webroot mode | Use existing webroot directory |
-| 🖥️ Standalone mode | Built-in webserver on port 80 |
-| 🔐 Standalone tls-alpn mode | Built-in webserver on port 443 |
-| 🪶 Apache mode | Use Apache for verification |
-| ⚡ Nginx mode | Use Nginx for verification |
-| 🌐 DNS mode | Use DNS TXT records |
+| Mode                                                                                | Description                    |
+| ----------------------------------------------------------------------------------- | ------------------------------ |
+| 📁 Webroot mode                                                                     | Use existing webroot directory |
+| 🖥️ Standalone mode                                                                  | Built-in webserver on port 80  |
+| 🔐 Standalone tls-alpn mode                                                         | Built-in webserver on port 443 |
+| 🪶 Apache mode                                                                      | Use Apache for verification    |
+| ⚡ Nginx mode                                                                       | Use Nginx for verification     |
+| 🌐 DNS mode                                                                         | Use DNS TXT records            |
 | 🔗 [DNS alias mode](https://github.com/acmesh-official/acme.sh/wiki/DNS-alias-mode) | Use DNS alias for verification |
-| 📡 [Stateless mode](https://github.com/acmesh-official/acme.sh/wiki/Stateless-Mode) | Stateless verification |
+| 📡 [Stateless mode](https://github.com/acmesh-official/acme.sh/wiki/Stateless-Mode) | Stateless verification         |
 
 ---
 
@@ -153,7 +152,7 @@
 
 #### 📥 Install Online
 
-> Check this project: https://github.com/acmesh-official/get.acme.sh
+> Check this project: <https://github.com/acmesh-official/get.acme.sh>
 
 ```bash
 curl https://get.acme.sh | sh -s email=my@example.com
@@ -177,12 +176,12 @@ cd ./acme.sh
 
 > 💡 You `don't have to be root` then, although `it is recommended`.
 
-📚 **Advanced Installation:** https://github.com/acmesh-official/acme.sh/wiki/How-to-install
+📚 **Advanced Installation:** <https://github.com/acmesh-official/acme.sh/wiki/How-to-install>
 
 **The installer will perform 3 actions:**
 
 1. Create and copy `acme.sh` to your home dir (`$HOME`): `~/.acme.sh/`.
-All certs will be placed in this folder too.
+   All certs will be placed in this folder too.
 2. Create alias for: `acme.sh=~/.acme.sh/acme.sh`.
 3. Create daily cron job to check and renew the certs if needed.
 
@@ -243,7 +242,7 @@ The certs will be placed in `~/.acme.sh/example.com/`
 
 > 🔐 The certs will default to **ECC** certificates.
 
-📚 **More examples:** https://github.com/acmesh-official/acme.sh/wiki/How-to-issue-a-cert
+📚 **More examples:** <https://github.com/acmesh-official/acme.sh/wiki/How-to-issue-a-cert>
 
 ---
 
@@ -253,7 +252,8 @@ After the cert is generated, you probably want to install/copy the cert to your 
 
 > ⚠️ **IMPORTANT:** You **MUST** use this command to copy the certs to the target files. **DO NOT** use the certs files in `~/.acme.sh/` folder — they are for internal use only, the folder structure may change in the future.
 
-#### 🪶 Apache Example:
+#### 🪶 Apache Example
+
 ```bash
 acme.sh --install-cert -d example.com \
 --cert-file      /path/to/certfile/in/apache/cert.pem  \
@@ -262,7 +262,8 @@ acme.sh --install-cert -d example.com \
 --reloadcmd     "service apache2 force-reload"
 ```
 
-#### ⚡ Nginx Example:
+#### ⚡ Nginx Example
+
 ```bash
 acme.sh --install-cert -d example.com \
 --key-file       /path/to/keyfile/in/nginx/key.pem  \
@@ -292,7 +293,7 @@ Install/copy the cert/key to the production Apache or Nginx path.
 acme.sh --issue --standalone -d example.com -d www.example.com -d cp.example.com
 ```
 
-📚 **More examples:** https://github.com/acmesh-official/acme.sh/wiki/How-to-issue-a-cert
+📚 **More examples:** <https://github.com/acmesh-official/acme.sh/wiki/How-to-issue-a-cert>
 
 ---
 
@@ -306,7 +307,7 @@ acme.sh --issue --standalone -d example.com -d www.example.com -d cp.example.com
 acme.sh --issue --alpn -d example.com -d www.example.com -d cp.example.com
 ```
 
-📚 **More examples:** https://github.com/acmesh-official/acme.sh/wiki/How-to-issue-a-cert
+📚 **More examples:** <https://github.com/acmesh-official/acme.sh/wiki/How-to-issue-a-cert>
 
 ---
 
@@ -324,7 +325,7 @@ acme.sh --issue --apache -d example.com -d www.example.com -d cp.example.com
 
 > 💡 **Note:** This Apache mode is only to issue the cert, it will **not** change your Apache config files. You will need to configure your website config files to use the cert by yourself. We don't want to mess with your Apache server, don't worry!
 
-📚 **More examples:** https://github.com/acmesh-official/acme.sh/wiki/How-to-issue-a-cert
+📚 **More examples:** <https://github.com/acmesh-official/acme.sh/wiki/How-to-issue-a-cert>
 
 ---
 
@@ -344,7 +345,7 @@ acme.sh --issue --nginx -d example.com -d www.example.com -d cp.example.com
 
 > 💡 **Note:** This Nginx mode is only to issue the cert, it will **not** change your Nginx config files. You will need to configure your website config files to use the cert by yourself. We don't want to mess with your Nginx server, don't worry!
 
-📚 **More examples:** https://github.com/acmesh-official/acme.sh/wiki/How-to-issue-a-cert
+📚 **More examples:** <https://github.com/acmesh-official/acme.sh/wiki/How-to-issue-a-cert>
 
 ---
 
@@ -354,13 +355,13 @@ If your DNS provider supports API access, we can use that API to automatically i
 
 > ✨ **You don't have to do anything manually!**
 
-📚 **Currently acme.sh supports most DNS providers:** https://github.com/acmesh-official/acme.sh/wiki/dnsapi
+📚 **Currently acme.sh supports most DNS providers:** <https://github.com/acmesh-official/acme.sh/wiki/dnsapi>
 
 ---
 
 ### 9️⃣ Use DNS Manual Mode
 
-See: https://github.com/acmesh-official/acme.sh/wiki/dns-manual-mode first.
+See: <https://github.com/acmesh-official/acme.sh/wiki/dns-manual-mode> first.
 
 If your dns provider doesn't support any api access, you can add the txt record by hand.
 
@@ -400,14 +401,14 @@ Just set the `keylength` to a valid, supported value.
 
 **Valid values for the `keylength` parameter:**
 
-| Key Length | Description |
-|------------|-------------|
-| `ec-256` | prime256v1, "ECDSA P-256" ⭐ **Default** |
-| `ec-384` | secp384r1, "ECDSA P-384" |
-| `ec-521` | secp521r1, "ECDSA P-521" ⚠️ Not supported by Let's Encrypt yet |
-| `2048` | RSA 2048-bit |
-| `3072` | RSA 3072-bit |
-| `4096` | RSA 4096-bit |
+| Key Length | Description                                                    |
+| ---------- | -------------------------------------------------------------- |
+| `ec-256`   | prime256v1, "ECDSA P-256" ⭐ **Default**                       |
+| `ec-384`   | secp384r1, "ECDSA P-384"                                       |
+| `ec-521`   | secp521r1, "ECDSA P-521" ⚠️ Not supported by Let's Encrypt yet |
+| `2048`     | RSA 2048-bit                                                   |
+| `3072`     | RSA 3072-bit                                                   |
+| `4096`     | RSA 4096-bit                                                   |
 
 **Examples:**
 
@@ -432,8 +433,6 @@ It's simple! Just give a wildcard domain as the `-d` parameter:
 ```sh
 acme.sh --issue -d example.com -d '*.example.com' --dns dns_cf
 ```
-
-
 
 ---
 
@@ -495,13 +494,13 @@ acme.sh --upgrade --auto-upgrade 0
 
 ### 1️⃣5️⃣ Issue a Certificate from an Existing CSR
 
-📚 https://github.com/acmesh-official/acme.sh/wiki/Issue-a-cert-from-existing-CSR
+📚 <https://github.com/acmesh-official/acme.sh/wiki/Issue-a-cert-from-existing-CSR>
 
 ---
 
 ### 1️⃣6️⃣ Send Notifications in Cronjob
 
-📚 https://github.com/acmesh-official/acme.sh/wiki/notify
+📚 <https://github.com/acmesh-official/acme.sh/wiki/notify>
 
 ---
 
@@ -513,10 +512,10 @@ acme.sh --upgrade --auto-upgrade 0
 
 ### 1️⃣8️⃣ Acknowledgments
 
-| Project | Link |
-|---------|------|
-| 🙏 Acme-tiny | https://github.com/diafygi/acme-tiny |
-| 📜 ACME protocol | https://github.com/ietf-wg-acme/acme |
+| Project          | Link                                   |
+| ---------------- | -------------------------------------- |
+| 🙏 Acme-tiny     | <https://github.com/diafygi/acme-tiny> |
+| 📜 ACME protocol | <https://github.com/ietf-wg-acme/acme> |
 
 ---
 
@@ -567,8 +566,8 @@ Support this project with your organization. Your logo will show up here with a 
 
 > 💝 Your donation makes **acme.sh** better!
 
-| Method | Link |
-|--------|------|
+| Method                                 | Link                                               |
+| -------------------------------------- | -------------------------------------------------- |
 | PayPal / Alipay(支付宝) / Wechat(微信) | [https://donate.acme.sh/](https://donate.acme.sh/) |
 
 📜 [Donate List](https://github.com/acmesh-official/acme.sh/wiki/Donate-list)
@@ -579,15 +578,16 @@ Support this project with your organization. Your logo will show up here with a 
 
 > [!NOTE]
 > This repository is officially maintained by <strong>ZeroSSL</strong> as part of our commitment to providing secure and reliable SSL/TLS solutions. We welcome contributions and feedback from the community!  
-> For more information about our services, including free and paid SSL/TLS certificates, visit https://zerossl.com.
->   
+> For more information about our services, including free and paid SSL/TLS certificates, visit <https://zerossl.com>.
+>
 > All donations made through this repository go directly to the original independent maintainer (Neil Pang), not to ZeroSSL.
+
 <p align="center">
-	<a href="https://zerossl.com">
-		<picture>
-			<source media="(prefers-color-scheme: dark)" srcset="https://zerossl.com/assets/images/zerossl_logo_white.svg">
-			<source media="(prefers-color-scheme: light)" srcset="https://zerossl.com/assets/images/zerossl_logo.svg">
-			<img src="https://zerossl.com/assets/images/zerossl_logo.svg" alt="ZeroSSL" width="256">
-		</picture>
-	</a>
+ <a href="https://zerossl.com">
+  <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://zerossl.com/assets/images/zerossl_logo_white.svg">
+   <source media="(prefers-color-scheme: light)" srcset="https://zerossl.com/assets/images/zerossl_logo.svg">
+   <img src="https://zerossl.com/assets/images/zerossl_logo.svg" alt="ZeroSSL" width="256">
+  </picture>
+ </a>
 </p>

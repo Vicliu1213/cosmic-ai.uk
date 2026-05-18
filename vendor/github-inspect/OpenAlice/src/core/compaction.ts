@@ -100,6 +100,66 @@ const TRUNCATION_PLACEHOLDER = '[content truncated during compaction]'
 const LARGE_TOOL_RESULT_THRESHOLD = 500 // characters
 const MIN_MICROCOMPACT_SAVINGS = 20_000  // tokens
 
+function extractText(content: SessionEntry['message']['content']): string {
+  if (typeof content === 'string') return content
+  return content
+    .map((block) => {
+      if (block.type === 'text') return block.text
+      if (block.type === 'tool_result') return block.content
+      return ''
+    })
+    .join('\n')
+}
+
+function scoreImportance(entry: SessionEntry): number {
+  if (entry.type === 'system') return 100
+
+  const text = extractText(entry.message.content)
+  const lower = text.toLowerCase()
+  let score = entry.type === 'assistant' ? 3 : 5
+
+  if (text.length <= 120) score += 4
+  if (/\b(error|exception|failed|failure|warning|critical|urgent|blocked)\b/.test(lower)) score += 6
+  if (/\b(decision|decided|approved|confirmed|selected|final|done|resolved)\b/.test(lower)) score += 5
+  if (/\b(todo|next step|action item|plan|follow-?up|must|should)\b/.test(lower)) score += 4
+  if (/[0-9]/.test(text)) score += 2
+  if (/[=:{}`\[\]]/.test(text)) score += 1
+  if (/```/.test(text)) score += 2
+  if (text.includes('?')) score += 1
+
+  if (entry.type === 'user') score += 1
+  if (entry.type === 'assistant' && /\b(tool_result|tool_use)\b/.test(lower)) score -= 1
+
+  return score
+}
+
+function canTruncateEntry(entry: SessionEntry): boolean {
+  if (entry.type === 'system') return false
+  const content = entry.message.content
+  if (typeof content === 'string') return content.length > LARGE_TOOL_RESULT_THRESHOLD
+  return content.some((block) => block.type === 'tool_result' && block.content.length > LARGE_TOOL_RESULT_THRESHOLD)
+}
+
+function truncateEntry(entry: SessionEntry): { entry: SessionEntry; savedTokens: number } {
+  const content = entry.message.content
+  if (typeof content === 'string') return { entry, savedTokens: 0 }
+
+  let savedTokens = 0
+  const newContent: ContentBlock[] = content.map((block) => {
+    if (block.type !== 'tool_result' || block.content.length <= LARGE_TOOL_RESULT_THRESHOLD) {
+      return block
+    }
+
+    savedTokens += estimateTokens(block.content) - estimateTokens(TRUNCATION_PLACEHOLDER)
+    return { ...block, content: TRUNCATION_PLACEHOLDER }
+  })
+
+  return {
+    entry: { ...entry, message: { ...entry.message, content: newContent } },
+    savedTokens,
+  }
+}
+
 /**
  * Strip large old tool results in-memory. Does NOT write to disk.
  * Returns a new entry array and the estimated token savings.
@@ -117,28 +177,31 @@ export function microcompact(
     }
   }
 
-  // Keep the most recent N tool results intact
-  const truncatable = new Set(
-    toolResultIndices.slice(0, Math.max(0, toolResultIndices.length - config.microcompactKeepRecent)),
-  )
+  const keepRecent = Math.max(0, config.microcompactKeepRecent)
+  const protectedIndices = new Set(toolResultIndices.slice(-keepRecent))
+  const candidates = toolResultIndices
+    .filter((index) => !protectedIndices.has(index) && canTruncateEntry(entries[index]))
+    .map((index) => ({
+      index,
+      importance: scoreImportance(entries[index]),
+      tokens: estimateEntryTokens(entries[index]),
+    }))
+    .toSorted((a, b) => a.importance - b.importance || b.tokens - a.tokens || a.index - b.index)
 
+  const result = entries.map((entry) => entry)
   let savedTokens = 0
-  const result = entries.map((entry, i) => {
-    if (!truncatable.has(i)) return entry
+  let currentTokens = estimateSessionTokens(entries)
+  const threshold = getAutoCompactThreshold(config)
 
-    const content = entry.message.content
-    if (!Array.isArray(content)) return entry
+  for (const candidate of candidates) {
+    if (currentTokens <= threshold) break
+    const truncated = truncateEntry(result[candidate.index])
+    if (truncated.savedTokens === 0) continue
 
-    const newContent: ContentBlock[] = content.map(block => {
-      if (block.type === 'tool_result' && block.content.length > LARGE_TOOL_RESULT_THRESHOLD) {
-        savedTokens += estimateTokens(block.content) - estimateTokens(TRUNCATION_PLACEHOLDER)
-        return { ...block, content: TRUNCATION_PLACEHOLDER }
-      }
-      return block
-    })
-
-    return { ...entry, message: { ...entry.message, content: newContent } }
-  })
+    result[candidate.index] = truncated.entry
+    savedTokens += truncated.savedTokens
+    currentTokens -= truncated.savedTokens
+  }
 
   return { entries: result, savedTokens }
 }

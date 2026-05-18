@@ -9,7 +9,7 @@ class Agent:
         self.genome = genome_config["theories"]
         self.resources = resources
         self.reputation = 1.0
-        self.kb = ray.get(kb_ref)
+        self.kb = ray.get(kb_ref) if isinstance(kb_ref, ray.ObjectRef) else kb_ref
         self.known_theories = {}
         for theory in self.genome:
             name = theory['name']
@@ -36,5 +36,7 @@ class Agent:
             return quantum_tasks.run_shor(**kwargs)
         elif task_type == "annealing":
             return quantum_tasks.run_annealing(**kwargs)
+        elif task_type == "classic_reconstruct":
+            return quantum_tasks.run_classic_reconstruction(**kwargs)
         else:
             return f"未知任務: {task_type}"
