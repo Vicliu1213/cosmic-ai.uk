@@ -9,16 +9,19 @@ class KnowledgeBase:
 
     def _load_all(self):
         for filename in os.listdir(self.docs_path):
-            if filename.endswith(".md"):
-                filepath = os.path.join(self.docs_path, filename)
-                with open(filepath, 'r', encoding='utf-8') as f:
-                    content = f.read()
-                theory_name = self._extract_title(content) or filename.replace('.md', '')
-                self.theories[theory_name] = {
-                    'filename': filename,
-                    'content': content,
-                    'summary': self._extract_summary(content)
-                }
+            if not filename.endswith(".md"):
+                continue
+            if not re.match(r'^\d{2}_.+\.md$', filename):
+                continue
+            filepath = os.path.join(self.docs_path, filename)
+            with open(filepath, 'r', encoding='utf-8') as f:
+                content = f.read()
+            theory_name = self._extract_title(content) or filename.replace('.md', '')
+            self.theories[theory_name] = {
+                'filename': filename,
+                'content': content,
+                'summary': self._extract_summary(content)
+            }
         print(f"知識庫已載入 {len(self.theories)} 個理論: {', '.join(self.theories.keys())}")
 
     def _extract_title(self, content):

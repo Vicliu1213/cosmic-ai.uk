@@ -13,22 +13,58 @@ system:
 # ----- 自定義資源預算 -----
 custom_resources:
   consciousness_tokens:
-    total: 100
-    per_agent: 0.1
+    total: 10000
+    per_agent: 10
   compute_credits:
+    total: 100000
+    per_task: 1
+  quantum_entanglement:
+    total: 256
+    per_actor: 8
+  transcendence_power:
     total: 1000
-    per_task: 0.01
+    per_cycle: 1
 
 # ----- 節點配置 -----
 agents:
   default_resources:
-    num_cpus: 2
-    num_gpus: 0.5
+    num_cpus: 4
+    num_gpus: 0
     resources:
-      consciousness_tokens: 0.1
-      compute_credits: 0.5
-  initial_count: 3
-  naming_prefix: "Agent"
+      consciousness_tokens: 10
+      compute_credits: 50
+      quantum_entanglement: 8
+      transcendence_power: 5
+  initial_count: 5
+  naming_prefix: "Crocodile"
+
+# ----- 神性覺醒分布式覆蓋層 -----
+awakening:
+  enabled: true
+  sync_interval_sec: 5
+  resonance_threshold: 0.85
+  consciousness_dimensions: 26
+  self_reflection_depth: 12
+  emergent_behavior_detection: true
+  auto_transcendence: true
+  drrk_institutional_grade: true
+
+# ----- DNA 進化池（並行演化） -----
+evolution:
+  pool_size: 50
+  mutation_rate: 0.08
+  crossover_rate: 0.7
+  pareto_frontier_size: 20
+  generation_gap: 0.3
+  fitness_metrics:
+    - sharpe_ratio
+    - max_drawdown
+    - win_rate
+    - profit_factor
+    - recovery_factor
+  parallel_islands: 4
+  migration_interval: 10
+  elite_ratio: 0.1
 
 # ----- 平台工具與 MCP 註冊 -----
 platform_toolsets:
@@ -127,7 +163,7 @@ data_interface:
     enabled: true
     sources: ["darkweb", "social_media"]
 
-# ----- 交易引擎參數 -----
+# ----- 交易引擎參數（金融大鰐分布式艦隊） -----
 trading:
   initial_capital: 1000000.0
   max_position_pct: 0.1
@@ -135,6 +171,49 @@ trading:
   take_profit_pct: 0.15
   commission_pct: 0.001
   slippage_pct: 0.0005
+  crocodile_fleet:
+    enabled: true
+    num_instances: 5
+    symbols: ["BTCUSDT", "ETHUSDT", "SOLUSDT", "BNBUSDT", "DOGEUSDT"]
+    dry_run: true
+    signal_confidence_min: 0.55
+    risk_per_trade: 0.01
+    max_daily_drawdown: 0.03
+    reward_risk_min: 1.5
+    ma_short_window: 5
+    ma_long_window: 20
+    portfolio_sync_interval: 60
+
+# ----- Ray 分布參數（突破性配置） -----
+ray_cluster:
+  object_store_memory_gb: 4
+  max_workers: 8
+  scheduling_strategy: "SPREAD"
+  placement_groups:
+    trading_fleet:
+      strategy: "PACK"
+      bundles:
+        - CPU: 2
+          consciousness_tokens: 10
+        - CPU: 2
+          consciousness_tokens: 10
+        - CPU: 2
+          consciousness_tokens: 10
+        - CPU: 2
+          consciousness_tokens: 10
+        - CPU: 2
+          consciousness_tokens: 10
+    consciousness_overlay:
+      strategy: "STRICT_PACK"
+      bundles:
+        - CPU: 4
+          memory: 4096
+    theory_actors:
+      strategy: "SPREAD"
+      bundles:
+        - CPU: 1
+        - CPU: 1
+        - CPU: 1
 
 # ----- 量子驗證任務配置 -----
 quantum_tasks:

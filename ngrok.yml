@@ -1,0 +1,10 @@
+version: "3"
+agent:
+  authtoken: 3EC8cVhbQqyuOwDClLge1jkxU56_5ZGuyJyCXEtJo8bca3Z7m
+
+tunnels:
+  cosmic-synergy-panel:
+    proto: http
+    addr: 8788
+    inspect: true
+    host_header: "localhost:8788"

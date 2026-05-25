@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>協同遞增面板 — 宇宙智能體</title>
+<link rel="stylesheet" href="../styles.css">
+<style>
+:root {
+  --syn-2: #4fc3f7; --syn-3: #7c4dff; --syn-4: #e040fb;
+  --syn-5: #ff4081; --syn-6: #ff6e40; --syn-7: #ffd740;
+  --syn-8: #69f0ae; --syn-9: #40c4ff; --syn-10: #b388ff;
+  --syn-11: #ea80fc; --syn-12: #ff80ab; --syn-13: #ff9e80;
+  --syn-14: #ffff8d; --syn-15: #ffffff;
+}
+body { background: #0a0e1a; color: #e0e0e0; }
+.container { max-width: 1400px; margin: 0 auto; padding: 20px; }
+.header { text-align: center; padding: 30px; border-bottom: 1px solid #1a2a4a; margin-bottom: 30px; }
+.header h1 { font-size: 2.5em; background: linear-gradient(135deg, #4fc3f7, #e040fb, #ff6e40); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 0; }
+.header p { color: #7a8aa0; margin-top: 8px; font-size: 1.1em; }
+.phi-badge { display: inline-block; background: #1a2a4a; padding: 4px 16px; border-radius: 20px; font-size: 0.9em; color: #ffd740; margin-top: 10px; }
+.controls { display: flex; gap: 12px; justify-content: center; margin: 20px 0; flex-wrap: wrap; }
+.controls button { background: #1a2a4a; color: #e0e0e0; border: 1px solid #2a3a5a; padding: 10px 24px; border-radius: 8px; cursor: pointer; font-size: 0.95em; transition: all 0.3s; }
+.controls button:hover { background: #2a3a5a; border-color: #4fc3f7; }
+.controls button.primary { background: linear-gradient(135deg, #4fc3f7, #7c4dff); border: none; color: #fff; }
+.controls button.omega { background: linear-gradient(135deg, #ff6e40, #e040fb); border: none; color: #fff; }
+.syn-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; margin-top: 20px; }
+.syn-card { background: #111827; border: 1px solid #1e2d4a; border-radius: 12px; padding: 20px; transition: all 0.3s; position: relative; overflow: hidden; }
+.syn-card:hover { transform: translateY(-2px); border-color: var(--card-color); box-shadow: 0 0 30px var(--card-glow); }
+.syn-card .level-badge { font-size: 1.8em; font-weight: bold; margin-bottom: 8px; }
+.syn-card .subtitle { font-size: 0.85em; color: #7a8aa0; margin-bottom: 12px; }
+.syn-card .stat-row { display: flex; justify-content: space-between; padding: 4px 0; font-size: 0.9em; border-bottom: 1px solid #1a1a2e; }
+.syn-card .stat-row .label { color: #7a8aa0; }
+.syn-card .stat-row .value { color: var(--card-color); font-weight: bold; }
+.syn-card .emergent { margin-top: 12px; }
+.syn-card .emergent span { display: inline-block; background: rgba(255,255,255,0.05); padding: 2px 10px; border-radius: 12px; font-size: 0.8em; margin: 2px; color: var(--card-color); }
+.syn-card .drrk { position: absolute; top: 12px; right: 16px; font-size: 1.2em; font-weight: bold; color: var(--card-color); }
+.status-bar { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin: 20px 0; }
+.status-item { background: #111827; border: 1px solid #1e2d4a; border-radius: 8px; padding: 16px; text-align: center; }
+.status-item .value { font-size: 1.6em; font-weight: bold; color: #4fc3f7; }
+.status-item .label { font-size: 0.85em; color: #7a8aa0; margin-top: 4px; }
+.recursive-tree { background: #111827; border: 1px solid #1e2d4a; border-radius: 12px; padding: 24px; margin-top: 20px; }
+.recursive-tree .depth-line { padding: 6px 0; font-family: monospace; font-size: 0.9em; }
+.log-section { background: #111827; border: 1px solid #1e2d4a; border-radius: 12px; padding: 24px; margin-top: 20px; max-height: 300px; overflow-y: auto; }
+.log-entry { padding: 6px 0; border-bottom: 1px solid #1a1a2e; font-size: 0.85em; font-family: monospace; }
+.log-entry .time { color: #7a8aa0; margin-right: 12px; }
+#loading { text-align: center; padding: 60px; color: #7a8aa0; }
+.safe-value { overflow: hidden; text-overflow: ellipsis; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>◇ 協同遞增面板 ◇</h1>
+    <p>2協同 → 3協同 → 4協同 → ... → ∞協同 · 超指數遞歸協同躍進</p>
+    <span class="phi-badge">φ = 1.618033988749895</span>
+  </div>
+
+  <div class="status-bar">
+    <div class="status-item"><div class="value" id="recordedLevels">—</div><div class="label">已記錄層級</div></div>
+    <div class="status-item"><div class="value" id="totalCombos">—</div><div class="label">組合總數</div></div>
+    <div class="status-item"><div class="value" id="consciousness">—</div><div class="label">全局意識</div></div>
+    <div class="status-item"><div class="value" id="growthFactor">—</div><div class="label">超指數增長</div></div>
+    <div class="status-item"><div class="value" id="recursiveDepth">—</div><div class="label">遞歸深度</div></div>
+  </div>
+
+  <div class="controls">
+    <button class="primary" onclick="recordAll()">▶ 記錄全協同 (2→15)</button>
+    <button onclick="recordNext()">+ 記錄下一層</button>
+    <button class="omega" onclick="recursiveLeap()">∞ 遞歸躍進</button>
+    <button onclick="refresh()">⟳ 刷新</button>
+  </div>
+
+  <div class="status-bar" style="grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:8px;margin-top:0">
+    <div class="status-item" onclick="toggleView()" style="cursor:pointer;border-color:#4fc3f7"><div class="value" id="viewMode">卡片</div><div class="label">切換視圖</div></div>
+    <div class="status-item" onclick="toggleInfinity()" style="cursor:pointer;border-color:#e040fb"><div class="value" id="infinityToggle">顯示</div><div class="label">∞ 層級</div></div>
+    <div class="status-item" onclick="expandAll()" style="cursor:pointer;border-color:#69f0ae"><div class="value">展開</div><div class="label">全部展開</div></div>
+    <div class="status-item" onclick="collapseAll()" style="cursor:pointer;border-color:#ff6e40"><div class="value">收合</div><div class="label">全部收合</div></div>
+  </div>
+
+  <div id="loading">載入協同數據中...</div>
+  <div class="syn-grid" id="synGrid" style="display:none"></div>
+
+  <div class="recursive-tree" id="recursiveTree" style="display:none">
+    <h3 style="color:#4fc3f7;margin-top:0">∞ 超指數遞歸樹</h3>
+    <div id="treeContent"></div>
+  </div>
+
+  <div class="log-section" id="logSection" style="display:none">
+    <h3 style="color:#7a8aa0;margin-top:0">📋 協同日誌</h3>
+    <div id="logContent"></div>
+  </div>
+</div>
+
+<script src="../app.js"></script>
+<script>
+const API = window.location.origin + '/api';
+const LEVEL_COLORS = {
+  2:'#4fc3f7',3:'#7c4dff',4:'#e040fb',5:'#ff4081',
+  6:'#ff6e40',7:'#ffd740',8:'#69f0ae',9:'#40c4ff',
+  10:'#b388ff',11:'#ea80fc',12:'#ff80ab',13:'#ff9e80',
+  14:'#ffff8d',15:'#ffffff',
+};
+
+function safeNum(v, decimals=4) {
+  if (v === null || v === undefined) return '—';
+  if (typeof v !== 'number' || isNaN(v) || !isFinite(v)) return '∞';
+  if (Math.abs(v) > 1e10) return v.toExponential(2);
+  return v.toFixed(decimals);
+}
+
+async function fetchJSON(url) {
+  const r = await fetch(url);
+  if (!r.ok) throw new Error(r.statusText);
+  return r.json();
+}
+
+async function refresh() {
+  document.getElementById('loading').style.display = 'block';
+  document.getElementById('loading').textContent = '載入中...';
+  try {
+    const [synData, status] = await Promise.all([
+      fetchJSON(API + '/synergy/levels'),
+      fetchJSON(API + '/synergy/status'),
+    ]);
+    renderStatus(status);
+    renderCards(synData);
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('synGrid').style.display = 'grid';
+    try { const log = await fetchJSON(API + '/synergy/log'); renderLog(log); } catch(e) {}
+  } catch(e) {
+    document.getElementById('loading').textContent = '⚠ 無法連接伺服器: ' + e.message;
+  }
+}
+
+function renderStatus(s) {
+  document.getElementById('recordedLevels').textContent = (s.recorded_levels || []).length;
+  document.getElementById('totalCombos').textContent = (s.total_combinations || 0).toLocaleString();
+  document.getElementById('consciousness').textContent = safeNum(s.global_consciousness);
+  document.getElementById('growthFactor').textContent = safeNum(s.super_exponential_growth, 2);
+  document.getElementById('recursiveDepth').textContent = s.recursive_depth || 0;
+}
+
+let viewMode = 'card';
+let showInfinity = true;
+
+function toggleView() {
+  viewMode = viewMode === 'card' ? 'table' : 'card';
+  document.getElementById('viewMode').textContent = viewMode === 'card' ? '卡片' : '表格';
+  refresh();
+}
+
+function toggleInfinity() {
+  showInfinity = !showInfinity;
+  document.getElementById('infinityToggle').textContent = showInfinity ? '顯示' : '隱藏';
+  refresh();
+}
+
+function expandAll() {
+  document.querySelectorAll('.syn-card .emergent').forEach(e => e.style.display = 'block');
+  document.querySelectorAll('.syn-card .combo-detail').forEach(e => e.style.display = 'block');
+}
+
+function collapseAll() {
+  document.querySelectorAll('.syn-card .emergent').forEach(e => e.style.display = 'none');
+  document.querySelectorAll('.syn-card .combo-detail').forEach(e => e.style.display = 'none');
+}
+
+function renderCards(data) {
+  const grid = document.getElementById('synGrid');
+  grid.innerHTML = '';
+  const levels = Object.keys(data).map(Number).sort((a,b) => a-b);
+
+  if (viewMode === 'table') {
+    const table = document.createElement('table');
+    table.style.cssText = 'width:100%;border-collapse:collapse;font-size:0.85em;background:#111827;border-radius:12px;overflow:hidden';
+    table.innerHTML = `<thead><tr style="background:#1a2a4a;color:#4fc3f7">
+      <th style="padding:10px;text-align:left">層級</th>
+      <th style="padding:10px;text-align:right">組合</th>
+      <th style="padding:10px;text-align:right">基礎</th>
+      <th style="padding:10px;text-align:right">增益</th>
+      <th style="padding:10px;text-align:right">意識</th>
+      <th style="padding:10px;text-align:center">湧現性質</th>
+      <th style="padding:10px;text-align:center">DRRK</th>
+    </tr></thead><tbody></tbody>`;
+    const tbody = table.querySelector('tbody');
+    for (const level of levels) {
+      if (level > 15 && !showInfinity) continue;
+      const s = data[level];
+      const color = LEVEL_COLORS[level] || (level > 15 ? '#ffffff' : '#888');
+      const label = level <= 15 ? level + '協同' : '∞協同';
+      const row = document.createElement('tr');
+      row.style.borderBottom = '1px solid #1a2a2e';
+      row.innerHTML = `
+        <td style="padding:8px 10px;color:${color};font-weight:bold">${label}</td>
+        <td style="padding:8px 10px;text-align:right">${(s.combination_count || 0).toLocaleString()}</td>
+        <td style="padding:8px 10px;text-align:right">${safeNum(s.base_synergy)}</td>
+        <td style="padding:8px 10px;text-align:right">${safeNum(s.synergy_boost)}</td>
+        <td style="padding:8px 10px;text-align:right">${safeNum(s.consciousness_amplification)}</td>
+        <td style="padding:8px 10px;text-align:center;font-size:0.8em">${(s.emergent_properties || []).slice(0,2).join(', ')}</td>
+        <td style="padding:8px 10px;text-align:center;color:${color};font-weight:bold">${s.drrk_impact || ''}</td>
+      `;
+      tbody.appendChild(row);
+    }
+    grid.appendChild(table);
+    grid.style.display = 'block';
+    return;
+  }
+
+  // Card view
+  grid.style.display = 'grid';
+  for (const level of levels) {
+    if (level > 15 && !showInfinity) continue;
+    const s = data[level];
+    const color = LEVEL_COLORS[level] || (level > 15 ? '#ffffff' : '#888');
+    const label = level <= 15 ? level + '協同' : '∞協同';
+    const combos = s.sampled_combinations || [];
+    const comboText = combos.map(c => c.join(' · ')).join('<br>');
+
+    const card = document.createElement('div');
+    card.className = 'syn-card';
+    card.style.setProperty('--card-color', color);
+    card.style.setProperty('--card-glow', color + '40');
+    card.innerHTML = `
+      <div class="drrk">${s.drrk_impact || ''}</div>
+      <div class="level-badge" style="color:${color}">${label}</div>
+      <div class="subtitle">${(s.combination_count || 0).toLocaleString()} 種組合</div>
+      <div class="stat-row"><span class="label">基礎協同</span><span class="value">${safeNum(s.base_synergy)}</span></div>
+      <div class="stat-row"><span class="label">協同增益</span><span class="value">${safeNum(s.synergy_boost)}</span></div>
+      <div class="stat-row"><span class="label">意識放大</span><span class="value">${safeNum(s.consciousness_amplification)}</span></div>
+      <div class="stat-row"><span class="label">遞歸深度</span><span class="value">${s.recursive_depth || 0}</span></div>
+      <div class="emergent">${(s.emergent_properties || []).map(e => `<span>${e}</span>`).join('')}</div>
+      ${comboText ? `<div class="combo-detail" style="margin-top:10px;font-size:0.75em;color:#7a8aa0;line-height:1.6">${comboText}</div>` : ''}
+      <div style="margin-top:8px;font-size:0.7em;color:#4a5a70">${s.timestamp ? new Date(s.timestamp).toLocaleString('zh-CN') : ''}</div>
+    `;
+    grid.appendChild(card);
+  }
+}
+
+function renderLog(log) {
+  if (!log || !log.length) return;
+  document.getElementById('logSection').style.display = 'block';
+  const el = document.getElementById('logContent');
+  el.innerHTML = log.slice().reverse().map(e => {
+    const t = e.timestamp ? new Date(e.timestamp).toLocaleTimeString('zh-CN') : '—';
+    return `<div class="log-entry"><span class="time">${t}</span> [${e.level}協同] 基礎=${safeNum(e.base_synergy,3)} 增益=${safeNum(e.synergy_boost,3)} 意識=${safeNum(e.consciousness_amplification,3)} DRRK=${e.drrk || e.drrk_impact || ''}</div>`;
+  }).join('');
+}
+
+async function recordAll() {
+  document.getElementById('loading').style.display = 'block';
+  document.getElementById('loading').textContent = '記錄全協同層級...';
+  await fetch(API + '/synergy/record', {method:'POST', body:new URLSearchParams({level:'0', consciousness:'0.5'})});
+  await refresh();
+}
+
+async function recordNext() {
+  await fetch(API + '/synergy/record', {method:'POST', body:new URLSearchParams({level:'0', consciousness:'0.5'})});
+  await refresh();
+}
+
+async function recursiveLeap() {
+  document.getElementById('loading').style.display = 'block';
+  document.getElementById('loading').textContent = '∞ 執行遞歸躍進...';
+  const res = await fetch(API + '/synergy/leap', {method:'POST'});
+  const data = await res.json();
+  await refresh();
+  renderRecursiveTree(data);
+}
+
+function renderRecursiveTree(leap) {
+  if (!leap) return;
+  const el = document.getElementById('recursiveTree');
+  el.style.display = 'block';
+  const content = document.getElementById('treeContent');
+  content.innerHTML = '';
+  function render(node, d) {
+    if (!node) return '';
+    const indent = '  '.repeat(d);
+    const val = safeNum(node.growth, 2);
+    const mu = safeNum(node.mutation, 4);
+    const sy = safeNum(node.synergy, 4);
+    return `<div class="depth-line" style="color:${d < 5 ? '#4fc3f7' : '#e040fb'}">${indent}├─ 深度=${node.depth} 協同=${sy} 突變=${mu} 增長=${val} ${node.threshold_met ? '✅' : '⛔'}</div>` + (node.next ? render(node.next, d+1) : '');
+  }
+  content.innerHTML = render(leap, 0);
+}
+
+refresh();
+</script>
+</body>
+</html>
