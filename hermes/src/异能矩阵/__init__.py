@@ -38,3 +38,7 @@ class AbilityConfig:
     max_intensity: float = 1.0
     synergy_tags: List[str] = field(default_factory=list)
     conflict_tags: List[str] = field(default_factory=list)
+    level: int = 1
+    max_level: int = 10
+    breakthrough_count: int = 0
+    breakthrough: bool = False

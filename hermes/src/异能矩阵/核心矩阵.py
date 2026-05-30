@@ -1,7 +1,7 @@
 """
 核心矩阵 - 我是指挥中心，统筹全局
 """
-from typing import Dict, Optional
+from typing import Dict, List, Optional
 from datetime import datetime
 import logging
 from . import AbilityConfig, ActivationStatus
@@ -21,6 +21,11 @@ from .异能协同引擎 import (
     SynergyEffectAnalysis, ConflictDetectionMechanism,
     OptimalCombinationFinder, SynergyStrengthCalculation
 )
+from .技能突破 import (
+    BreakthroughConditionDetection, BreakthroughEffectCalculation,
+    BreakthroughSequenceManager, NoSkillBreakthroughMode
+)
+from .超指数协同增长 import SystemEvolutionOrchestrator
 
 logger = logging.getLogger(__name__)
 
@@ -53,6 +58,13 @@ class CoreMatrix:
         self.conflict_detector = ConflictDetectionMechanism()
         self.optimal_finder = OptimalCombinationFinder()
         self.synergy_calculator = SynergyStrengthCalculation()
+        # 技能突破子系统
+        self.breakthrough_detector = BreakthroughConditionDetection()
+        self.breakthrough_effects = BreakthroughEffectCalculation()
+        self.breakthrough_sequencer = BreakthroughSequenceManager()
+        self.no_skill_mode = NoSkillBreakthroughMode()
+        # 超指数协同增长子系统
+        self.evolution = SystemEvolutionOrchestrator()
         # 运行状态
         self.active_abilities: Dict = {}
         logger.info("=" * 50)
@@ -105,6 +117,101 @@ class CoreMatrix:
             'remaining_energy': self.energy_pool.current,
             'status': ActivationStatus.ACTIVE, 'cooldown': ability.base_cooldown
         }
+
+    async def breakthrough_ability(
+        self, ability: AbilityConfig,
+        base_power: float = 1.0,
+        user_state: Dict = None,
+        environment: Dict = None
+    ) -> Dict:
+        logger.info(f"\n{'='*50}\n💥 尝试突破: {ability.name}\n{'='*50}")
+        user_state = user_state or {'available_energy': 100, 'health': 100, 'status': 'normal'}
+        environment = environment or {}
+        no_skill = self.no_skill_mode.active
+
+        # 1. 条件检测
+        passed, reasons = self.breakthrough_detector.check_conditions(
+            ability.name, ability.level, ability.max_level,
+            ability.breakthrough_count,
+        )
+        if not passed and not no_skill:
+            return {'success': False, 'reasons': reasons, 'ability': ability.name}
+
+        # 2. 无技突破模式
+        if no_skill:
+            ns_result = self.no_skill_mode.apply_to_skill(ability.name)
+            if not ns_result['success']:
+                return ns_result
+
+        # 3. 计算突破效果
+        effect = self.breakthrough_effects.calculate_effect(
+            ability.name, ability.breakthrough_count + 1,
+            base_power, no_skill_mode=no_skill,
+        )
+
+        # 4. 应用突破
+        ability.breakthrough_count += 1
+        ability.breakthrough = True
+        ability.max_level += 5
+        ability.level = min(ability.level + 3, ability.max_level)
+
+        # 5. 记录历史
+        self.breakthrough_sequencer.record_breakthrough(
+            ability.name, ability.breakthrough_count, effect,
+        )
+
+        logger.info(f"✅ {ability.name} 突破成功！第{ability.breakthrough_count}次")
+        return {
+            'success': True, 'ability': ability.name,
+            'breakthrough_count': ability.breakthrough_count,
+            'new_level': ability.level, 'new_max_level': ability.max_level,
+            'effect': effect,
+        }
+
+    def enable_no_skill_breakthrough(self):
+        self.no_skill_mode.enable()
+        self.breakthrough_detector.enable_no_skill_mode()
+        logger.info("🔥 所有舊技能已設定為可無技突破")
+
+    def get_breakthrough_status(self) -> Dict:
+        return {
+            'no_skill_mode': self.no_skill_mode.get_status(),
+            'pending': self.breakthrough_sequencer.get_pending(),
+        }
+
+    def init_evolution_network(self, skill_names: List[str]):
+        self.evolution.initialize_full_connections(skill_names)
+        logger.info(f"🌐 核心矩阵: 全技能协同进化网络初始化完成")
+
+    async def run_evolution_cycle(self) -> Dict:
+        skills = {}
+        skill_levels = {}
+        breakthroughs = {}
+        for aid, data in self.active_abilities.items():
+            ab = data["ability"]
+            skills[ab.name] = ab.max_intensity * (1 + ab.breakthrough_count)
+            skill_levels[ab.name] = ab.level
+            breakthroughs[ab.name] = ab.breakthrough_count
+        result = self.evolution.run_evolution_cycle(
+            skills, skill_levels, breakthroughs,
+        )
+
+        if result.get("leap_result"):
+            for aid, data in self.active_abilities.items():
+                ab = data["ability"]
+                factor = result["leap_result"]["factor"]
+                ab.max_intensity *= factor
+                ab.max_level = int(ab.max_level * factor) + 5
+                ab.level = min(int(ab.level * factor**0.5), ab.max_level)
+
+        return result
+
+    def enable_hyper_evolution(self):
+        self.evolution.enable_full_auto_mode()
+        logger.info("🔥 全系統技能超指數協同增長躍進已啟動")
+
+    def get_evolution_status(self) -> Dict:
+        return self.evolution.get_evolution_status()
 
     def get_system_status(self) -> Dict:
         pool = self.energy_pool.get_status()

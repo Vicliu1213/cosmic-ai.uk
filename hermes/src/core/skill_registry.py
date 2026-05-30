@@ -13,6 +13,11 @@ class SkillEntry:
     actor_class: Optional[str] = None
     passive_components: List[str] = field(default_factory=list)
     status: str = "registered"
+    level: int = 1
+    max_level: int = 10
+    breakthrough_count: int = 0
+    breakthrough: bool = False
+    breakthrough_effects: List[str] = field(default_factory=list)
 
 
 class SkillRegistry:
@@ -26,14 +31,48 @@ class SkillRegistry:
         module: str,
         actor_class: Optional[str] = None,
         passive_components: Optional[List[str]] = None,
+        level: int = 1,
+        max_level: int = 10,
     ) -> SkillEntry:
         entry = SkillEntry(
             name=name,
             module=module,
             actor_class=actor_class,
             passive_components=passive_components or [],
+            level=level,
+            max_level=max_level,
         )
         self.entries[name] = entry
+        return entry
+
+    def level_up(self, name: str, amount: int = 1) -> Optional[SkillEntry]:
+        entry = self.entries.get(name)
+        if not entry:
+            return None
+        entry.level = min(entry.level + amount, entry.max_level)
+        return entry
+
+    def breakthrough_skill(
+        self, name: str, effects: Optional[List[str]] = None
+    ) -> Optional[SkillEntry]:
+        entry = self.entries.get(name)
+        if not entry:
+            return None
+        entry.breakthrough = True
+        entry.breakthrough_count += 1
+        entry.max_level += 5
+        if effects:
+            entry.breakthrough_effects.extend(effects)
+        return entry
+
+    def set_no_skill_breakthrough(self, name: str) -> Optional[SkillEntry]:
+        entry = self.entries.get(name)
+        if not entry:
+            return None
+        entry.breakthrough = True
+        entry.breakthrough_count += 1
+        entry.max_level += 10
+        entry.breakthrough_effects.append("无技突破")
         return entry
 
     def load(self, name: str) -> Any:
@@ -57,6 +96,11 @@ class SkillRegistry:
                 "actor_class": entry.actor_class,
                 "passive_components": entry.passive_components,
                 "status": entry.status,
+                "level": entry.level,
+                "max_level": entry.max_level,
+                "breakthrough": entry.breakthrough,
+                "breakthrough_count": entry.breakthrough_count,
+                "breakthrough_effects": entry.breakthrough_effects,
             }
             for name, entry in self.entries.items()
         }

@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Hummingbot Panel</title>
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body>
+    <main class="control-shell">
+      <aside class="control-sidebar">
+        <div class="control-brand">
+          <p class="eyebrow">Hummingbot Control Panel</p>
+          <h1>Hummingbot</h1>
+          <p class="summary">開源高頻交易框架 — 策略、連接器、運行狀態集中管理。</p>
+        </div>
+        <nav class="control-nav">
+          <a href="../index.html" class="control-nav-item">Dashboard</a>
+          <a href="./trading_orchestrator.html" class="control-nav-item">Trading Orchestrator</a>
+          <a href="./control_center.html" class="control-nav-item">Control Center</a>
+          <a href="./webui_hub.html" class="control-nav-item">WebUI Hub</a>
+        </nav>
+        <section class="control-stack">
+          <article class="card control-card">
+            <h2>快速入口</h2>
+            <div class="links">
+              <a href="https://hummingbot.org" target="_blank" rel="noreferrer">Official Docs</a>
+              <a href="https://discord.gg/hummingbot" target="_blank" rel="noreferrer">Discord</a>
+              <a href="https://github.com/hummingbot/hummingbot" target="_blank" rel="noreferrer">GitHub</a>
+            </div>
+          </article>
+          <article class="card control-card">
+            <h2>Docker 部署</h2>
+            <div class="pill-row">
+              <span class="pill">make setup</span>
+              <span class="pill">make deploy</span>
+              <span class="pill">docker attach</span>
+            </div>
+          </article>
+        </section>
+      </aside>
+
+      <section class="control-main">
+        <header class="hero control-hero">
+          <div>
+            <p class="eyebrow">open-source framework</p>
+            <h1>Automated Trading Bot</h1>
+            <p class="summary">支援 140+ 中心化與去中心化交易所，社群累計 $34B+ 交易量。</p>
+          </div>
+          <div class="hero-actions">
+            <a class="hero-button primary" href="../src/hummingbot" target="_blank" rel="noreferrer">Browse Source</a>
+            <a class="hero-button" href="../src/hummingbot/hummingbot/strategy" target="_blank" rel="noreferrer">Strategies</a>
+            <a class="hero-button" href="../src/hummingbot/hummingbot/connector" target="_blank" rel="noreferrer">Connectors</a>
+          </div>
+        </header>
+
+        <section class="kpi-grid">
+          <article class="card kpi-card">
+            <div class="kpi-label">Version</div>
+            <div class="kpi-value">2.2+</div>
+            <div class="kpi-delta up">latest</div>
+          </article>
+          <article class="card kpi-card">
+            <div class="kpi-label">Exchanges</div>
+            <div class="kpi-value">140+</div>
+            <div class="kpi-delta up">CEX + DEX</div>
+          </article>
+          <article class="card kpi-card">
+            <div class="kpi-label">Volume</div>
+            <div class="kpi-value">$34B+</div>
+            <div class="kpi-delta up">community</div>
+          </article>
+          <article class="card kpi-card">
+            <div class="kpi-label">Status</div>
+            <div class="kpi-value">Ready</div>
+            <div class="kpi-delta up">CLI / Docker</div>
+          </article>
+        </section>
+
+        <section class="featured-grid">
+          <article class="card featured-card">
+            <h2>Pure Market Making</h2>
+            <div class="meta">經典做市策略</div>
+            <div class="pill-row">
+              <span class="pill">bid/ask spread</span>
+              <span class="pill">order size</span>
+              <span class="pill">inventory skew</span>
+            </div>
+            <div class="links"><a href="../src/hummingbot/hummingbot/strategy/pure_market_making" target="_blank" rel="noreferrer">View Strategy</a></div>
+          </article>
+          <article class="card featured-card">
+            <h2>Cross Exchange MM</h2>
+            <div class="meta">跨交易所做市套利</div>
+            <div class="pill-row">
+              <span class="pill">arbitrage</span>
+              <span class="pill">hedging</span>
+              <span class="pill">balancing</span>
+            </div>
+            <div class="links"><a href="../src/hummingbot/hummingbot/strategy/cross_exchange_market_making" target="_blank" rel="noreferrer">View Strategy</a></div>
+          </article>
+          <article class="card featured-card">
+            <h2>AMM Arbitrage</h2>
+            <div class="meta">DEX AMM 套利</div>
+            <div class="pill-row">
+              <span class="pill">uniswap</span>
+              <span class="pill">sushiswap</span>
+              <span class="pill">pancakeswap</span>
+            </div>
+            <div class="links"><a href="../src/hummingbot/hummingbot/strategy/amm_arb" target="_blank" rel="noreferrer">View Strategy</a></div>
+          </article>
+          <article class="card featured-card">
+            <h2>Perpetual MM</h2>
+            <div class="meta">永續合約做市</div>
+            <div class="pill-row">
+              <span class="pill">perpetual</span>
+              <span class="pill">funding rate</span>
+              <span class="pill">leverage</span>
+            </div>
+            <div class="links"><a href="../src/hummingbot/hummingbot/strategy/perpetual_market_making" target="_blank" rel="noreferrer">View Strategy</a></div>
+          </article>
+          <article class="card featured-card">
+            <h2>Spot Perpetual Arb</h2>
+            <div class="meta">現貨-永續套利</div>
+            <div class="pill-row">
+              <span class="pill">basis trade</span>
+              <span class="pill">funding arb</span>
+              <span class="pill">delta neutral</span>
+            </div>
+            <div class="links"><a href="../src/hummingbot/hummingbot/strategy/spot_perpetual_arbitrage" target="_blank" rel="noreferrer">View Strategy</a></div>
+          </article>
+          <article class="card featured-card">
+            <h2>Liquidity Mining</h2>
+            <div class="meta">流動性挖礦</div>
+            <div class="pill-row">
+              <span class="pill">yield</span>
+              <span class="pill">LP tokens</span>
+              <span class="pill">reward</span>
+            </div>
+            <div class="links"><a href="../src/hummingbot/hummingbot/strategy/liquidity_mining" target="_blank" rel="noreferrer">View Strategy</a></div>
+          </article>
+        </section>
+
+        <section class="grid">
+          <article class="card">
+            <h2>Connectors — CEX</h2>
+            <div class="meta">中心化交易所</div>
+            <div class="pill-row">
+              <span class="pill">binance</span>
+              <span class="pill">coinbase</span>
+              <span class="pill">kucoin</span>
+              <span class="pill">gate.io</span>
+              <span class="pill">okx</span>
+              <span class="pill">bybit</span>
+              <span class="pill">bitget</span>
+              <span class="pill">ascendex</span>
+            </div>
+            <div class="links"><a href="../src/hummingbot/hummingbot/connector/exchange" target="_blank" rel="noreferrer">All CEX Connectors</a></div>
+          </article>
+          <article class="card">
+            <h2>Connectors — DEX</h2>
+            <div class="meta">去中心化交易所 (via Gateway)</div>
+            <div class="pill-row">
+              <span class="pill">uniswap</span>
+              <span class="pill">sushiswap</span>
+              <span class="pill">pancakeswap</span>
+              <span class="pill">traderjoe</span>
+              <span class="pill">quickswap</span>
+              <span class="pill">curve</span>
+              <span class="pill">balancer</span>
+            </div>
+            <div class="links"><a href="../src/hummingbot/hummingbot/connector/gateway" target="_blank" rel="noreferrer">All DEX Connectors</a></div>
+          </article>
+          <article class="card">
+            <h2>Deployment</h2>
+            <div class="meta">部署方式對比</div>
+            <div class="pill-row">
+              <span class="pill">Docker</span>
+              <span class="pill">Source Install</span>
+              <span class="pill">Telegram Condor</span>
+            </div>
+            <div class="links">
+              <a href="../src/hummingbot/docker-compose.yml" target="_blank" rel="noreferrer">docker-compose.yml</a>
+              <a href="../src/hummingbot/Dockerfile" target="_blank" rel="noreferrer">Dockerfile</a>
+            </div>
+          </article>
+        </section>
+
+        <section id="screen-surface" class="grid" aria-label="screen surface"></section>
+      </section>
+
+      <aside class="control-rightbar">
+        <article class="card status-card">
+          <h2>Source Tree</h2>
+          <div class="links">
+            <a href="../src/hummingbot/hummingbot/core" target="_blank" rel="noreferrer">Core Engine</a>
+            <a href="../src/hummingbot/hummingbot/strategy_v2" target="_blank" rel="noreferrer">Strategy V2</a>
+            <a href="../src/hummingbot/hummingbot/model" target="_blank" rel="noreferrer">Data Model</a>
+            <a href="../src/hummingbot/hummingbot/remote_iface" target="_blank" rel="noreferrer">Remote Interface</a>
+          </div>
+        </article>
+        <article class="card status-card">
+          <h2>Key Files</h2>
+          <div class="links">
+            <a href="../src/hummingbot/setup.py" target="_blank" rel="noreferrer">setup.py</a>
+            <a href="../src/hummingbot/pyproject.toml" target="_blank" rel="noreferrer">pyproject.toml</a>
+            <a href="../src/hummingbot/Makefile" target="_blank" rel="noreferrer">Makefile</a>
+            <a href="../src/hummingbot/conf" target="_blank" rel="noreferrer">Config Templates</a>
+          </div>
+        </article>
+        <article class="card status-card">
+          <h2>Scripts</h2>
+          <div class="links">
+            <a href="../src/hummingbot/scripts" target="_blank" rel="noreferrer">V2 Scripts</a>
+            <a href="../src/hummingbot/hummingbot/templates" target="_blank" rel="noreferrer">Templates</a>
+          </div>
+        </article>
+      </aside>
+    </main>
+    <script src="../app.js"></script>
+  </body>
+</html>

@@ -375,6 +375,28 @@
       ]
     },
     {
+      "name": "hummingbot",
+      "title": "Hummingbot",
+      "category": "trading",
+      "entry": "../src/hummingbot/hummingbot/client/hummingbot_application.py",
+      "docs": "../src/hummingbot/README.md",
+      "config": "../src/hummingbot/conf",
+      "quality": "production",
+      "components": [
+        "strategy_engine",
+        "connector_bridge",
+        "market_data",
+        "order_management",
+        "portfolio_tracker"
+      ],
+      "capabilities": [
+        "market_making",
+        "arbitrage",
+        "hedging",
+        "liquidity_mining"
+      ]
+    },
+    {
       "name": "enhanced_hybrid",
       "title": "Enhanced Hybrid Algorithms",
       "category": "verification",
