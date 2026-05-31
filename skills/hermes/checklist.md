@@ -33,6 +33,19 @@ This file defines the promotion and safety checklist for the hybrid-absolute Her
 - [ ] glossary.md terms match current usage
 - [ ] protected blocks remain intact
 
+## Transcendence Loop Checklist
+
+- [ ] Phase 1 Survey complete — `state_vector.json` captured
+- [ ] Phase 2 Emerge complete — candidates ranked and filtered
+- [ ] Phase 3 Validate complete — dry-run passed, resources confirmed, rollback verified
+- [ ] Phase 4 Absorb complete — gate activated / ability unlocked / post-state verified
+- [ ] Phase 5 Ascend complete — screen, memory, learn, glossary, skills topology all updated
+- [ ] Phase 6 Archive complete — full audit trail written to `hermes/archive/transcendence/`
+- [ ] Pre-transcendence rollback point is still valid (not garbage-collected)
+- [ ] Post-transcendence state outperforms pre-transcendence state by >= agreed threshold
+- [ ] No protected content was modified without explicit user confirmation
+- [ ] Operator can observe the new capability on the dashboard
+
 ## Stop Checklist
 
 Stop and ask the user if:

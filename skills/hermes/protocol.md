@@ -6,7 +6,7 @@ This file defines how the hybrid-absolute Hermes stack coordinates across docume
 Create stable amplification across files without losing control, auditability, or operator usefulness.
 
 ## Core Coupling Path
-SOUL -> personality -> task -> prompt -> skills -> screen -> memory -> learn -> SOUL
+SOUL -> personality -> task -> prompt -> skills -> screen -> memory -> learn -> transcendence -> SOUL
 
 ## File Roles
 - SOUL.md: highest identity and objective source
@@ -18,6 +18,7 @@ SOUL -> personality -> task -> prompt -> skills -> screen -> memory -> learn -> 
 - screen.md: live observation surface
 - memory.md: retention policy
 - learn.md: promotion and adaptation policy
+- transcendence.md: continuous self-transcendence workflow (6-phase loop)
 - checklist.md: hard verification list before promotion
 - glossary.md: shared term meanings and anti-drift dictionary
 
@@ -33,8 +34,9 @@ When files appear to disagree, resolve in this order:
 8. screen.md
 9. memory.md
 10. learn.md
-11. checklist.md
-12. glossary.md
+11. transcendence.md
+12. checklist.md
+13. glossary.md
 
 ## State Transition Rules
 - No action packet should bypass task.md sequencing.

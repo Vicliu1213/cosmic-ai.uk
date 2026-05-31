@@ -37,6 +37,12 @@ Use for iterative improvement after verification.
 - self-evolve
 - retrospection and promotion rules
 
+### 6. Transcendence Layer
+Use for continuous self-transcendence beyond current capability boundaries.
+- transcendence-loop (Survey → Emerge → Validate → Absorb → Ascend → Archive)
+- discovery / gap auto-detection / omega level-up
+- fusion of activated abilities into emergent hybrid capabilities
+
 ## Trading Orchestration Rule
 - For trading-operation tasks, load the orchestration skill first.
 - Use only the minimum set of downstream skills needed for the current objective.
@@ -55,6 +61,7 @@ Use for iterative improvement after verification.
 - prompt.md defines how skills are invoked in-session.
 - memory.md defines what skill outcomes are retained.
 - learn.md defines what skill patterns are promoted.
+- transcendence.md defines the self-transcendence workflow for continuous evolution.
 - screen.md defines how skill state is observed.
 - protocol.md defines conflict resolution and handoff rules.
 
