@@ -1,17 +1,24 @@
 """
-Ω宇宙系统 — 22系统完全融合
+Ω宇宙系统 — 22系統完全融合
+
+核心系統 S01-S07 | 擴展系統 S08-S15 | 頂層系統 S16-S22
 """
 from .omega_system import (
-    ΩLevel, ΩNumber,
-    AbilityType, Ability, AbilityMatrix,
-    MetaAbility, SuperpowerSystem,
-    MindNode, SuperBrainSystem,
+    ΩLevel,
+    ΩNumber,
+    AbilityType,
+    Ability,
+    AbilityMatrix,
+    MetaAbility,
+    SuperpowerSystem,
+    MindNode,
+    SuperBrainSystem,
     AugmentationSystem,
     ImmortalitySystem,
     TalentMutationSystem,
     CapitalPredatorEngine,
     CoreSystemsCoordinator,
-    TimelineNode, CausalChain, SpacetimeControlSystem,
+    SpacetimeControlSystem,
     MultidimensionalConsciousnessSystem,
     DestinyInterferenceSystem,
     RealityCreationSystem,
@@ -32,10 +39,15 @@ from .omega_system import (
 )
 
 __all__ = [
-    "ΩLevel", "ΩNumber",
-    "AbilityType", "Ability", "AbilityMatrix",
-    "MetaAbility", "SuperpowerSystem",
-    "MindNode", "SuperBrainSystem",
+    "ΩLevel",
+    "ΩNumber",
+    "AbilityType",
+    "Ability",
+    "AbilityMatrix",
+    "MetaAbility",
+    "SuperpowerSystem",
+    "MindNode",
+    "SuperBrainSystem",
     "AugmentationSystem",
     "ImmortalitySystem",
     "TalentMutationSystem",
@@ -58,4 +70,5 @@ __all__ = [
     "CosmicConsciousnessSystem",
     "MetaEvolutionSystem",
     "OmegaUnifiedCoordinator",
+    "omega_main",
 ]

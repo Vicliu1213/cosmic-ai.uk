@@ -5,6 +5,18 @@ One-click deploy: docs/task6.md → src/omega_system/omega_system.py
 
 import re
 
+# Hardcoded _placeholder: replaces broken indentation version in task6.md
+PLACEHOLDER_FUNC = '''
+def _placeholder(name: str) -> object:
+    """Placeholder for cross-file import fallback."""
+    class _P:
+        def __getattr__(self, item):
+            async def _noop(*a, **kw):
+                return {}
+            return _noop
+    return _P()
+'''
+
 DUNDER_FIXES = {
     '**future**': '__future__', '**init**': '__init__', '**name**': '__name__',
     '**main**': '__main__', '**mul**': '__mul__', '**str**': '__str__',
@@ -19,6 +31,7 @@ def fix_md(text: str) -> str:
     for old, new in DUNDER_FIXES.items():
         text = text.replace(old, new)
     text = text.replace('\\*', '*')
+    text = text.replace('\\_', '_')
     for old, new in SPECIAL_FIXES.items():
         text = text.replace(old, new)
     return text
@@ -224,25 +237,14 @@ def cleanup(lines):
             continue
         skip_next = False
 
-        # Skip placeholder code
-        if '_placeholder' in s and 'def ' in s:
-            continue
-
-        # Fix coordinator conditional instantiation
-        m = re.search(r"(self\.\w+)\s*=\s*(\w+)\s+if\s+'\2'\s+in\s+dir", line)
-        if m:
-            result.append(f"        {m.group(1)} = {m.group(2)}()")
-            continue
-
-        if "if 'MindNode' in dir()" in line:
-            result.append('            node = MindNode(entity_id, entity_id, 130.0, 1.0, 100.0)')
-            continue
-
         # Deduplicate logging.basicConfig (keep first)
         if 'logging.basicConfig' in line:
-            # Check if we already added one
-            already = any('logging.basicConfig' in x for x in result)
-            if already:
+            if any('logging.basicConfig' in x for x in result):
+                continue
+
+        # Remove duplicate __future__ imports (must be at file start)
+        if 'from __future__' in line:
+            if any('from __future__' in x for x in result):
                 continue
 
         result.append(line)
@@ -268,11 +270,13 @@ def main():
     lines = fix_nested_blocks(lines)
 
     # 4. Remove conditional import blocks and simplify coordinator
-    # Remove "from omega_system_part1 import (...)" block
     filtered = []
     skip_paren = 0
+    in_mindnode_block = False
     for line in lines:
         s = line.strip()
+        
+        # Remove "from omega_system_part1 import (...)" block
         if 'from omega_system_part1' in s:
             skip_paren = 1
             continue
@@ -281,17 +285,28 @@ def main():
             if skip_paren <= 0:
                 skip_paren = 0
             continue
-        # Skip _placeholder function definition
-        if '_placeholder' in s and 'def ' in s:
-            continue
-        # Fix if 'ClassName' in dir() lines
-        m = re.search(r"(self\.\w+)\s*=\s*(\w+)\s+if\s+'\2'\s+in\s+dir", line)
+        
+        # Keep _placeholder function and related (needed for conditional fallbacks)
+        
+        # Transform single-line: self.xxx = Class() if 'Class' in dir() else ...
+        m = re.search(r"(self\.\w+)\s*=\s*(\w+)\s+if\s+['\"]\2['\"]\s+in\s+dir", line)
         if m:
             filtered.append(f"        {m.group(1)} = {m.group(2)}()")
             continue
-        if "if 'MindNode' in dir()" in line:
-            filtered.append('            node = MindNode(entity_id, entity_id, 130.0, 1.0, 100.0)')
+        
+        # Handle multi-line: node = MindNode(...) \ if 'MindNode' in dir() else type(...)
+        if 'node = MindNode(entity_id' in s and line.strip().endswith('\\'):
+            # This line is already correct - remove the trailing backslash
+            indent = len(line) - len(line.lstrip())
+            filtered.append(' ' * indent + 'node = MindNode(entity_id, entity_id, 130.0, 1.0, 100.0)')
+            in_mindnode_block = True
             continue
+        if in_mindnode_block:
+            # Skip continuation lines until the statement ends
+            if s.endswith('})()'):
+                in_mindnode_block = False
+            continue
+        
         filtered.append(line)
     lines = filtered
 
@@ -300,13 +315,32 @@ def main():
 
     code = '\n'.join(lines)
 
+    # Strip broken _placeholder + _P from markdown, append correct version
+    placeholder_lines = 0
+    cleaned_lines = code.split('\n')
+    temp = []
+    skipping = False
+    for ln in cleaned_lines:
+        s = ln.strip()
+        if s.startswith('def _placeholder'):
+            skipping = True
+        if skipping and s.startswith('# ── 主程序'):
+            skipping = False
+        if not skipping:
+            temp.append(ln)
+        else:
+            placeholder_lines += 1
+
+    code = '\n'.join(temp) + '\n' + PLACEHOLDER_FUNC
+    print(f"   Removed {placeholder_lines} placeholder lines, injected clean version")
+
     # Write
     path = 'src/omega_system/omega_system.py'
     with open(path, 'w', encoding='utf-8') as f:
         f.write(code)
 
     print(f"✅ Deployed: {path}")
-    print(f"   Lines: {len(lines)}")
+    print(f"   Lines: {len(code.split(chr(10)))}")
 
     # Syntax check
     try:
@@ -317,6 +351,33 @@ def main():
         clines = code.split('\n')
         start = max(0, e.lineno - 5)
         end = min(len(clines), e.lineno + 3)
+        for idx in range(start, end):
+            marker = " >>>" if idx + 1 == e.lineno else "    "
+            print(f"{marker} L{idx+1}: {clines[idx][:120]}")
+        return
+
+    # 6. Black formatting
+    try:
+        import black as black_module
+        formatted = black_module.format_str(code, mode=black_module.Mode(line_length=120))
+        with open(path, 'w', encoding='utf-8') as f:
+            f.write(formatted)
+        print("✅ Black format applied")
+    except Exception as e:
+        print(f"⚠️  Black skipped: {e}")
+
+    # 7. Verify final syntax with black-formatted code
+    with open(path, 'r', encoding='utf-8') as f:
+        final_code = f.read()
+    try:
+        compile(final_code, path, 'exec')
+        line_count = len(final_code.split('\n'))
+        print(f"✅ Final syntax: OK ({line_count} lines)")
+    except SyntaxError as e:
+        print(f"⚠️  Final syntax error: line {e.lineno}: {e.msg}")
+        clines = final_code.split('\n')
+        start = max(0, e.lineno - 3)
+        end = min(len(clines), e.lineno + 2)
         for idx in range(start, end):
             marker = " >>>" if idx + 1 == e.lineno else "    "
             print(f"{marker} L{idx+1}: {clines[idx][:120]}")

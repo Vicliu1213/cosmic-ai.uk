@@ -22,6 +22,9 @@ from src.layers.distributed import (
 from src.synergy.dashboard_server import SynergyDashboardServer
 from src.synergy.gate_bridge import GateAbilityBridge
 
+# Ω宇宙系統 — 22系統完全融合
+from src.omega_system import OmegaUnifiedCoordinator, omega_main
+
 
 def main():
     start = time.time()
@@ -153,6 +156,19 @@ def main():
             stop.wait()
         except KeyboardInterrupt:
             pass
+
+    # Layer 9: Ω宇宙系統 — 22系統完全激活（可選）
+    if config.get("omega", {}).get("enabled", False):
+        logger.info("\n" + "★" * 60)
+        logger.info("  Ω宇宙系統 22系統完全激活 ...")
+        logger.info("★" * 60)
+        try:
+            import asyncio
+            coord = OmegaUnifiedCoordinator()
+            result = asyncio.run(coord.omega_full_activation("劉維克"))
+            logger.info(f"Ω 激活完成: {result.get('S20_divinity', {}).get('divinity_level', 'OK')}")
+        except Exception as e:
+            logger.warning(f"Ω 激活异常: {e}")
 
     actors.shutdown_all()
     cluster.shutdown()
