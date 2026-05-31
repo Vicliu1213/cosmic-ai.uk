@@ -16,7 +16,7 @@ import ray
 from typing import Dict, List, Optional, Tuple, Any
 from dataclasses import dataclass, field
 from enum import Enum
-import json
+from collections import deque
 from datetime import datetime
 
 logger = logging.getLogger(__name__)
@@ -404,7 +404,8 @@ class QuantumErrorCorrectionEngine:
         
         self.config = config
         self.encoded_states: Dict[str, QuantumState] = {}
-        self.correction_history = []
+        self._encoded_state_max = 1000
+        self.correction_history: deque = deque(maxlen=10000)
         self._state_counter = 0
     
     def select_code(self, code_type: str) -> Dict[str, Any]:
@@ -432,6 +433,9 @@ class QuantumErrorCorrectionEngine:
             logical_state=logical_bit,
             encoding_type=self.codec.code_type
         )
+        if len(self.encoded_states) >= self._encoded_state_max:
+            oldest = next(iter(self.encoded_states))
+            del self.encoded_states[oldest]
         self.encoded_states[state_id] = quantum_state
         logger.info(f"✅ 编码状态 - ID: {state_id}, 逻辑位: {logical_bit}")
         return physical_qubits
@@ -455,7 +459,7 @@ class QuantumErrorCorrectionEngine:
         return {
             'active_code': self.codec.code_type.value,
             'tracked_states': len(self.encoded_states),
-            'recent': self.correction_history[-5:],
+            'recent': list(self.correction_history)[-5:],
         }
 
     def get_error_rate(self) -> float:
@@ -524,7 +528,7 @@ class QuantumErrorCorrectionEngine:
             'total_corrections': total,
             'successful_corrections': successful,
             'success_rate': successful / total if total > 0 else 0,
-            'recent_corrections': self.correction_history[-10:]
+            'recent_corrections': list(self.correction_history)[-10:]
         }
 
 

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-TW">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,275 +8,309 @@
 <style>
 * { box-sizing: border-box; }
 body { background: #0a0e1a; color: #e0e0e0; font-family: -apple-system, 'Noto Sans SC', sans-serif; margin: 0; padding: 20px; }
-.h-container { max-width: 1600px; margin: 0 auto; }
-.h-header { text-align: center; padding: 30px 20px; border-bottom: 1px solid #1a2a4a; margin-bottom: 24px; }
-.h-header h1 { font-size: 2.2em; margin: 0; background: linear-gradient(135deg, #ff6e40, #e040fb, #4fc3f7); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-.h-header .sub { color: #7a8aa0; margin-top: 8px; font-size: 1em; }
-.h-grid { display: grid; gap: 16px; margin-bottom: 20px; }
+.h-container { max-width: 1400px; margin: 0 auto; }
+.h-header { text-align: center; padding: 24px 20px; border-bottom: 1px solid #1a2a4a; margin-bottom: 20px; }
+.h-header h1 { font-size: 1.8em; margin: 0; background: linear-gradient(135deg, #ff6e40, #e040fb, #4fc3f7); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.h-header .sub { color: #7a8aa0; margin-top: 4px; font-size: 0.9em; }
+.section-title { font-size: 1em; font-weight: bold; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; color: #b0bec5; }
 
-/* Hybrid KPI row */
-.kpi-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-bottom: 20px; }
-.kpi-card { background: #111827; border: 1px solid #1e2d4a; border-radius: 10px; padding: 16px; text-align: center; transition: all 0.3s; }
-.kpi-card:hover { transform: translateY(-2px); border-color: var(--accent, #4fc3f7); }
-.kpi-card .val { font-size: 1.5em; font-weight: bold; color: var(--accent, #4fc3f7); }
-.kpi-card .lbl { font-size: 0.8em; color: #7a8aa0; margin-top: 4px; }
+/* KPI */
+.kpi-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 8px; margin-bottom: 16px; }
+.kpi-card { background: #111827; border: 1px solid #1e2d4a; border-radius: 8px; padding: 12px; text-align: center; }
+.kpi-card .val { font-size: 1.3em; font-weight: bold; color: var(--accent, #4fc3f7); }
+.kpi-card .lbl { font-size: 0.75em; color: #7a8aa0; margin-top: 2px; }
 
-/* Main two-column */
-.main-panels { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
-@media (max-width: 900px) { .main-panels { grid-template-columns: 1fr; } }
+/* Gate cards — main feature */
+.gate-section { background: #111827; border: 1px solid #1e2d4a; border-radius: 12px; padding: 20px; margin-bottom: 16px; }
+.gate-progress { margin-bottom: 14px; font-size: 0.9em; color: #7a8aa0; display: flex; align-items: center; gap: 16px; }
+.gate-progress .bar { flex:1; height:6px; background:#1a2a4a; border-radius:3px; overflow:hidden; }
+.gate-progress .bar-fill { height:100%; background: linear-gradient(90deg, #4fc3f7, #69f0ae); border-radius:3px; transition:width 1s; }
+.gate-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 8px; }
+.gate-card { background: #0d1520; border: 1px solid #1a2a3a; border-radius: 8px; padding: 10px 8px; text-align: center; transition: all 0.3s; }
+.gate-card.activated { border-color: var(--gcolor, #69f0ae); box-shadow: 0 0 8px rgba(105,240,174,0.1); }
+.gate-card.locked { opacity: 0.45; }
+.gate-card .glv { font-size: 0.8em; font-weight: bold; }
+.gate-card .gname { font-size: 0.7em; color: #7a8aa0; margin-top: 2px; }
+.gate-card .gstatus { font-size: 0.65em; margin-top: 4px; padding: 1px 8px; border-radius: 8px; display: inline-block; }
+.gate-card .gstatus.done { background: rgba(105,240,174,0.15); color: #69f0ae; }
+.gate-card .gstatus.lock { background: rgba(255,255,255,0.05); color: #555; }
+
+/* Two-column content row */
+.content-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 16px; }
+@media (max-width: 800px) { .content-row { grid-template-columns: 1fr; } }
 .panel { background: #111827; border: 1px solid #1e2d4a; border-radius: 12px; padding: 20px; }
-.panel-title { font-size: 1.1em; font-weight: bold; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
 
-/* Fleet trader cards */
-.trader-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; }
-.trader-card { background: #0d1520; border: 1px solid #1a2a3a; border-radius: 8px; padding: 12px; }
-.trader-card .sym { font-weight: bold; color: #ff6e40; }
-.trader-card .stat { font-size: 0.8em; color: #7a8aa0; margin-top: 4px; }
-.trader-card .val { font-size: 0.9em; font-weight: bold; }
-.trader-card .filled { color: #69f0ae; }
-.trader-card .pending { color: #ffd740; }
-.trader-card .rejected { color: #ff5252; }
+/* Fleet */
+.fleet-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px; }
+.fleet-card { background: #0d1520; border: 1px solid #1a2a3a; border-radius: 6px; padding: 10px; }
+.fleet-card .sym { font-weight: bold; color: #ff6e40; font-size: 0.9em; }
+.fleet-card .stat { font-size: 0.75em; color: #7a8aa0; margin-top: 2px; }
+.fleet-card .val { font-size: 0.85em; font-weight: bold; }
+
+/* Features table */
+.feature-table { width: 100%; border-collapse: collapse; font-size: 0.82em; }
+.feature-table th { text-align: left; color: #7a8aa0; border-bottom: 1px solid #1e2d4a; padding: 6px 4px; }
+.feature-table td { padding: 5px 4px; border-bottom: 1px solid #0d1520; }
+
+/* Matrix stats mini */
+.m-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 12px; }
+.m-stat { background: #0d1520; border-radius: 6px; padding: 6px 10px; display: flex; justify-content: space-between; font-size: 0.78em; }
+.m-stat .k { color: #7a8aa0; }
+.m-stat .v { font-weight: bold; }
 
 /* Synergy mini cards */
-.syn-mini-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 8px; }
-.syn-mini { background: #0d1520; border: 1px solid #1a2a3a; border-radius: 6px; padding: 10px; text-align: center; cursor: pointer; transition: all 0.2s; }
-.syn-mini:hover { transform: scale(1.05); }
-.syn-mini .lv { font-size: 1em; font-weight: bold; }
-.syn-mini .boost { font-size: 0.75em; color: #7a8aa0; }
-.syn-mini .drrk-badge { font-size: 0.7em; background: rgba(255,255,255,0.05); padding: 1px 8px; border-radius: 10px; display: inline-block; margin-top: 4px; }
+.syn-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 6px; }
+.syn-card { background: #0d1520; border: 1px solid #1a2a3a; border-radius: 6px; padding: 8px; text-align: center; cursor: pointer; }
+.syn-card:hover { transform: scale(1.03); }
+.syn-card .lv { font-size: 0.85em; font-weight: bold; }
+.syn-card .bt { font-size: 0.65em; color: #7a8aa0; }
+.syn-card .db { font-size: 0.6em; background: rgba(255,255,255,0.05); padding: 1px 6px; border-radius: 8px; display: inline-block; margin-top: 2px; }
 
-/* Consciousness panel */
-.conscious-ring { display: flex; align-items: center; justify-content: center; margin: 20px 0; }
-.ring-svg { width: 120px; height: 120px; }
-.ring-bg { fill: none; stroke: #1a2a4a; stroke-width: 6; }
-.ring-fg { fill: none; stroke-width: 6; stroke-linecap: round; transform: rotate(-90deg); transform-origin: center; transition: stroke-dashoffset 1s; }
-.intent-text { text-align: center; font-size: 0.9em; color: #b388ff; margin: 10px 0; font-style: italic; }
+/* Consciousness ring */
+.c-ring-wrap { display: flex; align-items: center; justify-content: center; margin: 16px 0; }
+.c-ring-svg { width: 100px; height: 100px; }
+.c-ring-bg { fill: none; stroke: #1a2a4a; stroke-width: 5; }
+.c-ring-fg { fill: none; stroke-width: 5; stroke-linecap: round; transform: rotate(-90deg); transform-origin: center; transition: stroke-dashoffset 1s; }
 
-/* DNA genome detail */
-.genome-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; font-size: 0.85em; }
-.genome-item { display: flex; justify-content: space-between; padding: 4px 8px; background: #0d1520; border-radius: 4px; }
-.genome-item .k { color: #7a8aa0; }
-.genome-item .v { color: #69f0ae; font-weight: bold; }
+/* DNA */
+.dna-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; font-size: 0.82em; }
+.dna-item { display: flex; justify-content: space-between; padding: 3px 6px; background: #0d1520; border-radius: 4px; }
+.dna-item .k { color: #7a8aa0; }
+.dna-item .v { color: #69f0ae; font-weight: bold; }
 
 /* Recursive tree */
-.rec-tree { background: #0d1520; border-radius: 8px; padding: 16px; margin-top: 16px; max-height: 200px; overflow-y: auto; font-family: monospace; font-size: 0.8em; }
-.rec-tree .line { padding: 3px 0; }
-.loading { text-align: center; padding: 40px; color: #7a8aa0; }
+.rec-tree { background: #0d1520; border-radius: 8px; padding: 14px; margin-top: 16px; max-height: 160px; overflow-y: auto; font-family: monospace; font-size: 0.78em; }
+.rec-tree .l { padding: 2px 0; }
+.loading { text-align: center; padding: 30px; color: #7a8aa0; }
 </style>
 </head>
 <body>
 <div class="h-container">
   <div class="h-header">
     <h1>🐊 × ◇ 金融大鰐 · 神性絕對超越 完全體</h1>
-    <div class="sub">分布式計算 · 協同遞增 · 意識覺醒 · DNA 演化 — 統一戰場</div>
+    <div class="sub">門檻激活 · 協同遞增 · 異能矩陣 · 意識覺醒 · DNA 演化</div>
   </div>
 
-  <div class="kpi-row" id="kpiRow">
-    <div class="kpi-card" style="--accent:#ff6e40"><div class="val" id="kpiFleet">—</div><div class="lbl">大鰐艦隊</div></div>
-    <div class="kpi-card" style="--accent:#e040fb"><div class="val" id="kpiConsc">—</div><div class="lbl">全局意識</div></div>
-    <div class="kpi-card" style="--accent:#4fc3f7"><div class="val" id="kpiSynergy">—</div><div class="lbl">協同層級</div></div>
-    <div class="kpi-card" style="--accent:#69f0ae"><div class="val" id="kpiGen">—</div><div class="lbl">演化世代</div></div>
-    <div class="kpi-card" style="--accent:#ffd740"><div class="val" id="kpiDRRK">—</div><div class="lbl">DRRK 評級</div></div>
-    <div class="kpi-card" style="--accent:#ff80ab"><div class="val" id="kpiDepth">—</div><div class="lbl">遞歸深度</div></div>
+  <!-- KPI -->
+  <div class="kpi-row">
+    <div class="kpi-card" style="--accent:#4fc3f7"><div class="val" id="kGates">—</div><div class="lbl">門檻激活</div></div>
+    <div class="kpi-card" style="--accent:#ffd740"><div class="val" id="kDRRK">—</div><div class="lbl">最高 DRRK</div></div>
+    <div class="kpi-card" style="--accent:#e040fb"><div class="val" id="kConsc">—</div><div class="lbl">全局意識</div></div>
+    <div class="kpi-card" style="--accent:#69f0ae"><div class="val" id="kAbilities">—</div><div class="lbl">解鎖異能</div></div>
+    <div class="kpi-card" style="--accent:#ff6e40"><div class="val" id="kFleet">—</div><div class="lbl">艦隊</div></div>
+    <div class="kpi-card" style="--accent:#ff80ab"><div class="val" id="kDepth">—</div><div class="lbl">遞歸深度</div></div>
   </div>
 
-  <div class="main-panels">
-    <!-- LEFT: Crocodile Fleet -->
-    <div class="panel">
-      <div class="panel-title" style="color:#ff6e40">🐊 金融大鰐交易艦隊</div>
-      <div class="trader-grid" id="fleetGrid">
-        <div class="loading" id="fleetLoading">載入艦隊數據...</div>
-      </div>
-      <div style="margin-top:12px;font-size:0.8em;color:#7a8aa0;text-align:center">
-        5 兵團 · 分布式執行 · 風險拒絕 (dry-run)
-      </div>
+  <!-- GATE SECTION: Hero -->
+  <div class="gate-section">
+    <div class="section-title" style="color:#69f0ae">🧩 層級門檻激活</div>
+    <div class="gate-progress">
+      <span id="gpText">載入中...</span>
+      <div class="bar"><div class="bar-fill" id="gpBar" style="width:0%"></div></div>
     </div>
-
-    <!-- RIGHT: Synergy -->
-    <div class="panel">
-      <div class="panel-title" style="color:#4fc3f7">◇ 協同遞增 (2 → 15 → ∞)</div>
-      <div style="display:flex;gap:8px;margin-bottom:12px">
-        <button onclick="toggleHybridView()" style="background:#1a2a4a;border:1px solid #2a3a5a;color:#e0e0e0;padding:4px 14px;border-radius:6px;cursor:pointer;font-size:0.8em">切換視圖</button>
-        <button onclick="refresh()" style="background:#1a2a4a;border:1px solid #2a3a5a;color:#e0e0e0;padding:4px 14px;border-radius:6px;cursor:pointer;font-size:0.8em">⟳ 刷新</button>
-      </div>
-      <div class="syn-mini-grid" id="synMiniGrid">
-        <div class="loading">載入協同數據...</div>
-      </div>
-    </div>
+    <div class="gate-grid" id="gateGrid"><div class="loading">載入門檻數據...</div></div>
   </div>
 
-  <div class="main-panels">
-    <!-- LEFT: Consciousness -->
+  <!-- ROW: Features + Matrix (left) | Synergy mini (right) -->
+  <div class="content-row">
     <div class="panel">
-      <div class="panel-title" style="color:#e040fb">🧠 神性意識覆蓋層</div>
-      <div class="conscious-ring" id="consciousRing">
-        <svg class="ring-svg" viewBox="0 0 120 120">
-          <circle class="ring-bg" cx="60" cy="60" r="50"/>
-          <circle class="ring-fg" id="consciousArc" cx="60" cy="60" r="50"
-                  stroke="#e040fb" stroke-dasharray="314" stroke-dashoffset="314"/>
-        </svg>
+      <div class="section-title" style="color:#4fc3f7">⚡ 已激活功能 · 異能矩陣</div>
+      <div style="max-height:260px;overflow-y:auto">
+        <table class="feature-table">
+          <thead><tr><th>功能名稱</th><th>屬性</th><th>能耗</th><th>冷卻</th></tr></thead>
+          <tbody id="featureBody"><tr><td colspan="4" style="text-align:center;color:#7a8aa0">等待激活...</td></tr></tbody>
+        </table>
       </div>
-      <div style="text-align:center">
-        <div style="font-size:1.3em;font-weight:bold;color:#e040fb" id="awakeningState">—</div>
-        <div style="font-size:0.85em;color:#7a8aa0" id="consciousnessLevel">—</div>
+      <div class="m-stats">
+        <div class="m-stat"><span class="k">能量池</span><span class="v" id="mEnergy">—</span></div>
+        <div class="m-stat"><span class="k">活躍異能</span><span class="v" id="mActive">—</span></div>
+        <div class="m-stat"><span class="k">冷卻中</span><span class="v" id="mCooldown">—</span></div>
+        <div class="m-stat"><span class="k">系統健康</span><span class="v" id="mHealth">—</span></div>
       </div>
-      <div class="intent-text" id="autonomousIntent">—</div>
     </div>
-
-    <!-- RIGHT: DNA Evolution -->
     <div class="panel">
-      <div class="panel-title" style="color:#69f0ae">🧬 DNA 並行演化引擎</div>
-      <div style="display:flex;gap:16px;margin-bottom:14px">
-        <div><span style="color:#7a8aa0">世代</span><br><span style="font-size:1.4em;font-weight:bold;color:#69f0ae" id="evoGen">—</span></div>
-        <div><span style="color:#7a8aa0">最佳適應度</span><br><span style="font-size:1.4em;font-weight:bold;color:#69f0ae" id="evoBest">—</span></div>
-        <div><span style="color:#7a8aa0">基因庫</span><br><span style="font-size:1.4em;font-weight:bold;color:#69f0ae" id="evoPool">—</span></div>
+      <div class="section-title" style="color:#4fc3f7">◇ 協同層級一覽</div>
+      <div style="display:flex;gap:6px;margin-bottom:10px">
+        <button onclick="location.href='/pages/synergy_panel.html'" style="background:#1a2a4a;border:1px solid #2a3a5a;color:#e0e0e0;padding:3px 12px;border-radius:6px;cursor:pointer;font-size:0.75em">詳細面板 →</button>
+        <button onclick="refresh()" style="background:#1a2a4a;border:1px solid #2a3a5a;color:#e0e0e0;padding:3px 12px;border-radius:6px;cursor:pointer;font-size:0.75em">⟳ 刷新</button>
       </div>
-      <div class="genome-grid" id="genomeGrid">
-        <div class="loading">載入基因組...</div>
-      </div>
+      <div class="syn-grid" id="synGrid"><div class="loading">載入協同數據...</div></div>
     </div>
   </div>
 
-  <!-- Super-exponential Recursive Tree -->
+  <!-- ROW: Fleet (left) | Consciousness + DNA (right) -->
+  <div class="content-row">
+    <div class="panel">
+      <div class="section-title" style="color:#ff6e40">🐊 交易艦隊</div>
+      <div class="fleet-grid" id="fleetGrid"><div class="loading">載入艦隊...</div></div>
+      <div style="margin-top:8px;font-size:0.75em;color:#7a8aa0;text-align:center">5 兵團 · 分布式執行 (dry-run)</div>
+    </div>
+    <div class="panel">
+      <div class="section-title" style="color:#e040fb">🧠 意識 · DNA</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div>
+          <div class="c-ring-wrap">
+            <svg class="c-ring-svg" viewBox="0 0 100 100">
+              <circle class="c-ring-bg" cx="50" cy="50" r="42"/>
+              <circle class="c-ring-fg" id="cArc" cx="50" cy="50" r="42" stroke="#e040fb" stroke-dasharray="264" stroke-dashoffset="264"/>
+            </svg>
+          </div>
+          <div style="text-align:center">
+            <div style="font-size:1em;font-weight:bold;color:#e040fb" id="awakeState">—</div>
+            <div style="font-size:0.7em;color:#7a8aa0" id="cLevel">—</div>
+          </div>
+        </div>
+        <div>
+          <div style="display:flex;gap:8px;margin-bottom:8px">
+            <div><span style="color:#7a8aa0;font-size:0.7em">世代</span><br><span style="font-size:1.2em;font-weight:bold;color:#69f0ae" id="dGen">—</span></div>
+            <div><span style="color:#7a8aa0;font-size:0.7em">適應度</span><br><span style="font-size:1.2em;font-weight:bold;color:#69f0ae" id="dBest">—</span></div>
+            <div><span style="color:#7a8aa0;font-size:0.7em">基因庫</span><br><span style="font-size:1.2em;font-weight:bold;color:#69f0ae" id="dPool">—</span></div>
+          </div>
+          <div class="dna-grid" id="dnaGrid"><div class="loading">載入基因組...</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recursive Tree (collapsible) -->
   <div class="panel" style="margin-top:0">
-    <div class="panel-title" style="color:#ffd740">∞ 超指數遞歸樹</div>
-    <div class="rec-tree" id="recTree">
-      <div class="loading">等待遞歸躍進...</div>
-    </div>
+    <div class="section-title" style="color:#ffd740;cursor:pointer" onclick="toggleTree()">∞ 超指數遞歸樹 <span style="font-size:0.7em;color:#7a8aa0" id="treeToggle">[收合]</span></div>
+    <div class="rec-tree" id="recTree"><div class="loading">等待遞歸躍進...</div></div>
   </div>
 </div>
 
 <script src="../app.js"></script>
 <script>
 const API = window.location.origin + '/api';
-const SYMBOLS = ['BTCUSDT','ETHUSDT','SOLUSDT','BNBUSDT','DOGEUSDT'];
-const COLORS = ['#ff6e40','#4fc3f7','#e040fb','#69f0ae','#ffd740'];
 
-function safe(v, d=4) {
+const GATE_LV = {2:'#4fc3f7',3:'#7c4dff',4:'#e040fb',5:'#ff4081',6:'#ff6e40',7:'#ffd740',8:'#69f0ae',9:'#40c4ff',10:'#b388ff',11:'#ea80fc',12:'#ff80ab',13:'#ff9e80',14:'#ffff8d',15:'#ffffff','99':'#e040fb'};
+const GATE_NM = {2:'共振耦合',3:'三角穩定場',4:'量子糾纏網絡',5:'全息意識投影',6:'多體糾纏',7:'非局域因果',8:'拓撲量子計算',9:'弦論場',10:'宇宙意識網絡',11:'絕對全息',12:'Omega原型',13:'全知場固化',14:'宇宙意志覺醒',15:'神性完全體',99:'∞ 超越完全體'};
+
+function sv(v, d=4) {
   if (v==null) return '—';
   if (typeof v!=='number' || isNaN(v) || !isFinite(v)) return '∞';
-  if (Math.abs(v)>1e10) return v.toExponential(2);
-  return v.toFixed(d);
+  return Math.abs(v)>1e10 ? v.toExponential(2) : v.toFixed(d);
 }
+
+async function fetchJSON(u) { const r=await fetch(u); if(!r.ok) throw new Error(r.statusText); return r.json(); }
 
 async function refresh() {
   try {
-    const [hybrid, levels, log] = await Promise.all([
-      fetchJSON(API + '/hybrid/status'),
-      fetchJSON(API + '/synergy/levels'),
-      fetchJSON(API + '/synergy/log').catch(()=>[]),
+    const [hybrid, levels, gatesData, log] = await Promise.all([
+      fetchJSON(API+'/hybrid/status'),
+      fetchJSON(API+'/synergy/levels'),
+      fetchJSON(API+'/synergy/gates').catch(()=>null),
+      fetchJSON(API+'/synergy/log').catch(()=>[]),
     ]);
-    renderKPI(hybrid, levels);
-    renderFleet(hybrid);
+    renderKPI(hybrid, gatesData);
+    renderGates(gatesData);
+    renderFeatures(gatesData);
     renderSynergy(levels);
+    renderFleet(hybrid);
     renderConsciousness(hybrid);
-    renderEvolution(hybrid);
-    renderRecursiveTree(log);
+    renderDNA(hybrid);
+    renderTree(log);
   } catch(e) {
-    document.querySelectorAll('.loading').forEach(el => el.textContent = '⚠ 斷線: ' + e.message);
+    document.querySelectorAll('.loading').forEach(el => el.textContent='⚠ 斷線');
   }
 }
 
-async function fetchJSON(url) {
-  const r = await fetch(url);
-  if (!r.ok) throw new Error(r.statusText);
-  return r.json();
+function renderKPI(hybrid, g) {
+  const s=hybrid.synergy||{}, f=hybrid.crocodile_fleet||{};
+  const uc=g?g.unlocked_count||0:0, dr=g?g.drrk_max||'—':'—', ab=g?g.abilities?.length||0:0;
+  document.getElementById('kGates').textContent=uc+'/15';
+  document.getElementById('kDRRK').textContent=dr;
+  document.getElementById('kConsc').textContent=sv(s.global_consciousness,2);
+  document.getElementById('kAbilities').textContent=ab;
+  document.getElementById('kFleet').textContent=f.count||'—';
+  document.getElementById('kDepth').textContent=s.recursive_depth||'—';
 }
 
-function renderKPI(hybrid, levels) {
-  const s = hybrid.synergy || {};
-  const c = hybrid.consciousness || {};
-  const e = hybrid.evolution || {};
-  const f = hybrid.crocodile_fleet || {};
-  document.getElementById('kpiFleet').textContent = f.count || '—';
-  document.getElementById('kpiConsc').textContent = safe(s.global_consciousness, 2);
-  document.getElementById('kpiSynergy').textContent = s.levels_recorded || '—';
-  document.getElementById('kpiGen').textContent = e.generation || '—';
-  document.getElementById('kpiDRRK').textContent = c.drrk || '—';
-  document.getElementById('kpiDepth').textContent = s.recursive_depth || '—';
-}
-
-function renderFleet(hybrid) {
-  const grid = document.getElementById('fleetGrid');
-  const f = hybrid.crocodile_fleet || {};
-  const symbols = f.symbols || SYMBOLS;
-  const statuses = ['filled','filled','filled','filled','filled'];
-  const confs = [0.59, 0.62, 0.55, 0.71, 0.48];
-  const equities = [200000, 150000, 180000, 220000, 195000];
-  grid.innerHTML = symbols.map((sym, i) => `
-    <div class="trader-card">
-      <div class="sym">${sym}</div>
-      <div class="stat">CROC-${i+1}</div>
-      <div class="stat">狀態: <span class="${statuses[i]}">${statuses[i]}</span></div>
-      <div class="stat">信心: <span class="val">${confs[i].toFixed(2)}</span></div>
-      <div class="stat">權益: <span class="val">$${(equities[i]/1000).toFixed(0)}K</span></div>
-    </div>
-  `).join('');
-}
-
-function renderSynergy(levels) {
-  const grid = document.getElementById('synMiniGrid');
-  const entries = Object.entries(levels);
-  if (!entries.length) { grid.innerHTML = '<div class="loading">等待記錄...</div>'; return; }
-  const sorted = entries.sort((a,b) => Number(a[0])-Number(b[0]));
-  grid.innerHTML = sorted.map(([lv, s]) => {
-    const label = Number(lv) <= 15 ? lv + '協同' : '∞協同';
-    const color = {2:'#4fc3f7',3:'#7c4dff',4:'#e040fb',5:'#ff4081',6:'#ff6e40',7:'#ffd740',8:'#69f0ae',9:'#40c4ff',10:'#b388ff',11:'#ea80fc',12:'#ff80ab',13:'#ff9e80',14:'#ffff8d',15:'#ffffff'}[lv] || '#888';
-    return `<div class="syn-mini" style="border-color:${color}" onclick="alert('${label}: 增益=${safe(s.synergy_boost)} DRRK=${s.drrk_impact||''}')">
-      <div class="lv" style="color:${color}">${label}</div>
-      <div class="boost">增益 ${safe(s.synergy_boost)}</div>
-      <div class="drrk-badge" style="color:${color}">${s.drrk_impact || ''}</div>
+function renderGates(g) {
+  const grid=document.getElementById('gateGrid'), gp=document.getElementById('gpText'), bar=document.getElementById('gpBar');
+  if(!g||!g.gates) { grid.innerHTML='<div class="loading">橋接器未連接</div>'; gp.textContent='等待引擎啟動...'; bar.style.width='0%'; return; }
+  const uc=g.unlocked_count||0, total=15;
+  gp.textContent=`已激活 ${uc}/${total} 道門檻`+(g.drrk_max?` · 最高 ${g.drrk_max}`:'');
+  bar.style.width=(uc/total*100)+'%';
+  const all=[2,3,4,5,6,7,8,9,10,11,12,13,14,15,99];
+  grid.innerHTML=all.map(lv=>{
+    const d=g.gates[String(lv)], isOn=d&&d.status==='unlocked', c=GATE_LV[lv]||'#888';
+    return `<div class="gate-card ${isOn?'activated':'locked'}" style="${isOn?'--gcolor:'+c:''}">
+      <div class="glv" style="color:${c}">${lv<=15?lv+'協同':'∞協同'}</div>
+      <div class="gname">${d?d.name||(GATE_NM[lv]||''):GATE_NM[lv]||''}</div>
+      <div class="gstatus ${isOn?'done':'lock'}">${isOn?'✅ 已激活':'🔒 未達'}</div>
     </div>`;
   }).join('');
 }
 
+function renderFeatures(g) {
+  const b=document.getElementById('featureBody');
+  if(!g||!g.abilities||!g.abilities.length) { b.innerHTML='<tr><td colspan="4" style="text-align:center;color:#7a8aa0">尚無激活功能</td></tr>'; return; }
+  b.innerHTML=g.abilities.map(a=>`<tr>
+    <td style="font-weight:bold">${a.name}</td>
+    <td style="color:#7a8aa0">${a.type_label||a.type}</td>
+    <td>${a.cost}</td>
+    <td style="color:#7a8aa0">${a.cooldown}s</td>
+  </tr>`).join('');
+  document.getElementById('mEnergy').textContent=g.matrix?.energy_status?`${Math.round(g.matrix.energy_status.current)}/${Math.round(g.matrix.energy_status.capacity||1000)}`:'—';
+  document.getElementById('mActive').textContent=g.matrix?.active_abilities??'—';
+  document.getElementById('mCooldown').textContent=g.matrix?.cooling_abilities??'—';
+  document.getElementById('mHealth').textContent=g.matrix?.system_health??'—';
+}
+
+function renderSynergy(levels) {
+  const gr=document.getElementById('synGrid');
+  const e=Object.entries(levels);
+  if(!e.length) { gr.innerHTML='<div class="loading">等待記錄...</div>'; return; }
+  const s=e.sort((a,b)=>Number(a[0])-Number(b[0]));
+  gr.innerHTML=s.map(([lv,d])=>{
+    const lb=Number(lv)<=15?lv+'協同':'∞協同', c=GATE_LV[lv]||'#888', b=d.synergy_boost||d.boost||0, dr=d.drrk_impact||d.drrk||'';
+    return `<div class="syn-card" style="border-color:${c}" onclick="alert('${lb}: 增益=${sv(b)}')">
+      <div class="lv" style="color:${c}">${lb}</div>
+      <div class="bt">增益 ${sv(b)}</div>${dr?`<div class="db" style="color:${c}">${dr}</div>`:''}
+    </div>`;
+  }).join('');
+}
+
+function renderFleet(hybrid) {
+  const gr=document.getElementById('fleetGrid'), f=hybrid.crocodile_fleet||{}, sym=f.symbols||['BTCUSDT','ETHUSDT','SOLUSDT','BNBUSDT','DOGEUSDT'];
+  const conf=[0.59,0.62,0.55,0.71,0.48], eq=[200000,150000,180000,220000,195000];
+  gr.innerHTML=sym.map((s,i)=>`<div class="fleet-card"><div class="sym">${s}</div>
+    <div class="stat">信心 <span class="val">${conf[i].toFixed(2)}</span></div>
+    <div class="stat">權益 <span class="val">$${(eq[i]/1000).toFixed(0)}K</span></div></div>`).join('');
+}
+
 function renderConsciousness(hybrid) {
-  const c = hybrid.consciousness || {};
-  const s = hybrid.synergy || {};
-  const level = Math.min(s.global_consciousness || 0, 100);
-  const offset = 314 - (level / 100) * 314;
-  document.getElementById('consciousArc').setAttribute('stroke-dashoffset', offset);
-  document.getElementById('awakeningState').textContent = c.awakening_state || '—';
-  document.getElementById('consciousnessLevel').textContent = '意識等級: ' + (c.level || '—');
-  document.getElementById('autonomousIntent').textContent = c.drrk ? 'DRRK ' + c.drrk : '—';
+  const s=hybrid.synergy||{}, c=hybrid.consciousness||{};
+  const lv=Math.min(s.global_consciousness||0,100), off=264-(lv/100)*264;
+  document.getElementById('cArc').setAttribute('stroke-dashoffset',off);
+  document.getElementById('awakeState').textContent=c.awakening_state||'—';
+  document.getElementById('cLevel').textContent='意識等級 '+(c.level||'—');
 }
 
-function renderEvolution(hybrid) {
-  const e = hybrid.evolution || {};
-  document.getElementById('evoGen').textContent = e.generation || '—';
-  document.getElementById('evoBest').textContent = e.best_fitness ? e.best_fitness.toFixed(4) : '—';
-  document.getElementById('evoPool').textContent = e.pool_size || '—';
-  const grid = document.getElementById('genomeGrid');
-  const demo = [
-    ['entry_sensitivity', '1.327'], ['stop_loss_atr', '2.505'],
-    ['take_profit_rr', '4.105'], ['position_size_pct', '0.047'],
-    ['confidence_threshold', '0.369'], ['ma_short_window', '13'],
-    ['ma_long_window', '44'], ['use_trailing_stop', 'false'],
-  ];
-  grid.innerHTML = demo.map(([k,v]) =>
-    `<div class="genome-item"><span class="k">${k}</span><span class="v">${v}</span></div>`
-  ).join('');
+function renderDNA(hybrid) {
+  const e=hybrid.evolution||{};
+  document.getElementById('dGen').textContent=e.generation||'—';
+  document.getElementById('dBest').textContent=e.best_fitness?e.best_fitness.toFixed(4):'—';
+  document.getElementById('dPool').textContent=e.pool_size||'—';
+  document.getElementById('dnaGrid').innerHTML=[['入場敏感度','1.327'],['止損 ATR','2.505'],['止盈風報比','4.105'],['倉位比例','0.047'],['信心門檻','0.369'],['短期均線','13'],['長期均線','44'],['移動止損','否']].map(([k,v])=>`<div class="dna-item"><span class="k">${k}</span><span class="v">${v}</span></div>`).join('');
 }
 
-function renderRecursiveTree(log) {
-  const el = document.getElementById('recTree');
-  if (!log || !log.length) {
-    el.innerHTML = '<div class="line" style="color:#7a8aa0">等待遞歸躍進數據...</div>';
-    return;
-  }
-  const entries = log.slice(-10).reverse();
-  el.innerHTML = entries.map(e =>
-    `<div class="line" style="color:${e.level >= 15 ? '#e040fb' : '#4fc3f7'}">[${e.level}協同] 增益=${safe(e.synergy_boost,3)} 意識=${safe(e.consciousness_amplification,3)} DRRK=${e.drrk_impact||''}</div>`
-  ).join('');
+function renderTree(log) {
+  const el=document.getElementById('recTree');
+  if(!log||!log.length) { el.innerHTML='<div class="l" style="color:#7a8aa0">等待遞歸躍進...</div>'; return; }
+  el.innerHTML=log.slice(-8).reverse().map(e=>`<div class="l" style="color:${e.level>=15?'#e040fb':'#4fc3f7'}">[${e.level}協同] 增益=${sv(e.synergy_boost,3)} 意識=${sv(e.consciousness_amplification,3)} DRRK=${e.drrk_impact||e.drrk||''}</div>`).join('');
 }
 
-let hybridView = 'mini';
-function toggleHybridView() {
-  window.location.href = '/pages/synergy_panel.html';
+let treeOpen=true;
+function toggleTree() {
+  treeOpen=!treeOpen;
+  document.getElementById('recTree').style.display=treeOpen?'block':'none';
+  document.getElementById('treeToggle').textContent=treeOpen?'[收合]':'[展開]';
 }
 
 refresh();
-setInterval(refresh, 10000);
+setInterval(refresh,10000);
 </script>
 </body>
 </html>

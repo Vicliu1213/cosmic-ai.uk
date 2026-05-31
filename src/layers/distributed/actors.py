@@ -44,13 +44,13 @@ class ActorOrchestrator:
                 futures[theory] = ref.get_status.remote()
             except Exception:
                 pass
-        results = {}
-        for theory, future in futures.items():
-            try:
-                results[theory] = ray.get(future, timeout=10)
-            except Exception as e:
-                results[theory] = {"error": str(e)}
-        return results
+        if not futures:
+            return {}
+        try:
+            values = ray.get(list(futures.values()), timeout=10)
+            return dict(zip(futures.keys(), values))
+        except Exception as e:
+            return {k: {"error": str(e)} for k in futures}
 
     def shutdown_all(self):
         for ref in self.actors.values():

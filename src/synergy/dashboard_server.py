@@ -108,6 +108,20 @@ class SynergyDashboardServer:
             self._write_json()
             return JSONResponse(result)
 
+        @router.get("/synergy/gates")
+        def get_gates():
+            bridge = getattr(self.recorder, "gate_bridge", None)
+            if bridge:
+                return JSONResponse(bridge.get_full_status())
+            return JSONResponse({
+                "gates": {},
+                "abilities": [],
+                "matrix": {},
+                "unlocked_count": 0,
+                "drrk_max": "",
+                "note": "gate_bridge not configured on recorder",
+            })
+
         @router.get("/hybrid/status")
         def hybrid_status():
             import subprocess, time

@@ -18,7 +18,6 @@ from dataclasses import dataclass, field
 from enum import Enum
 from datetime import datetime
 from collections import defaultdict, deque
-import json
 
 logger = logging.getLogger(__name__)
 
@@ -268,48 +267,10 @@ class CMAESEvolutionStrategy:
         self.cmu = min(1 - self.c1, 2 * (self.mueff - 2 + 1 / self.mueff) / ((self.dimensions + 2) ** 2 + self.mueff))
         self.damps = 1 + 2 * max(0, np.sqrt((self.mueff - 1) / (self.dimensions + 1)) - 1) + self.cs
         
-        # 进化历史
+        # 进化历史 (有界队列)
         self.generation = 0
-        self.fitness_history = []
-        self.mean_history = []
-    
-    def initialize_population(self, genome_size: int) -> List[np.ndarray]:
-        self.dimensions = int(genome_size)
-        self.mean = np.zeros(self.dimensions)
-        self.C = np.eye(self.dimensions)
-        self.B = np.eye(self.dimensions)
-        self.D = np.ones(self.dimensions)
-        return [np.random.rand(genome_size) for _ in range(self.population_size)]
-    
-    def evolve(self, population: np.ndarray, fitness_scores: np.ndarray) -> np.ndarray:
-        solutions = [np.asarray(ind) for ind in population]
-        fitness_values = list(np.asarray(fitness_scores, dtype=float))
-        self.update(solutions, fitness_values)
-        return np.asarray(self.sample_population())
-    
-    def get_covariance_matrix(self, genome_size: int) -> np.ndarray:
-        if self.C.shape != (genome_size, genome_size):
-            return np.eye(genome_size)
-        return self.C.copy()
-
-    def initialize_population(self, genome_size: int) -> List[np.ndarray]:
-        self.dimensions = int(genome_size)
-        self.mean = np.zeros(self.dimensions)
-        self.C = np.eye(self.dimensions)
-        self.B = np.eye(self.dimensions)
-        self.D = np.ones(self.dimensions)
-        return [np.random.rand(genome_size) for _ in range(self.population_size)]
-
-    def evolve(self, population: np.ndarray, fitness_scores: np.ndarray) -> np.ndarray:
-        solutions = [np.asarray(ind) for ind in population]
-        fitness_values = list(np.asarray(fitness_scores, dtype=float))
-        self.update(solutions, fitness_values)
-        return np.asarray(self.sample_population())
-
-    def get_covariance_matrix(self, genome_size: int) -> np.ndarray:
-        if self.C.shape != (genome_size, genome_size):
-            return np.eye(genome_size)
-        return self.C.copy()
+        self.fitness_history: deque = deque(maxlen=10000)
+        self.mean_history: deque = deque(maxlen=10000)
     
     def sample_population(self) -> List[np.ndarray]:
         """采样种群"""
@@ -376,7 +337,7 @@ class CMAESEvolutionStrategy:
             'generation': self.generation,
             'current_mean': self.mean.tolist(),
             'current_sigma': self.sigma,
-            'fitness_history': self.fitness_history[-20:],
+            'fitness_history': list(self.fitness_history)[-20:],
             'population_size': self.population_size,
             'dimensions': self.dimensions
         }
@@ -393,7 +354,7 @@ class KnowledgeDistiller:
         else:
             self.temperature = float(temperature)
             self.alpha = float(alpha)
-        self.distillation_history = []
+        self.distillation_history: deque = deque(maxlen=10000)
     
     def calculate_distillation_loss(self, teacher_logits: np.ndarray, student_logits: np.ndarray) -> float:
         return self.distill_knowledge({'logits': teacher_logits}, {'logits': student_logits})
@@ -444,7 +405,7 @@ class KnowledgeDistiller:
         return {
             'total_distillations': len(self.distillation_history),
             'temperature': self.temperature,
-            'recent_distillations': self.distillation_history[-10:]
+            'recent_distillations': list(self.distillation_history)[-10:]
         }
 
 
@@ -487,8 +448,8 @@ class SelfEvolutionEngine:
         
         self.agents = agents or []
         self.learning_phase = LearningPhase.EXPLORATION
-        self.phase_transitions: List[Tuple[float, str]] = []
-        self.experience_buffer: List[Dict[str, Any]] = []
+        self.phase_transitions: deque = deque(maxlen=1000)
+        self.experience_buffer: deque = deque(maxlen=100000)
     
     def select_algorithm(self, algo: str) -> Dict[str, Any]:
         return {'selected': algo, 'status': 'ready'}
@@ -590,7 +551,7 @@ class SelfEvolutionEngine:
             'evolution_stats': self.evolution_strategy.get_evolution_stats(),
             'distillation_stats': self.knowledge_distiller.get_distillation_stats(),
             'learning_phase': self.learning_phase.value,
-            'phase_transitions': self.phase_transitions[-10:]
+            'phase_transitions': list(self.phase_transitions)[-10:]
         }
 
 

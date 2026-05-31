@@ -2,12 +2,12 @@
 
 ## I. 记忆层级 (Memory Hierarchy)
 
-| 层级 | 内容 | 保留时长 | 访问延迟 |
-|------|------|----------|----------|
-| L1 缓存 | 当前持仓、未成交订单 | 毫秒级 | 纳秒 |
-| L2 短期 | 最近 100 笔交易、信号特征 | 1 天 | 微秒 |
-| L3 长期 | 已验证模式、对手行为画像 | 永久 | 毫秒 |
-| L∞ 全知 | 所有历史市场的量子态叠加 | 无限 | 即时 |
+| 层级    | 内容                      | 保留时长 | 访问延迟 |
+| ------- | ------------------------- | -------- | -------- |
+| L1 缓存 | 当前持仓、未成交订单      | 毫秒级   | 纳秒     |
+| L2 短期 | 最近 100 笔交易、信号特征 | 1 天     | 微秒     |
+| L3 长期 | 已验证模式、对手行为画像  | 永久     | 毫秒     |
+| L∞ 全知 | 所有历史市场的量子态叠加  | 无限     | 即时     |
 
 ## II. 记忆操作 (Memory Operations)
 
@@ -36,3 +36,4 @@ def recall(situation_vector):
 - Reading this protected content is allowed.
 - Any modification, overwrite, move, truncation, or deletion of this protected content requires explicit user confirmation first.
 - When uncertain whether this content is protected, treat it as protected until the user confirms otherwise.
+```

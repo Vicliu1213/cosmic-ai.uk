@@ -12,9 +12,11 @@ from typing import Dict, Any, Optional, List, Union
 from pathlib import Path
 from dataclasses import dataclass
 from enum import Enum
+from collections import deque
 import re
 import json
 import hashlib
+import shutil
 
 logger = logging.getLogger(__name__)
 
@@ -53,7 +55,7 @@ class EncodingProtector:
     
     def __init__(self, policy: EncodingPolicy = None):
         self.policy = policy or EncodingPolicy()
-        self.encoding_error_log = []
+        self.encoding_error_log: deque = deque(maxlen=10000)
         logger.info("✅ EncodingProtector initialized")
     
     def detect_encoding(self, data: bytes) -> str:
@@ -165,14 +167,14 @@ class EncodingProtector:
     
     def get_error_log(self) -> List[Dict[str, Any]]:
         """獲取錯誤日誌"""
-        return self.encoding_error_log.copy()
+        return list(self.encoding_error_log)
 
 
 class DataValidator:
     """數據驗證器 - 防止數據損毀"""
     
     def __init__(self):
-        self.validation_log = []
+        self.validation_log: deque = deque(maxlen=10000)
         logger.info("✅ DataValidator initialized")
     
     def calculate_checksum(self, data: Union[str, bytes]) -> str:
@@ -252,14 +254,15 @@ class DataValidator:
     def get_validation_report(self) -> Dict[str, Any]:
         """獲取驗證報告"""
         total = len(self.validation_log)
-        passed = sum(1 for r in self.validation_log if r['status'] == 'PASS')
+        validation_list = list(self.validation_log)
+        passed = sum(1 for r in validation_list if r['status'] == 'PASS')
         
         return {
             "total_validations": total,
             "passed": passed,
             "failed": total - passed,
             "success_rate": (passed / total * 100) if total > 0 else 0,
-            "recent_events": self.validation_log[-10:]
+            "recent_events": validation_list[-10:]
         }
 
 
@@ -307,12 +310,9 @@ class FileIOProtector:
             path = Path(filepath)
             encoding = encoding or "utf-8"
             
-            # 建立備份
             if backup and path.exists():
                 backup_path = path.with_suffix(path.suffix + '.backup')
-                with open(path, 'rb') as f:
-                    with open(backup_path, 'wb') as bf:
-                        bf.write(f.read())
+                shutil.copy2(path, backup_path)
                 logger.debug(f"✅ Backup created: {backup_path}")
             
             # 驗證內容
@@ -392,8 +392,9 @@ class SystemEncodingManager:
         
         # 編碼錯誤日誌
         report += "\n📋 編碼錯誤日誌:\n"
-        if self.encoding_protector.encoding_error_log:
-            for error in self.encoding_protector.encoding_error_log[-5:]:
+        log = self.encoding_protector.get_error_log()
+        if log:
+            for error in log[-5:]:
                 report += f"  - {error['original_encoding']} -> {error['used_encoding']}\n"
         else:
             report += "  ✅ 無編碼錯誤\n"

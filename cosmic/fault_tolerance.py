@@ -19,7 +19,6 @@ from enum import Enum
 from datetime import datetime
 from collections import defaultdict, deque
 import threading
-import json
 
 logger = logging.getLogger(__name__)
 
@@ -88,6 +87,7 @@ class FaultDetectionEngine:
         )
         self.monitoring_active = False
         self.fault_callbacks: List[callable] = []
+        self._max_callbacks = 100
     
     def check_component_health(
         self,
@@ -169,6 +169,8 @@ class FaultDetectionEngine:
     
     def register_fault_callback(self, callback: callable):
         """注册故障回调"""
+        if len(self.fault_callbacks) >= self._max_callbacks:
+            self.fault_callbacks.pop(0)
         self.fault_callbacks.append(callback)
 
 
@@ -180,6 +182,7 @@ class FaultIsolationManager:
         self.isolation_strategy = self.config.get('isolation_strategy', 'manual')
         self.strategies = list(self.config.get('strategies', []))
         self.isolated_components: Dict[str, FaultEvent] = {}
+        self._max_isolated = 1000
         self.isolation_history: deque = deque(maxlen=1000)
 
     def apply_isolation_strategy(self, component_id: str, strategy: str):
@@ -200,7 +203,9 @@ class FaultIsolationManager:
     def isolate_fault(self, fault_event: FaultEvent) -> bool:
         """隔离故障"""
         try:
-            # 记录隔离
+            if len(self.isolated_components) >= self._max_isolated:
+                oldest = next(iter(self.isolated_components))
+                del self.isolated_components[oldest]
             self.isolated_components[fault_event.component_id] = fault_event
             self.isolation_history.append({
                 'timestamp': datetime.now().isoformat(),
@@ -223,11 +228,11 @@ class FaultIsolationManager:
         return component_id in self.isolated_components
     
     def get_isolation_status(self) -> Dict[str, Any]:
-        """获取隔离状态"""
+        iso_list = list(self.isolation_history)
         return {
             'isolated_count': len(self.isolated_components),
             'isolated_components': list(self.isolated_components.keys()),
-            'recent_isolations': list(self.isolation_history)[-10:]
+            'recent_isolations': iso_list[-10:],
         }
 
 
@@ -312,14 +317,14 @@ class FailoverManager:
         }
     
     def get_failover_stats(self) -> Dict[str, Any]:
-        """获取转移统计"""
-        successful = sum(1 for f in self.failover_history if f['success'])
+        fh = list(self.failover_history)
+        successful = sum(1 for f in fh if f['success'])
         
         return {
-            'total_failovers': len(self.failover_history),
+            'total_failovers': len(fh),
             'successful_failovers': successful,
-            'success_rate': successful / len(self.failover_history) if self.failover_history else 0,
-            'recent_failovers': list(self.failover_history)[-10:]
+            'success_rate': successful / len(fh) if fh else 0,
+            'recent_failovers': fh[-10:],
         }
 
 

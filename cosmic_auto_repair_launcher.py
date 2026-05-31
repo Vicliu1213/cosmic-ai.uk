@@ -26,6 +26,7 @@ from cosmic.encoding_protection import (
     FileIOProtector,
     safe_print
 )
+from cosmic.performance_optimizer import apply_cosmic_optimizations
 
 # 設置日誌
 logging.basicConfig(
@@ -233,11 +234,31 @@ class CosmicAIAutoRepairSystem:
         
         safe_print("\n" + "="*80)
     
+    def enable_aggressive_multi_layer_repair(self):
+        """啟用激進多層自動修復模式 — 突破物理極限"""
+        safe_print("\n" + "="*80)
+        safe_print("🚀 啟動激進多層自動修復模式 (Multi-Layer Aggressive Repair)")
+        safe_print("="*80)
+
+        self.config_manager.enable_aggressive_repair()
+        safe_print("\n✅ 容錯系統: aggressive 模式 (檢測間隔 250ms)")
+        safe_print("✅ 量子纠错系統: aggressive 模式 (校正間隔 100ms, 重試 5x)")
+        safe_print("✅ 自進化系統: aggressive 模式 (更新頻率 25 steps, 蒸餾 10 steps)")
+
+        self.print_auto_repair_config()
+        safe_print("\n" + "="*80)
+
     def run_system(self):
         """運行完整系統"""
         try:
-            # 打印系統信息
-            self.print_auto_repair_config()
+            # 性能突破優化
+            safe_print("\n🚀 宇宙效能突破初始化...")
+            optimizer = apply_cosmic_optimizations()
+
+            # 啟用激進多層修復
+            self.enable_aggressive_multi_layer_repair()
+
+            # 打印編碼保護信息
             self.print_encoding_protection_info()
             
             # 模擬修復場景
@@ -249,7 +270,7 @@ class CosmicAIAutoRepairSystem:
             # 連續監控 (10秒)
             self.run_continuous_monitoring(duration_sec=10)
             
-            safe_print("\n✅ 系統運行完成")
+            safe_print("\n✅ 系統運行完成 — 多層自動修復已全面激活")
             
         except Exception as e:
             logger.error(f"❌ System error: {e}")

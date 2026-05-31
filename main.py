@@ -20,6 +20,7 @@ from src.layers.distributed import (
     CrocodileFleet, ConsciousnessLayer, EvolutionEngine,
 )
 from src.synergy.dashboard_server import SynergyDashboardServer
+from src.synergy.gate_bridge import GateAbilityBridge
 
 
 def main():
@@ -33,8 +34,13 @@ def main():
 
     # Layer 0: Knowledge
     kb = KnowledgeBase(docs_path="docs/")
-    ray.put(kb)
+    kb_ref = ray.put(kb)
     logger.info(f"知識庫載入 {len(kb.theories)} 個理論")
+
+    # Layer 0.5: GateBridge → CoreMatrix
+    bridge = GateAbilityBridge(energy_capacity=1000.0)
+    bridge.ensure_core_matrix()
+    logger.info("GateBridge ⇄ CoreMatrix 串聯就緒")
 
     # Layer 1: Ray Cluster
     cluster = DistributedCluster(namespace=config["system"]["namespace"])
@@ -42,7 +48,7 @@ def main():
     logger.info(f"Ray 就緒 | 資源: {cluster.resources}")
 
     # Layer 2: Dashboard Server (starts early, feeds live data)
-    synergy = SynergyEngine()
+    synergy = SynergyEngine(gate_bridge=bridge)
     dashboard = SynergyDashboardServer(synergy, port=8788)
     try:
         dashboard.start()
@@ -59,7 +65,7 @@ def main():
     )
     agents = [Agent.options(name=f"{agent_cfg['naming_prefix']}_{i+1}",
                             num_cpus=num_cpus, num_gpus=num_gpus
-                            ).remote(i + 1, config["genome"], agent_cfg["default_resources"], ray.put(kb))
+                            ).remote(i + 1, config["genome"], agent_cfg["default_resources"], kb_ref)
               for i in range(agent_cfg["initial_count"])]
     logger.info(f"智能體: {len(agents)}")
 
@@ -74,15 +80,14 @@ def main():
         vote = ray.get(mgr.propose_and_vote.remote(proposal), timeout=30)
     except Exception as e:
         vote = {"error": str(e)}
-    logger.info(f"投票: {vote}")
 
-    # Quantum tasks
+    # Quantum tasks (batch parallel)
     task_mode = "classic_reconstruct"
     try:
         tasks = ray.get([a.perform_quantum_task.remote(task_mode) for a in agents], timeout=30)
     except Exception as e:
         tasks = [f"error: {e}"] * len(agents)
-    logger.info(f"量子任務: {tasks}")
+    logger.info(f"投票: {vote} | 量子任務: {len(tasks)} agents")
 
     # Layer 4: Crocodile Fleet
     tcfg = config.get("trading", {})
@@ -142,9 +147,10 @@ def main():
     logger.info(f"\n{synergy.summary_table()}")
 
     if os.getenv("COSMIC_KEEP_RUNNING", "0") == "1":
+        import threading
+        stop = threading.Event()
         try:
-            while True:
-                time.sleep(10)
+            stop.wait()
         except KeyboardInterrupt:
             pass
 

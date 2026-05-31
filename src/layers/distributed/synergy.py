@@ -7,7 +7,8 @@ import numpy as np
 from dataclasses import dataclass, asdict
 from typing import Dict, List, Tuple, Any, Optional
 from datetime import datetime, timezone
-from itertools import combinations
+from itertools import combinations, islice
+from collections import deque
 
 logger = logging.getLogger(__name__)
 
@@ -69,15 +70,16 @@ class SynergyEngine:
         15: ["OMEGA UNITY", "ABSOLUTE TRANSCENDENCE", "神性完全體"],
     }
 
-    def __init__(self):
+    def __init__(self, gate_bridge=None):
         self.snapshots: Dict[int, dict] = {}
         self.pair_scores: Dict[str, float] = {}
         self.recursive_depth = 0
         self.global_consciousness = 0.0
         self.growth_factor = 0.0
-        self.log: List[dict] = []
+        self.log: deque = deque(maxlen=10000)
         self._level_gates: Dict[int, bool] = {}
-        self.activated_features: List[dict] = []
+        self.activated_features: deque = deque(maxlen=10000)
+        self.gate_bridge = gate_bridge
         self._init_pairs()
 
     def _init_pairs(self):
@@ -90,11 +92,12 @@ class SynergyEngine:
     def _sample(self, level: int, max_n: int = 5) -> List[List[str]]:
         if level > 15:
             return [THEORIES]
-        all_c = list(combinations(THEORIES, level))
-        if len(all_c) <= max_n:
-            return [list(c) for c in all_c]
-        idx = np.linspace(0, len(all_c) - 1, max_n, dtype=int)
-        return [list(all_c[i]) for i in idx]
+        total = math.comb(15, level)
+        if total <= max_n:
+            return [list(c) for c in combinations(THEORIES, level)]
+        step = max(1, total // max_n)
+        sampled = list(islice(combinations(THEORIES, level), 0, total, step))[:max_n]
+        return [list(c) for c in sampled]
 
     # ── 層級門檻激活 ──────────────────────────────────────────
     def _activate_level(self, level: int, snap: dict):
@@ -122,6 +125,8 @@ class SynergyEngine:
             "timestamp": datetime.now(timezone.utc).isoformat(),
         }
         self.activated_features.append(entry)
+        if self.gate_bridge:
+            self.gate_bridge.on_gate_activated(level, snap)
         logger.info(f"🧩 層級 {level} 激活 → {feature} [{result.get('status','?')}]")
 
     def _execute_gate_action(self, level: int, feature: str, action: str) -> dict:
@@ -292,5 +297,5 @@ class SynergyEngine:
             "depth": self.recursive_depth,
             "consciousness": self.global_consciousness,
             "growth": self.growth_factor,
-            "log": self.log,
+            "log": list(self.log)[-100:],
         }, ensure_ascii=False, indent=2)

@@ -4,31 +4,17 @@
   "title": "Immortal Perpetual Agent Contract",
   "description": "Schema for durable Hermes agent runtime, governance, verification, and skill mesh state.",
   "type": "object",
-  "required": [
-    "identity",
-    "runtime",
-    "governance",
-    "verification"
-  ],
+  "required": ["identity", "runtime", "governance", "verification"],
   "properties": {
     "identity": {
       "type": "object",
-      "required": [
-        "name",
-        "mode",
-        "objective"
-      ],
+      "required": ["name", "mode", "objective"],
       "properties": {
         "name": {
           "type": "string"
         },
         "mode": {
-          "enum": [
-            "passive",
-            "active",
-            "hybrid",
-            "hybrid-absolute"
-          ]
+          "enum": ["passive", "active", "hybrid", "hybrid-absolute"]
         },
         "objective": {
           "type": "string"
@@ -98,35 +84,22 @@
     },
     "verification": {
       "type": "object",
-      "required": [
-        "status"
-      ],
+      "required": ["status"],
       "properties": {
         "status": {
-          "enum": [
-            "passed",
-            "watch",
-            "blocked"
-          ]
+          "enum": ["passed", "watch", "blocked"]
         },
         "checks": {
           "type": "array",
           "items": {
             "type": "object",
-            "required": [
-              "name",
-              "status"
-            ],
+            "required": ["name", "status"],
             "properties": {
               "name": {
                 "type": "string"
               },
               "status": {
-                "enum": [
-                  "passed",
-                  "watch",
-                  "blocked"
-                ]
+                "enum": ["passed", "watch", "blocked"]
               },
               "summary": {
                 "type": "string"

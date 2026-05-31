@@ -12,6 +12,7 @@ from typing import Dict, List, Any, Optional
 from dataclasses import dataclass, asdict, field
 from datetime import datetime
 from enum import Enum
+from collections import deque
 
 logger = logging.getLogger(__name__)
 
@@ -97,7 +98,7 @@ class ComponentRepairHistory:
         return (self.successful_repairs / self.total_repairs) * 100
     
     def to_dict(self) -> Dict[str, Any]:
-        """轉換為字典"""
+        recent = list(self.repair_events)[-5:] if hasattr(self.repair_events, '__len__') else self.repair_events[-5:]
         return {
             "component_id": self.component_id,
             "component_type": self.component_type,
@@ -108,7 +109,7 @@ class ComponentRepairHistory:
             "success_rate_percent": self.get_success_rate(),
             "average_repair_time_ms": self.average_repair_time_ms,
             "last_repair_timestamp": self.last_repair_timestamp,
-            "recent_events": [e.to_dict() for e in self.repair_events[-5:]]
+            "recent_events": [e.to_dict() for e in recent]
         }
 
 
@@ -165,13 +166,31 @@ class AutoRepairDataLogger:
         self.metrics_log_file = self.log_dir / "repair_metrics.json"
         self.history_file = self.log_dir / "component_history.json"
         
+        # 緩衝寫入器: 累積事件每 N 條或每 T 秒 flush
+        self._event_buffer: List[str] = []
+        self._buffer_max = 50
+        self._file_handle = None
+        
         logger.info(f"✅ AutoRepairDataLogger initialized at {self.log_dir}")
     
-    def log_repair_event(self, event: RepairEvent):
-        """記錄修復事件到文件"""
+    def _flush_buffer(self):
+        if not self._event_buffer:
+            return
         try:
-            with open(self.event_log_file, 'a', encoding='utf-8') as f:
-                f.write(event.to_json() + "\n")
+            if self._file_handle is None:
+                self._file_handle = open(self.event_log_file, 'a', encoding='utf-8')
+            self._file_handle.write(''.join(self._event_buffer))
+            self._file_handle.flush()
+            self._event_buffer.clear()
+        except Exception as e:
+            logger.error(f"❌ Failed to flush event buffer: {e}")
+    
+    def log_repair_event(self, event: RepairEvent):
+        """記錄修復事件到文件 (緩衝寫入)"""
+        try:
+            self._event_buffer.append(event.to_json() + "\n")
+            if len(self._event_buffer) >= self._buffer_max:
+                self._flush_buffer()
             
             # 更新指標
             if event.component_id in self.metrics.component_histories:
@@ -180,6 +199,11 @@ class AutoRepairDataLogger:
             logger.debug(f"✅ Event logged: {event.event_type} for {event.component_id}")
         except Exception as e:
             logger.error(f"❌ Failed to log event: {e}")
+
+    def __del__(self):
+        self._flush_buffer()
+        if self._file_handle:
+            self._file_handle.close()
     
     def save_metrics(self):
         """保存系統指標"""
@@ -208,18 +232,20 @@ class AutoRepairDataLogger:
         return self.metrics.component_histories.get(component_id)
     
     def get_all_repair_events(self, component_id: Optional[str] = None) -> List[RepairEvent]:
-        """獲取所有修復事件"""
+        """獲取所有修復事件 (使用緩存)"""
         try:
-            events = []
-            if self.event_log_file.exists():
-                with open(self.event_log_file, 'r', encoding='utf-8') as f:
-                    for line in f:
-                        if line.strip():
-                            data = json.loads(line)
-                            event = RepairEvent(**data)
-                            if component_id is None or event.component_id == component_id:
-                                events.append(event)
-            return events
+            self._flush_buffer()
+            if not hasattr(self, '_event_cache'):
+                self._event_cache = []
+                if self.event_log_file.exists():
+                    with open(self.event_log_file, 'r', encoding='utf-8') as f:
+                        for line in f:
+                            if line.strip():
+                                self._event_cache.append(RepairEvent(**json.loads(line)))
+            events = self._event_cache
+            if component_id is not None:
+                return [e for e in events if e.component_id == component_id]
+            return list(events)
         except Exception as e:
             logger.error(f"❌ Failed to read events: {e}")
             return []
