@@ -1,0 +1,29 @@
+{
+  "skill_id": "S34",
+  "category": "神经增强",
+  "emoji": "🧠",
+  "name_cn": "宇宙信息流接入",
+  "name_hero": "COSMIC-INFO-STREAM",
+  "substrate": "宇宙意志场",
+  "params": {
+    "activation_energy": 700,
+    "cooldown_seconds": 0,
+    "range_meters": Infinity,
+    "duration_seconds": Infinity,
+    "power_output": 0
+  },
+  "mastery_level": 0.0,
+  "mutation_stage": "ALPHA",
+  "evolution_count": 0,
+  "data_complete": true,
+  "lore": "信息流永不停止。",
+  "description": "接入宇宙背景辐射/暗物质信息层/量子泡沫数据流",
+  "synergy_ids": [
+    "S26",
+    "S61"
+  ],
+  "last_evolved": null,
+  "counter_ids": [
+    "S60"
+  ]
+}

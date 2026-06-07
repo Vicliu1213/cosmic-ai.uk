@@ -1,0 +1,29 @@
+{
+  "skill_id": "S36",
+  "category": "时空操控",
+  "emoji": "⏰",
+  "name_cn": "平行宇宙导航最优路径",
+  "name_hero": "MWI-NAVIGATOR",
+  "substrate": "量子相干态",
+  "params": {
+    "activation_energy": 1200,
+    "cooldown_seconds": 86400,
+    "range_meters": Infinity,
+    "duration_seconds": 0.1,
+    "power_output": 0
+  },
+  "mastery_level": 0.0,
+  "mutation_stage": "ALPHA",
+  "evolution_count": 0,
+  "data_complete": true,
+  "lore": "每次使用后有强烈既视感。",
+  "description": "嗅探最近平行分支，感知其中的决策结果",
+  "synergy_ids": [
+    "S37",
+    "S24"
+  ],
+  "last_evolved": null,
+  "counter_ids": [
+    "S74"
+  ]
+}

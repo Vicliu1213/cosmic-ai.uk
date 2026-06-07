@@ -1,0 +1,29 @@
+{
+  "skill_id": "S06",
+  "category": "战斗异能",
+  "emoji": "⚔️",
+  "name_cn": "奇点波质能湮灭",
+  "name_hero": "SINGULARITY-CANNON-φ",
+  "substrate": "量子相干态",
+  "params": {
+    "activation_energy": 5000,
+    "cooldown_seconds": 300,
+    "range_meters": 50,
+    "duration_seconds": 1e-06,
+    "power_output": 1.8e+26
+  },
+  "mastery_level": 0.0,
+  "mutation_stage": "ALPHA",
+  "evolution_count": 0,
+  "data_complete": true,
+  "lore": "联合国A级禁用武器，仅授权使用过3次。",
+  "description": "将空间压缩成普朗克尺度奇点后释放",
+  "synergy_ids": [
+    "S01",
+    "S93"
+  ],
+  "last_evolved": null,
+  "counter_ids": [
+    "S56"
+  ]
+}

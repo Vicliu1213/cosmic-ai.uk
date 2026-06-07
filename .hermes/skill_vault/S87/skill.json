@@ -1,0 +1,29 @@
+{
+  "skill_id": "S87",
+  "category": "进化元能力",
+  "emoji": "🔮",
+  "name_cn": "元进化进化的进化",
+  "name_hero": "META-EVOLUTION-SRP-∞",
+  "substrate": "基因表达",
+  "params": {
+    "activation_energy": 2000,
+    "cooldown_seconds": 604800,
+    "range_meters": 0,
+    "duration_seconds": 604800,
+    "power_output": Infinity
+  },
+  "mastery_level": 0.0,
+  "mutation_stage": "ALPHA",
+  "evolution_count": 0,
+  "data_complete": true,
+  "lore": "已知使用7次以上的只有一人。",
+  "description": "修改自己的基因组，每次使用成为稍微不同的物种",
+  "synergy_ids": [
+    "S02",
+    "S88"
+  ],
+  "last_evolved": null,
+  "counter_ids": [
+    "S47"
+  ]
+}

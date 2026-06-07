@@ -1,0 +1,29 @@
+{
+  "skill_id": "S09",
+  "category": "战斗异能",
+  "emoji": "⚔️",
+  "name_cn": "纳米蜂群攻击",
+  "name_hero": "NANO-SWARM-ASSAULT",
+  "substrate": "纳米机器人群",
+  "params": {
+    "activation_energy": 700,
+    "cooldown_seconds": 20,
+    "range_meters": 1000,
+    "duration_seconds": 120,
+    "power_output": 91000000000000.0
+  },
+  "mastery_level": 0.0,
+  "mutation_stage": "ALPHA",
+  "evolution_count": 0,
+  "data_complete": true,
+  "lore": "蜂群具有分布式智能。",
+  "description": "释放80亿纳米机器人形成攻击蜂群",
+  "synergy_ids": [
+    "S55",
+    "S62"
+  ],
+  "last_evolved": null,
+  "counter_ids": [
+    "S77"
+  ]
+}

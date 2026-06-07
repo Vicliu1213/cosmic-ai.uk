@@ -1,0 +1,29 @@
+{
+  "skill_id": "S85",
+  "category": "资本影响",
+  "emoji": "💰",
+  "name_cn": "文明跃迁推动K3级",
+  "name_hero": "CIVILIZATION-LEAP-K3",
+  "substrate": "宇宙意志场",
+  "params": {
+    "activation_energy": 5000,
+    "cooldown_seconds": 0,
+    "range_meters": Infinity,
+    "duration_seconds": Infinity,
+    "power_output": 0
+  },
+  "mastery_level": 0.0,
+  "mutation_stage": "ALPHA",
+  "evolution_count": 0,
+  "data_complete": true,
+  "lore": "能量掌控规模提升10^20倍。",
+  "description": "推动人类文明从K1跃升至K3（星系级能源）",
+  "synergy_ids": [
+    "S86",
+    "S78"
+  ],
+  "last_evolved": null,
+  "counter_ids": [
+    "S33"
+  ]
+}

@@ -1,0 +1,301 @@
+# ─── Hermes 技能配置 — 每項技能的作用域、激活條件、特殊條約 ───
+# scope:  individual（作用自身）/ fleet（作用艦隊）/ system（作用系統）/ reality（作用現實）
+# trigger: passive（常駐）/ active（主動）/ conditional（條件解鎖）/ global（全局生效）
+# special: 技能專屬的額外約束
+
+categories:
+  戰鬥异能:
+    base_activation_prob: 0.35
+    base_mastery_gain: 0.012
+    global_effect: false
+    description: "需要目標或戰鬥情境才能激活"
+
+  神经增强:
+    base_activation_prob: 0.50
+    base_mastery_gain: 0.015
+    global_effect: true
+    description: "被動強化神經系統，無需外部情境"
+
+  时空操控:
+    base_activation_prob: 0.25
+    base_mastery_gain: 0.010
+    global_effect: false
+    description: "需要時空錨點或因果目標"
+
+  永生肉体:
+    base_activation_prob: 0.40
+    base_mastery_gain: 0.008
+    global_effect: true
+    description: "被動維持，持續運作無需觸發"
+
+  意识精神:
+    base_activation_prob: 0.30
+    base_mastery_gain: 0.020
+    global_effect: true
+    description: "意識層級擴展，全局共振"
+
+  资本影响:
+    base_activation_prob: 0.35
+    base_mastery_gain: 0.018
+    global_effect: false
+    description: "需市場數據或交易事件才能激活"
+
+  进化元能力:
+    base_activation_prob: 0.15
+    base_mastery_gain: 0.025
+    global_effect: true
+    description: "元層級被動，極難激活但增益最高"
+
+skills:
+  # ── 戰鬥异能 (S01-S18) ──
+  S01:
+    scope: individual
+    trigger: active
+    special: { requires_target: true, dimension_count: 11 }
+  S05:
+    scope: individual
+    trigger: conditional
+    special: { recursion_risk: "神經過載", max_safe_iterations: 7200 }
+  S06:
+    scope: individual
+    trigger: active
+    special: { restricted: "聯合國A級禁用", requires_approval: true }
+  S13:
+    scope: reality
+    trigger: active
+    special: { breaks_causality: true }
+  S17:
+    scope: reality
+    trigger: active
+    special: { requires_willpower: true }
+  S18:
+    scope: reality
+    trigger: conditional
+    prerequisites: ["S01", "S03", "S06", "S07", "S10", "S11", "S12", "S13", "S15", "S17"]
+
+  # ── 神經增強 (S19-S34) ──
+  S19:
+    scope: system
+    trigger: global
+    special: { boosts_all_skills: true, iq_cap: "infinite" }
+  S20:
+    scope: individual
+    trigger: passive
+    special: { parallel_threads: 1024 }
+  S21:
+    scope: fleet
+    trigger: conditional
+    special: { min_connected: 10, collective_iq_formula: "n^1.7" }
+  S22:
+    scope: individual
+    trigger: passive
+    special: { compiles_thought_to_action: true }
+  S24:
+    scope: system
+    trigger: passive
+    special: { market_coverage: 137 }
+  S26:
+    scope: system
+    trigger: global
+    special: { accesses_akashic: true }
+  S27:
+    scope: system
+    trigger: passive
+    special: { auto_iterations: 500, improvement_per_gen: 0.05 }
+  S29:
+    scope: reality
+    trigger: conditional
+    special: { reframes_problems: true }
+  S31:
+    scope: system
+    trigger: passive
+    special: { game_theory_dominance: true, win_rate: 0.9999 }
+  S33:
+    scope: fleet
+    trigger: conditional
+    special: { fusion_rate: 0.95, requires_consent: false }
+  S34:
+    scope: system
+    trigger: global
+    special: { cosmic_data_stream: true }
+
+  # ── 時空操控 (S35-S48) ──
+  S35:
+    scope: individual
+    trigger: active
+    special: { time_dilation: 5.0, cooldown_hours: 1 }
+  S36:
+    scope: system
+    trigger: active
+    special: { parallel_scan: true, cooldown_hours: 24 }
+  S37:
+    scope: reality
+    trigger: active
+    special: { causality_editing: true, strength_range: [0, 1.0] }
+  S38:
+    scope: individual
+    trigger: active
+    special: { time_dilation_max: 100000 }
+  S40:
+    scope: reality
+    trigger: active
+    special: { creates_matter: true, energy_cost_per_kg: 9e16 }
+  S42:
+    scope: individual
+    trigger: passive
+    special: { pocket_dimension_volume: 1e50 }
+  S45:
+    scope: reality
+    trigger: conditional
+    special: { rewrites_physics: true }
+    prerequisites: ["S03", "S37", "S40", "S44"]
+  S48:
+    scope: reality
+    trigger: global
+    special: { absolute_free_will: true }
+
+  # ── 永生肉體 (S49-S60) ──
+  S49:
+    scope: individual
+    trigger: passive
+    special: { biological_age_lock: 25, healing_multiplier: 17 }
+  S50:
+    scope: individual
+    trigger: active
+    special: { one_time_use: true, digital_speed_boost: 1000 }
+  S51:
+    scope: system
+    trigger: passive
+    special: { backup_count: 1000000, backup_locations: 8 }
+  S52:
+    scope: individual
+    trigger: passive
+    special: { entropy_reversal: true }
+  S53:
+    scope: system
+    trigger: global
+    special: { merges_with_universe: true }
+  S54:
+    scope: individual
+    trigger: active
+    special: { gene_modules: 8, cooldown_days: 7 }
+  S55:
+    scope: individual
+    trigger: passive
+    special: { nanobot_repair: true, self_replicating: true }
+  S58:
+    scope: individual
+    trigger: passive
+    special: { internal_fusion: true, self_sustaining: true }
+  S60:
+    scope: system
+    trigger: passive
+    special: { light_speed_response: true }
+
+  # ── 意識精神 (S61-S74) ──
+  S61:
+    scope: system
+    trigger: global
+    special: { global_sensor_network: true, sensor_count: "15B" }
+  S62:
+    scope: individual
+    trigger: active
+    special: { nano_reconfiguration: true, max_simultaneous: 3, power_ratio: 0.6 }
+  S63:
+    scope: system
+    trigger: global
+    special: { omnipresence: true }
+  S64:
+    scope: reality
+    trigger: conditional
+    special: { universe_creation: true }
+    prerequisites: ["S45", "S88", "S90", "S96"]
+  S65:
+    scope: system
+    trigger: global
+    special: { multiverse_awareness: true }
+  S66:
+    scope: system
+    trigger: passive
+    special: { gaia_resonance: true }
+  S70:
+    scope: reality
+    trigger: active
+    special: { probability_control: true, max_success_rate: 0.9999 }
+  S74:
+    scope: reality
+    trigger: conditional
+    special: { omega_self_singularity: true }
+    prerequisites: ["S61", "S62", "S63", "S64", "S65", "S66", "S67", "S68", "S69", "S70", "S71", "S72", "S73"]
+
+  # ── 資本影響 (S75-S86) ──
+  S75:
+    scope: system
+    trigger: passive
+    special: { quantum_arbitrage: true, markets_covered: 137 }
+  S76:
+    scope: fleet
+    trigger: passive
+    special: { economic_gravity: true, radius_km: 100 }
+  S77:
+    scope: system
+    trigger: passive
+    special: { cosmic_asset_portfolio: true }
+  S79:
+    scope: fleet
+    trigger: active
+    special: { market_manipulation: true, record_time_min: 11 }
+  S80:
+    scope: reality
+    trigger: conditional
+    special: { rewrites_economics: true }
+  S81:
+    scope: fleet
+    trigger: active
+    special: { narrative_control: true, coverage: "8B" }
+  S82:
+    scope: fleet
+    trigger: passive
+    special: { resonance_field: true, radius_km: 10000 }
+  S85:
+    scope: system
+    trigger: conditional
+    special: { civilization_leap: true, target_kardashev: 3 }
+  S86:
+    scope: system
+    trigger: active
+    special: { evolution_virus: true, r0: "5-15" }
+
+  # ── 進化元能力 (S87-S96) ──
+  S87:
+    scope: individual
+    trigger: conditional
+    special: { self_genome_rewrite: true, cooldown_days: 7 }
+  S88:
+    scope: reality
+    trigger: conditional
+    special: { meta_rule_creation: true }
+    prerequisites: ["S87", "S45"]
+  S89:
+    scope: system
+    trigger: conditional
+    special: { intention_to_system: true }
+  S90:
+    scope: reality
+    trigger: conditional
+    special: { meaning_field: true }
+    prerequisites: ["S88", "S64"]
+  S94:
+    scope: reality
+    trigger: conditional
+    special: { infinite_liberation: true, unlocks_all: true }
+    prerequisites: ["S45", "S88", "S90"]
+  S95:
+    scope: system
+    trigger: active
+    special: { collective_awakening: true, awakening_rate: "40-70%" }
+  S96:
+    scope: reality
+    trigger: conditional
+    special: { omega_fusion: true }
+    prerequisites: ["S74"]  # 所有其他 95 技能 Ω 級

@@ -1,0 +1,29 @@
+{
+  "skill_id": "S41",
+  "category": "时空操控",
+  "emoji": "⏰",
+  "name_cn": "信息转物质转换",
+  "name_hero": "INFO-TO-MATTER-COMPILER",
+  "substrate": "量子相干态",
+  "params": {
+    "activation_energy": 2500,
+    "cooldown_seconds": 300,
+    "range_meters": 50,
+    "duration_seconds": 600,
+    "power_output": 0
+  },
+  "mastery_level": 0.0,
+  "mutation_stage": "ALPHA",
+  "evolution_count": 0,
+  "data_complete": true,
+  "lore": "精度达原子级。",
+  "description": "将纯信息蓝图编码转化为物理物质结构",
+  "synergy_ids": [
+    "S40",
+    "S22"
+  ],
+  "last_evolved": null,
+  "counter_ids": [
+    "S13"
+  ]
+}

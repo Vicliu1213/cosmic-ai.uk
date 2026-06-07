@@ -1,0 +1,29 @@
+{
+  "skill_id": "S33",
+  "category": "神经增强",
+  "emoji": "🧠",
+  "name_cn": "记忆融合他人即我",
+  "name_hero": "MEMORY-FUSION-PROTOCOL",
+  "substrate": "神经回路",
+  "params": {
+    "activation_energy": 400,
+    "cooldown_seconds": 0,
+    "range_meters": 0,
+    "duration_seconds": Infinity,
+    "power_output": 0
+  },
+  "mastery_level": 0.0,
+  "mutation_stage": "ALPHA",
+  "evolution_count": 0,
+  "data_complete": true,
+  "lore": "含冲突记忆的自动解决。",
+  "description": "直接融合他人技能记忆，95%融合率",
+  "synergy_ids": [
+    "S21",
+    "S32"
+  ],
+  "last_evolved": null,
+  "counter_ids": [
+    "S53"
+  ]
+}

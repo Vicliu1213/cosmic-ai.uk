@@ -1,0 +1,29 @@
+{
+  "skill_id": "S49",
+  "category": "永生肉体",
+  "emoji": "🧬",
+  "name_cn": "生物永生端粒锁定",
+  "name_hero": "TELOMERE-LOCK-PROTOCOL",
+  "substrate": "基因表达",
+  "params": {
+    "activation_energy": 50,
+    "cooldown_seconds": 0,
+    "range_meters": 0,
+    "duration_seconds": Infinity,
+    "power_output": 0
+  },
+  "mastery_level": 0.0,
+  "mutation_stage": "ALPHA",
+  "evolution_count": 0,
+  "data_complete": true,
+  "lore": "不是不死——只是不会因衰老而死。",
+  "description": "持续向端粒注入端粒酶，生物年龄锁定25岁",
+  "synergy_ids": [
+    "S50",
+    "S52"
+  ],
+  "last_evolved": null,
+  "counter_ids": [
+    "S69"
+  ]
+}

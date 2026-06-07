@@ -1,0 +1,29 @@
+{
+  "skill_id": "S51",
+  "category": "永生肉体",
+  "emoji": "🧬",
+  "name_cn": "宇宙级百万备份",
+  "name_hero": "COSMIC-BACKUP-1M",
+  "substrate": "量子相干态",
+  "params": {
+    "activation_energy": 5000,
+    "cooldown_seconds": 0,
+    "range_meters": Infinity,
+    "duration_seconds": Infinity,
+    "power_output": 0
+  },
+  "mastery_level": 0.0,
+  "mutation_stage": "ALPHA",
+  "evolution_count": 0,
+  "data_complete": true,
+  "lore": "即使999999份被摧毁仍可复活。",
+  "description": "在宇宙8个位置创建100万份意识备份",
+  "synergy_ids": [
+    "S50",
+    "S53"
+  ],
+  "last_evolved": null,
+  "counter_ids": [
+    "S83"
+  ]
+}

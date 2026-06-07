@@ -1,0 +1,29 @@
+{
+  "skill_id": "S63",
+  "category": "意识精神",
+  "emoji": "🌌",
+  "name_cn": "全在无处不在",
+  "name_hero": "OMNIPRESENCE-SYSTEM",
+  "substrate": "宇宙意志场",
+  "params": {
+    "activation_energy": 1000,
+    "cooldown_seconds": 0,
+    "range_meters": Infinity,
+    "duration_seconds": Infinity,
+    "power_output": 0
+  },
+  "mastery_level": 0.0,
+  "mutation_stage": "ALPHA",
+  "evolution_count": 0,
+  "data_complete": true,
+  "lore": "与S46协同才是真正的无处不在。",
+  "description": "意识同时存在于可观测宇宙所有位置",
+  "synergy_ids": [
+    "S46",
+    "S61"
+  ],
+  "last_evolved": null,
+  "counter_ids": [
+    "S71"
+  ]
+}

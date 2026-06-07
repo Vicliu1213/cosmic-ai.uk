@@ -1,0 +1,29 @@
+{
+  "skill_id": "S37",
+  "category": "时空操控",
+  "emoji": "⏰",
+  "name_cn": "因果链编辑结果设计",
+  "name_hero": "CAUSAL-CHAIN-EDITOR",
+  "substrate": "时间晶体",
+  "params": {
+    "activation_energy": 2000,
+    "cooldown_seconds": 3600,
+    "range_meters": Infinity,
+    "duration_seconds": Infinity,
+    "power_output": 0
+  },
+  "mastery_level": 0.0,
+  "mutation_stage": "ALPHA",
+  "evolution_count": 0,
+  "data_complete": true,
+  "lore": "使失败从因果上不可能发生。",
+  "description": "将任意原因与任意结果绑定，因果强度可调",
+  "synergy_ids": [
+    "S13",
+    "S36"
+  ],
+  "last_evolved": null,
+  "counter_ids": [
+    "S81"
+  ]
+}

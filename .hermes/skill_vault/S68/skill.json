@@ -1,0 +1,29 @@
+{
+  "skill_id": "S68",
+  "category": "意识精神",
+  "emoji": "🌌",
+  "name_cn": "跨物种意识迁移",
+  "name_hero": "CROSS-SPECIES-CONSCIOUSNESS",
+  "substrate": "神经回路",
+  "params": {
+    "activation_energy": 600,
+    "cooldown_seconds": 3600,
+    "range_meters": Infinity,
+    "duration_seconds": 3600,
+    "power_output": 0
+  },
+  "mastery_level": 0.0,
+  "mutation_stage": "ALPHA",
+  "evolution_count": 0,
+  "data_complete": true,
+  "lore": "鲸歌中包含复杂的三维宇宙地图。",
+  "description": "暂时进入任何生物的意识视角",
+  "synergy_ids": [
+    "S59",
+    "S67"
+  ],
+  "last_evolved": null,
+  "counter_ids": [
+    "S10"
+  ]
+}

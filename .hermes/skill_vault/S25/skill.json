@@ -1,0 +1,29 @@
+{
+  "skill_id": "S25",
+  "category": "神经增强",
+  "emoji": "🧠",
+  "name_cn": "生物信号读取看穿一切",
+  "name_hero": "BIOSIGNAL-READER-PRO",
+  "substrate": "生物电场",
+  "params": {
+    "activation_energy": 200,
+    "cooldown_seconds": 0,
+    "range_meters": 500,
+    "duration_seconds": Infinity,
+    "power_output": 0
+  },
+  "mastery_level": 0.0,
+  "mutation_stage": "ALPHA",
+  "evolution_count": 0,
+  "data_complete": true,
+  "lore": "诚实度识别误差<4%。",
+  "description": "读取任何人的情绪/意图/健康状态",
+  "synergy_ids": [
+    "S08",
+    "S16"
+  ],
+  "last_evolved": null,
+  "counter_ids": [
+    "S93"
+  ]
+}

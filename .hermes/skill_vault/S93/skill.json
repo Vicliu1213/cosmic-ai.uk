@@ -1,0 +1,29 @@
+{
+  "skill_id": "S93",
+  "category": "进化元能力",
+  "emoji": "🔮",
+  "name_cn": "奇点收敛威力Ω化",
+  "name_hero": "SINGULARITY-CONVERGENCE",
+  "substrate": "量子相干态",
+  "params": {
+    "activation_energy": Infinity,
+    "cooldown_seconds": 0,
+    "range_meters": Infinity,
+    "duration_seconds": Infinity,
+    "power_output": Infinity
+  },
+  "mastery_level": 0.0,
+  "mutation_stage": "ALPHA",
+  "evolution_count": 0,
+  "data_complete": true,
+  "lore": "80次迭代后突破到Ω层级。",
+  "description": "将任意实体/能量/信息收敛到奇点",
+  "synergy_ids": [
+    "S06",
+    "S94"
+  ],
+  "last_evolved": null,
+  "counter_ids": [
+    "S89"
+  ]
+}

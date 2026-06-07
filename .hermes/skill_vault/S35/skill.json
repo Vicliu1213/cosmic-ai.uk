@@ -1,0 +1,29 @@
+{
+  "skill_id": "S35",
+  "category": "时空操控",
+  "emoji": "⏰",
+  "name_cn": "时间银行时间复利",
+  "name_hero": "TIME-CRYSTAL-BANK",
+  "substrate": "时间晶体",
+  "params": {
+    "activation_energy": 700,
+    "cooldown_seconds": 3600,
+    "range_meters": 5,
+    "duration_seconds": Infinity,
+    "power_output": 0
+  },
+  "mastery_level": 0.0,
+  "mutation_stage": "ALPHA",
+  "evolution_count": 0,
+  "data_complete": true,
+  "lore": "赢得了时间窃贼绰号。",
+  "description": "时间晶体创造时间流速差异区：内部1分钟=外部5分钟",
+  "synergy_ids": [
+    "S10",
+    "S36"
+  ],
+  "last_evolved": null,
+  "counter_ids": [
+    "S67"
+  ]
+}

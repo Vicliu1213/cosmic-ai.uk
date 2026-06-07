@@ -2,40 +2,58 @@
 
 Project guidance for Hermes and other coding agents.
 
-## Trading skills first
+## Quick start
 
-- For trading-operation tasks, start at `.hermes/skills.md` and `.hermes/protocol.md`.
-- Load the orchestration skill at `skills/trading/omega-trading-operator/SKILL.md` first when the repo-local skills tree is present, then load only the module skills you actually need.
-- Source modules live under `.hermes/src/core/`; repo-local skills in `skills/trading/` are the human/agent operating layer for those modules.
-- Use `.hermes/screen.md` for the observation surface, `.hermes/checklist.md` for promotion gates, and `.hermes/glossary.md` to normalize terminology.
+```bash
+pip install -r requirements.txt   # ray, pyyaml
+npm install                        # @ngrok/ngrok
+python main.py                     # run engine once
+COSMIC_KEEP_RUNNING=1 python3 main.py  # keep-alive mode
+```
 
-## Repo-local trading skills
+## Architecture
 
-- `skills/trading/orderflow-hunt/SKILL.md`
-- `skills/trading/arbitrage-capture/SKILL.md`
-- `skills/trading/liquidity-stealth/SKILL.md`
-- `skills/trading/risk-shield/SKILL.md`
-- `skills/trading/memory-matrix/SKILL.md`
-- `skills/trading/self-evolve/SKILL.md`
-- `skills/trading/omega-trading-operator/SKILL.md`
+- **Entry**: `main.py` (read-only 444 — do not modify without asking).
+- **Config**: `config/cosmic_config.yaml` — YAML-driven; edit there, not in code.
+- **15 theory actors**: `src/<theory>/core.py` — each exports an `*Actor` Ray class; orchestrated by `orchestrator.py`.
+- **Core modules**: `cosmic/` — Agent, Consensus, Trading, KnowledgeBase, etc.
+- **Dashboard**: port 8788 (`/pages/synergy_panel.html`); ngrok tunnel in `start.sh`.
+- **Startup scripts**: `run.sh` (engine only), `start.sh` (engine + dashboard + ngrok).
 
-## Operating rule
+## Testing
+
+```bash
+python -m pytest tests/test_*.py -v       # single run
+bash scripts/run_all_tests.sh              # batch
+```
+
+`pytest.ini` sets `testpaths = tests` and excludes `vendor`, `hermes`, `.hermes`.
+
+## Hermes governance stack
+
+The active stack lives at `skills/hermes/`. Key files:
+- `SOUL.md` — identity, `omega.md` — control law, `protocol.md` — coupling rules
+- `skills.md` — capability topology, `screen.md` — observation surface
+- `checklist.md` — promotion/verification gates, `glossary.md` — term alignment
+- `task.md` — decomposition, `transcendence.md` — 6-phase evolution loop
+- `memory.md`, `learn.md`, `personality.md`, `prompt.md`
+
+## Operating rules
 
 - Prefer simulation, dry-run, and explicit verification before any live execution path.
-- Use the skill references and templates to make outputs concrete, visual, and auditable.
-- Keep durable workflow updates in files under `.hermes/` or `skills/`, not only in chat.
-- Protected policy blocks must be ignored by default during delete/cleanup/reorg actions.
-- Reading protected policy blocks is allowed, but modifying, moving, truncating, or deleting them requires explicit user confirmation first.
+- Keep durable workflow updates in files under `skills/hermes/` or `skills/`, not only in chat.
+- Protected policy blocks in `skills/hermes/*.md` must not be modified without explicit confirmation.
 
-## Protected Content Rule
+## Protected content
 
-- Future delete/cleanup/reorg actions must ignore this protected content by default.
-- Reading this protected content is allowed.
-- Any modification, overwrite, move, truncation, or deletion of this protected content requires explicit user confirmation first.
-- When uncertain whether this content is protected, treat it as protected until the user confirms otherwise.
+- `skills/hermes/*.md` — all contain protected-content blocks; read allowed, edit requires confirmation.
+- `main.py` — read-only (444); modify only after asking.
+- `.env` — contains live API keys (exchanges, ngrok, OpenRouter); never commit or expose.
+- `ngrok.yml` — contains authtoken; treat as sensitive.
 
-## File modification safety
+## Conventions
 
-- `main.py` is set to **read-only (444)**. Do NOT modify, overwrite, or delete it without explicit user confirmation.
-- Before modifying any file that is read-only, ask the user first and wait for approval.
-- Before writing to or deleting any existing file (not just read-only ones), ask the user first — do not assume.
+- No formatter/linter at repo root — use Python idioms from existing code.
+- All theory modules follow the same pattern: `src/<theory>/core.py` with a Ray `Actor` class.
+- YAML config is the single source of truth for runtime parameters.
+- Logs go to `cosmic_engine.log`.

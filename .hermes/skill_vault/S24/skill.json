@@ -1,0 +1,29 @@
+{
+  "skill_id": "S24",
+  "category": "神经增强",
+  "emoji": "🧠",
+  "name_cn": "市场神谕未来洞见",
+  "name_hero": "MARKET-ORACLE-ENGINE",
+  "substrate": "量子相干态",
+  "params": {
+    "activation_energy": 400,
+    "cooldown_seconds": 0,
+    "range_meters": Infinity,
+    "duration_seconds": Infinity,
+    "power_output": 0
+  },
+  "mastery_level": 0.0,
+  "mutation_stage": "ALPHA",
+  "evolution_count": 0,
+  "data_complete": true,
+  "lore": "置信度85-99%。",
+  "description": "量子态模型实时处理全球137个市场",
+  "synergy_ids": [
+    "S75",
+    "S39"
+  ],
+  "last_evolved": null,
+  "counter_ids": [
+    "S86"
+  ]
+}

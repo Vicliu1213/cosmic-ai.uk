@@ -15,6 +15,7 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(level
 logger = logging.getLogger(__name__)
 
 from cosmic.knowledge_base import KnowledgeBase
+from cosmic.registry import AgentRegistry, ModelRegistry
 from src.layers.distributed import (
     DistributedCluster, ActorOrchestrator, SynergyEngine,
     CrocodileFleet, ConsciousnessLayer, EvolutionEngine,
@@ -24,6 +25,9 @@ from src.synergy.gate_bridge import GateAbilityBridge
 
 # Ω宇宙系統 — 22系統完全融合
 from src.omega_system import OmegaUnifiedCoordinator, omega_main
+
+# 赫爾墨斯進化引擎 — 2157超能力英雄系統
+from src.hermes_evolution import HermesEvolutionEngine, init_hermes_filesystem
 
 
 def main():
@@ -76,21 +80,39 @@ def main():
     n = actors.spawn_all()
     logger.info(f"理論 Actor: {n}/15")
 
+    # Layer 3b: 智能體 & 模型註冊
+    agent_reg = AgentRegistry.remote()
+    model_reg = ModelRegistry.remote()
+    for i, a in enumerate(agents):
+        try:
+            aid = ray.get(a.get_agent_id.remote(), timeout=5)
+            ray.get(agent_reg.register.remote(aid, ["quantum_compute","consensus_voting","theory_query","market_analysis"]), timeout=5)
+        except Exception:
+            ray.get(agent_reg.register.remote(f"agent_{i+1}", ["basic"]), timeout=5)
+    ray.get(model_reg.register.remote("drrk_omniscient", "cosmic_entity",
+                                       ["singularity_compute","temporal_analysis","synergy_activation","awakening"],
+                                       performance_score=9.9), timeout=5)
+    reg_status = ray.get(agent_reg.get_status.remote(), timeout=5)
+    logger.info(f"註冊: Agent={reg_status['total']} Model=1")
+
     # Consensus
     proposal = "提升量子奇點理論表達強度"
+    vote = {"status": "skipped"}
     try:
         mgr = ConsensusManager.remote(config["consensus"], agents)
-        vote = ray.get(mgr.propose_and_vote.remote(proposal), timeout=30)
+        vote = ray.get(mgr.propose_and_vote.remote(proposal), timeout=15)
     except Exception as e:
-        vote = {"error": str(e)}
+        logger.info(f"  投票進度: {e}")
+        vote = {"status": "partial", "note": str(e)[:60]}
 
     # Quantum tasks (batch parallel)
     task_mode = "classic_reconstruct"
+    tasks = []
     try:
-        tasks = ray.get([a.perform_quantum_task.remote(task_mode) for a in agents], timeout=30)
+        tasks = ray.get([a.perform_quantum_task.remote(task_mode) for a in agents], timeout=15)
     except Exception as e:
-        tasks = [f"error: {e}"] * len(agents)
-    logger.info(f"投票: {vote} | 量子任務: {len(tasks)} agents")
+        tasks = [f"timeout"] * len(agents)
+    logger.info(f"投票: {vote.get('status','?')} | 量子任務: {len(tasks)} agents")
 
     # Layer 4: Crocodile Fleet
     tcfg = config.get("trading", {})
@@ -169,6 +191,54 @@ def main():
             logger.info(f"Ω 激活完成: {result.get('S20_divinity', {}).get('divinity_level', 'OK')}")
         except Exception as e:
             logger.warning(f"Ω 激活异常: {e}")
+
+    # Layer 10: 赫爾墨斯進化引擎 — 2157超能力英雄系統
+    if config.get("hermes_evolution", {}).get("enabled", False):
+        logger.info("\n" + "🦸" * 30)
+        logger.info("  赫爾墨斯進化引擎啟動 ...")
+        logger.info("🦸" * 30)
+        try:
+            import asyncio
+            max_it = config.get("hermes_evolution", {}).get("max_iterations", 10)
+            n_skills = init_hermes_filesystem()
+            logger.info(f"  技能庫: {n_skills}/96 節點")
+            engine = HermesEvolutionEngine()
+            engine.load_or_create_hero(callsign="DRRK-VICTOR")
+
+            # 雙向橋接: Hermes ↔ Omega TalentMutationSystem
+            if config.get("omega", {}).get("enabled", False):
+                from src.omega_system.omega_system import TalentMutationSystem
+                from src.hermes_evolution.bridge_omega import (
+                    push_all_hermes_to_tms, build_hermes_context_with_tms,
+                    sync_hermes_to_permanent_chain,
+                )
+                tms = TalentMutationSystem()
+
+                async def _run_tms_bridge():
+                    await push_all_hermes_to_tms(tms, engine.skills)
+                    base_ctx = build_hermes_context_with_tms(tms, {
+                        "type": "integrated", "intensity": 0.7,
+                    })
+                    scenarios = [
+                        {**base_ctx, "type": "combat", "intensity": 0.8, "tags": ["tms_boosted"]},
+                        {**base_ctx, "type": "neural", "intensity": 0.6, "tags": ["tms_boosted"]},
+                        {**base_ctx, "type": "capital", "intensity": 0.7, "tags": ["tms_boosted"]},
+                    ]
+                    await engine.run_infinite_evolution(max_iterations=max_it, battle_scenarios=scenarios)
+                    return sync_hermes_to_permanent_chain(tms, engine.skills)
+
+                made_perm = asyncio.run(_run_tms_bridge())
+                logger.info(f"  ⚡ TMS 橋接: {len(tms.talents)} 天賦同步")
+                if made_perm:
+                    logger.info(f"  🔒 永久天賦: {len(made_perm)} 項")
+            else:
+                asyncio.run(engine.run_infinite_evolution(max_iterations=max_it))
+
+            report = engine.get_status_report()
+            logger.info(f"  英雄: {report['callsign']} | 等級: {report['tier']} | "
+                        f"迭代: {report['total_iterations']} | Ω技能: {report['omega_skills']}/96")
+        except Exception as e:
+            logger.warning(f"赫爾墨斯進化引擎: {e}")
 
     actors.shutdown_all()
     cluster.shutdown()

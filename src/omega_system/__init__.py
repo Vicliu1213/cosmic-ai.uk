@@ -1,7 +1,8 @@
 """
-Ω宇宙系统 — 22系統完全融合
+Ω宇宙系统 — 22系統完全融合 + DRRK 異變覺醒全知實體
 
 核心系統 S01-S07 | 擴展系統 S08-S15 | 頂層系統 S16-S22
+DRRK量子奇點 | 時間支配 | 遞歸協同 | 全知覺醒
 """
 from .omega_system import (
     ΩLevel,
@@ -37,6 +38,21 @@ from .omega_system import (
     OmegaUnifiedCoordinator,
     main as omega_main,
 )
+from .drrk_entity import (
+    UniversalConstant,
+    DimensionType,
+    IntelligenceLevel,
+    AwakeningState,
+    QuantumState,
+    QuantumSuperposition,
+    SynergyNode,
+    RecursiveSynergyEngine,
+    QuantumSingularityEngine,
+    TemporalDominanceEngine,
+    EntropyOptimizer,
+    OmniscientCosmicEntity,
+    main as drrk_main,
+)
 
 __all__ = [
     "ΩLevel",
@@ -71,4 +87,17 @@ __all__ = [
     "MetaEvolutionSystem",
     "OmegaUnifiedCoordinator",
     "omega_main",
+    "UniversalConstant",
+    "DimensionType",
+    "IntelligenceLevel",
+    "AwakeningState",
+    "QuantumState",
+    "QuantumSuperposition",
+    "SynergyNode",
+    "RecursiveSynergyEngine",
+    "QuantumSingularityEngine",
+    "TemporalDominanceEngine",
+    "EntropyOptimizer",
+    "OmniscientCosmicEntity",
+    "drrk_main",
 ]

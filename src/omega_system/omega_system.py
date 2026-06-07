@@ -1751,31 +1751,28 @@ class ΩNumber:
     lvl: ΩLevel = ΩLevel.FINITE
     coeff: float = 0.0
 
+    def __mul__(self, k):
+        return ΩNumber(self.val * k, self.lvl, self.coeff * k)
 
-def __mul__(self, k):
-    return ΩNumber(self.val * k, self.lvl, self.coeff * k)
+    def transcend(self):
+        levels = list(ΩLevel)
+        idx = levels.index(self.lvl)
+        nxt = levels[min(idx + 1, len(levels) - 1)]
+        return ΩNumber(0.0, nxt, max(1.0, self.coeff * 2))
 
-
-def transcend(self):
-    levels = list(ΩLevel)
-    idx = levels.index(self.lvl)
-    nxt = levels[min(idx + 1, len(levels) - 1)]
-    return ΩNumber(0.0, nxt, max(1.0, self.coeff * 2))
-
-
-def __str__(self):
-    sym = {
-        ΩLevel.FINITE: "",
-        ΩLevel.ALEPH_0: "ℵ₀",
-        ΩLevel.ALEPH_1: "ℵ₁",
-        ΩLevel.ALEPH_2: "ℵ₂",
-        ΩLevel.INACCESSIBLE: "I",
-        ΩLevel.ABSOLUTE: "Ω",
-    }
-    if self.lvl == ΩLevel.FINITE:
-        return f"{self.val:.2e}" if self.val > 1e6 else f"{self.val:.2f}"
-    c = f"{self.coeff:.2f}×" if self.coeff != 1.0 else ""
-    return f"{c}{sym[self.lvl]}"
+    def __str__(self):
+        sym = {
+            ΩLevel.FINITE: "",
+            ΩLevel.ALEPH_0: "ℵ₀",
+            ΩLevel.ALEPH_1: "ℵ₁",
+            ΩLevel.ALEPH_2: "ℵ₂",
+            ΩLevel.INACCESSIBLE: "I",
+            ΩLevel.ABSOLUTE: "Ω",
+        }
+        if self.lvl == ΩLevel.FINITE:
+            return f"{self.val:.2e}" if self.val > 1e6 else f"{self.val:.2f}"
+        c = f"{self.coeff:.2f}×" if self.coeff != 1.0 else ""
+        return f"{c}{sym[self.lvl]}"
 
     # ═══════════════════════════════════════════════════════════════════════════════
 

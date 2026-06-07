@@ -1,0 +1,29 @@
+{
+  "skill_id": "S53",
+  "category": "永生肉体",
+  "emoji": "🧬",
+  "name_cn": "宇宙意识化永恒存在",
+  "name_hero": "COSMIC-CONSCIOUSNESS-MERGE",
+  "substrate": "宇宙意志场",
+  "params": {
+    "activation_energy": 8000,
+    "cooldown_seconds": 0,
+    "range_meters": Infinity,
+    "duration_seconds": Infinity,
+    "power_output": 0
+  },
+  "mastery_level": 0.0,
+  "mutation_stage": "ALPHA",
+  "evolution_count": 0,
+  "data_complete": true,
+  "lore": "465亿光年可观测宇宙全域。",
+  "description": "意识与可观测宇宙融合",
+  "synergy_ids": [
+    "S51",
+    "S65"
+  ],
+  "last_evolved": null,
+  "counter_ids": [
+    "S01"
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "skill_id": "S14",
+  "category": "战斗异能",
+  "emoji": "⚔️",
+  "name_cn": "协同连击编排",
+  "name_hero": "SYNERGY-COMBO-CHAIN",
+  "substrate": "神经回路",
+  "params": {
+    "activation_energy": 200,
+    "cooldown_seconds": 1,
+    "range_meters": 0,
+    "duration_seconds": 60,
+    "power_output": 0
+  },
+  "mastery_level": 0.0,
+  "mutation_stage": "ALPHA",
+  "evolution_count": 0,
+  "data_complete": true,
+  "lore": "团队输出提升至个人总和的n^1.5倍。",
+  "description": "实时计算队友技能的最优激活序列",
+  "synergy_ids": [
+    "S04",
+    "S07"
+  ],
+  "last_evolved": null,
+  "counter_ids": [
+    "S16"
+  ]
+}

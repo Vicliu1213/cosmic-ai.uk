@@ -1,0 +1,29 @@
+{
+  "skill_id": "S46",
+  "category": "时空操控",
+  "emoji": "⏰",
+  "name_cn": "意识分裂万处并存",
+  "name_hero": "CONSCIOUSNESS-SPLIT-10K",
+  "substrate": "量子相干态",
+  "params": {
+    "activation_energy": 1000,
+    "cooldown_seconds": 600,
+    "range_meters": Infinity,
+    "duration_seconds": Infinity,
+    "power_output": 0
+  },
+  "mastery_level": 0.0,
+  "mutation_stage": "ALPHA",
+  "evolution_count": 0,
+  "data_complete": true,
+  "lore": "同时在1万个地方采取独立行动。",
+  "description": "意识分裂为10000份完整独立碎片",
+  "synergy_ids": [
+    "S63",
+    "S47"
+  ],
+  "last_evolved": null,
+  "counter_ids": [
+    "S48"
+  ]
+}

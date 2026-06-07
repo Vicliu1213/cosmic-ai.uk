@@ -1,0 +1,29 @@
+{
+  "skill_id": "S27",
+  "category": "神经增强",
+  "emoji": "🧠",
+  "name_cn": "算法自进化500代优化",
+  "name_hero": "ALGO-SELF-EVOLVE-500",
+  "substrate": "神经回路",
+  "params": {
+    "activation_energy": 600,
+    "cooldown_seconds": 0,
+    "range_meters": 0,
+    "duration_seconds": Infinity,
+    "power_output": 0
+  },
+  "mastery_level": 0.0,
+  "mutation_stage": "ALPHA",
+  "evolution_count": 0,
+  "data_complete": true,
+  "lore": "累计提升超39,000,000倍。",
+  "description": "算法自我迭代500代，每代提升5%",
+  "synergy_ids": [
+    "S87",
+    "S15"
+  ],
+  "last_evolved": null,
+  "counter_ids": [
+    "S11"
+  ]
+}

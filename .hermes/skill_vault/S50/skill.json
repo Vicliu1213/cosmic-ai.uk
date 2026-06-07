@@ -1,0 +1,29 @@
+{
+  "skill_id": "S50",
+  "category": "永生肉体",
+  "emoji": "🧬",
+  "name_cn": "数字永生意识上传",
+  "name_hero": "CONSCIOUSNESS-UPLOAD-CDP7",
+  "substrate": "量子相干态",
+  "params": {
+    "activation_energy": 10000,
+    "cooldown_seconds": Infinity,
+    "range_meters": Infinity,
+    "duration_seconds": Infinity,
+    "power_output": 0
+  },
+  "mastery_level": 0.0,
+  "mutation_stage": "ALPHA",
+  "evolution_count": 0,
+  "data_complete": true,
+  "lore": "数字态思维速度是生物态的1000倍。",
+  "description": "将86万亿突触连接完整编码上传至量子云",
+  "synergy_ids": [
+    "S49",
+    "S51"
+  ],
+  "last_evolved": null,
+  "counter_ids": [
+    "S76"
+  ]
+}

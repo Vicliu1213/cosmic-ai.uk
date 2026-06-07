@@ -1,0 +1,29 @@
+{
+  "skill_id": "S79",
+  "category": "资本影响",
+  "emoji": "💰",
+  "name_cn": "市场造神价格神控",
+  "name_hero": "MARKET-GOD-MAKER",
+  "substrate": "模因病毒",
+  "params": {
+    "activation_energy": 400,
+    "cooldown_seconds": 0,
+    "range_meters": Infinity,
+    "duration_seconds": Infinity,
+    "power_output": 0
+  },
+  "mastery_level": 0.0,
+  "mutation_stage": "ALPHA",
+  "evolution_count": 0,
+  "data_complete": true,
+  "lore": "历史最快记录：11分钟。",
+  "description": "将任何资产价格推到任意目标价位",
+  "synergy_ids": [
+    "S75",
+    "S81"
+  ],
+  "last_evolved": null,
+  "counter_ids": [
+    "S87"
+  ]
+}

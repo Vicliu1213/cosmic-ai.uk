@@ -1,0 +1,29 @@
+{
+  "skill_id": "S29",
+  "category": "神经增强",
+  "emoji": "🧠",
+  "name_cn": "问题溶解引擎",
+  "name_hero": "PROBLEM-DISSOLVE-ENGINE",
+  "substrate": "神经回路",
+  "params": {
+    "activation_energy": 250,
+    "cooldown_seconds": 0,
+    "range_meters": 0,
+    "duration_seconds": Infinity,
+    "power_output": 0
+  },
+  "mastery_level": 0.0,
+  "mutation_stage": "ALPHA",
+  "evolution_count": 0,
+  "data_complete": true,
+  "lore": "通过重新定义框架消除问题存在基础。",
+  "description": "不是解决问题而是让问题消失",
+  "synergy_ids": [
+    "S88",
+    "S22"
+  ],
+  "last_evolved": null,
+  "counter_ids": [
+    "S25"
+  ]
+}

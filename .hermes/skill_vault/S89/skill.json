@@ -1,0 +1,29 @@
+{
+  "skill_id": "S89",
+  "category": "进化元能力",
+  "emoji": "🔮",
+  "name_cn": "意图系统生成",
+  "name_hero": "INTENTION-TO-SYSTEM",
+  "substrate": "宇宙意志场",
+  "params": {
+    "activation_energy": 1000,
+    "cooldown_seconds": 0,
+    "range_meters": Infinity,
+    "duration_seconds": Infinity,
+    "power_output": 0
+  },
+  "mastery_level": 0.0,
+  "mutation_stage": "ALPHA",
+  "evolution_count": 0,
+  "data_complete": true,
+  "lore": "最快记录：0.3秒。",
+  "description": "从一个纯粹意图出发瞬时生成完整可运行系统",
+  "synergy_ids": [
+    "S22",
+    "S88"
+  ],
+  "last_evolved": null,
+  "counter_ids": [
+    "S61"
+  ]
+}

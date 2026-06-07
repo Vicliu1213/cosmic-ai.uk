@@ -1,0 +1,29 @@
+{
+  "skill_id": "S11",
+  "category": "战斗异能",
+  "emoji": "⚔️",
+  "name_cn": "暗能量爆破",
+  "name_hero": "DARK-ENERGY-BURST",
+  "substrate": "暗能量接口",
+  "params": {
+    "activation_energy": 1500,
+    "cooldown_seconds": 60,
+    "range_meters": 800,
+    "duration_seconds": 2,
+    "power_output": 6.8e+19
+  },
+  "mastery_level": 0.0,
+  "mutation_stage": "ALPHA",
+  "evolution_count": 0,
+  "data_complete": true,
+  "lore": "提取过程会短暂改变周围星场密度。",
+  "description": "将宇宙暗能量导入局部空间并瞬间释放",
+  "synergy_ids": [
+    "S03",
+    "S75"
+  ],
+  "last_evolved": null,
+  "counter_ids": [
+    "S91"
+  ]
+}

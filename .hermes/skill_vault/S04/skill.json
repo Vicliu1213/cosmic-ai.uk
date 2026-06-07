@@ -1,0 +1,29 @@
+{
+  "skill_id": "S04",
+  "category": "战斗异能",
+  "emoji": "⚔️",
+  "name_cn": "协同场最大共振",
+  "name_hero": "BIOFIELD-RESONANCE",
+  "substrate": "生物电场",
+  "params": {
+    "activation_energy": 400,
+    "cooldown_seconds": 5,
+    "range_meters": 2000,
+    "duration_seconds": 10,
+    "power_output": 8800000000000.0
+  },
+  "mastery_level": 0.0,
+  "mutation_stage": "ALPHA",
+  "evolution_count": 0,
+  "data_complete": true,
+  "lore": "违反能量守恒定律的现象。",
+  "description": "与队友生物电场同步到黄金比例频率，输出超线性增益",
+  "synergy_ids": [
+    "S21",
+    "S63"
+  ],
+  "last_evolved": null,
+  "counter_ids": [
+    "S42"
+  ]
+}

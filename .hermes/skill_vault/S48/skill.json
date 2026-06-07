@@ -1,0 +1,29 @@
+{
+  "skill_id": "S48",
+  "category": "时空操控",
+  "emoji": "⏰",
+  "name_cn": "绝对自由意志超越因果",
+  "name_hero": "ABSOLUTE-FREE-WILL",
+  "substrate": "宇宙意志场",
+  "params": {
+    "activation_energy": Infinity,
+    "cooldown_seconds": 0,
+    "range_meters": Infinity,
+    "duration_seconds": Infinity,
+    "power_output": 0
+  },
+  "mastery_level": 0.0,
+  "mutation_stage": "ALPHA",
+  "evolution_count": 0,
+  "data_complete": true,
+  "lore": "每个当下都是全新的创造。",
+  "description": "完全超越基因决定论/因果律/概率场约束",
+  "synergy_ids": [
+    "S37",
+    "S45"
+  ],
+  "last_evolved": null,
+  "counter_ids": [
+    "S62"
+  ]
+}

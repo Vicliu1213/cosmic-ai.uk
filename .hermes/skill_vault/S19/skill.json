@@ -1,0 +1,29 @@
+{
+  "skill_id": "S19",
+  "category": "神经增强",
+  "emoji": "🧠",
+  "name_cn": "Ω级心智无限智能",
+  "name_hero": "QCP-OMEGA-MIND",
+  "substrate": "量子相干态",
+  "params": {
+    "activation_energy": 300,
+    "cooldown_seconds": 0,
+    "range_meters": Infinity,
+    "duration_seconds": Infinity,
+    "power_output": Infinity
+  },
+  "mastery_level": 0.0,
+  "mutation_stage": "ALPHA",
+  "evolution_count": 0,
+  "data_complete": true,
+  "lore": "已知激活者3位。",
+  "description": "量子纠缠态引入神经元，思维速度突破经典极限",
+  "synergy_ids": [
+    "S20",
+    "S21"
+  ],
+  "last_evolved": null,
+  "counter_ids": [
+    "S51"
+  ]
+}

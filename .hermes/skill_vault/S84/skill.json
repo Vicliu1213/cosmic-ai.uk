@@ -1,0 +1,29 @@
+{
+  "skill_id": "S84",
+  "category": "资本影响",
+  "emoji": "💰",
+  "name_cn": "历史叙事重写意义重构",
+  "name_hero": "HISTORICAL-NARRATIVE-REWRITER",
+  "substrate": "模因病毒",
+  "params": {
+    "activation_energy": 700,
+    "cooldown_seconds": 0,
+    "range_meters": Infinity,
+    "duration_seconds": Infinity,
+    "power_output": 0
+  },
+  "mastery_level": 0.0,
+  "mutation_stage": "ALPHA",
+  "evolution_count": 0,
+  "data_complete": true,
+  "lore": "10年内变成主流共识。",
+  "description": "重新定义历史事件的意义",
+  "synergy_ids": [
+    "S81",
+    "S67"
+  ],
+  "last_evolved": null,
+  "counter_ids": [
+    "S26"
+  ]
+}

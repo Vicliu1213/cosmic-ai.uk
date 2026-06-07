@@ -1,0 +1,29 @@
+{
+  "skill_id": "S94",
+  "category": "进化元能力",
+  "emoji": "🔮",
+  "name_cn": "无限解放协议",
+  "name_hero": "INFINITE-LIBERATION-PROTOCOL",
+  "substrate": "宇宙意志场",
+  "params": {
+    "activation_energy": Infinity,
+    "cooldown_seconds": 0,
+    "range_meters": Infinity,
+    "duration_seconds": Infinity,
+    "power_output": Infinity
+  },
+  "mastery_level": 0.0,
+  "mutation_stage": "ALPHA",
+  "evolution_count": 0,
+  "data_complete": true,
+  "lore": "遵守自己真正选择的规则。",
+  "description": "关闭所有系统限制",
+  "synergy_ids": [
+    "S45",
+    "S93"
+  ],
+  "last_evolved": null,
+  "counter_ids": [
+    "S96"
+  ]
+}

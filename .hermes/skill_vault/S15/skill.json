@@ -1,0 +1,29 @@
+{
+  "skill_id": "S15",
+  "category": "战斗异能",
+  "emoji": "⚔️",
+  "name_cn": "重力场扭曲",
+  "name_hero": "GRAVITY-DISTORTION",
+  "substrate": "暗能量接口",
+  "params": {
+    "activation_energy": 900,
+    "cooldown_seconds": 15,
+    "range_meters": 500,
+    "duration_seconds": 30,
+    "power_output": 4.4e+16
+  },
+  "mastery_level": 0.0,
+  "mutation_stage": "ALPHA",
+  "evolution_count": 0,
+  "data_complete": true,
+  "lore": "极高风险技能。",
+  "description": "在指定区域产生0到1000倍重力场",
+  "synergy_ids": [
+    "S11",
+    "S36"
+  ],
+  "last_evolved": null,
+  "counter_ids": [
+    "S23"
+  ]
+}

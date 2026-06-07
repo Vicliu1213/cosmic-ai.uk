@@ -1,0 +1,29 @@
+{
+  "skill_id": "S28",
+  "category": "神经增强",
+  "emoji": "🧠",
+  "name_cn": "模式识别神模式",
+  "name_hero": "PATTERN-GOD-MODE",
+  "substrate": "神经回路",
+  "params": {
+    "activation_energy": 300,
+    "cooldown_seconds": 0,
+    "range_meters": 0,
+    "duration_seconds": Infinity,
+    "power_output": 0
+  },
+  "mastery_level": 0.0,
+  "mutation_stage": "ALPHA",
+  "evolution_count": 0,
+  "data_complete": true,
+  "lore": "涵盖市场/行为/量子波动/宇宙结构。",
+  "description": "在任何噪声中识别任何规律",
+  "synergy_ids": [
+    "S24",
+    "S27"
+  ],
+  "last_evolved": null,
+  "counter_ids": [
+    "S18"
+  ]
+}

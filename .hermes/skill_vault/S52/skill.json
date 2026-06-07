@@ -1,0 +1,29 @@
+{
+  "skill_id": "S52",
+  "category": "永生肉体",
+  "emoji": "🧬",
+  "name_cn": "熵逆转永恒青春",
+  "name_hero": "ENTROPY-REVERSAL-YOUTH",
+  "substrate": "基因表达",
+  "params": {
+    "activation_energy": 300,
+    "cooldown_seconds": 0,
+    "range_meters": 0,
+    "duration_seconds": Infinity,
+    "power_output": 0
+  },
+  "mastery_level": 0.0,
+  "mutation_stage": "ALPHA",
+  "evolution_count": 0,
+  "data_complete": true,
+  "lore": "双向用途：自身熵减/目标熵增。",
+  "description": "局部违反热力学第二定律使细胞自动向最高有序态重组",
+  "synergy_ids": [
+    "S49",
+    "S58"
+  ],
+  "last_evolved": null,
+  "counter_ids": [
+    "S90"
+  ]
+}

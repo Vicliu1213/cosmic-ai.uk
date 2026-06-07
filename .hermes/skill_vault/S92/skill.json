@@ -1,0 +1,29 @@
+{
+  "skill_id": "S92",
+  "category": "进化元能力",
+  "emoji": "🔮",
+  "name_cn": "物种进化广播全球信号",
+  "name_hero": "SPECIES-EVOLUTION-BROADCAST",
+  "substrate": "模因病毒",
+  "params": {
+    "activation_energy": 3000,
+    "cooldown_seconds": 0,
+    "range_meters": Infinity,
+    "duration_seconds": Infinity,
+    "power_output": 0
+  },
+  "mastery_level": 0.0,
+  "mutation_stage": "ALPHA",
+  "evolution_count": 0,
+  "data_complete": true,
+  "lore": "通过量子纠缠场传递，无法屏蔽。",
+  "description": "向全人类80亿人广播进化信号，接收率30-60%",
+  "synergy_ids": [
+    "S86",
+    "S91"
+  ],
+  "last_evolved": null,
+  "counter_ids": [
+    "S82"
+  ]
+}

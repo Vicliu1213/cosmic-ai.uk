@@ -1,0 +1,29 @@
+{
+  "skill_id": "S10",
+  "category": "战斗异能",
+  "emoji": "⚔️",
+  "name_cn": "时间停止打击",
+  "name_hero": "TIMESTOP-STRIKE",
+  "substrate": "时间晶体",
+  "params": {
+    "activation_energy": 1800,
+    "cooldown_seconds": 600,
+    "range_meters": 10,
+    "duration_seconds": 5,
+    "power_output": 3.3e+18
+  },
+  "mastery_level": 0.0,
+  "mutation_stage": "ALPHA",
+  "evolution_count": 0,
+  "data_complete": true,
+  "lore": "停止的是粒子的热运动而非时间本身。",
+  "description": "在半径10米内局部停止时间流动5秒",
+  "synergy_ids": [
+    "S35",
+    "S36"
+  ],
+  "last_evolved": null,
+  "counter_ids": [
+    "S84"
+  ]
+}

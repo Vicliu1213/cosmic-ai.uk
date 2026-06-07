@@ -1,0 +1,29 @@
+{
+  "skill_id": "S86",
+  "category": "资本影响",
+  "emoji": "💰",
+  "name_cn": "进化病毒意识传播",
+  "name_hero": "EVOLUTION-VIRUS-DEPLOY",
+  "substrate": "模因病毒",
+  "params": {
+    "activation_energy": 400,
+    "cooldown_seconds": 0,
+    "range_meters": Infinity,
+    "duration_seconds": Infinity,
+    "power_output": 0
+  },
+  "mastery_level": 0.0,
+  "mutation_stage": "ALPHA",
+  "evolution_count": 0,
+  "data_complete": true,
+  "lore": "指数级扩散觉醒。",
+  "description": "设计R₀值5-15的意识进化病毒",
+  "synergy_ids": [
+    "S85",
+    "S81"
+  ],
+  "last_evolved": null,
+  "counter_ids": [
+    "S40"
+  ]
+}

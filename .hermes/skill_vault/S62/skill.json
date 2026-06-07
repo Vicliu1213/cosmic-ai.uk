@@ -1,0 +1,29 @@
+{
+  "skill_id": "S62",
+  "category": "意识精神",
+  "emoji": "🌌",
+  "name_cn": "全能无事不可为",
+  "name_hero": "MPI-MODULAR-INTERFACE",
+  "substrate": "纳米机器人群",
+  "params": {
+    "activation_energy": 200,
+    "cooldown_seconds": 1,
+    "range_meters": 0,
+    "duration_seconds": Infinity,
+    "power_output": Infinity
+  },
+  "mastery_level": 0.0,
+  "mutation_stage": "ALPHA",
+  "evolution_count": 0,
+  "data_complete": true,
+  "lore": "同时模拟3种，威力60%。",
+  "description": "8亿纳米机器人1秒内重新配置模拟任何超能力",
+  "synergy_ids": [
+    "S09",
+    "S57"
+  ],
+  "last_evolved": null,
+  "counter_ids": [
+    "S64"
+  ]
+}

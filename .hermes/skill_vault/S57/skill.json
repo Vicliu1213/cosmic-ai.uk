@@ -1,0 +1,29 @@
+{
+  "skill_id": "S57",
+  "category": "永生肉体",
+  "emoji": "🧬",
+  "name_cn": "形态自由7形态解锁",
+  "name_hero": "FORM-FREEDOM-7MODES",
+  "substrate": "纳米机器人群",
+  "params": {
+    "activation_energy": 500,
+    "cooldown_seconds": 1,
+    "range_meters": 0,
+    "duration_seconds": Infinity,
+    "power_output": 0
+  },
+  "mastery_level": 0.0,
+  "mutation_stage": "ALPHA",
+  "evolution_count": 0,
+  "data_complete": true,
+  "lore": "切换后意识连续性完整保留。",
+  "description": "意识与肉体完全解绑，切换7种形态",
+  "synergy_ids": [
+    "S56",
+    "S62"
+  ],
+  "last_evolved": null,
+  "counter_ids": [
+    "S29"
+  ]
+}

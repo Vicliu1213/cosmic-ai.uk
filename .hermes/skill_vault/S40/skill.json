@@ -1,0 +1,29 @@
+{
+  "skill_id": "S40",
+  "category": "时空操控",
+  "emoji": "⏰",
+  "name_cn": "物质凝聚无中生有",
+  "name_hero": "MATTER-CONDENSATION",
+  "substrate": "暗能量接口",
+  "params": {
+    "activation_energy": 3000,
+    "cooldown_seconds": 600,
+    "range_meters": 100,
+    "duration_seconds": 300,
+    "power_output": 9.9e+20
+  },
+  "mastery_level": 0.0,
+  "mutation_stage": "ALPHA",
+  "evolution_count": 0,
+  "data_complete": true,
+  "lore": "可创造任何元素。",
+  "description": "通过E=mc²逆向从量子真空凝聚物质",
+  "synergy_ids": [
+    "S11",
+    "S41"
+  ],
+  "last_evolved": null,
+  "counter_ids": [
+    "S06"
+  ]
+}

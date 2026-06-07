@@ -1,0 +1,29 @@
+{
+  "skill_id": "S03",
+  "category": "战斗异能",
+  "emoji": "⚔️",
+  "name_cn": "现实扭曲波",
+  "name_hero": "REALITY-WARP-FIELD",
+  "substrate": "暗能量接口",
+  "params": {
+    "activation_energy": 2200,
+    "cooldown_seconds": 30,
+    "range_meters": 500,
+    "duration_seconds": 60,
+    "power_output": 1.2e+20
+  },
+  "mastery_level": 0.0,
+  "mutation_stage": "ALPHA",
+  "evolution_count": 0,
+  "data_complete": true,
+  "lore": "2143年新东京防卫战首次实战应用。",
+  "description": "接入暗能量网络，半径500米内物理定律局部偏移",
+  "synergy_ids": [
+    "S45",
+    "S96"
+  ],
+  "last_evolved": null,
+  "counter_ids": [
+    "S35"
+  ]
+}

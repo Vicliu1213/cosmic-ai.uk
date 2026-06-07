@@ -1,0 +1,29 @@
+{
+  "skill_id": "S30",
+  "category": "神经增强",
+  "emoji": "🧠",
+  "name_cn": "创意爆炸无限生成",
+  "name_hero": "CREATIVITY-EXPLOSION",
+  "substrate": "神经回路",
+  "params": {
+    "activation_energy": 200,
+    "cooldown_seconds": 0,
+    "range_meters": 0,
+    "duration_seconds": Infinity,
+    "power_output": 0
+  },
+  "mastery_level": 0.0,
+  "mutation_stage": "ALPHA",
+  "evolution_count": 0,
+  "data_complete": true,
+  "lore": "10维度产生2^10种组合。",
+  "description": "从一个种子概念生成无限创意",
+  "synergy_ids": [
+    "S22",
+    "S19"
+  ],
+  "last_evolved": null,
+  "counter_ids": [
+    "S32"
+  ]
+}

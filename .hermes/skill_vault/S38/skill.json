@@ -1,0 +1,29 @@
+{
+  "skill_id": "S38",
+  "category": "时空操控",
+  "emoji": "⏰",
+  "name_cn": "时间循环无限迭代",
+  "name_hero": "TIME-LOOP-ITERATOR",
+  "substrate": "时间晶体",
+  "params": {
+    "activation_energy": 900,
+    "cooldown_seconds": 604800,
+    "range_meters": 50,
+    "duration_seconds": 86400,
+    "power_output": 0
+  },
+  "mastery_level": 0.0,
+  "mutation_stage": "ALPHA",
+  "evolution_count": 0,
+  "data_complete": true,
+  "lore": "1天×100000次=主观274年。",
+  "description": "在特定时间段创造循环，主观时间达客观100000倍",
+  "synergy_ids": [
+    "S35",
+    "S87"
+  ],
+  "last_evolved": null,
+  "counter_ids": [
+    "S88"
+  ]
+}

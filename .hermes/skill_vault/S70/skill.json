@@ -1,0 +1,29 @@
+{
+  "skill_id": "S70",
+  "category": "意识精神",
+  "emoji": "🌌",
+  "name_cn": "概率场操控99.99%成功率",
+  "name_hero": "PROBABILITY-FIELD-CONTROL",
+  "substrate": "量子相干态",
+  "params": {
+    "activation_energy": 700,
+    "cooldown_seconds": 0,
+    "range_meters": Infinity,
+    "duration_seconds": Infinity,
+    "power_output": 0
+  },
+  "mastery_level": 0.0,
+  "mutation_stage": "ALPHA",
+  "evolution_count": 0,
+  "data_complete": true,
+  "lore": "最优结果概率提升至99.99%。",
+  "description": "主动操控任何事件发生概率",
+  "synergy_ids": [
+    "S44",
+    "S39"
+  ],
+  "last_evolved": null,
+  "counter_ids": [
+    "S24"
+  ]
+}

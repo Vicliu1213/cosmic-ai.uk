@@ -1,0 +1,29 @@
+{
+  "skill_id": "S76",
+  "category": "资本影响",
+  "emoji": "💰",
+  "name_cn": "财富黑洞被动吸引",
+  "name_hero": "ECONOMIC-GRAVITY-FIELD",
+  "substrate": "暗能量接口",
+  "params": {
+    "activation_energy": 300,
+    "cooldown_seconds": 0,
+    "range_meters": 100000,
+    "duration_seconds": Infinity,
+    "power_output": 0
+  },
+  "mastery_level": 0.0,
+  "mutation_stage": "ALPHA",
+  "evolution_count": 0,
+  "data_complete": true,
+  "lore": "量化基金称之为阿尔法场。",
+  "description": "暗能量配置为经济引力场，100公里内资本流动系统性偏向",
+  "synergy_ids": [
+    "S75",
+    "S73"
+  ],
+  "last_evolved": null,
+  "counter_ids": [
+    "S66"
+  ]
+}

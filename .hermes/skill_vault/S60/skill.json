@@ -1,0 +1,29 @@
+{
+  "skill_id": "S60",
+  "category": "永生肉体",
+  "emoji": "🧬",
+  "name_cn": "光速意识无延迟响应",
+  "name_hero": "LIGHT-SPEED-CONSCIOUSNESS",
+  "substrate": "量子相干态",
+  "params": {
+    "activation_energy": 700,
+    "cooldown_seconds": 0,
+    "range_meters": Infinity,
+    "duration_seconds": Infinity,
+    "power_output": 0
+  },
+  "mastery_level": 0.0,
+  "mutation_stage": "ALPHA",
+  "evolution_count": 0,
+  "data_complete": true,
+  "lore": "全球响应时间约0.13秒。",
+  "description": "意识传播速度达光速3×10^8 m/s",
+  "synergy_ids": [
+    "S19",
+    "S59"
+  ],
+  "last_evolved": null,
+  "counter_ids": [
+    "S50"
+  ]
+}

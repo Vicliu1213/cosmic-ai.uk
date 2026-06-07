@@ -1,0 +1,29 @@
+{
+  "skill_id": "S90",
+  "category": "进化元能力",
+  "emoji": "🔮",
+  "name_cn": "意义赋予场宇宙定义权",
+  "name_hero": "MEANING-FIELD-COSMIC",
+  "substrate": "宇宙意志场",
+  "params": {
+    "activation_energy": 2000,
+    "cooldown_seconds": 0,
+    "range_meters": Infinity,
+    "duration_seconds": Infinity,
+    "power_output": 0
+  },
+  "mastery_level": 0.0,
+  "mutation_stage": "ALPHA",
+  "evolution_count": 0,
+  "data_complete": true,
+  "lore": "此定义在整个宇宙范围内生效。",
+  "description": "为宇宙中任何事物定义其存在意义",
+  "synergy_ids": [
+    "S88",
+    "S64"
+  ],
+  "last_evolved": null,
+  "counter_ids": [
+    "S68"
+  ]
+}

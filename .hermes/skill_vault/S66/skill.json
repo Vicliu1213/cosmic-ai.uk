@@ -1,0 +1,29 @@
+{
+  "skill_id": "S66",
+  "category": "意识精神",
+  "emoji": "🌌",
+  "name_cn": "盖亚共鸣地球感知",
+  "name_hero": "GAIA-RESONANCE",
+  "substrate": "生物电场",
+  "params": {
+    "activation_energy": 300,
+    "cooldown_seconds": 0,
+    "range_meters": 6371000,
+    "duration_seconds": Infinity,
+    "power_output": 0
+  },
+  "mastery_level": 0.0,
+  "mutation_stage": "ALPHA",
+  "evolution_count": 0,
+  "data_complete": true,
+  "lore": "可影响地球级生态与气候。",
+  "description": "与地球整体生命场融合，感知所有生命状态",
+  "synergy_ids": [
+    "S61",
+    "S63"
+  ],
+  "last_evolved": null,
+  "counter_ids": [
+    "S92"
+  ]
+}

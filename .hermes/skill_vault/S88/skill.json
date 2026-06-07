@@ -1,0 +1,29 @@
+{
+  "skill_id": "S88",
+  "category": "进化元能力",
+  "emoji": "🔮",
+  "name_cn": "元规则创造法则之法则",
+  "name_hero": "META-RULE-CREATOR",
+  "substrate": "宇宙意志场",
+  "params": {
+    "activation_energy": 3000,
+    "cooldown_seconds": 0,
+    "range_meters": Infinity,
+    "duration_seconds": Infinity,
+    "power_output": Infinity
+  },
+  "mastery_level": 0.0,
+  "mutation_stage": "ALPHA",
+  "evolution_count": 0,
+  "data_complete": true,
+  "lore": "从规则遵守者到规则制定者。",
+  "description": "创造管理规则的元规则",
+  "synergy_ids": [
+    "S87",
+    "S89"
+  ],
+  "last_evolved": null,
+  "counter_ids": [
+    "S54"
+  ]
+}

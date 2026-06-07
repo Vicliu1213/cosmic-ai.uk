@@ -1,0 +1,29 @@
+{
+  "skill_id": "S56",
+  "category": "永生肉体",
+  "emoji": "🧬",
+  "name_cn": "器官超人类升级",
+  "name_hero": "ORGAN-SUPERHUMAN-UPGRADE",
+  "substrate": "纳米机器人群",
+  "params": {
+    "activation_energy": 3000,
+    "cooldown_seconds": 0,
+    "range_meters": 0,
+    "duration_seconds": Infinity,
+    "power_output": 0
+  },
+  "mastery_level": 0.0,
+  "mutation_stage": "ALPHA",
+  "evolution_count": 0,
+  "data_complete": true,
+  "lore": "以人体器官为原型的工程设备。",
+  "description": "全器官替换升级：大脑量子处理器等",
+  "synergy_ids": [
+    "S55",
+    "S59"
+  ],
+  "last_evolved": null,
+  "counter_ids": [
+    "S22"
+  ]
+}

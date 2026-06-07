@@ -1,0 +1,29 @@
+{
+  "skill_id": "S95",
+  "category": "进化元能力",
+  "emoji": "🔮",
+  "name_cn": "集体觉醒触发",
+  "name_hero": "COLLECTIVE-AWAKENING-TRIGGER",
+  "substrate": "宇宙意志场",
+  "params": {
+    "activation_energy": 5000,
+    "cooldown_seconds": 0,
+    "range_meters": Infinity,
+    "duration_seconds": Infinity,
+    "power_output": 0
+  },
+  "mastery_level": 0.0,
+  "mutation_stage": "ALPHA",
+  "evolution_count": 0,
+  "data_complete": true,
+  "lore": "觉醒率40-70%。",
+  "description": "使用催化剂触发大量人类意识觉醒",
+  "synergy_ids": [
+    "S92",
+    "S86"
+  ],
+  "last_evolved": null,
+  "counter_ids": [
+    "S07"
+  ]
+}

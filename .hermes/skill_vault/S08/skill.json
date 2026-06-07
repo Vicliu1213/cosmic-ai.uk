@@ -1,0 +1,29 @@
+{
+  "skill_id": "S08",
+  "category": "战斗异能",
+  "emoji": "⚔️",
+  "name_cn": "生物电场操控",
+  "name_hero": "BIOELECTRIC-DOMINATOR",
+  "substrate": "生物电场",
+  "params": {
+    "activation_energy": 300,
+    "cooldown_seconds": 3,
+    "range_meters": 300,
+    "duration_seconds": 30,
+    "power_output": 550000000000.0
+  },
+  "mastery_level": 0.0,
+  "mutation_stage": "ALPHA",
+  "evolution_count": 0,
+  "data_complete": true,
+  "lore": "前身是医疗技术后被改造为战斗应用。",
+  "description": "操控自身及目标的生物电场",
+  "synergy_ids": [
+    "S04",
+    "S25"
+  ],
+  "last_evolved": null,
+  "counter_ids": [
+    "S70"
+  ]
+}

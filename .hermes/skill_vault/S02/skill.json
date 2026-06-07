@@ -1,0 +1,29 @@
+{
+  "skill_id": "S02",
+  "category": "战斗异能",
+  "emoji": "⚔️",
+  "name_cn": "无限叠层突破",
+  "name_hero": "STACK-STORM-∞",
+  "substrate": "神经回路",
+  "params": {
+    "activation_energy": 120,
+    "cooldown_seconds": 0.05,
+    "range_meters": 0,
+    "duration_seconds": 3600,
+    "power_output": Infinity
+  },
+  "mastery_level": 0.0,
+  "mutation_stage": "ALPHA",
+  "evolution_count": 0,
+  "data_complete": true,
+  "lore": "神经可塑性工程师通过赫尔墨斯协议v7开发。",
+  "description": "每次激活在突触留下蛋白印记，第10叠触发LTP超强化",
+  "synergy_ids": [
+    "S05",
+    "S87"
+  ],
+  "last_evolved": null,
+  "counter_ids": [
+    "S28"
+  ]
+}

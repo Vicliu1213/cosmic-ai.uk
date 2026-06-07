@@ -1,0 +1,29 @@
+{
+  "skill_id": "S67",
+  "category": "意识精神",
+  "emoji": "🌌",
+  "name_cn": "集体无意识接入人类智慧库",
+  "name_hero": "COLLECTIVE-UNCONSCIOUS-ACCESS",
+  "substrate": "宇宙意志场",
+  "params": {
+    "activation_energy": 400,
+    "cooldown_seconds": 0,
+    "range_meters": Infinity,
+    "duration_seconds": Infinity,
+    "power_output": 0
+  },
+  "mastery_level": 0.0,
+  "mutation_stage": "ALPHA",
+  "evolution_count": 0,
+  "data_complete": true,
+  "lore": "荣格理论被证明是真实存在的量子信息场。",
+  "description": "接入全人类87亿人心智深层共识库",
+  "synergy_ids": [
+    "S21",
+    "S34"
+  ],
+  "last_evolved": null,
+  "counter_ids": [
+    "S03"
+  ]
+}

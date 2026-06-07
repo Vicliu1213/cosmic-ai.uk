@@ -1,0 +1,29 @@
+{
+  "skill_id": "S45",
+  "category": "时空操控",
+  "emoji": "⏰",
+  "name_cn": "现实规则重写",
+  "name_hero": "REALITY-RULE-REWRITER",
+  "substrate": "宇宙意志场",
+  "params": {
+    "activation_energy": Infinity,
+    "cooldown_seconds": 0,
+    "range_meters": Infinity,
+    "duration_seconds": Infinity,
+    "power_output": Infinity
+  },
+  "mastery_level": 0.0,
+  "mutation_stage": "ALPHA",
+  "evolution_count": 0,
+  "data_complete": true,
+  "lore": "已执行：energy_conservation=False。",
+  "description": "直接修改物理定律/数学常数/系统规则",
+  "synergy_ids": [
+    "S03",
+    "S96"
+  ],
+  "last_evolved": null,
+  "counter_ids": [
+    "S41"
+  ]
+}

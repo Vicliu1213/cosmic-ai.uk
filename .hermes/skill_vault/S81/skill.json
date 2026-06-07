@@ -1,0 +1,29 @@
+{
+  "skill_id": "S81",
+  "category": "资本影响",
+  "emoji": "💰",
+  "name_cn": "叙事控制80亿人覆盖",
+  "name_hero": "MSP-NARRATIVE-CONTROL",
+  "substrate": "模因病毒",
+  "params": {
+    "activation_energy": 450,
+    "cooldown_seconds": 3600,
+    "range_meters": Infinity,
+    "duration_seconds": 86400,
+    "power_output": 0
+  },
+  "mastery_level": 0.0,
+  "mutation_stage": "ALPHA",
+  "evolution_count": 0,
+  "data_complete": true,
+  "lore": "被感染者不会察觉是外部植入。",
+  "description": "将认知框架编码为赫尔墨斯模因格式传播",
+  "synergy_ids": [
+    "S79",
+    "S82"
+  ],
+  "last_evolved": null,
+  "counter_ids": [
+    "S05"
+  ]
+}

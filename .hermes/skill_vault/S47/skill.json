@@ -1,0 +1,29 @@
+{
+  "skill_id": "S47",
+  "category": "时空操控",
+  "emoji": "⏰",
+  "name_cn": "梦境现实投影",
+  "name_hero": "DREAM-REALITY-PROJECTOR",
+  "substrate": "宇宙意志场",
+  "params": {
+    "activation_energy": 1500,
+    "cooldown_seconds": 0,
+    "range_meters": Infinity,
+    "duration_seconds": Infinity,
+    "power_output": 0
+  },
+  "mastery_level": 0.0,
+  "mutation_stage": "ALPHA",
+  "evolution_count": 0,
+  "data_complete": true,
+  "lore": "最终阶段梦境与现实的界限消失。",
+  "description": "意识中想象的任何事物100%物质化投影到物理现实",
+  "synergy_ids": [
+    "S17",
+    "S40"
+  ],
+  "last_evolved": null,
+  "counter_ids": [
+    "S55"
+  ]
+}

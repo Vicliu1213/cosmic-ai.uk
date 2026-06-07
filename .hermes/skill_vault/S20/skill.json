@@ -1,0 +1,29 @@
+{
+  "skill_id": "S20",
+  "category": "神经增强",
+  "emoji": "🧠",
+  "name_cn": "万路并行思维",
+  "name_hero": "CORTEX-FORK-1024",
+  "substrate": "神经回路",
+  "params": {
+    "activation_energy": 180,
+    "cooldown_seconds": 0,
+    "range_meters": 0,
+    "duration_seconds": Infinity,
+    "power_output": 0
+  },
+  "mastery_level": 0.0,
+  "mutation_stage": "ALPHA",
+  "evolution_count": 0,
+  "data_complete": true,
+  "lore": "副作用是偶尔忘记自己是哪个自己。",
+  "description": "前额叶皮层划分为1024个半独立处理单元",
+  "synergy_ids": [
+    "S19",
+    "S32"
+  ],
+  "last_evolved": null,
+  "counter_ids": [
+    "S58"
+  ]
+}

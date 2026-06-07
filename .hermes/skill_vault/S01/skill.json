@@ -1,0 +1,29 @@
+{
+  "skill_id": "S01",
+  "category": "战斗异能",
+  "emoji": "⚔️",
+  "name_cn": "跨维度连击",
+  "name_hero": "DIMENSIONAL-STRIKE-Δ",
+  "substrate": "量子相干态",
+  "params": {
+    "activation_energy": 850,
+    "cooldown_seconds": 0,
+    "range_meters": 1000000000.0,
+    "duration_seconds": 0.001,
+    "power_output": 4700000000000000.0
+  },
+  "mastery_level": 0.0,
+  "mutation_stage": "ALPHA",
+  "evolution_count": 0,
+  "data_complete": true,
+  "lore": "2089年量子战士「维克」首次在实战中激活第11维度通道。",
+  "description": "在11个维度同时发动攻击，目标的任何防御系统无法跨维度响应",
+  "synergy_ids": [
+    "S12",
+    "S36"
+  ],
+  "last_evolved": null,
+  "counter_ids": [
+    "S21"
+  ]
+}

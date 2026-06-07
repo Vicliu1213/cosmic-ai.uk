@@ -1,0 +1,29 @@
+{
+  "skill_id": "S16",
+  "category": "战斗异能",
+  "emoji": "⚔️",
+  "name_cn": "神经感知爆发",
+  "name_hero": "NEURAL-SENSE-BURST",
+  "substrate": "神经回路",
+  "params": {
+    "activation_energy": 150,
+    "cooldown_seconds": 5,
+    "range_meters": 2000,
+    "duration_seconds": 30,
+    "power_output": 0
+  },
+  "mastery_level": 0.0,
+  "mutation_stage": "ALPHA",
+  "evolution_count": 0,
+  "data_complete": true,
+  "lore": "副作用是感知过载。",
+  "description": "感知能力提升至普通人10000倍",
+  "synergy_ids": [
+    "S08",
+    "S25"
+  ],
+  "last_evolved": null,
+  "counter_ids": [
+    "S30"
+  ]
+}

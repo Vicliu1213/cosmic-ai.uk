@@ -1,0 +1,29 @@
+{
+  "skill_id": "S83",
+  "category": "资本影响",
+  "emoji": "💰",
+  "name_cn": "文化基因写入跨代传播",
+  "name_hero": "CULTURAL-GENE-WRITER",
+  "substrate": "模因病毒",
+  "params": {
+    "activation_energy": 600,
+    "cooldown_seconds": 0,
+    "range_meters": Infinity,
+    "duration_seconds": Infinity,
+    "power_output": 0
+  },
+  "mastery_level": 0.0,
+  "mutation_stage": "ALPHA",
+  "evolution_count": 0,
+  "data_complete": true,
+  "lore": "指数级病毒传播，跨代遗传。",
+  "description": "将任何思想/价值观写入文化DNA",
+  "synergy_ids": [
+    "S81",
+    "S86"
+  ],
+  "last_evolved": null,
+  "counter_ids": [
+    "S19"
+  ]
+}

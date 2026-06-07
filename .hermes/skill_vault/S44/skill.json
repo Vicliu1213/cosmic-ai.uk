@@ -1,0 +1,29 @@
+{
+  "skill_id": "S44",
+  "category": "时空操控",
+  "emoji": "⏰",
+  "name_cn": "波函数控制现实锁定",
+  "name_hero": "WAVE-FUNCTION-LOCK",
+  "substrate": "量子相干态",
+  "params": {
+    "activation_energy": 600,
+    "cooldown_seconds": 0,
+    "range_meters": Infinity,
+    "duration_seconds": Infinity,
+    "power_output": 0
+  },
+  "mastery_level": 0.0,
+  "mutation_stage": "ALPHA",
+  "evolution_count": 0,
+  "data_complete": true,
+  "lore": "可使掷骰子必得6。",
+  "description": "通过意识强度控制量子事件波函数塌缩方向",
+  "synergy_ids": [
+    "S07",
+    "S39"
+  ],
+  "last_evolved": null,
+  "counter_ids": [
+    "S34"
+  ]
+}

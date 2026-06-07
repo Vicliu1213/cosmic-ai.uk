@@ -1,0 +1,29 @@
+{
+  "skill_id": "S73",
+  "category": "意识精神",
+  "emoji": "🌌",
+  "name_cn": "好运场域Lv5强度",
+  "name_hero": "LUCK-FIELD-LV5",
+  "substrate": "宇宙意志场",
+  "params": {
+    "activation_energy": 400,
+    "cooldown_seconds": 0,
+    "range_meters": 10000000,
+    "duration_seconds": Infinity,
+    "power_output": 0
+  },
+  "mastery_level": 0.0,
+  "mutation_stage": "ALPHA",
+  "evolution_count": 0,
+  "data_complete": true,
+  "lore": "正向机会吸引率+200%。",
+  "description": "在自身周围10000公里创造持续好运场域",
+  "synergy_ids": [
+    "S70",
+    "S71"
+  ],
+  "last_evolved": null,
+  "counter_ids": [
+    "S45"
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "skill_id": "S61",
+  "category": "意识精神",
+  "emoji": "🌌",
+  "name_cn": "全知宇宙无秘密",
+  "name_hero": "GLOBAL-SENSOR-NEURAL",
+  "substrate": "生物电场",
+  "params": {
+    "activation_energy": 500,
+    "cooldown_seconds": 0,
+    "range_meters": 6371000,
+    "duration_seconds": Infinity,
+    "power_output": 0
+  },
+  "mastery_level": 0.0,
+  "mutation_stage": "ALPHA",
+  "evolution_count": 0,
+  "data_complete": true,
+  "lore": "变成地球本身的神经系统。",
+  "description": "神经系统与全球150亿IoT传感器节点同步",
+  "synergy_ids": [
+    "S34",
+    "S26"
+  ],
+  "last_evolved": null,
+  "counter_ids": [
+    "S57"
+  ]
+}

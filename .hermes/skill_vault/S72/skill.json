@@ -1,0 +1,29 @@
+{
+  "skill_id": "S72",
+  "category": "意识精神",
+  "emoji": "🌌",
+  "name_cn": "蝴蝶效应引擎放大",
+  "name_hero": "BUTTERFLY-ENGINE-10-9",
+  "substrate": "时间晶体",
+  "params": {
+    "activation_energy": 200,
+    "cooldown_seconds": 0,
+    "range_meters": Infinity,
+    "duration_seconds": Infinity,
+    "power_output": 0
+  },
+  "mastery_level": 0.0,
+  "mutation_stage": "ALPHA",
+  "evolution_count": 0,
+  "data_complete": true,
+  "lore": "链条一旦启动无法取消。",
+  "description": "用极小行动撬动极大结果，放大倍数10^3到10^9",
+  "synergy_ids": [
+    "S37",
+    "S69"
+  ],
+  "last_evolved": null,
+  "counter_ids": [
+    "S38"
+  ]
+}

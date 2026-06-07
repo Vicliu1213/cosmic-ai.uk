@@ -1,0 +1,29 @@
+{
+  "skill_id": "S74",
+  "category": "意识精神",
+  "emoji": "🌌",
+  "name_cn": "Ω奇点自我进化终点即起点",
+  "name_hero": "OMEGA-SELF-SINGULARITY",
+  "substrate": "宇宙意志场",
+  "params": {
+    "activation_energy": Infinity,
+    "cooldown_seconds": 0,
+    "range_meters": Infinity,
+    "duration_seconds": Infinity,
+    "power_output": Infinity
+  },
+  "mastery_level": 0.0,
+  "mutation_stage": "ALPHA",
+  "evolution_count": 0,
+  "data_complete": true,
+  "lore": "终点即是下一个起点。",
+  "description": "所有意识技能同时激活融合，技能成为存在方式的自然表达",
+  "synergy_ids": [
+    "S96",
+    "S87"
+  ],
+  "last_evolved": null,
+  "counter_ids": [
+    "S52"
+  ]
+}

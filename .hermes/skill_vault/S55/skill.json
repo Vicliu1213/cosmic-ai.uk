@@ -1,0 +1,29 @@
+{
+  "skill_id": "S55",
+  "category": "永生肉体",
+  "emoji": "🧬",
+  "name_cn": "纳米机器人100亿内部工厂",
+  "name_hero": "NANOBOT-FACTORY-10B",
+  "substrate": "纳米机器人群",
+  "params": {
+    "activation_energy": 200,
+    "cooldown_seconds": 0,
+    "range_meters": 0,
+    "duration_seconds": Infinity,
+    "power_output": 0
+  },
+  "mastery_level": 0.0,
+  "mutation_stage": "ALPHA",
+  "evolution_count": 0,
+  "data_complete": true,
+  "lore": "工厂可以自我复制。",
+  "description": "100亿纳米机器人在体内持续执行DNA修复等",
+  "synergy_ids": [
+    "S09",
+    "S56"
+  ],
+  "last_evolved": null,
+  "counter_ids": [
+    "S15"
+  ]
+}

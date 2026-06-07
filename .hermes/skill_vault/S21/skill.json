@@ -1,0 +1,29 @@
+{
+  "skill_id": "S21",
+  "category": "神经增强",
+  "emoji": "🧠",
+  "name_cn": "集体意识接入涌现智慧",
+  "name_hero": "MESHLINK-COLLECTIVE",
+  "substrate": "生物电场",
+  "params": {
+    "activation_energy": 220,
+    "cooldown_seconds": 10,
+    "range_meters": 50000,
+    "duration_seconds": 3600,
+    "power_output": 0
+  },
+  "mastery_level": 0.0,
+  "mutation_stage": "ALPHA",
+  "evolution_count": 0,
+  "data_complete": true,
+  "lore": "2151年12人联合17秒解决P≠NP。",
+  "description": "10个以上激活者同步形成临时集体意识",
+  "synergy_ids": [
+    "S04",
+    "S63"
+  ],
+  "last_evolved": null,
+  "counter_ids": [
+    "S65"
+  ]
+}

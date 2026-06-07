@@ -215,6 +215,20 @@ ray_cluster:
         - CPU: 1
         - CPU: 1
 
+# ----- 赫爾墨斯進化引擎（2157超能力英雄系統） -----
+hermes_evolution:
+  enabled: false
+  max_iterations: 10
+  auto_init_filesystem: true
+  hero_callsign: "DRRK-VICTOR"
+  battle_scenarios:
+    - type: "street_battle"
+      intensity: 0.3
+    - type: "corporate_raid"
+      intensity: 0.6
+    - type: "dimension_crisis"
+      intensity: 0.9
+
 # ----- 量子驗證任務配置 -----
 quantum_tasks:
   grover:

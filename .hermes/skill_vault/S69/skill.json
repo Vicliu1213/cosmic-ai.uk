@@ -1,0 +1,29 @@
+{
+  "skill_id": "S69",
+  "category": "意识精神",
+  "emoji": "🌌",
+  "name_cn": "命运节点识别人生杠杆",
+  "name_hero": "FATE-NODE-DETECTOR",
+  "substrate": "时间晶体",
+  "params": {
+    "activation_energy": 500,
+    "cooldown_seconds": 0,
+    "range_meters": Infinity,
+    "duration_seconds": Infinity,
+    "power_output": 0
+  },
+  "mastery_level": 0.0,
+  "mutation_stage": "ALPHA",
+  "evolution_count": 0,
+  "data_complete": true,
+  "lore": "评分最高达10/10。",
+  "description": "扫描未来100年识别5个以上改变人生的命运节点",
+  "synergy_ids": [
+    "S39",
+    "S10"
+  ],
+  "last_evolved": null,
+  "counter_ids": [
+    "S17"
+  ]
+}

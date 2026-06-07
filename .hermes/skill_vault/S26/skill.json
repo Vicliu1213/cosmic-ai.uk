@@ -1,0 +1,29 @@
+{
+  "skill_id": "S26",
+  "category": "神经增强",
+  "emoji": "🧠",
+  "name_cn": "阿卡西记录宇宙全史",
+  "name_hero": "AKASHIC-RECORDS-ACCESS",
+  "substrate": "宇宙意志场",
+  "params": {
+    "activation_energy": 800,
+    "cooldown_seconds": 0,
+    "range_meters": Infinity,
+    "duration_seconds": Infinity,
+    "power_output": 0
+  },
+  "mastery_level": 0.0,
+  "mutation_stage": "ALPHA",
+  "evolution_count": 0,
+  "data_complete": true,
+  "lore": "信息量是人类文明的10^80倍。",
+  "description": "访问宇宙138亿年历史的完整信息",
+  "synergy_ids": [
+    "S61",
+    "S34"
+  ],
+  "last_evolved": null,
+  "counter_ids": [
+    "S04"
+  ]
+}

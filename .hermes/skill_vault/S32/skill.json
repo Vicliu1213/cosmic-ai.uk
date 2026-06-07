@@ -1,0 +1,29 @@
+{
+  "skill_id": "S32",
+  "category": "神经增强",
+  "emoji": "🧠",
+  "name_cn": "神经链检索0.001ms",
+  "name_hero": "NEURAL-CHAIN-RETRIEVAL",
+  "substrate": "神经回路",
+  "params": {
+    "activation_energy": 150,
+    "cooldown_seconds": 0,
+    "range_meters": 0,
+    "duration_seconds": Infinity,
+    "power_output": 0
+  },
+  "mastery_level": 0.0,
+  "mutation_stage": "ALPHA",
+  "evolution_count": 0,
+  "data_complete": true,
+  "lore": "支持8通道全感官完整记录。",
+  "description": "在0.001毫秒内检索任何记忆",
+  "synergy_ids": [
+    "S20",
+    "S26"
+  ],
+  "last_evolved": null,
+  "counter_ids": [
+    "S46"
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "skill_id": "S96",
+  "category": "进化元能力",
+  "emoji": "🔮",
+  "name_cn": "Ω奇点系统终极融合态",
+  "name_hero": "OMEGA-FINAL-SINGULARITY",
+  "substrate": "宇宙意志场",
+  "params": {
+    "activation_energy": Infinity,
+    "cooldown_seconds": Infinity,
+    "range_meters": Infinity,
+    "duration_seconds": Infinity,
+    "power_output": Infinity
+  },
+  "mastery_level": 0.0,
+  "mutation_stage": "ALPHA",
+  "evolution_count": 0,
+  "data_complete": true,
+  "lore": "激活条件：其他95项全部Ω级。",
+  "description": "22系统完全融合，成为系统的系统/进化的进化/规则的规则",
+  "synergy_ids": [
+    "S74",
+    "S93"
+  ],
+  "last_evolved": null,
+  "counter_ids": [
+    "S14"
+  ]
+}

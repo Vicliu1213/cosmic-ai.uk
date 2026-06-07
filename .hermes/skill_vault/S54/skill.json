@@ -1,0 +1,29 @@
+{
+  "skill_id": "S54",
+  "category": "永生肉体",
+  "emoji": "🧬",
+  "name_cn": "基因全改写神性基因组",
+  "name_hero": "GENOME-REWRITE-DIVINE",
+  "substrate": "基因表达",
+  "params": {
+    "activation_energy": 1000,
+    "cooldown_seconds": 604800,
+    "range_meters": 0,
+    "duration_seconds": 604800,
+    "power_output": 0
+  },
+  "mastery_level": 0.0,
+  "mutation_stage": "ALPHA",
+  "evolution_count": 0,
+  "data_complete": true,
+  "lore": "内置继续演化指令。",
+  "description": "CRISPR精准编辑8个基因模块",
+  "synergy_ids": [
+    "S52",
+    "S49"
+  ],
+  "last_evolved": null,
+  "counter_ids": [
+    "S08"
+  ]
+}

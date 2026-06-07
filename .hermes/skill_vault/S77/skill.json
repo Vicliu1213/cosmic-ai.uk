@@ -1,0 +1,29 @@
+{
+  "skill_id": "S77",
+  "category": "资本影响",
+  "emoji": "💰",
+  "name_cn": "宇宙资产组合Ω估值",
+  "name_hero": "COSMIC-ASSET-PORTFOLIO",
+  "substrate": "宇宙意志场",
+  "params": {
+    "activation_energy": 500,
+    "cooldown_seconds": 0,
+    "range_meters": Infinity,
+    "duration_seconds": Infinity,
+    "power_output": 0
+  },
+  "mastery_level": 0.0,
+  "mutation_stage": "ALPHA",
+  "evolution_count": 0,
+  "data_complete": true,
+  "lore": "总估值：Ω。",
+  "description": "注册太阳系行星/暗物质/黑洞能源/时间期货为资产类别",
+  "synergy_ids": [
+    "S75",
+    "S79"
+  ],
+  "last_evolved": null,
+  "counter_ids": [
+    "S73"
+  ]
+}

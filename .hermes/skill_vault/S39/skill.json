@@ -1,0 +1,29 @@
+{
+  "skill_id": "S39",
+  "category": "时空操控",
+  "emoji": "⏰",
+  "name_cn": "预见引擎5万分支计算",
+  "name_hero": "FORESIGHT-ENGINE-50K",
+  "substrate": "量子相干态",
+  "params": {
+    "activation_energy": 500,
+    "cooldown_seconds": 0,
+    "range_meters": Infinity,
+    "duration_seconds": 0,
+    "power_output": 0
+  },
+  "mastery_level": 0.0,
+  "mutation_stage": "ALPHA",
+  "evolution_count": 0,
+  "data_complete": true,
+  "lore": "找出最优行动路径。",
+  "description": "实时计算50000条未来分支",
+  "synergy_ids": [
+    "S36",
+    "S24"
+  ],
+  "last_evolved": null,
+  "counter_ids": [
+    "S95"
+  ]
+}

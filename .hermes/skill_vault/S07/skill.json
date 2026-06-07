@@ -1,0 +1,29 @@
+{
+  "skill_id": "S07",
+  "category": "战斗异能",
+  "emoji": "⚔️",
+  "name_cn": "量子叠加打击",
+  "name_hero": "QUANTUM-SUPERPOS-STRIKE",
+  "substrate": "量子相干态",
+  "params": {
+    "activation_energy": 600,
+    "cooldown_seconds": 0.1,
+    "range_meters": 200,
+    "duration_seconds": 0.01,
+    "power_output": 230000000000000.0
+  },
+  "mastery_level": 0.0,
+  "mutation_stage": "ALPHA",
+  "evolution_count": 0,
+  "data_complete": true,
+  "lore": "看起来像同时出现在多个地方。",
+  "description": "同时在所有可能的攻击路径上行动，命中时塌缩到最优结果",
+  "synergy_ids": [
+    "S12",
+    "S44"
+  ],
+  "last_evolved": null,
+  "counter_ids": [
+    "S63"
+  ]
+}

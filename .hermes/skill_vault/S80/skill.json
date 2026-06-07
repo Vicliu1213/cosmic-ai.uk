@@ -1,0 +1,29 @@
+{
+  "skill_id": "S80",
+  "category": "资本影响",
+  "emoji": "💰",
+  "name_cn": "经济规则重写",
+  "name_hero": "ECONOMIC-RULE-REWRITER",
+  "substrate": "宇宙意志场",
+  "params": {
+    "activation_energy": 1000,
+    "cooldown_seconds": 0,
+    "range_meters": Infinity,
+    "duration_seconds": Infinity,
+    "power_output": 0
+  },
+  "mastery_level": 0.0,
+  "mutation_stage": "ALPHA",
+  "evolution_count": 0,
+  "data_complete": true,
+  "lore": "重新定义什么是稀缺/价值/财富。",
+  "description": "修改货币体系/价值定义/交换规则的底层逻辑",
+  "synergy_ids": [
+    "S45",
+    "S79"
+  ],
+  "last_evolved": null,
+  "counter_ids": [
+    "S94"
+  ]
+}

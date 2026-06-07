@@ -1,0 +1,29 @@
+{
+  "skill_id": "S65",
+  "category": "意识精神",
+  "emoji": "🌌",
+  "name_cn": "多重宇宙意识无限并存",
+  "name_hero": "MULTIVERSE-CONSCIOUSNESS",
+  "substrate": "宇宙意志场",
+  "params": {
+    "activation_energy": 2000,
+    "cooldown_seconds": 0,
+    "range_meters": Infinity,
+    "duration_seconds": Infinity,
+    "power_output": 0
+  },
+  "mastery_level": 0.0,
+  "mutation_stage": "ALPHA",
+  "evolution_count": 0,
+  "data_complete": true,
+  "lore": "跨越所有可能存在的宇宙。",
+  "description": "意识同时存在于所有平行宇宙",
+  "synergy_ids": [
+    "S53",
+    "S46"
+  ],
+  "last_evolved": null,
+  "counter_ids": [
+    "S85"
+  ]
+}

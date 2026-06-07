@@ -1,0 +1,29 @@
+{
+  "skill_id": "S82",
+  "category": "资本影响",
+  "emoji": "💰",
+  "name_cn": "共鸣场自然追随磁场",
+  "name_hero": "RESONANCE-FIELD-ATTRACTOR",
+  "substrate": "宇宙意志场",
+  "params": {
+    "activation_energy": 300,
+    "cooldown_seconds": 0,
+    "range_meters": 10000000,
+    "duration_seconds": Infinity,
+    "power_output": 0
+  },
+  "mastery_level": 0.0,
+  "mutation_stage": "ALPHA",
+  "evolution_count": 0,
+  "data_complete": true,
+  "lore": "自然吸引力×3-8倍。",
+  "description": "在10000公里内创造吸引力场",
+  "synergy_ids": [
+    "S81",
+    "S73"
+  ],
+  "last_evolved": null,
+  "counter_ids": [
+    "S12"
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "skill_id": "S91",
+  "category": "进化元能力",
+  "emoji": "🔮",
+  "name_cn": "新人类播种宇宙扩张",
+  "name_hero": "NEW-HUMAN-SEEDER",
+  "substrate": "基因表达",
+  "params": {
+    "activation_energy": 8000,
+    "cooldown_seconds": 0,
+    "range_meters": Infinity,
+    "duration_seconds": Infinity,
+    "power_output": 0
+  },
+  "mastery_level": 0.0,
+  "mutation_stage": "ALPHA",
+  "evolution_count": 0,
+  "data_complete": true,
+  "lore": "已播种：地球/火星/比邻星b/开普勒452b。",
+  "description": "在宇宙各地宜居星球播种Ω优化的新人类",
+  "synergy_ids": [
+    "S85",
+    "S87"
+  ],
+  "last_evolved": null,
+  "counter_ids": [
+    "S75"
+  ]
+}

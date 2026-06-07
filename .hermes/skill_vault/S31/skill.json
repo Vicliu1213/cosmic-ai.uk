@@ -1,0 +1,29 @@
+{
+  "skill_id": "S31",
+  "category": "神经增强",
+  "emoji": "🧠",
+  "name_cn": "博弈终结者绝对支配",
+  "name_hero": "GAME-THEORY-DOMINATOR",
+  "substrate": "神经回路",
+  "params": {
+    "activation_energy": 350,
+    "cooldown_seconds": 0,
+    "range_meters": 0,
+    "duration_seconds": Infinity,
+    "power_output": 0
+  },
+  "mastery_level": 0.0,
+  "mutation_stage": "ALPHA",
+  "evolution_count": 0,
+  "data_complete": true,
+  "lore": "胜率趋近99.99%。",
+  "description": "在任何博弈中找到绝对支配策略",
+  "synergy_ids": [
+    "S24",
+    "S81"
+  ],
+  "last_evolved": null,
+  "counter_ids": [
+    "S39"
+  ]
+}

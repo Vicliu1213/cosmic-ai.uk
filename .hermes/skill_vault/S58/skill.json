@@ -1,0 +1,29 @@
+{
+  "skill_id": "S58",
+  "category": "永生肉体",
+  "emoji": "🧬",
+  "name_cn": "体内核聚变无限自持",
+  "name_hero": "INTERNAL-FUSION-REACTOR",
+  "substrate": "基因表达",
+  "params": {
+    "activation_energy": 2000,
+    "cooldown_seconds": 0,
+    "range_meters": 0,
+    "duration_seconds": Infinity,
+    "power_output": 3.8e+26
+  },
+  "mastery_level": 0.0,
+  "mutation_stage": "ALPHA",
+  "evolution_count": 0,
+  "data_complete": true,
+  "lore": "不再需要任何外部补给。",
+  "description": "每个细胞内建微型核聚变反应堆",
+  "synergy_ids": [
+    "S52",
+    "S57"
+  ],
+  "last_evolved": null,
+  "counter_ids": [
+    "S36"
+  ]
+}
